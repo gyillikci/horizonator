@@ -90,7 +90,7 @@ bool horizonator_init( // output
     if(tiles_name == NULL)
         tiles_name = "mapnik";
     if(tiles_url_fmt == NULL)
-        tiles_url_fmt = "https://a.tile.openstreetmap.org/%d/%d/%d.png";
+        tiles_url_fmt = "https://tile.openstreetmap.org/%d/%d/%d.png";
     if(dir_dems  == NULL)
         dir_dems  = SRTM1 ?
             "~/.horizonator/DEMs_SRTM1" :
