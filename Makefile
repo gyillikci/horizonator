@@ -44,7 +44,6 @@ LDLIBS_FLORB := \
  $(shell pkg-config --libs libpng) \
  $(shell pkg-config --libs tinyxml) \
  -lboost_filesystem \
- -lboost_system \
  -lboost_thread \
  -pthread
 
