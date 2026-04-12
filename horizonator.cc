@@ -644,5 +644,19 @@ int main(int argc, char** argv)
 
     Fl::run();
 
+    // Save the status in the clipboard. This is ugly. I shouldn't save
+    // EVERYTHING and if the user never selected the text with the mouse, I
+    // shouldn't save anything. And shelling-out is ugly. But it gets the job
+    // done for now
+    if(g_status_text->value())
+    {
+        FILE* f = popen("xclip -selection clipboard", "w");
+        if(f != NULL)
+        {
+            fprintf(f, g_status_text->value());
+            pclose(f);
+        }
+    }
+
     return 0;
 }
