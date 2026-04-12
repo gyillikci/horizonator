@@ -26,6 +26,9 @@
 #define OSM_TILE_WIDTH      256
 #define OSM_TILE_HEIGHT     256
 
+#define OSM_TILE_TEXTURE_NAME_DEFAULT    "mapnik"
+#define OSM_TILE_TEXTURE_URL_FMT_DEFAULT "https://tile.openstreetmap.org/%d/%d/%d.png"
+
 #define assert_opengl()                                 \
     do {                                                \
         int error = glGetError();                       \
@@ -88,9 +91,9 @@ bool horizonator_init( // output
 
 
     if(tiles_name == NULL)
-        tiles_name = "mapnik";
+        tiles_name = OSM_TILE_TEXTURE_NAME_DEFAULT;
     if(tiles_url_fmt == NULL)
-        tiles_url_fmt = "https://tile.openstreetmap.org/%d/%d/%d.png";
+        tiles_url_fmt = OSM_TILE_TEXTURE_URL_FMT_DEFAULT;
     if(dir_dems  == NULL)
         dir_dems  = SRTM1 ?
             "~/.horizonator/DEMs_SRTM1" :
