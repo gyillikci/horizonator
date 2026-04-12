@@ -319,6 +319,12 @@ bool horizonator_init( // output
                 if(0 != system(cmd))
                 {
                     MSG("mkdir && wget failed");
+
+                    // delete the incomplete failed download
+                    len = snprintf( cmd, sizeof(cmd),
+                                    "rm %s", filename );
+                    assert(len < (int)sizeof(cmd));
+                    system(cmd);
                     return false;
                 }
             }
