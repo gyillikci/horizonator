@@ -52,14 +52,16 @@ static view_t g_view =
 static float g_picked_lat = 1e6f;
 static float g_picked_lon = 1e6f;
 
+static char g_command_base[1024];
 
 static void update_status_text()
 {
-    char str[256];
+    char str[1024];
 
     int Nwritten =
         snprintf(str, sizeof(str),
-                 "horizonator %.5f %.5f %.1f %.1f",
+                 "%s %.5f %.5f %.1f %.1f",
+                 g_command_base,
                  g_view.lat,
                  g_view.lon,
                  g_view.az_center_deg,
@@ -544,6 +546,29 @@ int main(int argc, char** argv)
     {
         g_view.az_center_deg = (float)atof(argv[optind+2]);
         g_view.az_radius_deg = (float)atof(argv[optind+3]);
+    }
+
+    // construct g_command_base
+    char* command_base_tail          = g_command_base;
+    int   command_base_buf_remaining = sizeof(g_command_base);
+    for(int i=0; i<optind; i++)
+    {
+        // I append ' ' + argv[i]. I write the final \0. I put leave the pointer
+        // at the final \0
+        const char* str  = argv[i];
+        const int   size = strlen(str);
+        if(command_base_buf_remaining < size+2) // 2 because ' ' and '\0'
+        {
+            fprintf(stderr, "g_command_base too small. Rebuild with larger g_command_base\n");
+            return 1;
+        }
+
+        *command_base_tail = ' ';
+        memcpy(command_base_tail+1, str, size);
+        command_base_tail[size+1] = '\0';
+
+        command_base_tail          += size+1;
+        command_base_buf_remaining -= size+1;
     }
 
     ////////////// Done cmdline-option parsing. Let's do the thing.
