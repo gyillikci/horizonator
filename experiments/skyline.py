@@ -224,23 +224,23 @@ def quadratic_refine(xy, c):
     return dx, dy
 
 
-def solve_position(skyline_fn, el_obs, lat_c, lon_c, z,
+def solve_position(skyline_fn, el_obs, z,
                    box_m=1000.0, coarse_n=9, fine_step_m=25.0,
                    weights=None, verbose=False):
-    """Coarse-to-fine position search over a box centered on (lat_c, lon_c).
+    """Coarse-to-fine position search over a box centered on the origin.
 
-    skyline_fn(lat, lon) -> el array on the same azimuth grid as el_obs.
-    Returns (lat, lon, info) of the estimated position. Search grid spacing:
-    coarse box_m/(coarse_n-1), then a 5x5 fine grid at fine_step_m around the
-    coarse minimum, then a quadratic sub-grid refinement.
+    skyline_fn(dn_m, de_m) -> el array on the same azimuth grid as el_obs,
+    for a candidate dn_m meters north / de_m meters east of the box center.
+    Returns (dn, de, info) of the estimated position offset in meters.
+    Search grid spacing: coarse box_m/(coarse_n-1), then a 5x5 fine grid at
+    fine_step_m around the coarse minimum, then a quadratic sub-grid
+    refinement.
     """
-    mlat, mlon = meters_per_degree(lat_c)
     evals = [0]
 
     def C(dn, de):
         evals[0] += 1
-        el = skyline_fn(lat_c + dn / mlat, lon_c + de / mlon)
-        return cost(el_obs, el, weights=weights)
+        return cost(el_obs, skyline_fn(dn, de), weights=weights)
 
     # coarse grid
     g = np.linspace(-box_m / 2, box_m / 2, coarse_n)
@@ -266,6 +266,5 @@ def solve_position(skyline_fn, el_obs, lat_c, lon_c, z,
         print(f'  fine   min at dn={dn2:+.1f} de={de2:+.1f} '
               f'({evals[0]} evaluations)')
 
-    info = dict(evals=evals[0], coarse_cost=cc, coarse_grid=g,
-                dn=dn2, de=de2)
-    return lat_c + dn2 / mlat, lon_c + de2 / mlon, info
+    info = dict(evals=evals[0], coarse_cost=cc, coarse_grid=g)
+    return dn2, de2, info
