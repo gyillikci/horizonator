@@ -69,3 +69,19 @@ it via ctypes. Measured on the 4-vCPU build container: 13.8 ms/skyline
 single-thread, 4.4 ms on 4 threads (3600 azimuths, 40 km range at 90 m
 steps) — ~100x the NumPy marcher, agreeing with it to 0.02 mrad RMS.
 `e3_scale.py` uses it to search a 100 km x 100 km box.
+
+## Automatic front-end and the `skyfix` CLI
+
+- `extract.py` — automatic skyline extraction (local-linear-continuation
+  boundary detector: first sustained deviation from the sky, robust to
+  graded/hazy skies and to crisp sea horizons below faint distant ridges)
+  plus EXIF utilities (FOV from FocalLengthIn35mmFilm, GPS direction and
+  altitude).
+- `skyfix.py` — the end-to-end CLI: photo in, position fix + covariance
+  out. `python3 skyfix.py IMG --center LAT,LON [--pitch P --roll R ...]`;
+  FOV/heading/altitude default from EXIF. Run it on your own coastal
+  photos: keep original files (EXIF intact), supply pitch/roll from an
+  IMU app to ~0.5 deg, use `--box` for your dead-reckoning uncertainty.
+- `e4c_synth.py` — end-to-end validation on photo-realistic composites
+  with real EXIF (written via piexif): 40–62 m error at the four
+  sea-observer cases in a 5 km box, ~11 s per fix.
