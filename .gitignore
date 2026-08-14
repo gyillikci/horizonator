@@ -9,3 +9,8 @@ cscope.out
 horizonator
 standalone
 *.docstring.h
+mrbuild-git/
+mrbuild
+*.tar.gz
+experiments/out/*.npz
+experiments/__pycache__/
