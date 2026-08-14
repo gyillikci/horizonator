@@ -698,6 +698,47 @@ add canopy-height noise), cloud truncation of the top n% of ridges, and FOV
 reduction 360° → 90° → 40° (the Foucher 2025 question). Output:
 accuracy-vs-nuisance curves; identifies the error budget's dominant terms.
 
+> **E2 results** (`experiments/e2_ablations.py`, figure
+> `experiments/out/e2_ablations.png`; CEP50/CEP95 in meters, 20 trials per
+> point; site A baseline 7/27 m, site B 14/46 m). The error budget, ranked:
+>
+> 1. **Heading bias dominates, and the mitigation kills it.** Naive solves
+>    scale linearly with the bias: at 1°, 99 m (A) / 345 m (B); at 2°,
+>    195 m / 587 m. Site B tracks the predicted `d·ε` (24 km × ε) almost
+>    exactly; site A sits ~2.5× *below* its prediction — with land on
+>    opposite bearings, a rigid azimuth shift makes contradictory demands
+>    that partially cancel, so two-sided geometry is intrinsically more
+>    bias-tolerant. Co-estimating a single azimuth-offset nuisance
+>    (`skyline.cost_azshift`, §5 stage 2) **fully restores the baseline at
+>    every bias level up to 2°** — 8/26 m (A), 14/46 m (B). Compass quality
+>    stops mattering; the mitigation should simply always be on.
+> 2. **Cloud truncation is the main environmental risk.** Truncating the
+>    top 10% of the land skyline is free (7/17 m at A); 25% is mild
+>    (10/65 m); at 50% the solve breaks down at site A (35 m CEP50 but
+>    756 m CEP95 — the surviving low skyline is ambiguous). A per-bin
+>    confidence weight from the sky-segmentation front-end (§5 stage 0)
+>    is the right defense, plus refusing a fix when too little skyline
+>    variance survives.
+> 3. **Random skyline noise is a non-issue**: flat to 2 mrad, and only
+>    4 mrad (2× the pixel quantization) shows at all — hundreds of azimuth
+>    bins average it away.
+> 4. **Height/tide mismatch of ±2 m is a non-issue** (within noise of the
+>    baseline at both sites): the skyline barely moves with observer
+>    height compared to its motion with horizontal position.
+> 5. **Refraction-coefficient mismatch k′ ∈ [0.10, 0.20] is negligible**
+>    (≤0.2 mrad at 40 km, no measurable CEP change), justifying the
+>    fixed k = 0.13 in the renderer. (Anomalous refraction/mirage
+>    conditions remain out of scope.)
+> 6. **DEM source mismatch is small**: observations rendered from 1″ SRTM
+>    matched against the 3″ lattice cost ~1 m at both sites (8/30 m at A,
+>    15/33 m at B) — encouraging, though both are the same SRTM family;
+>    an independent DEM (Copernicus GLO-30) remains future work.
+> 7. **FOV**: site A degrades gracefully (10 m CEP50 even at 40°, though
+>    CEP95 reaches 94 m as some solves get fragile); site B, whose land
+>    all sits in one ~90° sector, loses accuracy once the FOV clips that
+>    sector (36/155 m at 40°). Matches Foucher et al.'s limited-FOV
+>    findings qualitatively.
+
 **E3 — Search-strategy comparison.** On the E1/E2 cost surfaces, compare:
 dense 25 m grid (reference), coarse-to-fine (§5), DIRECT, GP-based BO, and
 BnB with parallax bounds. Metrics: renders-to-solution, miss rate of the
@@ -723,10 +764,11 @@ sequential estimator.
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
 search loop. Steps 2–4 are pure Python on top of the existing renderer.
 
-**Status: steps 1–4 and experiments E0/E1 are implemented** — see
+**Status: steps 1–4 and experiments E0/E1/E2 are implemented** — see
 `experiments/` (`skyline.py`, `e0_validate.py`, `e1_closed_loop.py`,
-`e1_plots.py`, `fetch_dems.py` and the README there), with figures in
-`experiments/out/`. Partial E2 coverage came along for free (the FOV, noise
-and heading-bias configs above); the remaining E2 ablations (DEM source,
-refraction coefficient, tide/height error, cloud truncation) and E3–E5 are
-future work.
+`e2_ablations.py`, the plot scripts, `fetch_dems.py` and the README there),
+with figures in `experiments/out/`. Remaining E2 items: an independent DEM
+family (Copernicus GLO-30) and canopy-height noise. E3–E5 are future work,
+with one E2 amendment for E3: the azimuth-offset co-estimation proved so
+effective and cheap that it should be part of the default cost, not an
+option.

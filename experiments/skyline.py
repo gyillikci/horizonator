@@ -141,9 +141,11 @@ class GlSkyline:
     """
 
     def __init__(self, lat, lon, width=3600, height=400,
-                 render_radius_m=45000.0, dir_dems=None, zfar=40000.0):
+                 render_radius_m=45000.0, dir_dems=None, zfar=40000.0,
+                 SRTM1=False):
         import horizonator
-        kwargs = dict(render_radius_m=render_radius_m, allow_downloads=False)
+        kwargs = dict(render_radius_m=render_radius_m, allow_downloads=False,
+                      SRTM1=SRTM1)
         if dir_dems is not None:
             kwargs['dir_dems'] = dir_dems
         self.h = horizonator.horizonator(lat, lon, width, height, **kwargs)
@@ -198,6 +200,25 @@ def cost(el_obs, el_syn, huber_delta=3e-3, weights=None):
     return float(np.mean(l))
 
 
+def cost_azshift(el_obs, el_syn, weights=None, huber_delta=3e-3,
+                 max_shift_px=24):
+    """Skyline cost minimized over a global azimuth shift of the observation:
+    co-estimates a compass-bias nuisance parameter (study doc section 5,
+    stage 2). Assumes a full-circle azimuth grid, so a shift is a roll.
+    Two-stage search: every 2 px over +-max_shift_px, then +-1 px around the
+    best."""
+    best, sbest = np.inf, 0
+    for s in range(-max_shift_px, max_shift_px + 1, 2):
+        c = cost(np.roll(el_obs, s), el_syn, huber_delta=huber_delta,
+                 weights=weights)
+        if c < best:
+            best, sbest = c, s
+    for s in (sbest - 1, sbest + 1):
+        best = min(best, cost(np.roll(el_obs, s), el_syn,
+                              huber_delta=huber_delta, weights=weights))
+    return best
+
+
 def meters_per_degree(lat):
     """(m per degree of latitude, m per degree of longitude)"""
     return (REARTH * np.pi / 180.0,
@@ -226,7 +247,7 @@ def quadratic_refine(xy, c):
 
 def solve_position(skyline_fn, el_obs, z,
                    box_m=1000.0, coarse_n=9, fine_step_m=25.0,
-                   weights=None, verbose=False):
+                   weights=None, cost_fn=None, verbose=False):
     """Coarse-to-fine position search over a box centered on the origin.
 
     skyline_fn(dn_m, de_m) -> el array on the same azimuth grid as el_obs,
@@ -237,10 +258,12 @@ def solve_position(skyline_fn, el_obs, z,
     refinement.
     """
     evals = [0]
+    if cost_fn is None:
+        cost_fn = cost
 
     def C(dn, de):
         evals[0] += 1
-        return cost(el_obs, skyline_fn(dn, de), weights=weights)
+        return cost_fn(el_obs, skyline_fn(dn, de), weights=weights)
 
     # coarse grid
     g = np.linspace(-box_m / 2, box_m / 2, coarse_n)
