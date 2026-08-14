@@ -52,15 +52,24 @@ for name, res in results.items():
     ax.set_xlim(-180, 180)
     ax.set_xlabel('azimuth (deg, 0 = N)')
     ax.set_ylabel('skyline elevation (mrad)')
-    land = np.isfinite(r)
+    # land = skyline meaningfully above the sea-horizon dip (the renderer
+    # legitimately returns the sea surface itself in open-water azimuths)
+    dip = np.sqrt(2 * 5.0 / (6371000.0 / (1 - 0.13)))
+    land = d['el_center'] > (-dip + 0.5e-3)
+    rl = r[land]
     ax.set_title(f'(a) skyline at box center — land in {land.mean()*100:.0f}% '
-                 f'of azimuths, mean range '
-                 f'{np.nanmean(r)/1e3:.1f} km', fontsize=10)
+                 f'of azimuths, mean land range '
+                 f'{np.mean(rl)/1e3:.1f} km', fontsize=10)
     sc = res['site']['sector_center_deg']
     sc = (sc + 180) % 360 - 180
-    ax.axvspan(sc - 45, sc + 45, color='#d55e00', alpha=0.12, lw=0)
-    ax.text(sc, ax.get_ylim()[1], ' 90° sector', color='#a04000',
-            ha='center', va='top', fontsize=9)
+    for lo, hi in [(sc - 45, sc + 45),
+                   (sc - 45 + 360, sc + 45 + 360),
+                   (sc - 45 - 360, sc + 45 - 360)]:
+        if hi > -180 and lo < 180:  # handle wrap at +-180
+            ax.axvspan(max(lo, -180), min(hi, 180),
+                       color='#d55e00', alpha=0.12, lw=0)
+    ax.text(np.clip(sc, -160, 160), ax.get_ylim()[1], '90° sector',
+            color='#a04000', ha='center', va='top', fontsize=9)
     ax.grid(alpha=0.25, lw=0.5)
 
     # (b),(c) cost surfaces

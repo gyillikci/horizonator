@@ -149,14 +149,18 @@ exactly the way a matching loop wants:
    sea-horizon distance itself wrong. **Fix is one line in the shader:**
    `enh.z -= dot(en,en) / (2.0 * R_eff);` with `R_eff = R/(1−k)`, `k ≈ 0.13`
    — the standard surveyor's curvature-plus-refraction correction. (Doing it
-   in the shader keeps the CPU-side mesh untouched.)
+   in the shader keeps the CPU-side mesh untouched.) **Implemented:**
+   `vertex.glsl` and the CPU-side `horizonator_project()` now apply this
+   correction, with `k = HORIZONATOR_REFRACTION_K = 0.13` shared via
+   `horizonator.h`; validated by experiment E0 below.
 2. **The Python API does not expose viewer height.** `py_horizonator_render()`
    calls `horizonator_move(&ctx, NULL, lat, lon)`, and the NULL makes the C
    code auto-select `z = max(4 surrounding DEM cells) + 1 m`. At sea that
    yields z = 1 m regardless of the actual bridge/deck height. Needed: a
    `z=` keyword on `render()` (and constructor) plumbed into the existing
    `viewer_z` in/out parameter of `horizonator_move()` — the C API already
-   supports it.
+   supports it. **Implemented:** both the constructor and `render()` now
+   accept `z=` (default: auto-select as before).
 3. **Pitch/roll are hard-wired to zero.** The renderer always looks out
    parallel to the horizontal plane. That is fine — with known extrinsics the
    *observed* image should be resampled into the same az/el equirectangular
@@ -626,6 +630,19 @@ geometric limit is hidden, (c) skyline elevation angles of surveyed peaks
 match ephemeris-grade computation to <0.5 mrad. This also produces the
 first regression tests for the patch.
 
+> **E0 results** (`experiments/e0_validate.py`, Bodrum–Kos test area,
+> SRTM 3″ from the AWS skadi mirror — note those tiles contain bathymetry,
+> clamped to 0 like `dem.c` does): **16/16 checks pass.** Sea-horizon dip
+> matches `√(2h/R_eff)` to <0.15 mrad (GL, quantization-limited) and
+> <0.01 mrad (ray-marcher) for h = 2–20 m; horizon distance matches
+> `√(2·R_eff·h)` exactly at the marcher's step resolution. The GL skyline
+> agrees with an independent NumPy ray-marcher to 1.8 mrad RMS (0.9 mrad
+> median) over a full 360° terrain panorama — quantization (0.87 mrad at
+> 0.1°/px) plus mesh-vs-bilinear differences. On distant terrain where
+> curvature matters (>1 mrad effect), the GL render matches the
+> curved-Earth model 2.7× better than the flat-Earth model, confirming the
+> patch does what it should.
+
 **E1 — Synthetic closed loop (render-vs-render).** Choose 2–3 real sites
 with different character — e.g. an archipelago (many islands, near+far), a
 single mountainous island seen broadside at 20–40 km, and a low featureless
@@ -634,6 +651,44 @@ the box (viewer h = 2–20 m). Recover position with the §5 pipeline. Map the
 **full cost surface over the box** (this is cheap and is the most
 informative artifact: basin width, multimodality, coastal degeneracy made
 visible). Metrics: CEP50/CEP95, ellipse orientation vs coast geometry.
+
+> **E1 results** (`experiments/e1_closed_loop.py`, 20 ground-truth
+> positions per site, viewer z = 5 m, 0.1°/px panoramas, coarse-to-fine
+> search on a 25 m lattice with quadratic sub-grid refinement; ~0.27 s per
+> candidate render on software GL, all solves served from a precomputed
+> 41×41 lattice):
+>
+> *Site A — mid-strait between the Bodrum peninsula and Kos (land in 80% of
+> azimuths, mean land range 14.5 km):*
+>
+> | config | CEP50 | CEP95 | max |
+> |---|---|---|---|
+> | clean, 360° | **7.2 m** | 26.6 m | 29.8 m |
+> | clean, 90° FOV | 10.2 m | 58.0 m | 80.7 m |
+> | 1 mrad noise, 360° | 7.1 m | 27.1 m | 30.1 m |
+> | 0.2° heading bias, 360° | 23.4 m | 45.5 m | 48.4 m |
+>
+> *Site B — open water SW of Kos (land in 24% of azimuths, in one NNE–ENE
+> sector, mean land range 23.8 km):*
+>
+> | config | CEP50 | CEP95 | max |
+> |---|---|---|---|
+> | clean, 360° | 13.6 m | 46.3 m | 46.5 m |
+> | clean, 90° FOV | 22.2 m | 50.1 m | 56.7 m |
+> | 1 mrad noise, 360° | 15.7 m | 46.1 m | 51.6 m |
+> | 0.2° heading bias, 360° | 68.2 m | 85.9 m | 90.5 m |
+>
+> Every §1.2 prediction checks out quantitatively: GPS-class accuracy in
+> the strong-geometry case; 1 mrad of random skyline noise is almost
+> invisible (hundreds of azimuth bins average it away); the heading-bias
+> error matches `d·ε` (14.5 km × 3.5 mrad ≈ 50 m worst-case at site A,
+> 23.8 km × 3.5 mrad ≈ 83 m at site B — measured 48 m and 90 m max);
+> and the site-B cost surface shows exactly the predicted along-ray
+> degeneracy, a valley elongated along the mean line of sight toward the
+> single visible coast (see `experiments/out/e1_B-offshore.png`). The cost
+> surfaces are unimodal over the whole 1 km box at both sites — a single
+> coarse-to-fine descent suffices here, and the topological gate of §5
+> only becomes necessary at larger search scales.
 
 **E2 — Noise ablations on E1.** Inject, one at a time and combined: heading
 bias 0.1–2° (expect bias ≈ d·ε, confirming §1.2), skyline extraction noise
@@ -667,3 +722,11 @@ sequential estimator.
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
 search loop. Steps 2–4 are pure Python on top of the existing renderer.
+
+**Status: steps 1–4 and experiments E0/E1 are implemented** — see
+`experiments/` (`skyline.py`, `e0_validate.py`, `e1_closed_loop.py`,
+`e1_plots.py`, `fetch_dems.py` and the README there), with figures in
+`experiments/out/`. Partial E2 coverage came along for free (the FOV, noise
+and heading-bias configs above); the remaining E2 ablations (DEM source,
+refraction coefficient, tide/height error, cloud truncation) and E3–E5 are
+future work.
