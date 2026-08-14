@@ -206,7 +206,167 @@ optimization ideas come from.)*
 
 ## 4. Literature: search & optimization techniques for the position sweep
 
-<!-- FILLED FROM LITERATURE AGENT B -->
+The per-candidate cost (synthesize a skyline, compare to the observation) is
+the expensive primitive; the cost surface over position is smooth-ish but
+multimodal. Seven threads of literature bear on how to spend those
+evaluations. Note first that the *exact* structure — grid search of
+DEM-synthesized skylines against an observed panoramic horizon — already
+exists in the planetary-rover literature: Stein & Medioni, "Map-based
+localization using the panoramic horizon" (IEEE Trans. Robotics & Automation,
+1995); Cozman & Krotkov's Viper for lunar/Mars rovers (ICRA 1997, Autonomous
+Robots 2000); [Chiodini et al., "Mars rovers localization by matching local
+horizon to surface DEMs"](https://ieeexplore.ieee.org/document/7999600/)
+(MetroAeroSpace 2017). Those papers define the pipeline; the threads below
+are about doing the search well.
+
+### 4.1 Terrain-aided navigation (TERCOM / SITAN / point-mass filters)
+
+The closest structural analog: match a measured 1D terrain profile against a
+stored DEM to fix position.
+
+- Golden, "Terrain contour matching (TERCOM)" (SPIE 1980) — batch MAD/MSD
+  correlation over a search grid; robust to large initial error.
+- Hostetler & Andreas, "Nonlinear Kalman filtering techniques for
+  terrain-aided navigation" (IEEE TAC 1983) — SITAN: recursive EKF on local
+  terrain slope; fast but false-fixes when initial uncertainty is large.
+- [Bergman, Ljung & Gustafsson, "Point-mass filter and Cramér–Rao bound for
+  terrain-aided navigation"](https://ieeexplore.ieee.org/document/650690/)
+  (CDC 1997) and Bergman's 1999 [PhD
+  thesis](https://www.rt.isy.liu.se/research/reports/Ph.D.Thesis/PhD579.pdf) —
+  full Bayesian grid filter over position, achieving the CRLB; ancestor of
+  particle-filter TAN ([Gustafsson et al. 2002](https://www.irisa.fr/aspi/legland/ref/gustafsson02a.pdf)).
+- [Zhao et al., IEEE Sensors J. 2015](https://www.researchgate.net/publication/273394609_A_Novel_Terrain-Aided_Navigation_Algorithm_Combined_With_the_TERCOM_Algorithm_and_Particle_Filter)
+  — hybrid: batch acquisition + recursive tracking (the TERPROM two-phase
+  design).
+
+**Transferable lesson:** the *acquisition-then-track* architecture — batch
+correlation to find the basin, recursive/local refinement inside it. TERCOM's
+profile is spatial (along-track) while ours is angular (azimuth sweep from a
+point), so a single skyline is one very informative point-mass-filter
+measurement update rather than a trajectory.
+
+### 4.2 Branch-and-bound over pose space
+
+- [Breuel, "Implementation techniques for geometric branch-and-bound matching
+  methods"](https://www.sciencedirect.com/science/article/abs/pii/S1077314203000262)
+  (CVIU 2003) — subdivide transformation space, bound the best achievable
+  cost per cell, prune; globally optimal and adaptive.
+- [Yang et al., "Go-ICP"](https://arxiv.org/abs/1605.03344) (ICCV 2013 /
+  TPAMI 2016) — BnB over motion space with derived error bounds, local
+  refinement nested inside to tighten the incumbent.
+
+**Fit:** strong, because a rigorous per-cell bound exists for our cost. A
+skyline point at range `r` moves at most `δ/r` radians in azimuth when the
+observer moves `δ` — and the range image gives `r` per azimuth bin for free,
+so each rendered candidate yields a Lipschitz bound over its neighborhood.
+This certifies a no-miss search of the box with far fewer renders than a
+dense grid. Bounds go loose only in azimuths with very close foreground
+terrain (small `r_min`) — handled with robust per-bin costs.
+
+### 4.3 Coarse-to-fine / multi-resolution grid search
+
+- [Borgefors, "Hierarchical Chamfer Matching"](https://ieeexplore.ieee.org/document/9107/)
+  (TPAMI 1988) — the canonical coarse-to-fine curve matcher.
+- [Lewis, "Fast Normalized Cross-Correlation"](https://scribblethink.org/Work/nvisionInterface/nip.html)
+  (1995) — sum-table NCC machinery.
+
+**Fit:** the workhorse baseline and what the rover papers actually do. Coarse
+grid spacing can be *chosen from the same parallax bound as §4.2* (nearest
+skyline range sets the safe spacing), which turns naive coarse-to-fine into a
+non-adaptive BnB with no missed-basin risk. For a 1 km box: ~100 m spacing
+(121 renders) → keep top-k basins → 25 m → continuous local refinement.
+
+### 4.4 Particle filters / Monte Carlo localization
+
+- [Dellaert, Fox, Burgard & Thrun, "Monte Carlo Localization"](https://www.ri.cmu.edu/pub_files/pub1/dellaert_frank_1999_2/dellaert_frank_1999_2.pdf)
+  (ICRA 1999); [Thrun et al., "Robust MCL"](https://www.sciencedirect.com/science/article/pii/S0004370201000698/pdf)
+  (AIJ 2001) — including the standard treatment of expensive ray-cast beam
+  models vs precomputed *likelihood fields*.
+- Fox, "KLD-sampling" (IJRR 2003) — adaptive sample counts.
+
+**Fit:** for a single photo, MCL degenerates to randomized grid search. It
+becomes the right frame once there are *sequences* (a drifting/underway
+vessel taking frames over time): the posterior stays multimodal until skyline
+evidence disambiguates. The **likelihood-field trick transfers regardless**:
+precompute per-azimuth horizon-angle maps over the box once, then candidate
+evaluation is a lookup, not a render (see §5).
+
+### 4.5 Surrogate / Bayesian optimization (expensive black-box)
+
+- Jones, Perttunen & Stuckman, "Lipschitzian optimization without the
+  Lipschitz constant" (JOTA 1993) — **DIRECT**: deterministic global search
+  on a box, derivative-free, zero tuning.
+- Jones, Schonlau & Welch, "Efficient Global Optimization of Expensive
+  Black-Box Functions" (JGO 1998) — **EGO**: Gaussian-process surrogate +
+  expected improvement; the canonical Bayesian-optimization reference.
+- Hansen & Ostermeier (Evol. Comp. 2001) — CMA-ES; poor fit here (needs
+  10³–10⁴ evaluations).
+
+**Fit:** a 2–3D box with an expensive smooth-ish multimodal objective is the
+textbook BO/DIRECT regime — tens-to-low-hundreds of evaluations, and GP
+lengthscales can be set from the parallax physics. But it ignores the strong
+problem structure (bounds, precomputation) the other threads exploit, and GP
+stationarity is violated at occlusion "cliffs." Best as a model-free
+fallback, or for the height/heading nuisance dimensions.
+
+### 4.6 Topological / structural matching (the "topological search" thread)
+
+This is the closest match to the intuition of searching *structure* rather
+than metric values:
+
+- **Persistence on the skyline itself.** 0-dimensional persistent homology of
+  the 1D curve θ(az) ranks skyline peaks by persistence (prominence),
+  giving a noise-robust, scale-free set of "significant peaks" — far more
+  stable than thresholded local maxima. (PH used as a localization
+  fingerprint: [IEEE IV 2021 for LiDAR](https://www.researchgate.net/publication/355836716_Persistent_Homology_in_LiDAR-Based_Ego-Vehicle_Localization);
+  as terrain morphology descriptor: [RSE 2020](https://www.sciencedirect.com/science/article/abs/pii/S0034425720301863).)
+  Note that *topographic prominence*, beloved of mountaineers, **is** the
+  0-D persistence of the elevation function — the concepts align exactly.
+- **Qualitative localization by cyclic order of landmarks.**
+  [Qualitative place signatures of visible landmarks](https://www.tandfonline.com/doi/full/10.1080/13658816.2024.2348736)
+  (IJGIS 2024): a position's signature is the cyclic azimuth order (+
+  qualitative angle classes) of visible landmarks; the map partitions into
+  cells of constant signature and retrieval is cyclic-sequence matching.
+  Related: qualitative angle-order navigation (Levitt & Lawton lineage;
+  [Mor & Indelman 2020/2023](https://arxiv.org/pdf/2302.08735)). Cozman &
+  Krotkov's rover work already used peak azimuth ordering + elevation angles
+  as the match primitive.
+- **Ridge graphs / surface networks / contour trees.** Pfaltz "surface
+  networks" (1976); [survey of terrain topology structures](https://doi.org/10.3390/encyclopedia5030098)
+  (2025); [Reeb-graph metrics](https://arxiv.org/pdf/2110.05631); merge-tree
+  distances (Beketayev et al. 2014) — machinery for comparing the observed
+  skyline's merge tree against candidates', robust to smooth deformation.
+
+**Fit:** within a 1 km box the cyclic order of distant peaks changes only
+when the observer crosses an aspect-graph boundary (an occlusion event or an
+azimuth-order swap), so the box partitions into a handful of
+constant-signature cells. That makes topology a superb **gating/pruning
+stage** — reject cells whose peak signature contradicts the observation, at
+near-zero cost — and a poor *standalone* localizer (it yields a cell, not a
+point). This is, we believe, the productive reading of "optimization
+resembling topological search": use topology to prune, metric matching to
+refine. At larger search scales (10–100 km) the signature index becomes the
+retrieval mechanism, as in Baatz et al.'s contour-word approach (§3).
+
+### 4.7 1D signal matching specifics (the inner-loop cost)
+
+- **Circular/FFT correlation** over azimuth scores all heading offsets at
+  once — with known orientation it is not needed for search, but is a cheap
+  way to co-estimate the compass-bias nuisance parameter
+  ([Nagy, PFG 2020](https://link.springer.com/article/10.1007/s41064-020-00093-1)
+  does azimuth refinement by skyline matching).
+- **Banded dynamic time warping** absorbs small residual warps from
+  calibration/DEM/refraction error that pointwise L2 punishes
+  (used in the rover VIPER line; [Grelsson et al., JFR 2016](https://www.researchgate.net/publication/283967541_Highly_Accurate_Attitude_Estimation_via_Horizon_Detection)).
+- **Directional chamfer / distance-transform costs**
+  ([Liu et al., FDCM, CVPR 2010](https://pure.johnshopkins.edu/en/publications/fast-directional-chamfer-matching/);
+  [SKYLINE2GPS, IROS 2010](https://inria.hal.science/inria-00523997)):
+  rasterize the *observed* skyline once into a (azimuth × elevation) distance
+  transform; each synthetic candidate is then scored by O(n) lookups. The
+  render becomes the only expensive step.
+- **Information weighting:** flat sea-horizon spans carry no positional
+  information — weight azimuth bins by local skyline variance (and by
+  parallax sensitivity `1/r`, §5).
 
 ---
 
