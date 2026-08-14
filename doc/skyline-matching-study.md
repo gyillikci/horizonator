@@ -863,6 +863,38 @@ literature.
 > files with EXIF intrinsics is the mandatory front-end — hand
 > digitization is only usable for narrow-FOV frames, and never for
 > wide-angle ones.
+>
+> **E4c — the automatic front-end, built and validated end-to-end**
+> (`experiments/extract.py`, `experiments/skyfix.py`,
+> `experiments/e4c_synth.py`). Since no usable external photo source is
+> reachable under this environment's egress policy (Wikimedia blocked,
+> GeoPose3K blocked, open-S3 YFCC images are 500 px with EXIF stripped),
+> the pipeline was validated on photo-realistic composites with real
+> EXIF: GL-rendered ground truth + sky gradient, range-dependent haze,
+> sea/terrain coloring, camera pitch/roll, sensor noise, and
+> FocalLengthIn35mmFilm / GPSImgDirection / GPSAltitude written into the
+> JPEGs. Results over a 5 km box with a randomly offset center,
+> ~11 s/fix: **40–62 m at all four sea-observer cases (0.7–0.9 mrad
+> extraction residual, zero recovered heading offset)**, 83 m at one
+> land case; one land case fails through the 1 km near-field mask
+> (its view contains genuine terrain at 100–800 m) — soft near-field
+> weighting is the open item for land-based observers.
+>
+> Three transferable findings from getting there: (1) **extraction
+> method matters more than anything downstream** — global sky-color
+> models fail on graded/hazy skies (extrapolation drift reads as
+> terrain), and pure edge detectors lock onto a crisp sea horizon below
+> a faint distant ridge; the working formulation is *local linear
+> continuation* (predict each row from the rows just above; boundary =
+> first sustained deviation), which handles both failure modes, each of
+> which was actually hit during validation. (2) **The elevation
+> nuisance must stay tight** (±10 mrad residual around a pitch prior
+> good to ~0.5°): freeing it wide discards the absolute-elevation
+> information that pins range, and accuracy collapses even with perfect
+> extraction. (3) The pitch/roll priors an IMU provides are not
+> optional garnish — they are what makes a single-frame fix
+> well-conditioned. `skyfix.py` is ready to run on real originals:
+> `python3 skyfix.py IMG --center LAT,LON --pitch P --roll R`.
 
 **E5 — Integration.** Wrap the fix + covariance as (a) a terrestrial-fix
 input to `celestial-navigation` (it already has a terrestrial/bearing
