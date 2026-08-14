@@ -806,6 +806,43 @@ man's version): run the full pipeline, compare to GPS. Expect the front-end
 (sky segmentation over water, haze) to be the pain point, per the
 literature.
 
+> **E4 first attempt** (`experiments/e4_real.py`, figure
+> `experiments/out/e4_real.png`): a real phone photo from the Gulf of
+> Akbük coast (2026-08-10), with a Theodolite-app frame supplying attitude
+> (heading 037° true as a prior, altitude 62 ft = 18.9 m); GPS was used
+> only to center a **25 km² (5 km × 5 km) search box**. Because the
+> original image file was not available to the solver, the skyline was
+> **hand-digitized** (~30 points, ±6 mrad) — an important caveat on the
+> numbers.
+>
+> - **Result: 320–770 m from the GPS position**, depending on the assumed
+>   camera FOV (solved as an outer parameter, 62–78°; best fit near
+>   62–66°, 324 m at 66°). Solve time: 29 s for the full FOV sweep
+>   (native marcher, 4 cores).
+> - **Lesson 1 — near-field DEM occlusion.** At the true position the
+>   predicted skyline was poisoned (25 mrad RMS) by SRTM smearing the
+>   observer's own coastal bluff into blocking terrain at 150–500 m
+>   range; a camera at a bluff edge sees over its local ground, but the
+>   DEM does not know that. Masking ranges < 1 km restored the fit to
+>   digitization-noise level (6 mrad). For land-based observers this mask
+>   (or an explicit camera-above-local-terrain model) is essential; pure
+>   sea observers don't have the problem.
+> - **Lesson 2 — FOV must be known, not searched.** With a single-sided
+>   ~65° view sector, position trades almost linearly against azimuth
+>   scale: **~130 m of position slide per degree of FOV error**, and
+>   ±6 mrad digitization noise cannot break the tie between FOV
+>   hypotheses. The original file's EXIF focal length (or a one-time
+>   calibration) removes this entirely — with intrinsics truly known, as
+>   the study assumes, this axis vanishes.
+> - **Lesson 3 — the heading prior was ~4° off** (the raw photo was
+>   framed differently from the Theodolite frame); the azimuth-shift
+>   co-estimation absorbed it, as designed (E2).
+>
+> With automatic pixel-level skyline extraction (±0.5–1 mrad) and EXIF
+> intrinsics, the E2 site-B numbers (~15–50 m) are the expectation for
+> this geometry. The script accepts `--csv` with properly extracted
+> skyline points to rerun against the same box.
+
 **E5 — Integration.** Wrap the fix + covariance as (a) a terrestrial-fix
 input to `celestial-navigation` (it already has a terrestrial/bearing
 mode), and (b) a custom GTSAM unary factor on pose, enabling fusion of
