@@ -842,6 +842,27 @@ literature.
 > intrinsics, the E2 site-B numbers (~15–50 m) are the expectation for
 > this geometry. The script accepts `--csv` with properly extracted
 > skyline points to rerun against the same box.
+>
+> **E4b — second photo and a joint solve** (`experiments/e4b_dual.py`).
+> A second frame from the same spot (iPhone 17 Pro 0.5×, heading 352°
+> true; the site is the south shore of Lake Bafa, so the "horizon" is
+> the far lakeshore and the elevation datum was co-estimated rather than
+> anchored to a sea-horizon dip) enabled a two-photo joint solve with a
+> proper pinhole model (106° FOV from the 13 mm-equiv lens spec — at
+> that FOV the linear pixel→angle mapping is invalid). Outcome: the
+> joint fix **degraded** to 3.4 km, and the diagnosis is the useful
+> part: cross-checking the two hand-digitized skylines against each
+> other showed the ultrawide digitization to be internally inconsistent
+> by ~2× in elevation scale (the same conical hill reads 124 mrad in
+> the 0.5× frame vs 56 mrad in the 1.0× frame and ~52 mrad in the DEM),
+> an error neither the elevation-offset nor the heading nuisance can
+> absorb. Visual (eyeball) digitization breaks down on an ultrawide's
+> strongly nonlinear projection; the 1.0× photo alone, whose
+> digitization is DEM-consistent, keeps the ~320 m result. Conclusion
+> unchanged and sharpened: pixel-level extraction from the original
+> files with EXIF intrinsics is the mandatory front-end — hand
+> digitization is only usable for narrow-FOV frames, and never for
+> wide-angle ones.
 
 **E5 — Integration.** Wrap the fix + covariance as (a) a terrestrial-fix
 input to `celestial-navigation` (it already has a terrestrial/bearing
