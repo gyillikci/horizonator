@@ -97,6 +97,90 @@ class Dem:
         return out
 
 
+def build_mosaic(dem, lat_min, lat_max, lon_min, lon_max):
+    """Assemble Dem tiles into one row-major float32 grid (row 0 = north
+    edge). Returns (mosaic, lat_nw, lon_nw, dpp). Cells per degree is taken
+    from the first available tile; missing tiles stay at 0 (ocean)."""
+    import math
+    la0, la1 = int(math.floor(lat_min)), int(math.ceil(lat_max))
+    lo0, lo1 = int(math.floor(lon_min)), int(math.ceil(lon_max))
+    cpd = None
+    for la in range(la0, la1):
+        for lo in range(lo0, lo1):
+            t = dem._tile(la, lo)
+            if t is not None:
+                cpd = t.shape[0] - 1
+                break
+        if cpd:
+            break
+    if cpd is None:
+        raise RuntimeError('no DEM tiles found for the mosaic area')
+
+    nrows = (la1 - la0) * cpd + 1
+    ncols = (lo1 - lo0) * cpd + 1
+    m = np.zeros((nrows, ncols), dtype=np.float32)
+    for la in range(la0, la1):
+        for lo in range(lo0, lo1):
+            t = dem._tile(la, lo)
+            if t is None:
+                continue
+            r0 = (la1 - la - 1) * cpd    # tile row 0 is the tile's north edge
+            c0 = (lo - lo0) * cpd
+            m[r0:r0 + cpd + 1, c0:c0 + cpd + 1] = t
+    return m, float(la1), float(lo0), 1.0 / cpd
+
+
+class CMarcher:
+    """Native (C/OpenMP) skyline ray-marcher over a DEM mosaic: the
+    on-device implementation prototype (see fastmarch.c). Same model and
+    conventions as RayMarcher. The shared library is compiled on first use.
+    """
+
+    def __init__(self, dem_dir, lat_range, lon_range,
+                 d_max=40000.0, d_step=90.0, d_min=150.0,
+                 refraction_k=K_REFRACTION):
+        import ctypes
+        import subprocess
+        here = os.path.dirname(os.path.abspath(__file__))
+        src = os.path.join(here, 'fastmarch.c')
+        so = os.path.join(here, 'fastmarch.so')
+        if not os.path.exists(so) or \
+           os.path.getmtime(so) < os.path.getmtime(src):
+            subprocess.run(['cc', '-O3', '-march=native', '-fopenmp',
+                            '-shared', '-fPIC', src, '-o', so], check=True)
+        self.lib = ctypes.CDLL(so)
+        f64p = np.ctypeslib.ndpointer(np.float64, flags='C_CONTIGUOUS')
+        self.lib.fastmarch_skyline.argtypes = [
+            np.ctypeslib.ndpointer(np.float32, flags='C_CONTIGUOUS'),
+            ctypes.c_int, ctypes.c_int,
+            ctypes.c_double, ctypes.c_double, ctypes.c_double,
+            ctypes.c_double, ctypes.c_double, ctypes.c_double,
+            f64p, ctypes.c_int,
+            ctypes.c_double, ctypes.c_double, ctypes.c_double,
+            ctypes.c_double,
+            f64p, f64p]
+
+        self.mosaic, self.lat_nw, self.lon_nw, self.dpp = \
+            build_mosaic(Dem(dem_dir), lat_range[0], lat_range[1],
+                         lon_range[0], lon_range[1])
+        self.d_min, self.d_max, self.d_step = d_min, d_max, d_step
+        self.refraction_k = refraction_k
+
+    def skyline(self, lat, lon, z, az_deg):
+        az = np.ascontiguousarray(np.radians(az_deg), dtype=np.float64)
+        el = np.empty(az.size)
+        r = np.empty(az.size)
+        self.lib.fastmarch_skyline(
+            self.mosaic, self.mosaic.shape[0], self.mosaic.shape[1],
+            self.lat_nw, self.lon_nw, self.dpp,
+            float(lat), float(lon), float(z),
+            az, az.size,
+            self.d_min, self.d_max, self.d_step,
+            self.refraction_k,
+            el, r)
+        return el, r
+
+
 class RayMarcher:
     """Skyline synthesis by marching one ray per azimuth over a Dem.
 

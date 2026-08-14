@@ -58,3 +58,14 @@ The GL renderer needs a display; on a headless box run everything under
   filled with the analytic sea-horizon dip `sqrt(2h/Reff)` so that
   land-vs-sea disagreements between observation and candidate still carry
   cost.
+
+## Native ray-marcher (`fastmarch.c`)
+
+The on-device prototype (e.g. Raspberry Pi CM5): one C/OpenMP ray per
+azimuth over a DEM mosaic, same curvature model as the patched shader,
+division- and trig-free inner loop. `skyline.CMarcher` compiles it on first
+use (`cc -O3 -march=native -fopenmp`; use `-mcpu=native` on ARM) and wraps
+it via ctypes. Measured on the 4-vCPU build container: 13.8 ms/skyline
+single-thread, 4.4 ms on 4 threads (3600 azimuths, 40 km range at 90 m
+steps) — ~100x the NumPy marcher, agreeing with it to 0.02 mrad RMS.
+`e3_scale.py` uses it to search a 100 km x 100 km box.
