@@ -197,10 +197,181 @@ day), where exhaustive dense search stops being free.
 
 ## 3. Literature: skyline / horizon matching for geo-localization
 
-*(Survey of the direct literature — see §4 for the neighboring fields the
-optimization ideas come from.)*
+The user's instinct is right: the direct literature is small — a few dozen
+papers over 30 years, in five clusters. No paper treats *exactly* "known full
+rotation, unknown position, 1 km² box"; the closest templates are the
+planetary-rover work (§3.2) and the maritime archipelago work (§3.4).
 
-<!-- FILLED FROM LITERATURE AGENT A -->
+### 3.1 Classical robotics origins (1990s)
+
+- **Talluri & Aggarwal**, "Position estimation for an autonomous mobile robot
+  in an outdoor environment" (IEEE TRA 8(5), 1992). Earliest "skyline as a
+  position fingerprint": geometric constraints from image-horizon features
+  vs DEM horizon, hypothesize-and-test, heading approximately known.
+- **Stein & Medioni**, "Map-based localization using the panoramic horizon"
+  (IEEE TRA 11(6), 1995). 360° horizon curve, polygonally approximated into
+  "super-segments" used as index keys into a precomputed database of
+  DEM-synthesized horizons over a position grid — the ancestor of all later
+  indexing approaches.
+- **Cozman & Krotkov (+ Guestrin), Viper** — ["Automatic mountain detection
+  and pose estimation for teleoperation of lunar
+  rovers"](https://ieeexplore.ieee.org/document/619329) (ICRA 1997);
+  ["Outdoor Visual Position Estimation for Planetary
+  Rovers"](https://link.springer.com/article/10.1023/A:1008966317408)
+  (Autonomous Robots 9(2), 2000). Skyline as a **1D elevation-angle function
+  of azimuth** matched against map-rendered horizons; probabilistic posterior
+  over an exhaustive position grid; orientation approximately known from the
+  pan/tilt mount. Localized the Apollo 17 site to a few hundred meters over
+  multi-km² areas. *The closest classical analog to our problem.*
+- **Naval, Mukunoki, Minoh & Ikeda**, ["Estimating Camera Position and
+  Orientation from Geographical Map and Mountain
+  Image"](https://www.researchgate.net/publication/2475290_Estimating_Camera_Position_and_Orientation_from_Geographical_Map_and_Mountain_Image)
+  (1997). Neural-net skyline extraction + nonlinear optimization for pose.
+- **Behringer** (IEEE VR 1999) — the *inverse* problem (known GPS position,
+  imprecise orientation): predicts the DEM horizon and matches to correct
+  heading/attitude to <10 mrad. Foundational for AR annotation.
+
+### 3.2 Planetary-rover horizon localization
+
+- **[Chiodini et al., "Mars rovers localization by matching local horizon to
+  surface DEMs"](https://ieeexplore.ieee.org/document/7999600/)**
+  (MetroAeroSpace 2017). Skyline from rover panoramas (sky mask → 1D curve);
+  **skylines simulated on a template grid of candidate positions** over a
+  HiRISE DEM; azimuth alignment as a cheap circular-correlation shift;
+  exhaustive position grid over hundreds of meters to km, error of order the
+  DEM grid. *Almost exactly the target problem and the recommended
+  baseline architecture.*
+- Carle et al., "Long-range rover localization by matching LIDAR scans to
+  orbital elevation maps" (JFR 2010) — same geometry, lidar sensor.
+
+### 3.3 Photo geo-localization in mountains (the ETH/Brno thread)
+
+- **[Baboud et al., "Automatic photo-to-terrain alignment for the annotation
+  of mountain pictures"](https://dl.acm.org/doi/10.1109/CVPR.2011.5995727)**
+  (CVPR 2011). Known GPS + FOV, **full rotation searched** over SO(3):
+  spherical cross-correlation of edge-orientation fields for pruning, then a
+  robust silhouette-edge metric. 86% correct alignment, <0.2° error. The
+  reference for silhouette matching *quality*; inverse of our unknowns.
+- **[Baatz, Saurer, Köser, Pollefeys, "Large Scale Visual Geo-Localization of
+  Images in Mountainous
+  Terrain"](https://link.springer.com/chapter/10.1007/978-3-642-33709-3_37)**
+  (ECCV 2012) and the journal version **[Saurer et al., "Image Based
+  Geo-localization in the
+  Alps"](https://link.springer.com/article/10.1007/s11263-015-0830-0)** (IJCV
+  116(3), 2016). Sky segmentation → 360° skyline; skyline cut into ~10°
+  segments encoded as quantized **"contour words"**; inverted-file
+  bag-of-words retrieval voting jointly for location *and* azimuth, then
+  ICP-style refinement. ~88% of 200+ queries localized over **all of
+  Switzerland (40 000 km²)**. Dataset (CH1) released
+  ([project page](https://cvg.ethz.ch/research/mountain_res)).
+- **[Tzeng et al., "User-Driven Geolocation of Untagged Desert Imagery Using
+  DEMs"](https://openaccess.thecvf.com/content_cvpr_workshops_2013/W07/papers/Tzeng_User-Driven_Geolocation_of_2013_CVPR_paper.pdf)**
+  (CVPRW 2013). No metadata at all; **concavity features** on skylines
+  (stable under unknown FOV). Shows which features survive when calibration
+  is unknown — by contrast, our known intrinsics+orientation admit plain 1D
+  correlation.
+- **[Chen et al., "Camera geolocation from mountain
+  images"](https://ieeexplore.ieee.org/document/7266746)** (FUSION 2015).
+  Explicitly handles **degraded skylines** (haze, occlusion); matches skyline
+  *and interior ridge structure* by vector cross-correlation on a uniform
+  geospatial grid.
+- **[GeoPose3K](https://cphoto.fit.vutbr.cz/geoPose3K/)** (Brejcha & Čadík,
+  IVC 2017): 3 000+ precisely-posed mountain photos with rendered
+  depth/normals — the benchmark of this niche. Survey: Brejcha & Čadík,
+  ["State-of-the-art in visual
+  geo-localization"](https://link.springer.com/article/10.1007/s10044-017-0611-1)
+  (PAA 2017).
+- Azimuth-only variant: [Nagy, PFG 2020](https://link.springer.com/content/pdf/10.1007/s41064-020-00093-1.pdf)
+  (known position, azimuth from skyline correlation) — useful as our
+  heading-bias co-estimation step, run in reverse.
+
+### 3.4 Maritime / sea-level observers — the closest cluster to our scenario
+
+- **[Grelsson, Robinson, Felsberg & Khan, "GPS-level accurate camera
+  localization with
+  HorizonNet"](https://onlinelibrary.wiley.com/doi/full/10.1002/rob.21929)**
+  (Journal of Field Robotics 37(6), 2020). USV in the Swedish archipelago,
+  360° panorama, sea-level observer viewing island silhouettes. One CNN
+  estimates the approximate horizon (→ pitch/roll, image levelled), a second
+  extracts the pixel-wise water/land/sky boundary; matching against
+  DEM+island-geography horizons over a candidate-position grid with 1D
+  correlation, plus temporal filtering along the track. **~10 m ("GPS-level")
+  accuracy.** *The single most relevant modern paper for our scenario.*
+- **[Naus & Wąż, "Precision in Determining Ship Position using the Method of
+  Comparing an Omnidirectional Map to a Visual Shoreline
+  Image"](https://www.cambridge.org/core/journals/journal-of-navigation/article/precision-in-determining-ship-position-using-the-method-of-comparing-an-omnidirectional-map-to-a-visual-shoreline-image/034E262CC0968993E439F2F50B33C6FD)**
+  (Journal of Navigation 69(2), 2016). Spherical catadioptric shoreline image
+  correlated against a synthetic view generated from the **Electronic
+  Navigational Chart** near the dead-reckoning position; accuracy assessed
+  against DGPS. Also one of the few works modeling refraction/tide effects.
+- **[Foucher et al., "Deep Visual-Geolocalization in Maritime Coastal
+  Environment"](https://hal.science/hal-05138313v1/document)** (IEEE OCEANS
+  2025). Deep horizon extraction + horizon correlation for USVs with a
+  **limited-FOV camera** (incl. thermal); quantifies accuracy degradation as
+  FOV shrinks — directly relevant to a non-panoramic camera.
+- Radar analog: "GPS-less Coastal Navigation using Marine Radar" (IFAC 2016)
+  — coastline matching with the same geometry, different sensor.
+
+### 3.5 Aerial and urban variants
+
+- **[Dumble & Gibbens, "Efficient Terrain-Aided Visual Horizon Based Attitude
+  Estimation and
+  Localization"](https://link.springer.com/article/10.1007/s10846-014-0043-8)**
+  (JIRS 78(2), 2015). Aircraft horizon profile vs **pre-generated reference
+  profiles stored on a grid** — the precompute-side architecture of §5.
+- **[SKYLINE2GPS](https://inria.hal.science/inria-00523997)** (Ramalingam,
+  Bouaziz, Sturm, Brand, IROS 2010). Upward fisheye skyline, graph-cut sky
+  segmentation (works day/night/rain), matched to coarse 3D city models;
+  meter-level along urban trajectories. Demonstrates fine positional
+  sensitivity of skylines in a confined search area.
+- UAV DEM-matching context: [heightmap-gradient TAN with clustered particle
+  filter, arXiv 2510.01348](https://arxiv.org/pdf/2510.01348) (2025).
+
+### 3.6 Deep-learning era
+
+- **PeakLens** (Fedorov, Frajberg, Fraternali et al., 2016–2017;
+  [peaklens.com](https://peaklens.com/)) — mobile-grade CNN pixel-wise
+  skyline extraction (~94% accuracy, 9 MB model, ~270 ms on a 2015 phone) +
+  alignment to SRTM-rendered panoramas. State of practice for the
+  segmentation front-end.
+- **[CrossLocate](https://openaccess.thecvf.com/content/WACV2022/html/Tomesek_CrossLocate_Cross-Modal_Large-Scale_Visual_Geo-Localization_in_Natural_Environments_Using_Rendered_WACV_2022_paper.html)**
+  (Tomešek, Čadík, Brejcha, WACV 2022;
+  [code](https://github.com/JanTomesek/CrossLocate)). Learned cross-modal
+  retrieval of photos against DEM-rendered views (semantics, silhouettes,
+  **depth — which wins**) over all of Switzerland. Best open large-scale
+  baseline.
+- **[CMLocate](https://ietresearch.onlinelibrary.wiley.com/doi/full/10.1049/ipr2.12883)**
+  (IET IP 2023) and **[Lan, Tang & Guo,
+  2024](https://link.springer.com/article/10.1007/s11042-024-19189-6)**
+  (horizon retrieval + hierarchical coarse-to-fine search: **95.8% success,
+  ~40 m error over 183 km²**) — concrete modern accuracy-vs-area datapoints.
+- Segmentation comparisons: [Ahmad et al., arXiv
+  1805.08105](https://arxiv.org/pdf/1805.08105); shallow-learning skyline
+  extraction [arXiv 2107.10997](https://arxiv.org/pdf/2107.10997);
+  [LandscapeAR, ECCV 2020](https://github.com/brejchajan/LandscapeAR) (code).
+
+### 3.7 Synthesis
+
+- **Representation converges by regime.** For levelled/known-orientation and
+  especially sea-level observers, everyone uses the **1D elevation-vs-azimuth
+  horizon function with (circular) cross-correlation** — Cozman/Krotkov,
+  Chiodini, Dumble & Gibbens, Grelsson, Naus & Wąż. Contour-word/embedding
+  retrieval only pays at ≥10³ km² scales with unknown orientation/FOV. Edge
+  maps + chamfer are for full-rotation search. Our known rotation collapses
+  the problem to the 1D representation — the simplest regime.
+- **Search converges too:** exhaustive/coarse-to-fine position grids with
+  cheap 1D correlation up to ~10²–10³ km²; retrieval indexes beyond that;
+  filters once a temporal sequence exists. Branch-and-bound is notably
+  *absent* from this niche (an opportunity — §4.2).
+- **Accuracy datapoints:** ~10 m (maritime panorama, Grelsson), ~40 m
+  (183 km², Lan 2024), ~43 m (desert 360°, VISAPP 2020), few hundred m
+  (Apollo 17, 1990s tooling). Tens of meters in a 1 km box is realistic.
+- **Gaps we must handle ourselves:** (a) positional sensitivity for
+  sea-level observers of *distant* terrain is barely quantified (the §1.2
+  analysis fills this); (b) low-relief coastlines are degenerate along the
+  viewing ray — interior ridges/coastline occlusion cues mitigate (Chen
+  2015); (c) refraction/tide are unmodelled outside the navigation-journal
+  thread — our §2.2 curvature patch and height nuisance handle this.
 
 ---
 
@@ -372,10 +543,127 @@ retrieval mechanism, as in Baatz et al.'s contour-word approach (§3).
 
 ## 5. Proposed pipeline
 
-<!-- FILLED AFTER LITERATURE SECTIONS -->
+Combining §2 (what the horizonator provides), §3 (what the field converged
+on) and §4 (how to search): a Chiodini/Grelsson-style grid pipeline, with a
+topological gate and a parallax-bound-derived grid, using the horizonator as
+the synthesis engine.
+
+**Stage 0 — observation front-end (once per frame).**
+Undistort the image with the known intrinsics; map every pixel to a ray and
+every ray through the known rotation to absolute (azimuth, elevation).
+Extract the sky/terrain boundary (gradient + dynamic-programming seam for a
+first implementation; a PeakLens/HorizonNet-style CNN when robustness to
+haze/sun/sea-spray matters). Resample to a uniform azimuth grid, e.g.
+0.05°/bin, giving **θ_obs(az) over the camera's azimuth span**, with a
+per-bin confidence. This levelling step is also where nonzero pitch/roll is
+absorbed, so the horizonator's always-level rendering is matched by
+construction.
+
+**Stage 1 — synthesis engine (once per search area).**
+`horizonator_init()` centered on the box, radius large enough to include all
+visible terrain (~50–90 km at sea). Apply the two §2.2 patches (curvature
+term in `vertex.glsl`; `viewer_z` plumbed through the Python `render()`).
+Per candidate: `render()` → skyline θ_syn(az) = per-column topmost valid
+range pixel, plus per-bin range r(az). Optionally precompute **per-azimuth
+horizon-angle maps** over the box (the MCL "likelihood field" trick, §4.4) so
+repeated queries in the same box become lookups; or swap in a 1D CPU
+ray-marcher with the same curvature model for headless batch runs.
+
+**Stage 2 — per-candidate cost.**
+Rasterize θ_obs once into a directional distance transform (§4.7). Candidate
+cost = Σ over azimuth bins of a robust (Huber/truncated) distance between
+θ_syn and the DT, with per-bin weights `w(az) = confidence × local skyline
+variance × 1/r(az)`: flat sea-horizon spans get ~zero weight, near/steep
+terrain gets more. Allow a **single global azimuth offset ψ** (compass bias)
+via 1D FFT correlation — one cheap extra dimension estimated in closed form
+per candidate. Optionally a ±1° banded DTW pass for residual warp.
+
+**Stage 3 — search over the box.**
+1. *Topological gate:* compute persistence-ranked peaks of θ_obs (=
+   prominence of skyline maxima); on a very coarse candidate set (~9–25
+   renders), compute each candidate's peak signature (cyclic azimuth order of
+   persistent peaks). Discard regions whose signature cannot match. In a
+   1 km box this typically leaves one or two contiguous cells.
+2. *Coarse grid:* spacing set by the parallax bound — the skyline moves ≤
+   δ/r_min radians for a δ move, so choose spacing where the predicted shift
+   stays within the cost function's basin (~100 m when nearest skyline
+   terrain is ≥5 km). 1 km box → ≤121 renders.
+3. *Refinement:* keep top-k basins, descend to 25 m grid, then fit a local
+   quadratic (or Gauss–Newton on the per-bin residuals) for a sub-grid
+   minimum, jointly with ψ (and h if the observer height is uncertain beyond
+   ~2 m).
+4. *(When the box grows to dead-reckoning scale, 10–100 km):* replace step 2
+   with branch-and-bound using the same per-cell parallax bounds (§4.2) —
+   novel in this niche and cheap to add — or the Baatz-style signature index
+   for retrieval at even larger scales.
+
+**Stage 4 — fix and uncertainty.**
+Laplace approximation at the minimum (inverse Hessian of the cost) → a
+position covariance ellipse. The ellipse's long axis will point along the
+mean viewing ray when only distant low terrain is visible — an honest report
+of the coastal degeneracy. Publish the result as a *terrestrial fix*
+compatible with the `celestial-navigation` toolkit (it is exactly a dense
+resection), and — with multiple frames from a moving vessel — as a
+measurement factor in a GTSAM factor graph fused with dead reckoning and
+celestial sights, or as the measurement update of a point-mass/particle
+filter (§4.1, §4.4).
+
+**Failure modes to design for:** clouds truncating ridge tops (robust cost +
+confidence weights), sun glare and sea clutter at the horizon (front-end),
+vessel roll smearing during exposure (IMU timestamping), DEM canopy bias
+(prefer Copernicus GLO-30), and the all-sea-horizon case (detect: total
+skyline variance below threshold → report "no fix possible," like a
+navigator would).
 
 ---
 
 ## 6. Experiment plan (1 km × 1 km, observer at sea)
 
-<!-- FILLED AFTER LITERATURE SECTIONS -->
+**E0 — Renderer validation.** After the curvature patch: render from a
+sea-level viewpoint toward a known coast; check (a) the sea horizon dips by
+`√(2h/R_eff)` and sits at the right distance, (b) terrain beyond the
+geometric limit is hidden, (c) skyline elevation angles of surveyed peaks
+match ephemeris-grade computation to <0.5 mrad. This also produces the
+first regression tests for the patch.
+
+**E1 — Synthetic closed loop (render-vs-render).** Choose 2–3 real sites
+with different character — e.g. an archipelago (many islands, near+far), a
+single mountainous island seen broadside at 20–40 km, and a low featureless
+coast (the hard case). Ground truth: render θ_obs at a random position in
+the box (viewer h = 2–20 m). Recover position with the §5 pipeline. Map the
+**full cost surface over the box** (this is cheap and is the most
+informative artifact: basin width, multimodality, coastal degeneracy made
+visible). Metrics: CEP50/CEP95, ellipse orientation vs coast geometry.
+
+**E2 — Noise ablations on E1.** Inject, one at a time and combined: heading
+bias 0.1–2° (expect bias ≈ d·ε, confirming §1.2), skyline extraction noise
+0.5–2 mrad, observer height error ±2 m, refraction coefficient k ∈
+[0.10, 0.20], tide ±2 m, DEM degradation (SRTM3 vs SRTM1 vs Copernicus;
+add canopy-height noise), cloud truncation of the top n% of ridges, and FOV
+reduction 360° → 90° → 40° (the Foucher 2025 question). Output:
+accuracy-vs-nuisance curves; identifies the error budget's dominant terms.
+
+**E3 — Search-strategy comparison.** On the E1/E2 cost surfaces, compare:
+dense 25 m grid (reference), coarse-to-fine (§5), DIRECT, GP-based BO, and
+BnB with parallax bounds. Metrics: renders-to-solution, miss rate of the
+global basin. At 1 km this mostly documents that coarse-to-fine is enough;
+rerun at a 20 km box to see the ranking change and the topological gate's
+pruning factor.
+
+**E4 — Real imagery.** Phone or camera photos from a ferry/boat position
+with GPS + compass logged (or harbor webcams with known mounts as a poor
+man's version): run the full pipeline, compare to GPS. Expect the front-end
+(sky segmentation over water, haze) to be the pain point, per the
+literature.
+
+**E5 — Integration.** Wrap the fix + covariance as (a) a terrestrial-fix
+input to `celestial-navigation` (it already has a terrestrial/bearing
+mode), and (b) a custom GTSAM unary factor on pose, enabling fusion of
+skyline fixes, celestial sights, and dead reckoning along a track —
+at which point the §4.4 particle/point-mass machinery becomes the natural
+sequential estimator.
+
+**Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
+`viewer_z` in the Python API (small, self-contained); (2) skyline extraction
+from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
+search loop. Steps 2–4 are pure Python on top of the existing renderer.
