@@ -39,6 +39,12 @@ The __init__() function takes
   DEMs are loaded. Initially the camera is positioned at this center point, but
   this may be moved around with each subsequent render() call
 
+- z: optional float, defaulting to -1. The viewer elevation above the geoid, in
+  meters. If omitted or <0, the elevation is auto-selected: slightly above the
+  DEM surface at the viewer position. Set this explicitly for observers not
+  standing on the terrain: a ship's deck a few meters above the sea, an
+  elevated mast, etc.
+
 - width, height: the dimensions of the images we will be producing
 
 - render_texture: optional boolean, defaulting to False. if not render_texture:

@@ -30,6 +30,14 @@ out vec2 tex;
 const float Rearth = 6371000.0;
 const float pi     = 3.14159265358979;
 
+// Earth curvature + standard atmospheric refraction correction. A point at
+// horizontal distance d sits below the viewer's tangent plane by
+// d^2/(2 Reff), with Reff = Rearth/(1-k). k is the standard terrestrial
+// refraction coefficient; must match HORIZONATOR_REFRACTION_K in
+// horizonator.h
+const float refraction_k = 0.13;
+const float Reff         = Rearth / (1.0 - refraction_k);
+
 // Unwraps an angle x to lie within pi of an angle near. All angles in radians
 float unwrap_near_rad(float x, float near)
 {
@@ -131,6 +139,13 @@ void main(void)
         vec3 enh = vec3( en.x, en.y, vertex.z - viewer_z );
 
         distance_ne = length(en);
+
+        // Earth curvature + refraction: drop distant terrain below the
+        // tangent plane. This matters at low viewer elevations (e.g. an
+        // observer at sea): it lowers distant skylines and hides terrain
+        // beyond the geometric horizon. See the comment above at the
+        // definition of Reff
+        enh.z -= distance_ne*distance_ne / (2.0 * Reff);
         float az_rad = atan(en.x, en.y);
 
         // az = 0:     North

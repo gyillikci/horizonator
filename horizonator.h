@@ -9,6 +9,13 @@
 #define HORIZONATOR_ZNEAR_DEFAULT 100.0f
 #define HORIZONATOR_ZFAR_DEFAULT  40000.0f
 
+// Standard terrestrial refraction coefficient k. The renderer and the
+// projection routines apply the surveyor's curvature-plus-refraction
+// correction: a point at horizontal distance d sits below the viewer's
+// tangent plane by d^2/(2 Reff), with Reff = Rearth/(1-k). Must match
+// refraction_k in vertex.glsl
+#define HORIZONATOR_REFRACTION_K 0.13
+
 
 typedef struct
 {

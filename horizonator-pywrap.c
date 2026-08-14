@@ -65,6 +65,7 @@ py_horizonator_init(py_horizonator_t* self, PyObject* args, PyObject* kwargs)
     const int render_radius_cells_default = 1000;
     int render_radius_cells = -1;
     double render_radius_m  = -1.;
+    double z                = -1.;
 
     char* keywords[] = {
         "lat", "lon",
@@ -76,6 +77,7 @@ py_horizonator_init(py_horizonator_t* self, PyObject* args, PyObject* kwargs)
         "allow_downloads",
         "render_radius_cells",
         "render_radius_m",
+        "z",
         NULL};
 
     if(self->ctx.offscreen.inited)
@@ -85,14 +87,15 @@ py_horizonator_init(py_horizonator_t* self, PyObject* args, PyObject* kwargs)
     }
 
     if( !PyArg_ParseTupleAndKeywords(args, kwargs,
-                                     "ddII|ppsssspid", keywords,
+                                     "ddII|ppsssspidd", keywords,
                                      &lat, &lon, &width, &height,
                                      &render_texture, &SRTM1,
                                      &dir_dems, &dir_tiles,
                                      &tiles_name, &tiles_url_fmt,
                                      &allow_downloads,
                                      &render_radius_cells,
-                                     &render_radius_m))
+                                     &render_radius_m,
+                                     &z))
         goto done;
 
     if(render_radius_cells<0 && render_radius_m<0)
@@ -104,9 +107,11 @@ py_horizonator_init(py_horizonator_t* self, PyObject* args, PyObject* kwargs)
     }
     
 
+    // z < 0 means "auto-select the viewer elevation from the DEM"
+    float viewer_z = (float)z;
     if(! horizonator_init( &self->ctx,
                            lat, lon,
-                           NULL,
+                           &viewer_z,
                            width, height,
                            render_radius_cells, render_radius_m,
                            true,
@@ -172,6 +177,8 @@ render(py_horizonator_t* self, PyObject* args, PyObject* kwargs)
     double znear_color = -1.;
     double zfar_color  = -1.;
 
+    double z = -1.;
+
     char* keywords[] = {
         "az_deg0", "az_deg1",
         "lat", "lon",
@@ -179,16 +186,18 @@ render(py_horizonator_t* self, PyObject* args, PyObject* kwargs)
         "az_extents_use_pixel_centers",
         "znear", "zfar",
         "znear_color", "zfar_color",
+        "z",
         NULL};
 
     if( !PyArg_ParseTupleAndKeywords(args, kwargs,
-                                     "dd|ddpppdddd", keywords,
+                                     "dd|ddpppddddd", keywords,
                                      &az_deg0, &az_deg1,
                                      &lat, &lon,
                                      &return_image, &return_range,
                                      &az_extents_use_pixel_centers,
                                      &znear, &zfar,
-                                     &znear_color, &zfar_color) )
+                                     &znear_color, &zfar_color,
+                                     &z) )
         goto done;
 
     if(znear_color < 0.) znear_color = znear;
@@ -217,12 +226,24 @@ render(py_horizonator_t* self, PyObject* args, PyObject* kwargs)
         goto done;
     }
 
-    if(lat > -1000.)
-        if( !horizonator_move( &self->ctx, NULL, lat, lon ) )
+    if(lat > -1000. || z >= 0.)
+    {
+        if(lat <= -1000.)
+        {
+            // No new position was given, but a viewer elevation was. Move in
+            // place, with the new elevation
+            lat = self->ctx.viewer_lat;
+            lon = self->ctx.viewer_lon;
+        }
+
+        // z < 0 means "auto-select the viewer elevation from the DEM"
+        float viewer_z = (float)z;
+        if( !horizonator_move( &self->ctx, &viewer_z, lat, lon ) )
         {
             BARF("horizonator_move() failed");
             goto done;
         }
+    }
 
     if( !horizonator_set_zextents( &self->ctx,
                                    znear, zfar, znear_color, zfar_color))

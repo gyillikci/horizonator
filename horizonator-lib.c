@@ -1148,7 +1148,11 @@ bool horizonator_project( // output
 
     // The projection code is mostly lifted from vertex.glsl. Would be nice to
     // consolidate
-    const double h           = ele - ele_viewer;
+    //
+    // Earth curvature + refraction: drop distant terrain below the tangent
+    // plane, same as the vertex shader does
+    const double Reff        = Rearth / (1.0 - HORIZONATOR_REFRACTION_K);
+    const double h           = ele - ele_viewer - distance_sq_ne / (2.0 * Reff);
     const double distance_ne = sqrt(distance_sq_ne);
     *range                   = sqrt(distance_sq_ne + h*h);
 

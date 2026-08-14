@@ -52,6 +52,13 @@ ARGUMENTS
   point. If omitted, the previously-selected (in the constructor or the previous
   render(...) call) coordinates are used.
 
+- z: optional float, defaulting to -1. The viewer elevation above the geoid, in
+  meters. If <0, the elevation is auto-selected: slightly above the DEM surface
+  at the viewer position. Set this explicitly for observers not standing on the
+  terrain: a ship's deck a few meters above the sea, an elevated mast, etc. Note
+  that if z is given without lat,lon, the viewer moves in place to the new
+  elevation.
+
 - return_image: optional boolean, defaulting to True. If return_image: the RGB
   image is returned. See RETURNED VALUES for details
 
