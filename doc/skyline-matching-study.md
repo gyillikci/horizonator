@@ -746,6 +746,60 @@ global basin. At 1 km this mostly documents that coarse-to-fine is enough;
 rerun at a 20 km box to see the ranking change and the topological gate's
 pruning factor.
 
+> **E3 results — the box scaled ×100** (`experiments/e3_scale.py`, figure
+> `experiments/out/e3_scale.png`). A **100 km × 100 km** box
+> (Dodecanese/SE Aegean, 90% sea), searched with the native C ray-marcher
+> (below) and a sea-masked hierarchical scheme: 2 km coarse grid over the
+> 2 336 at-sea candidates → non-max-suppressed top-15 seeds → 500/125/25 m
+> refinement + sub-grid quadratic; GL-rendered observations at 15 random
+> at-sea positions, z = 5 m.
+>
+> - **15/15 trials succeed, CEP50 15.8 m, worst 61 m** — the same
+>   accuracy class as the 1 km box, now over 10 000 km².
+> - **The true basin was the single lowest-cost coarse candidate in every
+>   trial** (L0 rank 0/2336), with the best basin beating the runner-up
+>   by ≥29% in cost. In this region the skyline is globally
+>   discriminative: there is no confusable stretch of coastline, even for
+>   the trial with land in only 7% of its azimuths. The feared
+>   multimodality did not materialize at this scale — the top-K/NMS
+>   machinery, the §4.2 branch-and-bound and the §4.6 topological gate
+>   remain insurance rather than necessity here. (Regions with repetitive
+>   coastal topography may still need them; that is a site-dependent
+>   question the L0 margin statistic now measures directly.)
+> - **Cost: 2 870 skyline evaluations ≈ 10.6 s per cold fix** on the
+>   4-core build machine (8.7 s coarse + 1.9 s refine). A dense 25 m grid
+>   over the same box would need 16 M evaluations (~20 h) — the hierarchy
+>   is a ~5 600× reduction at zero measured miss rate.
+>
+> Amendment to the E3 plan: at 100 km the cost landscape proved clean
+> enough that the planned DIRECT/BO/BnB comparison is moot in this region;
+> the informative remaining comparison is L0 grid pitch (2 km was safe;
+> how coarse can it go before rank-0 breaks) and repeating in a
+> low-relief, repetitive-coastline region.
+
+**E3b — On-device (Raspberry Pi CM5) sizing.** Prototyped in
+`experiments/fastmarch.c` + `skyline.CMarcher`: a C/OpenMP ray-marcher
+(one ray per azimuth over a float32 DEM mosaic, bilinear sampling, the
+same curvature model as the patched shader, division/trig-free inner
+loop), agreeing with the NumPy reference to 0.02 mrad RMS. Measured on the
+4-core x86 build container: **13.8 ms/skyline single-thread,
+4.4 ms on 4 threads** (3600 azimuths × 443 steps to 40 km) — ~100× the
+NumPy marcher, ~60× the software-GL render. Projected to the CM5's 4×
+Cortex-A76 (×2.3 per-core factor, NEON via `-mcpu=native`):
+~10 ms/skyline. Per fix:
+>
+> | scenario | evaluations | CM5 time |
+> |---|---|---|
+> | 1 km box, coarse-to-fine | ~106 | **~1 s** |
+> | 100 km box, hierarchical | ~2 870 | **~25 s** |
+> | tracking mode (precomputed lattice around the last fix) | cost lookups only | **≪1 s, ~1 Hz** |
+>
+> Plus a sky-segmentation front-end (ms for a classic gradient/seam
+> method, ~100–300 ms for a small CNN) and a one-time DEM-mosaic load
+> (~50 MB for 3°×3° at 3″). The full OpenGL renderer is not needed on the
+> device (and its `#version 420` shader exceeds the Pi GPU's GLES 3.1
+> anyway) — it remains the ground-truth/validation tool.
+
 **E4 — Real imagery.** Phone or camera photos from a ferry/boat position
 with GPS + compass logged (or harbor webcams with known mounts as a poor
 man's version): run the full pipeline, compare to GPS. Expect the front-end
@@ -764,11 +818,12 @@ sequential estimator.
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
 search loop. Steps 2–4 are pure Python on top of the existing renderer.
 
-**Status: steps 1–4 and experiments E0/E1/E2 are implemented** — see
-`experiments/` (`skyline.py`, `e0_validate.py`, `e1_closed_loop.py`,
-`e2_ablations.py`, the plot scripts, `fetch_dems.py` and the README there),
-with figures in `experiments/out/`. Remaining E2 items: an independent DEM
-family (Copernicus GLO-30) and canopy-height noise. E3–E5 are future work,
-with one E2 amendment for E3: the azimuth-offset co-estimation proved so
-effective and cheap that it should be part of the default cost, not an
-option.
+**Status: steps 1–4 and experiments E0/E1/E2/E3 are implemented** — see
+`experiments/` (`skyline.py`, `fastmarch.c`, `e0_validate.py`,
+`e1_closed_loop.py`, `e2_ablations.py`, `e3_scale.py`, the plot scripts,
+`fetch_dems.py` and the README there), with figures in `experiments/out/`.
+Remaining: an independent DEM family (Copernicus GLO-30), canopy-height
+noise, an L0-pitch sweep and a repetitive-coastline region for E3, and
+E4–E5. Two amendments from the results: azimuth-offset co-estimation
+should be part of the default cost (E2), and the native ray-marcher —
+not the GL renderer — is the production solver engine (E3b).
