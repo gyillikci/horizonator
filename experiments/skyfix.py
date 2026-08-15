@@ -21,6 +21,10 @@ heading prior and altitude come from EXIF when present, overridable:
                      offset co-estimated per candidate is only +-10 mrad,
                      deliberately tight -- a wide offset window discards the
                      absolute-elevation information that pins range
+  --auto-level       estimate pitch/roll from the visible sea horizon
+                     (exact dip known from --z) instead of --pitch/--roll,
+                     and tighten the elevation-offset window to +-2 mrad.
+                     Falls back to the priors when no sea is in view
   --dmin M           near-field mask (default 1000 m). Needed for real
                      land-based observers, where the DEM smears the
                      observer's own bluff into blocking terrain; harmless
@@ -46,6 +50,9 @@ import extract
 
 AZ = np.arange(-180.0, 180.0, 0.1) + 0.05
 BETAS = np.arange(-0.010, 0.0101, 0.002)  # residual after the pitch prior
+# residual after sea-horizon auto-levelling: the horizon line pins pitch
+# to sub-mrad, so only DEM/refraction residue is left to absorb
+BETAS_TIGHT = np.arange(-0.002, 0.00201, 0.0005)
 
 
 def basin_margin(cc, g, min_sep):
@@ -90,7 +97,7 @@ def observation(img, fov_deg, heading, roll_deg, pitch_deg=0.0):
             dict(rows=rows, conf=conf, az_rel=az_rel, el_pt=el_pt))
 
 
-def photo_cost(el_obs, w, el_syn, shifts):
+def photo_cost(el_obs, w, el_syn, shifts, betas=BETAS):
     best = (np.inf, 0, 0.0)
     for s in shifts:
         eo = np.roll(el_obs, s)
@@ -98,7 +105,7 @@ def photo_cost(el_obs, w, el_syn, shifts):
         m = ww > 0
         r = el_syn[m] - eo[m]
         wm = ww[m]
-        for b in BETAS:
+        for b in betas:
             rb = np.abs(r - b)
             h = np.where(rb <= 3e-3, 0.5 * rb * rb, 3e-3 * (rb - 1.5e-3))
             c = float(np.sum(h * wm) / np.sum(wm))
@@ -118,6 +125,15 @@ def main():
     ap.add_argument('--z', type=float)
     ap.add_argument('--roll', type=float, default=0.0)
     ap.add_argument('--pitch', type=float, default=0.0)
+    ap.add_argument('--auto-level', action='store_true',
+                    help='estimate pitch and roll from the visible sea '
+                         'horizon: for the known camera height its dip '
+                         'below level is exact, so the horizon line is a '
+                         'drift-free attitude reference better than an '
+                         'IMU. On success it overrides --pitch/--roll and '
+                         'tightens the co-estimated elevation offset to '
+                         '+-2 mrad; with no adequate sea segment in view '
+                         'it falls back to the priors')
     ap.add_argument('--dem', default=os.path.expanduser(
         os.environ.get('HORIZONATOR_DEMS', '~/.horizonator/DEMs_SRTM3')))
     ap.add_argument('--dmin', type=float, default=1000.0)
@@ -155,6 +171,24 @@ def main():
           f'z {z:.1f} m, box {args.box:.0f} m at ({lat_c:.5f},{lon_c:.5f})')
 
     img = extract.load_image(args.image)
+    betas = BETAS
+    level = None
+    if args.auto_level:
+        rows, conf = extract.skyline_seam(img)
+        f_px = (img.shape[1] / 2) / np.tan(np.radians(fov) / 2)
+        level = extract.sea_horizon_attitude(
+            rows, conf, img.shape, f_px, S.horizon_dip_rad(max(z, 0.5)),
+            rgb=img)
+        if level:
+            args.pitch, args.roll = level['pitch_deg'], level['roll_deg']
+            betas = BETAS_TIGHT
+            print(f"auto-level: pitch {args.pitch:+.3f} deg, roll "
+                  f"{args.roll:+.3f} deg from {level['n_inl']} sea-horizon "
+                  f"columns ({100 * level['frac']:.0f}% of width, rms "
+                  f"{level['rms_px']:.2f} px); beta window +-2 mrad")
+        else:
+            print('auto-level: no adequate sea horizon in view; '
+                  'falling back to --pitch/--roll priors')
     el_obs, w, diag = observation(img, fov, heading if heading is not None
                                   else 0.0, args.roll, args.pitch)
     shifts = range(-60, 61, 2) if heading is not None \
@@ -167,7 +201,7 @@ def main():
 
     def C(dn, de):
         el, _ = cm.skyline(lat_c + dn / mlat, lon_c + de / mlon, z, AZ)
-        return photo_cost(el_obs, w, el, shifts)[0]
+        return photo_cost(el_obs, w, el, shifts, betas)[0]
 
     step0 = max(args.box / 20, 100.0)
     g = np.arange(-args.box / 2, args.box / 2 + 1, step0)
@@ -216,7 +250,7 @@ def main():
     lat_e = lat_c + dn0 / mlat
     lon_e = lon_c + de0 / mlon
     el_syn, _ = cm.skyline(lat_e, lon_e, z, AZ)
-    cbest, sbest, bbest = photo_cost(el_obs, w, el_syn, shifts)
+    cbest, sbest, bbest = photo_cost(el_obs, w, el_syn, shifts, betas)
     rms_mrad = float(np.sqrt(2 * cbest) * 1e3)
     if rms_mrad > args.max_rms:
         reasons.append(f'residual {rms_mrad:.1f} mrad > {args.max_rms:.1f}: '
@@ -233,7 +267,10 @@ def main():
                   cost=cbest, rms_mrad=float(np.sqrt(2 * cbest) * 1e3),
                   heading_offset_deg=sbest * 0.1,
                   el_offset_mrad=bbest * 1e3,
-                  fov_deg=fov, z_m=z)
+                  fov_deg=fov, z_m=z,
+                  attitude=dict(pitch_deg=args.pitch, roll_deg=args.roll,
+                                source='sea-horizon' if level else 'prior'),
+                  auto_level=level)
     print(json.dumps(result, indent=1))
 
     if args.out:

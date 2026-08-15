@@ -94,6 +94,16 @@ steps) — ~100x the NumPy marcher, agreeing with it to 0.02 mrad RMS.
 - `e4c_synth.py` — end-to-end validation on photo-realistic composites
   with real EXIF (written via piexif): 40–62 m error at the four
   sea-observer cases in a 5 km box, ~11 s per fix.
+- Sea-horizon auto-levelling (`skyfix --auto-level`,
+  `extract.sea_horizon_attitude`): estimates pitch/roll from the visible
+  sea horizon — its dip below level is exactly known from the camera
+  height, making the horizon line a drift-free attitude reference better
+  than an IMU. On success the co-estimated elevation-offset window
+  tightens from ±10 to ±2 mrad, which sharpens range observability
+  (position σ roughly halves on the E4c sea cases, `e4g_autolevel.py`).
+  Guards: RANSAC with a nothing-below-the-line veto plus a photometric
+  water check that rejects "false horizons" (straight hazy ridges); when
+  no sea horizon is accepted, skyfix falls back to `--pitch`/`--roll`.
 
 ## Fusion (E5) and hardware benchmark
 

@@ -1,0 +1,25 @@
+{
+ "status": "ok",
+ "reasons": [],
+ "lat": 36.96146889512676,
+ "lon": 27.236464587118753,
+ "fix_ok": true,
+ "basin_margin": 3.219157228057556,
+ "relief_mrad": 20.426727471894374,
+ "dn_m": -1237.5,
+ "de_m": 875.0,
+ "sigma_n_m": 116.43754677752817,
+ "sigma_e_m": 164.91639988106633,
+ "cost": 2.690532045842809e-06,
+ "rms_mrad": 2.319712070858282,
+ "heading_offset_deg": 1.0,
+ "el_offset_mrad": -10.0,
+ "fov_deg": 71.58320735320068,
+ "z_m": 5.0,
+ "attitude": {
+  "pitch_deg": 0.0,
+  "roll_deg": 0.0,
+  "source": "prior"
+ },
+ "auto_level": null
+}

@@ -1027,6 +1027,36 @@ sequential estimator.
 > integrity still comes from fusing successive fixes against dead
 > reckoning (E5). The sea-observer envelope (E1–E3, E4c), with its
 > anchor to the flat horizon, remains the benign regime.
+>
+> **E4g — sea-horizon auto-levelling** (`extract.sea_horizon_attitude`,
+> `skyfix --auto-level`, `e4g_autolevel.py`). The Grelsson-style
+> levelling stage in closed form: for a known camera height the sea
+> horizon sits at the exactly known dip √(2h/Reff) below level, so the
+> horizon line in the image — v = tan(−dip−pitch)·hypot(u,f) − roll·u,
+> linear in (pitch, roll) — is a drift-free attitude reference. Fit by
+> 2-point RANSAC with two guards: a one-sided veto (boundary points
+> below a candidate line are impossible for a true sea horizon, which
+> kills lines fitted to elevated ridges while real sea is visible
+> lower), and a photometric water check (the band below a genuine
+> horizon is water, darker than the sky above it — a straight distant
+> ridge under haze, the navigator's "false horizon", fails it).
+> Implementing this exposed and fixed a systematic extractor bias: the
+> sustained-deviation trigger read crisp boundaries up to ~7 px early
+> (its forward window already contained them) — invisible under the
+> ±10 mrad offset window, fatal under ±2 mrad. A/B on the E4c sea
+> cases, same composites and boxes (A: perfect IMU prior, ±10 mrad
+> offset; B: **no attitude prior at all**, sea-horizon levelling,
+> ±2 mrad): where the horizon is accepted (2/4 cases) attitude is
+> recovered to ≤0.08° in both pitch and roll and the tight window
+> pays exactly as E2 predicted — strait3 matches the prior run's 26 m
+> with position σ nearly halved (76,78)→(44,42) m; offshore beats it
+> outright, 337 m→70 m with σ halved, because the wide offset window
+> had let the solve wander in range. Where no sea horizon is in view
+> (strait1) or only a false one (strait2, correctly rejected by the
+> water check) the estimator declines and skyfix falls back to the
+> priors. In deployment both are used together — IMU prior as the
+> fallback, horizon levelling as the upgrade whenever open water is
+> visible, which for the study's at-sea observer is nearly always.
 
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction

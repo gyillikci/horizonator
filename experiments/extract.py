@@ -75,16 +75,129 @@ def skyline_seam(rgb, search_frac=0.85, m_sustain=8, nsigma=4.0,
     first[bad] = med[bad]
     conf[bad] *= 0.3
 
-    # sub-pixel: linear interpolation of dev across the onset row
+    # sub-pixel: the sustained-mean trigger fires up to m_sustain-1 rows
+    # ABOVE a crisp boundary (its forward window already contains it), a
+    # contrast-dependent bias of several pixels. Advance to the first row
+    # where dev itself crosses the threshold, then interpolate across it
     out = first.copy()
     for x in range(W):
         r = int(first[x])
-        if 9 <= r < Hs - 1:
-            d0, d1 = dev[r - 1, x], dev[r, x]
-            t = nsigma * sigma[x]
+        t = nsigma * sigma[x]
+        rr = r
+        while rr < min(r + m_sustain, Hs - 1) and dev[rr, x] <= t:
+            rr += 1
+        if 9 <= rr < Hs - 1:
+            d0, d1 = dev[rr - 1, x], dev[rr, x]
             if d1 > d0 and d0 < t <= d1:
-                out[x] = r - 1 + (t - d0) / (d1 - d0)
+                out[x] = rr - 1 + (t - d0) / (d1 - d0)
+            else:
+                out[x] = rr
     return out, np.maximum(conf, 0.0)
+
+
+def sea_horizon_attitude(rows, conf, shape, f_px, dip_rad, rgb=None,
+                         tol_px=1.5, min_frac=0.12, min_span_frac=0.35,
+                         min_contrast=0.30):
+    """Estimate camera (pitch, roll) from the visible sea horizon.
+
+    For an observer at known height h the sea horizon sits at the exactly
+    known dip sqrt(2h/Reff) below level, so boundary columns lying on it
+    form an absolute, drift-free attitude reference (the levelling stage
+    of Grelsson et al. 2020, done in closed form instead of with a CNN).
+    For small angles a sea-horizon pixel (u, v) satisfies
+
+        v = tan(-dip - pitch) * hypot(u, f) - roll * u
+
+    which is linear in (tan(-dip-pitch), roll). The line is found by
+    2-point RANSAC over the boundary columns with a one-sided veto: a
+    candidate is discarded when boundary points lie significantly BELOW
+    it, which is impossible for a true sea horizon (terrain only ever
+    rises above it) but happens whenever a flat elevated ridge is tried
+    while real sea is visible lower in the frame.
+
+    A straight distant ridge under haze can still masquerade as the
+    horizon when no sea is in view at all (the navigator's "false
+    horizon"). When rgb is given, a photometric water check rejects such
+    fits: the band just below a genuine sea horizon is open water,
+    darker than the sky just above it by at least min_contrast (in mean
+    [0,1] intensity). Tuned for daylight maritime scenes; sun glare or
+    night use would need the CNN water/land/sky front-end instead.
+
+    rows, conf: skyline_seam() output. shape: image shape. f_px: focal
+    length in pixels. dip_rad: horizon dip for the camera height
+    (skyline.horizon_dip_rad(z)). rgb: the image in [0,1], enables the
+    water check.
+
+    Returns dict(pitch_deg, roll_deg, n_inl, frac, span_frac, rms_px,
+    contrast), or None when no adequate sea horizon is visible."""
+    H, W = shape[:2]
+    u = np.arange(W) - (W - 1) / 2.0
+    v = (H - 1) / 2.0 - np.asarray(rows, dtype=float)
+    Hu = np.hypot(u, f_px)
+    ok = np.asarray(conf) > 0
+    idx = np.where(ok)[0]
+    if idx.size < 16:
+        return None
+
+    rng = np.random.default_rng(0)
+    best = None
+    for _ in range(300):
+        i, j = rng.choice(idx, 2, replace=False)
+        if abs(u[i] - u[j]) < W / 8:
+            continue
+        M = np.array([[Hu[i], u[i]], [Hu[j], u[j]]])
+        try:
+            a, b = np.linalg.solve(M, [v[i], v[j]])
+        except np.linalg.LinAlgError:
+            continue
+        res = v - (a * Hu + b * u)
+        if ((res < -3.0) & ok).sum() > 0.02 * W:
+            continue                    # boundary below the line: not sea
+        n = int(((np.abs(res) <= tol_px) & ok).sum())
+        if best is None or n > best[0]:
+            best = (n, a, b)
+    if best is None:
+        return None
+    _, a, b = best
+
+    inl = ok
+    for _ in range(3):                  # IRLS refinement
+        res = v - (a * Hu + b * u)
+        inl = (np.abs(res) <= tol_px) & ok
+        if inl.sum() < 8:
+            return None
+        A = np.stack([Hu[inl], u[inl]], axis=1)
+        ww = np.clip(conf[inl], 0.0, 3.0)
+        sol, *_ = np.linalg.lstsq(A * ww[:, None], v[inl] * ww, rcond=None)
+        a, b = float(sol[0]), float(sol[1])
+
+    res = v - (a * Hu + b * u)
+    if ((res < -3.0) & ok).sum() > 0.02 * W:
+        return None
+    rms = float(np.sqrt(np.mean(res[inl] ** 2)))
+    frac = float(inl.mean())
+    span = float((u[inl].max() - u[inl].min()) / max(u[-1] - u[0], 1.0))
+    if frac < min_frac or span < min_span_frac or rms > tol_px:
+        return None
+
+    contrast = None
+    if rgb is not None:
+        bri = np.asarray(rgb).mean(axis=2)
+        above, below = [], []
+        for x in np.where(inl)[0]:
+            r0 = int(round(rows[x]))
+            if r0 - 14 >= 0 and r0 + 14 < H:
+                above.append(bri[r0 - 12:r0 - 3, x].mean())
+                below.append(bri[r0 + 3:r0 + 12, x].mean())
+        if len(above) < 8:
+            return None
+        contrast = float(np.median(above) - np.median(below))
+        if contrast < min_contrast:
+            return None                 # too bright below: false horizon
+    return dict(pitch_deg=float(np.degrees(-dip_rad - np.arctan(a))),
+                roll_deg=float(np.degrees(-np.arctan(b))),
+                n_inl=int(inl.sum()), frac=frac, span_frac=span,
+                rms_px=rms, contrast=contrast)
 
 
 def _ratio(v):

@@ -1,14 +1,25 @@
 {
- "lat": 36.949654678394076,
- "lon": 27.24984535607988,
- "dn_m": -100.0,
- "de_m": 287.5,
- "sigma_n_m": 82.27312809721303,
- "sigma_e_m": 56.214495443918395,
- "cost": 2.109902939933819e-07,
- "rms_mrad": 0.6496003294232261,
- "heading_offset_deg": 0.0,
- "el_offset_mrad": -6.0,
+ "status": "ok",
+ "reasons": [],
+ "lat": 36.95111607600369,
+ "lon": 27.249564020768588,
+ "fix_ok": true,
+ "basin_margin": 3.713601608520756,
+ "relief_mrad": 11.791015955920146,
+ "dn_m": 62.5,
+ "de_m": 262.5,
+ "sigma_n_m": 113.04389379149323,
+ "sigma_e_m": 59.675860873104234,
+ "cost": 2.7417238990551455e-07,
+ "rms_mrad": 0.7405030586101782,
+ "heading_offset_deg": -0.2,
+ "el_offset_mrad": -2.0,
  "fov_deg": 71.58320735320068,
- "z_m": 5.0
+ "z_m": 5.0,
+ "attitude": {
+  "pitch_deg": 0.5,
+  "roll_deg": 0.0,
+  "source": "prior"
+ },
+ "auto_level": null
 }
