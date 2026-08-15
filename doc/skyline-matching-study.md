@@ -998,6 +998,35 @@ sequential estimator.
 > zero impostors and ≥0.29 margins for every true basin) — and, when
 > underway, the factor graph's dead-reckoning consistency as the
 > external cross-check. This is why the instrument carries an IMU.
+>
+> **E4f — the attitude-prior A/B on the same 203 photos**
+> (`experiments/e4f_ab_audit.py`, `out/e4f_audit.csv`). Identical to
+> E4e except the attitude is instrumented: per photo, a reference
+> attitude is solved once at the ground truth, corrupted with realistic
+> instrument noise (σ 1° heading, 0.5° pitch), and the position solve
+> searches only ±2° heading / ±1° pitch around that prior. Confusion
+> matrix: TRUE-ACCEPT 62, FALSE-ACCEPT 40, CAUGHT 91, OVER-CAUTIOUS 10.
+> Against E4e: **availability doubles** (58→102 accepted, 29→62 of them
+> correct), median error over all 203 solves **halves** (1.9 km→791 m;
+> <500 m solves 20%→35%). At the default margin threshold the
+> false-accept share falls only 50%→39% — but the *composition*
+> changes: half the E4f false-accepts (21/40) lie at 500–1000 m,
+> adjacent-cell picks on the 250 m coarse grid straddling the 500 m
+> correctness line, not distant impostors. More importantly, **the
+> margin statistic now separates genuine from impostor** (median 0.96
+> for true accepts vs 0.30 for false — in E4e they overlapped): raising
+> `--min-margin` trades availability for integrity along a usable
+> curve — at 0.5: 56 accepted, 20% wrong, 3 beyond 1.5 km; at 1.0: 30
+> accepted, 7% wrong, none beyond 1.5 km. So the attitude prior does
+> two things the free search cannot: it stops wrong basins from
+> rotating into good fits (restoring meaning to the margin), and it
+> halves the raw position error. What it does not do, on this
+> mountain-terrain dataset with its repetitive ridgelines, is make a
+> *single* photo unconditionally trustworthy — high-confidence
+> single-fix operation needs the tightened margin threshold, and full
+> integrity still comes from fusing successive fixes against dead
+> reckoning (E5). The sea-observer envelope (E1–E3, E4c), with its
+> anchor to the flat horizon, remains the benign regime.
 
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
