@@ -916,6 +916,15 @@ literature.
 > contour-descriptor + verification machinery of Baatz et al. — a
 > different algorithm, not a parameter change. The maritime instrument
 > this study targets sits firmly on the well-posed side.
+>
+> Full 12-photo run (moderate ±6° pitch window, 5 km boxes, ~95 s/photo):
+> **median 2.4 km with the automatic extractor, 2.1 km with the
+> ground-truth masks** — the two agree closely on nearly every photo,
+> which is the one genuinely positive finding: on real alpine imagery
+> the automatic extractor is *not* the bottleneck (its errors track the
+> hand-made masks within ~20%); the failures are matching-side, caused
+> by the missing attitude priors. Successes when pitch happens small:
+> 45–430 m. n=12 confirms the trial verdict at scale.
 
 **E5 — Integration.** Wrap the fix + covariance as (a) a terrestrial-fix
 input to `celestial-navigation` (it already has a terrestrial/bearing
