@@ -52,7 +52,7 @@ DIR3 = os.path.expanduser('~/.horizonator/DEMs_SRTM3')
 
 BOX = 5000.0
 AZ = np.arange(-180.0, 180.0, 0.1) + 0.05
-BETAS = np.arange(-0.300, 0.3001, 0.015)  # handheld pitch reaches +-15 deg
+BETAS = np.arange(-0.100, 0.1001, 0.010)  # moderate: +-5.7 deg pitch window
 N_PHOTOS = int(sys.argv[1]) if len(sys.argv) > 1 else 12
 
 
