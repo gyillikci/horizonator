@@ -895,6 +895,27 @@ literature.
 > optional garnish — they are what makes a single-frame fix
 > well-conditioned. `skyfix.py` is ready to run on real originals:
 > `python3 skyfix.py IMG --center LAT,LON --pitch P --roll R`.
+>
+> **E4d — real photos at last: the CH1 alpine benchmark** (the
+> Baatz/Saurer ECCV'12 query set, pushed to `celestial-navigation:main`;
+> `experiments/e4d_ch1.py`). Calibrated focal lengths, ground-truth
+> positions, hand-made sky masks — but *no attitude information*: unknown
+> heading, pitch and roll, i.e. deliberately outside this project's
+> known-extrinsics design envelope. Results on the trial subset (5 km
+> boxes, solving with the ground-truth masks to isolate matching from
+> extraction): with a ±6° pitch window, photos whose pitch happens to be
+> small localize to ~50 m; opening the search to full rotation (pitch
+> ±20°, roll ±3°, heading free) fixes some failures (2.4 km → 336 m,
+> 2.9 km → 257 m) but makes others slide kilometers away *with excellent
+> residuals* (5–6 mrad). The diagnosis is structural, not a bug: with a
+> completely free rotation, 1D skyline matching over a 5 km alpine box is
+> under-constrained — wrong positions fit well. This cleanly delineates
+> the method's domain: **attitude priors (IMU pitch/roll to ~0.5°, a
+> compass heading prior) are what make single-frame skyline fixes
+> well-posed**; without them one needs the discriminative
+> contour-descriptor + verification machinery of Baatz et al. — a
+> different algorithm, not a parameter change. The maritime instrument
+> this study targets sits firmly on the well-posed side.
 
 **E5 — Integration.** Wrap the fix + covariance as (a) a terrestrial-fix
 input to `celestial-navigation` (it already has a terrestrial/bearing

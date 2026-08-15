@@ -16,6 +16,19 @@ with the automatic extractor (extract.skyline_seam) and with the
 ground-truth sky mask — separating extraction error from matching error.
 
 Run:   python3 e4d_ch1.py [N_PHOTOS]     (default 12; no GL needed)
+
+VERDICT (see study doc E4d): CH1 is an out-of-design-envelope test for
+this solver, and the results delineate the method's domain. With
+moderate nuisance freedom (pitch +-6 deg), photos whose pitch happens to
+be small solve to ~50 m; with full-rotation freedom (pitch +-20 deg,
+roll +-3 deg, heading free), previously-failing photos improve to
+250-340 m but others slide kilometers away WITH GOOD FIT QUALITY
+(5-6 mrad): 1D skyline matching with a completely unknown rotation over
+a 5 km alpine box is under-constrained for a significant fraction of
+photos. The instrumented regime this project targets (IMU pitch/roll,
+compass prior) avoids exactly this; the uninstrumented regime is what
+Baatz et al.'s discriminative contour descriptors + geometric
+verification were built for.
 """
 
 import os
