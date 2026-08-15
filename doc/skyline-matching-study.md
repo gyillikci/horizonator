@@ -978,6 +978,26 @@ sequential estimator.
 > unchanged (all sea fixes pass). Stable single-impostor failures with a
 > genuinely large margin remain the residual risk, gated in practice by
 > the factor graph's dead-reckoning consistency.
+>
+> **E4e — the gates audited against all 203 CH1 photos**
+> (`experiments/e4e_gate_audit.py`, `out/e4e_audit.csv`; GT-mask
+> observations, full heading search, 5 km boxes). Confusion matrix:
+> TRUE-ACCEPT 29, FALSE-ACCEPT 29, CAUGHT 134, OVER-CAUTIOUS 11. Read
+> two ways: the gates correctly convert **82% of wrong solves (134/163)
+> into honest no-fixes** — but among the 58 solves that pass all four
+> gates, **half are still wrong** (median 1.25 km), and raising the
+> margin threshold does not separate them (false share stays ~50% up to
+> margin 1.0, where availability collapses to 5 fixes). The impostors'
+> margins (median 0.41) overlap the genuine fixes' — from the inside
+> they are indistinguishable, because their fits are genuinely good.
+> **Conclusion, stated precisely: internal quality gates alone cannot
+> guarantee "genuine convergence or no convergence" in the
+> attitude-free regime.** They make failures mostly-detected, not
+> impossible. The guarantee-shaped claim survives only inside the
+> design envelope — attitude priors (where E1–E3's 35+ solves produced
+> zero impostors and ≥0.29 margins for every true basin) — and, when
+> underway, the factor graph's dead-reckoning consistency as the
+> external cross-check. This is why the instrument carries an IMU.
 
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
