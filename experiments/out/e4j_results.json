@@ -1,0 +1,62 @@
+{
+ "strait1": {
+  "z": 5.0,
+  "skyline": {
+   "err_m": 0.0,
+   "margin": 20.85806692194226,
+   "sigma_worst_m": 55.370052832839164
+  },
+  "joint": {
+   "err_m": 0.0,
+   "margin": 10.273183399609474,
+   "sigma_worst_m": 78.94673212236434
+  },
+  "coast_frac": 0.6944444444444444,
+  "d_shore_med": 4905.0
+ },
+ "strait2": {
+  "z": 5.0,
+  "skyline": {
+   "err_m": 0.0,
+   "margin": 23.49702790924738,
+   "sigma_worst_m": 45.02258593286497
+  },
+  "joint": {
+   "err_m": 0.0,
+   "margin": 11.785901675569907,
+   "sigma_worst_m": 63.85759380032064
+  },
+  "coast_frac": 0.7116666666666667,
+  "d_shore_med": 5850.0
+ },
+ "offshore": {
+  "z": 5.0,
+  "skyline": {
+   "err_m": 12.5,
+   "margin": 1.7971116361975046,
+   "sigma_worst_m": 277.29633851675203
+  },
+  "joint": {
+   "err_m": 12.5,
+   "margin": 1.7971116361975046,
+   "sigma_worst_m": 277.29633851675203
+  },
+  "coast_frac": 0.0,
+  "d_shore_med": null
+ },
+ "strait2_z18": {
+  "z": 18.0,
+  "skyline": {
+   "err_m": 0.0,
+   "margin": 23.22178442296166,
+   "sigma_worst_m": 48.10147926800693
+  },
+  "joint": {
+   "err_m": 0.0,
+   "margin": 13.754672935329502,
+   "sigma_worst_m": 64.5224275218465
+  },
+  "coast_frac": 0.8044444444444444,
+  "d_shore_med": 6030.0
+ }
+}

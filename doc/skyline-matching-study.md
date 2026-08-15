@@ -1118,6 +1118,25 @@ sequential estimator.
 > A full-circle (heading-unknown) solve now costs the same ~5 s as a
 > ±6° one — the E4e/E4f audit regime drops from hours to minutes, and
 > a CM5 heading-free fix becomes interactive.
+>
+> **E4j — coastline stadimetry: a negative result**
+> (`e4j_coastline.py`). Tested whether matching the visible waterline's
+> depression curve δ(az) ≈ −z/d − d/2Reff as a second channel (the
+> "dip short of the horizon" stadimeter; Grelsson's water/land
+> boundary) rounds out the range-elongated basins. It does not, at our
+> observer heights: with 1 mrad curve noise, range sensitivity
+> σ_d ≈ (d²/z)·σ_δ is ~1.8 km for a 3 km shore at z=5 m — weaker than
+> what the skyline already provides. Across the E4c sea sites the
+> joint cost left errors unchanged, roughly halved the relative basin
+> margins (the extra term's noise floor inflates the denominator), and
+> inflated the Laplace σ_worst by ~40% (55→79 m at strait1); the
+> offshore site has no shore in stadimetric reach at all. Conclusion:
+> do NOT build the water/land segmenter for ranging. The stadimetric
+> channel only becomes competitive for a high observer with near
+> shores (z ≳ 30 m, d ≲ 1 km — sensitivity ∝ z/d²), and Grelsson's
+> real benefit from the water/land boundary is land-vs-sea
+> classification per azimuth, which our cost already captures through
+> the analytic sea-horizon fill of open-water bins.
 
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
