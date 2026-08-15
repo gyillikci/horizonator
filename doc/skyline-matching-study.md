@@ -966,6 +966,18 @@ sequential estimator.
 > by rotating the whole chain — the conversion now happens at the
 > SkyNav API boundary, and fixing it improved the batch result too
 > (46→31 m mean).
+>
+> **Margin-based fix rejection** (follow-up to the perturbation study of
+> the CH1 failures): `skyfix` and `SkyNav.take_fix` now compute the
+> E3-style basin margin (relative cost gap between the two best
+> non-max-suppressed coarse basins) and refuse the fix below a threshold
+> (default 0.15; genuine fixes measured ≥0.29 in E3). Validated: the
+> healthy synthetic case passes at margin 40.8; the E4c land-case
+> failure — previously thought unfilterable — is caught at margin 0.07
+> and correctly reported as NO FIX; the E5b live-loop results are
+> unchanged (all sea fixes pass). Stable single-impostor failures with a
+> genuinely large margin remain the residual risk, gated in practice by
+> the factor graph's dead-reckoning consistency.
 
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction

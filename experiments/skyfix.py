@@ -48,6 +48,22 @@ AZ = np.arange(-180.0, 180.0, 0.1) + 0.05
 BETAS = np.arange(-0.010, 0.0101, 0.002)  # residual after the pitch prior
 
 
+def basin_margin(cc, g, min_sep):
+    """Relative cost margin between the best and second-best coarse
+    basins (non-max suppression at min_sep meters). Near zero = ambiguous.
+    Returns inf when only one basin exists within the box."""
+    order = np.argsort(cc, axis=None)
+    kept = []
+    for o in order:
+        i, j = np.unravel_index(o, cc.shape)
+        p = (g[i], g[j])
+        if all(np.hypot(p[0] - q[0], p[1] - q[1]) >= min_sep for q, _ in kept):
+            kept.append((p, cc[i, j]))
+        if len(kept) == 2:
+            return float((kept[1][1] - kept[0][1]) / max(kept[0][1], 1e-12))
+    return float('inf')
+
+
 def observation(img, fov_deg, heading, roll_deg, pitch_deg=0.0):
     """Extract the skyline and map it to the global azimuth grid.
     Returns (el_obs, weights, diag) with diag holding extraction results."""
@@ -105,6 +121,11 @@ def main():
     ap.add_argument('--dem', default=os.path.expanduser(
         os.environ.get('HORIZONATOR_DEMS', '~/.horizonator/DEMs_SRTM3')))
     ap.add_argument('--dmin', type=float, default=1000.0)
+    ap.add_argument('--min-margin', type=float, default=0.15,
+                    help='reject the fix when the second-best coarse basin '
+                         'is within this relative cost margin of the best '
+                         '(degenerate/ambiguous landscape). E3: genuine '
+                         'fixes showed margins >= 0.29')
     ap.add_argument('--out')
     args = ap.parse_args()
 
@@ -145,6 +166,16 @@ def main():
     cc = np.array([[C(dn, de) for de in g] for dn in g])
     i, j = np.unravel_index(np.argmin(cc), cc.shape)
     dn0, de0 = g[i], g[j]
+
+    # margin-based rejection: non-max-suppressed top-2 coarse basins.
+    # A margin near zero means several distant places fit comparably
+    # (degenerate landscape) -- the fix is untrustworthy even though its
+    # residual looks fine
+    margin = basin_margin(cc, g, min_sep=4 * step0)
+    fix_ok = margin >= args.min_margin
+    if not fix_ok:
+        print(f'WARNING: ambiguous fix (basin margin {margin:.2f} < '
+              f'{args.min_margin:.2f}) -- treat as NO FIX', file=sys.stderr)
     for step in (step0 / 5, step0 / 20):
         best = (np.inf, dn0, de0)
         for di in range(-2, 3):
@@ -173,6 +204,7 @@ def main():
     el_syn, _ = cm.skyline(lat_e, lon_e, z, AZ)
     cbest, sbest, bbest = photo_cost(el_obs, w, el_syn, shifts)
     result = dict(lat=lat_e, lon=lon_e,
+                  fix_ok=bool(fix_ok), basin_margin=float(margin),
                   dn_m=dn0, de_m=de0,
                   sigma_n_m=float(sig[0]), sigma_e_m=float(sig[1]),
                   cost=cbest, rms_mrad=float(np.sqrt(2 * cbest) * 1e3),

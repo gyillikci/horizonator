@@ -23,6 +23,7 @@ import numpy as np
 import gtsam
 import skyline as S
 from skyline_factor import skyline_factor, laplace_cov
+from skyfix import basin_margin
 
 AZ = np.arange(-180.0, 180.0, 0.1) + 0.05
 X = gtsam.symbol_shorthand.X
@@ -33,7 +34,8 @@ class SkyNav:
                  lat_range=None, lon_range=None,
                  start_pos=(0.0, 0.0), start_heading=0.0,
                  start_sigma=(200.0, 200.0, 0.1),
-                 fix_box_m=2000.0, cov_scale=0.02):
+                 fix_box_m=2000.0, cov_scale=0.02,
+                 min_margin=0.15):
         self.lat0, self.lon0, self.z = lat0, lon0, z
         self.mlat, self.mlon = S.meters_per_degree(lat0)
         self.cm = S.CMarcher(dem_dir,
@@ -41,6 +43,7 @@ class SkyNav:
                              lon_range or (lon0 - 0.7, lon0 + 0.7))
         self.fix_box_m = fix_box_m
         self.cov_scale = cov_scale
+        self.min_margin = min_margin
 
         params = gtsam.ISAM2Params()
         self.isam = gtsam.ISAM2(params)
@@ -83,7 +86,10 @@ class SkyNav:
         """Solve a skyline fix around the current estimate and fuse it.
         el_obs: observed skyline on the global 0.1-deg azimuth grid (from
         skyfix.observation() on a camera frame, or a simulator).
-        Returns (fix_enu, cov)."""
+        Returns (fix_enu, cov, margin, accepted). When the coarse basin
+        margin falls below min_margin the landscape is ambiguous: NO
+        factor is added (accepted=False) and the graph coasts on dead
+        reckoning."""
         est = self.isam.calculateEstimate().atPose2(X(self.k))
         center = np.array([est.x(), est.y()])
 
@@ -98,6 +104,7 @@ class SkyNav:
         cc = np.array([[C(de, dn) for de in g] for dn in g])
         i, j = np.unravel_index(np.argmin(cc), cc.shape)
         dn0, de0 = g[i], g[j]
+        margin = basin_margin(cc, g, min_sep=750.0)
         for step in (50.0, 12.5):
             best = (np.inf, de0, dn0)
             for di in range(-2, 3):
@@ -109,12 +116,14 @@ class SkyNav:
         fix = center + np.array([de0, dn0])
         cov = laplace_cov(lambda e, n: C(e - center[0], n - center[1]),
                           fix[0], fix[1], scale=self.cov_scale)
+        if margin < self.min_margin:
+            return fix, cov, margin, False
         f = skyline_factor(X(self.k), fix[0], fix[1], cov)
         self._factors.append(f)
         graph = gtsam.NonlinearFactorGraph()
         graph.add(f)
         self.isam.update(graph, gtsam.Values())
-        return fix, cov
+        return fix, cov, margin, True
 
     # ---------------- state out
     def current(self):

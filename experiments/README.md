@@ -78,7 +78,11 @@ steps) — ~100x the NumPy marcher, agreeing with it to 0.02 mrad RMS.
   plus EXIF utilities (FOV from FocalLengthIn35mmFilm, GPS direction and
   altitude).
 - `skyfix.py` — the end-to-end CLI: photo in, position fix + covariance
-  out. `python3 skyfix.py IMG --center LAT,LON [--pitch P --roll R ...]`;
+  out. Includes margin-based fix rejection: when the second-best coarse
+  basin is within `--min-margin` (default 0.15) of the best, the
+  landscape is ambiguous and the result carries `fix_ok: false` — a
+  no-fix, like a navigator refusing a doubtful sight. The same gate in
+  `SkyNav.take_fix` keeps ambiguous fixes out of the factor graph. `python3 skyfix.py IMG --center LAT,LON [--pitch P --roll R ...]`;
   FOV/heading/altitude default from EXIF. Run it on your own coastal
   photos: keep original files (EXIF intact), supply pitch/roll from an
   IMU app to ~0.5 deg, use `--box` for your dead-reckoning uncertainty.
