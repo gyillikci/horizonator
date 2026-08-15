@@ -77,8 +77,15 @@ steps) — ~100x the NumPy marcher, agreeing with it to 0.02 mrad RMS.
   graded/hazy skies and to crisp sea horizons below faint distant ridges)
   plus EXIF utilities (FOV from FocalLengthIn35mmFilm, GPS direction and
   altitude).
-- `skyfix.py` — the end-to-end CLI: photo in, position fix + covariance
-  out. Includes margin-based fix rejection: when the second-best coarse
+- `skyfix.py` — the end-to-end CLI: photo(s) in, position fix + covariance
+  out. Takes one photo or several from the SAME position (the
+  recommended field procedure is a telephoto pan; per-photo
+  `--fov/--heading/--pitch/--roll` as comma lists, `x` = unknown
+  heading), fused into one joint fix with per-photo precision weights
+  (`--px-err`, `--sigma-dem`; see study doc E4i). The heading-shift
+  search is FFT-accelerated — bit-identical robust optimum, ~100×
+  faster, so a full-circle heading-unknown solve costs the same ~5 s
+  as one with a compass prior. Includes margin-based fix rejection: when the second-best coarse
   basin is within `--min-margin` (default 0.15) of the best, the
   landscape is ambiguous. Any failed trust check — ambiguous basins,
   minimum railed on the box boundary, residual the DEM cannot explain

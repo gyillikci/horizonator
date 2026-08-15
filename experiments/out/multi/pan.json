@@ -1,0 +1,57 @@
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.03 < 0.15"
+ ],
+ "lat": 36.96004334483625,
+ "lon": 27.23871849983505,
+ "fix_ok": false,
+ "basin_margin": 0.027955639261668042,
+ "relief_mrad": 47.003019631026184,
+ "dn_m": 612.5,
+ "de_m": -250.0,
+ "sigma_n_m": 318.55988679206007,
+ "sigma_e_m": 290.17427762091796,
+ "cost": 1.1621128942670188e-05,
+ "rms_mrad": 4.821022493760051,
+ "n_photos": 3,
+ "z_m": 5.0,
+ "photos": [
+  {
+   "file": "tele_a.jpg",
+   "fov_deg": 10.299737810299828,
+   "heading_deg": 355.0,
+   "pitch_deg": -0.5,
+   "roll_deg": 0.5,
+   "weight": 1.0,
+   "rms_mrad": 0.6272381955374791,
+   "heading_offset_deg": 0.0,
+   "el_offset_mrad": 0.0,
+   "attitude_source": "prior"
+  },
+  {
+   "file": "tele_b.jpg",
+   "fov_deg": 10.299737810299828,
+   "heading_deg": 25.0,
+   "pitch_deg": -0.5,
+   "roll_deg": 0.5,
+   "weight": 1.0,
+   "rms_mrad": 0.7546071315815374,
+   "heading_offset_deg": -0.6000000000000001,
+   "el_offset_mrad": 0.0,
+   "attitude_source": "prior"
+  },
+  {
+   "file": "tele_c.jpg",
+   "fov_deg": 10.299737810299828,
+   "heading_deg": 55.0,
+   "pitch_deg": -0.5,
+   "roll_deg": 0.5,
+   "weight": 1.0,
+   "rms_mrad": 8.292400977946395,
+   "heading_offset_deg": 3.8000000000000003,
+   "el_offset_mrad": -6.0,
+   "attitude_source": "prior"
+  }
+ ]
+}

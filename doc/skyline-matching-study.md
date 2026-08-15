@@ -1096,6 +1096,28 @@ sequential estimator.
 > photographing for a skyline fix, a telephoto pan (several narrow-FOV
 > frames swept across the terrain) beats one wide frame — angular
 > resolution per digitized point is the whole budget.
+>
+> **E4i — multi-photo skyfix and the FFT heading search**
+> (`skyfix.py`, `e4i_multi.py`). Two upgrades productize the E4h
+> lessons. (1) skyfix now takes N photos from one position — the
+> telephoto-pan procedure — and fuses them into one joint, gated fix
+> with per-photo weights 1/σ², σ² = (px_err·FOV/width)² + σ_DEM²: the
+> extraction term scales with FOV, the DEM/model term (~1.5 mrad) is
+> FOV-independent and floors the weight. The synthetic pan test showed
+> why the floor matters: with a clean full-res extractor the DEM term
+> dominates, weights equalize, and azimuth COVERAGE decides (wide frame
+> 17 m; three 10° tele slivers 241 m and correctly inconclusive at
+> margin 0.03; combined 52 m) — the tele-pan advantage belongs to the
+> high-extraction-noise regime (coarse input, hand digitization, E4h),
+> reachable via `--px-err`. (2) The heading-shift search is now
+> FFT-accelerated: the weighted quadratic cost with its offset
+> minimized in closed form is three cross-correlations, computed for
+> all 3600 lags at once; the exact Huber cost then runs only on the
+> top-12 candidate lags, so the optimum is bit-identical to the
+> exhaustive search (verified over 6 randomized cases) at ~100× speed.
+> A full-circle (heading-unknown) solve now costs the same ~5 s as a
+> ±6° one — the E4e/E4f audit regime drops from hours to minutes, and
+> a CM5 heading-free fix becomes interactive.
 
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
