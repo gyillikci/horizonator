@@ -137,3 +137,14 @@ the E5 passage as a stream: live (causal) fused error 78 m mean / 10 m
 final vs the batch smoother's 31 m / 7 m. Note the compass-vs-Pose2
 angle convention (theta = pi/2 - heading), converted at the API
 boundary — feeding compass headings straight into Pose2 diverges.
+
+## Scene panorama (`panorama.py`)
+
+Render a colorized 360° scene panorama from any point:
+
+    xvfb-run -a python3 panorama.py LAT LON [Z] -o pano.png
+
+Equirectangular at 0.05°/px with an azimuth ruler (center = North);
+E4c scene coloring plus hillshade, elevation tint and haze. Z defaults
+to the DEM height + 3 m. This is a visualization of exactly what the
+matcher compares observations against.
