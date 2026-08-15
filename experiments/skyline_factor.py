@@ -36,6 +36,37 @@ def skyline_factor(key, fix_e, fix_n, cov):
     return gtsam.CustomFactor(noise, gtsam.KeyVector([key]), error_func)
 
 
+def heading_bias_factor(pose_key, bias_key, heading_meas_rad, sigma_rad):
+    """Compass-heading measurement with a shared bias VARIABLE.
+
+    Imported lesson from the parallel study branch (celestial-navigation
+    claude/iphone-celestial-sighting-imu-ctwbnf): systematic sensor
+    biases belong in the graph as estimated variables, not smeared into
+    per-measurement sigmas — on that branch's measured device biases the
+    difference was a fix 12.4 km wrong vs 2 m wrong.
+
+    Model: heading_meas = heading_true + bias, with Pose2 convention
+    theta = pi/2 - heading_true, so the residual is
+        err = wrap(theta - (pi/2 - heading_meas) - b)
+    on keys (pose, bias); bias is a 1-d variable shared by all heading
+    factors, made observable by the skyline fixes anchoring the chain."""
+    noise = gtsam.noiseModel.Isotropic.Sigma(1, sigma_rad)
+    target = np.pi / 2 - heading_meas_rad
+
+    def error_func(this, values, H):
+        theta = values.atPose2(this.keys()[0]).theta()
+        b = values.atVector(this.keys()[1])[0]
+        e = (theta - target - b + np.pi) % (2 * np.pi) - np.pi
+        if H is not None:
+            H[0] = np.array([[0.0, 0.0, 1.0]])
+            H[1] = np.array([[-1.0]])
+        return np.array([e])
+
+    return gtsam.CustomFactor(noise,
+                              gtsam.KeyVector([pose_key, bias_key]),
+                              error_func)
+
+
 def laplace_cov(cost_fn, e0, n0, h=25.0, floor=8.0, scale=1.0):
     """2x2 (east,north) covariance from the local quadratic shape of the
     match cost around its minimum (the same heuristic skyfix.py uses).

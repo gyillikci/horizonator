@@ -155,3 +155,16 @@ Equirectangular at 0.05°/px with an azimuth ruler (center = North);
 E4c scene coloring plus hillshade, elevation tint and haze. Z defaults
 to the DEM height + 3 m. This is a visualization of exactly what the
 matcher compares observations against.
+
+## Cross-pollination (E5c)
+
+Three imports from the parallel study branch (celestial-navigation
+`claude/iphone-celestial-sighting-imu-ctwbnf`): `SkyNav` estimates the
+compass bias as a graph variable, measured directly by each skyline
+fix's co-estimated azimuth shift (`e5c_bias.py`: recovers +1.32° of a
+true +1.50° and improves the live loop); `skyfix --pitch-sigma` sizes
+the elevation-offset window for the pitch source (~0.3 braced IMU,
+~1.5 for uncalibrated AR-app pitch, which was field-measured to carry
+a +1.5° platform-dependent bias); and the recorded warning that rms is
+not comparable across different extractions — multi-hypothesis
+selection must use margin/separation, never raw residual.

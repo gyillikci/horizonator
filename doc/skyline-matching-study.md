@@ -1137,6 +1137,32 @@ sequential estimator.
 > real benefit from the water/land boundary is land-vs-sea
 > classification per azimuth, which our cost already captures through
 > the analytic sea-horizon fill of open-water bins.
+>
+> **E5c — imports from the parallel study branch**
+> (celestial-navigation `claude/iphone-celestial-sighting-imu-ctwbnf`,
+> an independent 94-commit study that converged on the same terrain
+> problem; its findings agree with ours everywhere the two overlap).
+> Three lessons imported. (1) *Biases belong in the graph, not the
+> sigmas*: `SkyNav` now estimates the compass bias as a shared GTSAM
+> variable. The pure heading-factor formulation is correct in batch
+> but iSAM2 will not excite the stiff whole-chain-rotation mode it
+> needs (verified frozen at +0.06° of a true +1.50°); the working
+> observability comes from physics we already had — each accepted
+> skyline fix's co-estimated azimuth shift IS a direct compass-bias
+> measurement (the E4h mechanism), added as a factor on the bias.
+> A/B on the E5 passage (`e5c_bias.py`): recovered bias +1.32° of
+> +1.50°, fused error 78.5→69.4 m mean, 6.6→2.8 m final — and the
+> instrument now calibrates its own compass underway. (2) *App pitch
+> is not trustworthy*: the parallel branch measured a +1.50°±0.17°,
+> platform-dependent pitch bias in a real AR theodolite app —
+> 2.6× our whole offset window. `skyfix --pitch-sigma` (default 0.29°
+> ≡ the historical ±10 mrad) sizes the window as ±2σ; use ~1.5 for
+> uncalibrated app pitch; auto-levelling supersedes it. (3) *rms is
+> anti-predictive across extractions* (their CH1 sweep: spearman
+> +0.32 — a worse boundary scores a LOWER residual): any future
+> multi-hypothesis extraction must select on a dimensionless quantity
+> (basin margin / separation), never the raw residual. Recorded here
+> so it cannot be re-learned the hard way.
 
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction

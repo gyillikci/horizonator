@@ -22,11 +22,12 @@ solve dominates at ~1-2 s (2 km box, native marcher).
 import numpy as np
 import gtsam
 import skyline as S
-from skyline_factor import skyline_factor, laplace_cov
-from skyfix import basin_margin
+from skyline_factor import skyline_factor, heading_bias_factor, laplace_cov
+from skyfix import basin_margin, fast_photo_cost
 
 AZ = np.arange(-180.0, 180.0, 0.1) + 0.05
 X = gtsam.symbol_shorthand.X
+B = gtsam.symbol_shorthand.B
 
 
 class SkyNav:
@@ -35,7 +36,7 @@ class SkyNav:
                  start_pos=(0.0, 0.0), start_heading=0.0,
                  start_sigma=(200.0, 200.0, 0.1),
                  fix_box_m=2000.0, cov_scale=0.02,
-                 min_margin=0.15):
+                 min_margin=0.15, estimate_compass_bias=True):
         self.lat0, self.lon0, self.z = lat0, lon0, z
         self.mlat, self.mlon = S.meters_per_degree(lat0)
         self.cm = S.CMarcher(dem_dir,
@@ -49,6 +50,11 @@ class SkyNav:
                                     # else quality 6 (estimated/DR)
 
         params = gtsam.ISAM2Params()
+        # aggressive relinearization: the compass-bias variable couples
+        # every pose (a whole-chain-rotation mode) and the default lazy
+        # settings leave it stuck near its prior; these cost milliseconds
+        params.setRelinearizeThreshold(0.01)
+        params.relinearizeSkip = 1
         self.isam = gtsam.ISAM2(params)
         self.k = 0
         self._factors = []          # keep CustomFactor closures alive
@@ -61,22 +67,43 @@ class SkyNav:
             gtsam.noiseModel.Diagonal.Sigmas(list(start_sigma))))
         vals = gtsam.Values()
         vals.insert(X(0), gtsam.Pose2(start_pos[0], start_pos[1], th0))
+        # the compass bias as an estimated VARIABLE (imported from the
+        # parallel branch: biases belong in the graph, not in the
+        # sigmas). With it, the odometry lateral sigma no longer has to
+        # price a constant heading bias, so it can be much tighter
+        self.est_bias = estimate_compass_bias
+        if self.est_bias:
+            graph.add(gtsam.PriorFactorVector(
+                B(0), np.zeros(1),
+                gtsam.noiseModel.Isotropic.Sigma(1, np.radians(5.0))))
+            vals.insert(B(0), np.zeros(1))
         self.isam.update(graph, vals)
         self._last_theta = th0
 
     # ---------------- sensors in
     def add_odometry(self, dist_m, heading_rad):
         """One dead-reckoning leg: distance run along a measured heading.
-        Noise prices in unmodeled log/compass biases (see E5)."""
+
+        With estimate_compass_bias (default), the constant compass bias
+        is a graph variable: each leg adds a heading-measurement factor
+        tying the pose's theta to the measured heading THROUGH the bias,
+        and the between-factor lateral sigma only has to cover random
+        compass noise (0.015*d) instead of pricing a worst-case constant
+        bias (0.045*d, the legacy E5 setting kept for the fallback)."""
         est = self.isam.calculateEstimate().atPose2(X(self.k))
         theta = np.pi / 2 - heading_rad
         dtheta = theta - self._last_theta
+        lat_sig = (0.015 if self.est_bias else 0.045) * dist_m + 5.0
         graph = gtsam.NonlinearFactorGraph()
         graph.add(gtsam.BetweenFactorPose2(
             X(self.k), X(self.k + 1), gtsam.Pose2(dist_m, 0.0, dtheta),
             gtsam.noiseModel.Diagonal.Sigmas(
-                [0.04 * dist_m + 5.0, 0.045 * dist_m + 5.0,
-                 np.radians(1.0)])))
+                [0.04 * dist_m + 5.0, lat_sig, np.radians(1.0)])))
+        if self.est_bias:
+            f = heading_bias_factor(X(self.k + 1), B(0), heading_rad,
+                                    np.radians(0.5))
+            self._factors.append(f)
+            graph.add(f)
         vals = gtsam.Values()
         vals.insert(X(self.k + 1), gtsam.Pose2(
             est.x() + dist_m * np.sin(heading_rad),
@@ -84,6 +111,14 @@ class SkyNav:
         self.isam.update(graph, vals)
         self.k += 1
         self._last_theta = theta
+
+    def compass_bias_deg(self):
+        """Current estimate of the compass bias (deg; heading_meas =
+        heading_true + bias). None when not estimated."""
+        if not self.est_bias:
+            return None
+        return float(np.degrees(
+            self.isam.calculateEstimate().atVector(B(0))[0]))
 
     def take_fix(self, el_obs):
         """Solve a skyline fix around the current estimate and fuse it.
@@ -138,7 +173,29 @@ class SkyNav:
         self._factors.append(f)
         graph = gtsam.NonlinearFactorGraph()
         graph.add(f)
+        if self.est_bias:
+            # the fix's co-estimated azimuth shift is a DIRECT compass-
+            # bias measurement: the observation is labeled with compass
+            # azimuths, the DEM skyline with true ones, so the aligning
+            # shift s reads the bias directly (bias = -s; the same
+            # mechanism that caught the 7 deg Theodolite offset, E4h).
+            # Without this the bias is only observable through a stiff
+            # whole-chain-rotation mode that iSAM2 will not excite
+            el_fix, _ = self.cm.skyline(
+                self.lat0 + fix[1] / self.mlat,
+                self.lon0 + fix[0] / self.mlon, self.z, AZ)
+            _, s_best, _ = fast_photo_cost(
+                el_obs, np.ones(AZ.size), el_fix,
+                np.arange(-100, 101, 1), betas=np.array([0.0]))
+            b_meas = -np.radians(s_best * 0.1)
+            graph.add(gtsam.PriorFactorVector(
+                B(0), np.array([b_meas]),
+                gtsam.noiseModel.Isotropic.Sigma(1, np.radians(0.3))))
         self.isam.update(graph, gtsam.Values())
+        # extra Gauss-Newton sweeps: a fix pulls on the chain-rotation /
+        # compass-bias mode, which one incremental step under-corrects
+        for _ in range(3):
+            self.isam.update()
         self.fix_fresh = True
         return fix, cov, margin, True, []
 

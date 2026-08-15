@@ -215,6 +215,16 @@ def main():
                     help='inconclusive when no photo shows at least this '
                          'much skyline relief (mrad std): too little '
                          'to localize (e.g. open sea horizon only)')
+    ap.add_argument('--pitch-sigma', type=float, default=0.29,
+                    help='1-sigma pitch-prior uncertainty (deg); the '
+                         'elevation-offset window is +-2 sigma (default '
+                         'matches the historical +-10 mrad). Braced IMU '
+                         '~0.3; an UNCALIBRATED AR/theodolite app needs '
+                         '~1.5 -- a field-measured +1.5 deg platform-'
+                         'dependent pitch bias in such an app (parallel '
+                         'study branch) would silently poison the '
+                         'default window. Sea-horizon auto-levelling '
+                         'supersedes this when it succeeds')
     ap.add_argument('--px-err', type=float, default=1.5,
                     help='assumed skyline-extraction error in pixels '
                          '(at the 1600 px working width); raise it for '
@@ -261,10 +271,13 @@ def main():
             + (args.sigma_dem * 1e-3) ** 2 for f in fovs]
     uw = [min(sig2) / s2 for s2 in sig2]
 
+    half = max(0.010, 2.0 * np.radians(args.pitch_sigma))
+    betas_prior = np.arange(-half, half * 1.001, half / 5)
+
     photos = []
     for i, path in enumerate(args.images):
         img = extract.load_image(path)
-        betas = BETAS
+        betas = betas_prior
         level = None
         pitch, roll = pitches[i], rolls[i]
         if args.auto_level:
