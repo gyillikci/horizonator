@@ -1,0 +1,9 @@
+{
+ "cpu": 4,
+ "platform": "x86_64",
+ "ms_per_skyline_allthreads": 3.76,
+ "ms_per_skyline_1thread": 13.51,
+ "s_per_1km_fix": 0.38,
+ "evals_1km": 106,
+ "s_per_100km_L0_extrap": 8.7
+}
