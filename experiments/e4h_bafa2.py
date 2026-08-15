@@ -138,18 +138,24 @@ def observation(points, fov_deg, heading, pitch_deg, roll_deg,
     return el, wt
 
 
-def masked_cost(el_syn, el_obs, wt, shifts):
-    best = np.inf
+def align(el_syn, el_obs, wt, shifts):
+    """Best (cost, shift_bins, beta) of the observation against el_syn."""
+    best = (np.inf, 0, 0.0)
     for s in shifts:
         eo = np.roll(el_obs, s)
         mm = np.roll(wt, s) > 0
         r = el_syn[mm] - eo[mm]
         rb = np.abs(r[None, :] - BETAS[:, None])
         h = np.where(rb <= 3e-3, .5 * rb * rb, 3e-3 * (rb - 1.5e-3))
-        c = h.mean(1).min()
-        if c < best:
-            best = c
+        cv = h.mean(1)
+        i = int(np.argmin(cv))
+        if cv[i] < best[0]:
+            best = (float(cv[i]), s, float(BETAS[i]))
     return best
+
+
+def masked_cost(el_syn, el_obs, wt, shifts):
+    return align(el_syn, el_obs, wt, shifts)[0]
 
 
 def solve(obs_list, fov_note=''):
@@ -157,7 +163,11 @@ def solve(obs_list, fov_note=''):
     cm = S.CMarcher(DIR3, (LAT_GT - .6, LAT_GT + .6),
                     (LON_GT - .8, LON_GT + .8), d_min=DMIN)
     mlat, mlon = S.meters_per_degree(LAT_GT)
-    shifts = range(-60, 61, 2)
+    # +-10 deg: the C-photo overlay showed the Theodolite headings carry
+    # a ~7 deg bias (the DEM puts the conical hill at az 18.0 true vs 11
+    # on the HUD -- consistent with a declination-handling error), which
+    # overflows the usual +-6 deg window
+    shifts = range(-100, 101, 2)
 
     def C(dn, de):
         la, lo = LAT_GT + dn / mlat, LON_GT + de / mlon
@@ -182,9 +192,14 @@ def solve(obs_list, fov_note=''):
     c0 = C(dn0, de0)
     rms = float(np.sqrt(2 * c0 / len(obs_list)) * 1e3)
     err = float(np.hypot(dn0, de0))
+    la, lo = LAT_GT + dn0 / mlat, LON_GT + de0 / mlon
+    el_fix, _ = cm.skyline(la, lo, Z, AZ)
+    aligns = [align(el_fix, eo, w, shifts) for eo, w in obs_list]
     return dict(err_m=err, dn_m=float(dn0), de_m=float(de0),
                 rms_mrad=rms, margin=float(margin),
-                boundary=bool(boundary), note=fov_note)
+                boundary=bool(boundary), note=fov_note,
+                heading_off_deg=[round(a[1] * 0.1, 1) for a in aligns],
+                beta_mrad=[round(a[2] * 1e3, 1) for a in aligns])
 
 
 if __name__ == '__main__':
