@@ -85,3 +85,21 @@ steps) — ~100x the NumPy marcher, agreeing with it to 0.02 mrad RMS.
 - `e4c_synth.py` — end-to-end validation on photo-realistic composites
   with real EXIF (written via piexif): 40–62 m error at the four
   sea-observer cases in a 5 km box, ~11 s per fix.
+
+## Fusion (E5) and hardware benchmark
+
+- `skyline_factor.py` — skyline fixes as GTSAM factors: a unary Pose2
+  `CustomFactor` carrying the fix's anisotropic Laplace covariance
+  (with an empirical calibration, see the docstring), works with the
+  stock `pip install gtsam` wheel.
+- `e5_fusion.py` — a simulated 2 h coastal passage (Bodrum–Kos strait):
+  dead reckoning with +3% log and 1.5° compass bias vs the factor graph
+  fusing a skyline fix every 15 min (each solved over a 2 km box around
+  the current DR estimate, 0.6 s/fix). DR alone: 416 m mean / 787 m
+  final; fused: **46 m mean / 9 m final**.
+- `bench_cm5.sh` — turnkey benchmark for target hardware (CM5): fetches
+  DEMs, compiles the marcher, times skyline synthesis and full fixes.
+  Reference (4-core x86): 13.5/3.8 ms per skyline (1/all threads),
+  0.38 s per 1 km-box fix, ~9 s per 100 km-box coarse stage.
+- `skyline_fix.py` in the celestial-navigation repo (same branch) bridges
+  skyfix JSON output into that toolkit (LatLonGeodetic + Circle).

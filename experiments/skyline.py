@@ -146,8 +146,17 @@ class CMarcher:
         so = os.path.join(here, 'fastmarch.so')
         if not os.path.exists(so) or \
            os.path.getmtime(so) < os.path.getmtime(src):
-            subprocess.run(['cc', '-O3', '-march=native', '-fopenmp',
-                            '-shared', '-fPIC', src, '-o', so], check=True)
+            # -march=native on x86; ARM gcc wants -mcpu=native; last resort
+            # plain -O3
+            for arch in ('-march=native', '-mcpu=native', None):
+                cmd = ['cc', '-O3', '-fopenmp', '-shared', '-fPIC',
+                       src, '-o', so]
+                if arch:
+                    cmd.insert(2, arch)
+                if subprocess.run(cmd).returncode == 0:
+                    break
+            else:
+                raise RuntimeError('could not compile fastmarch.c')
         self.lib = ctypes.CDLL(so)
         f64p = np.ctypeslib.ndpointer(np.float64, flags='C_CONTIGUOUS')
         self.lib.fastmarch_skyline.argtypes = [

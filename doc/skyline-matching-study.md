@@ -933,6 +933,26 @@ skyline fixes, celestial sights, and dead reckoning along a track —
 at which point the §4.4 particle/point-mass machinery becomes the natural
 sequential estimator.
 
+> **E5 results** (`experiments/skyline_factor.py`, `e5_fusion.py`,
+> `celestial-navigation:skyline_fix.py`; figure
+> `experiments/out/e5_fusion.png`). Implemented both integrations:
+> (a) `skyline_fix.py` in the celestial-navigation repo converts skyfix
+> JSON into toolkit objects (a `LatLonGeodetic` estimated position and a
+> `Circle` of position); (b) a GTSAM `CustomFactor` carries the fix and
+> its anisotropic covariance into a Pose2 factor graph. Demo: a 2-hour
+> simulated passage through the Bodrum–Kos strait with +3% log bias and
+> 1.5° compass bias, a skyline fix every 15 min solved over a 2 km box
+> around the *current dead-reckoning estimate* (0.6 s/fix, native
+> marcher). **Dead reckoning alone: 416 m mean, 787 m final. Fused:
+> 46 m mean, 9 m final** — intermittent skyline fixes bound DR drift
+> indefinitely, closing the loop the study set out to close. Two
+> modeling lessons from getting the graph right: odometry noise must
+> price in unmodeled log/compass biases (an over-trusted odometry chain
+> outvotes even 15 m fixes — the wrong answer becomes the graph
+> optimum), and the Laplace covariance heuristic is ~10× pessimistic
+> against measured accuracy and needs an empirical calibration factor
+> (documented in `laplace_cov`).
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
