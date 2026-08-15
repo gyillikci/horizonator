@@ -116,11 +116,13 @@ print(f'{len(fixes)} fixes in {time.time()-t0:.0f}s')
 # ---------------- factor graph
 graph = gtsam.NonlinearFactorGraph()
 X = gtsam.symbol_shorthand.X
+# Pose2.theta is CCW-from-east; compass headings are CW-from-north
+gth = lambda h: np.pi / 2 - h
 graph.add(gtsam.PriorFactorPose2(
-    X(0), gtsam.Pose2(truth[0][0], truth[0][1], true_heading(0)),
+    X(0), gtsam.Pose2(truth[0][0], truth[0][1], gth(true_heading(0))),
     gtsam.noiseModel.Diagonal.Sigmas([50.0, 50.0, np.radians(3)])))
 for k, (dist, hdg) in enumerate(legs):
-    dtheta = hdg - (legs[k - 1][1] if k else true_heading(0))
+    dtheta = gth(hdg) - gth(legs[k - 1][1] if k else true_heading(0))
     graph.add(gtsam.BetweenFactorPose2(
         X(k), X(k + 1), gtsam.Pose2(dist, 0.0, dtheta),
         gtsam.noiseModel.Diagonal.Sigmas(
@@ -132,7 +134,7 @@ for k, (fix, cov) in fixes.items():
 
 init = gtsam.Values()
 for k in range(N + 1):
-    hdg = legs[min(k, N - 1)][1]
+    hdg = gth(legs[min(k, N - 1)][1])
     # initialize fix epochs at their fixes: LM otherwise converges
     # prematurely from a badly drifted DR initialization
     p = fixes[k][0] if k in fixes else dr[k]

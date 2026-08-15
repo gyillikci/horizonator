@@ -103,3 +103,15 @@ steps) — ~100x the NumPy marcher, agreeing with it to 0.02 mrad RMS.
   0.38 s per 1 km-box fix, ~9 s per 100 km-box coarse stage.
 - `skyline_fix.py` in the celestial-navigation repo (same branch) bridges
   skyfix JSON output into that toolkit (LatLonGeodetic + Circle).
+
+## Live instrument loop (`skynav.py`)
+
+The deployable version of E5: `SkyNav` fuses odometry legs and skyline
+fixes incrementally with iSAM2 (0.1 ms per odometry update, ~0.7 s per
+fix on the build box) and emits the fused position as NMEA 0183
+$GPGGA/$GPRMC sentences — feed them to OpenCPN/a chartplotter and the
+skyline-derived position displays like any GPS. `e5b_live.py` replays
+the E5 passage as a stream: live (causal) fused error 78 m mean / 10 m
+final vs the batch smoother's 31 m / 7 m. Note the compass-vs-Pose2
+angle convention (theta = pi/2 - heading), converted at the API
+boundary — feeding compass headings straight into Pose2 diverges.

@@ -952,6 +952,20 @@ sequential estimator.
 > optimum), and the Laplace covariance heuristic is ~10× pessimistic
 > against measured accuracy and needs an empirical calibration factor
 > (documented in `laplace_cov`).
+>
+> **E5b — the live instrument loop** (`experiments/skynav.py`,
+> `e5b_live.py`). The deployable form: iSAM2 fuses each odometry leg
+> (0.1 ms/update) and each skyline fix (~0.7 s solve+fuse) as they
+> arrive, and emits the fused position as NMEA 0183 $GPGGA/$GPRMC
+> sentences a chartplotter consumes like GPS. Replaying the E5 passage
+> as a stream: **78 m mean / 10 m final** causally (vs the batch
+> smoother's 31 m / 7 m — the honest filtering-vs-smoothing gap). One
+> convention trap worth recording: compass headings (CW from north)
+> fed directly into Pose2.theta (CCW from east) made incremental iSAM2
+> diverge by tens of km while batch LM silently absorbed the same bug
+> by rotating the whole chain — the conversion now happens at the
+> SkyNav API boundary, and fixing it improved the batch result too
+> (46→31 m mean).
 
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
