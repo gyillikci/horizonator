@@ -28,7 +28,31 @@ import numpy as np
 from PIL import Image
 import skyline as S
 from skyfix import basin_margin
-from e4d_ch1 import ensure_tiles  # reuses the tile fetcher
+
+
+def ensure_tiles(lat, lon, margin_lat=0.7, margin_lon=0.9):
+    import math
+    import gzip
+    import urllib.request
+    d1 = os.path.expanduser('~/.horizonator/DEMs_SRTM1')
+    os.makedirs(d1, exist_ok=True)
+    for la in range(math.floor(lat - margin_lat),
+                    math.floor(lat + margin_lat) + 1):
+        for lo in range(math.floor(lon - margin_lon),
+                        math.floor(lon + margin_lon) + 1):
+            t = f"N{la:02d}E{lo:03d}"
+            p3 = os.path.join(DIR3, t + '.hgt')
+            if os.path.exists(p3):
+                continue
+            p1 = os.path.join(d1, t + '.hgt')
+            if not os.path.exists(p1):
+                url = ('https://s3.amazonaws.com/elevation-tiles-prod/'
+                       f'skadi/{t[:3]}/{t}.hgt.gz')
+                print('  fetching', t, flush=True)
+                with urllib.request.urlopen(url) as r:
+                    open(p1, 'wb').write(gzip.decompress(r.read()))
+            a = np.fromfile(p1, dtype='>i2').reshape(3601, 3601)
+            a[::3, ::3].astype('>i2').tofile(p3)
 
 CH1 = '/home/user/celestial-navigation/CH1'
 DIR3 = os.path.expanduser('~/.horizonator/DEMs_SRTM3')
