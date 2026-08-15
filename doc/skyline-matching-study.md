@@ -1079,6 +1079,23 @@ sequential estimator.
 > input fidelity: with the two originals pushed to a repo (EXIF
 > intact, full resolution) this pair becomes the definitive
 > in-envelope real-photo test.
+>
+> Two more pairs from the same spot extended the set: C = 8.0×
+> telephoto of the conical hill (10.3° FOV, heading 011, pitch +0.2)
+> and D = 2.0× looking ESE down the lake (39.7° FOV, heading 100) —
+> nearly 90° of bearing spread. The telephoto proves the fidelity
+> argument from the other side: at 10.3° FOV the same hand digitization
+> is worth ~1 mrad instead of ~8, and photo C alone lands **250 m**
+> from the GPS (stable at 250–540 m across a ±20% FOV sweep), vs
+> 1.5–2.3 km for every wide shot. Joint solves (A+B, C+D, all four)
+> stay at 1.4–2.3 km: the wide photos' correlated digitization biases
+> are of similar residual magnitude to C's (5–8 mrad rms), so an
+> unweighted cost sum drags the fix away from the telephoto's answer.
+> Margins remain 0.01–0.28 throughout — the gates would still declare
+> these inconclusive, correctly. Field guidance that follows: when
+> photographing for a skyline fix, a telephoto pan (several narrow-FOV
+> frames swept across the terrain) beats one wide frame — angular
+> resolution per digitized point is the whole budget.
 
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction

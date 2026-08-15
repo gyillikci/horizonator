@@ -54,9 +54,35 @@ POINTS_B = [  # heading 014, pitch +5.8, roll 0.0
     (0.670, 0.542), (0.720, 0.530), (0.770, 0.510), (0.820, 0.490),
     (0.870, 0.470), (0.900, 0.465), (0.940, 0.470), (1.000, 0.480),
 ]
+# second delivery, same spot seconds earlier: C = 8.0x telephoto of the
+# conical hill (f35 ~192 mm -> 10.3 deg H-FOV: at this FOV digitization
+# precision is ~1 mrad, 8x better than the wide shots), D = 2.0x
+# (f35 ~48 mm -> 39.7 deg) looking ESE down the lake's long axis --
+# nearly 90 deg of bearing spread against A/B/C for a cross fix
+POINTS_C = [  # heading 011, pitch +0.2, roll -0.8, 8.0x
+    (0.000, 0.460), (0.030, 0.470), (0.060, 0.490), (0.100, 0.515),
+    (0.140, 0.540), (0.170, 0.555), (0.200, 0.500), (0.250, 0.435),
+    (0.300, 0.380), (0.350, 0.315), (0.400, 0.275), (0.450, 0.250),
+    (0.500, 0.235), (0.550, 0.250), (0.600, 0.280), (0.650, 0.315),
+    (0.700, 0.360), (0.750, 0.415), (0.800, 0.460), (0.850, 0.510),
+    (0.900, 0.550), (0.950, 0.600), (1.000, 0.635),
+]
+POINTS_D = [  # heading 100, pitch +2.9, roll -0.9, 2.0x
+    (0.000, 0.400), (0.040, 0.350), (0.080, 0.350), (0.120, 0.380),
+    (0.180, 0.400), (0.250, 0.415), (0.300, 0.425), (0.350, 0.435),
+    (0.400, 0.440), (0.450, 0.445), (0.500, 0.440), (0.520, 0.435),
+    (0.550, 0.445), (0.580, 0.440), (0.620, 0.415), (0.650, 0.400),
+    (0.700, 0.375), (0.750, 0.345), (0.800, 0.310), (0.850, 0.270),
+    (0.900, 0.235), (0.950, 0.190), (0.980, 0.165), (1.000, 0.175),
+]
+F_10X = 71.6
+F_80X = float(np.degrees(2 * np.arctan(17.30 / 192.0)))   # 10.3 deg
+F_20X = float(np.degrees(2 * np.arctan(17.30 / 48.0)))    # 39.7 deg
 PHOTOS = [
-    ('A', POINTS_A, 37.0, 5.3, -0.9),
-    ('B', POINTS_B, 14.0, 5.8, 0.0),
+    ('A', POINTS_A, 37.0, 5.3, -0.9, F_10X),
+    ('B', POINTS_B, 14.0, 5.8, 0.0, F_10X),
+    ('C', POINTS_C, 11.0, 0.2, -0.8, F_80X),
+    ('D', POINTS_D, 100.0, 2.9, -0.9, F_20X),
 ]
 ASPECT = 4.0 / 3.0
 
@@ -68,8 +94,14 @@ ASPECT = 4.0 / 3.0
 # as a consistent ~1.5 km displacement shared by both photos
 WATERLINE_A = [(0.00, 0.590), (0.30, 0.588), (0.60, 0.588), (1.00, 0.585)]
 WATERLINE_B = [(0.00, 0.582), (0.50, 0.585), (1.00, 0.585)]
+WATERLINE_C = [(0.10, 0.715), (0.50, 0.714), (0.90, 0.712)]
+WATERLINE_D = [(0.00, 0.478), (0.20, 0.478), (0.40, 0.478), (0.55, 0.477)]
+# waterline depression -atan(h_above_lake/d_shore), rough per-photo shore
+# distance; the +-2 mrad it is wrong by is absorbed by the beta nuisance
+EL_WLS = dict(A=-0.003, B=-0.003, C=-0.004, D=-0.002)
 EL_WL = -0.003
-WATERLINES = dict(A=WATERLINE_A, B=WATERLINE_B)
+WATERLINES = dict(A=WATERLINE_A, B=WATERLINE_B,
+                  C=WATERLINE_C, D=WATERLINE_D)
 
 
 def _map(points, fov_deg, pitch_deg, roll_deg):
@@ -86,15 +118,16 @@ def _map(points, fov_deg, pitch_deg, roll_deg):
 
 
 def observation(points, fov_deg, heading, pitch_deg, roll_deg,
-                waterline=None):
+                waterline=None, el_wl=EL_WL):
     """Digitized points -> (el_obs, weights) on the global azimuth grid.
     With waterline given, skyline elevations are referenced to the
-    digitized waterline at EL_WL (differential measurement)."""
+    digitized waterline at el_wl (differential measurement: cancels the
+    digitizer's absolute-y bias, the pitch chain, and first-order roll)."""
     az_rel, el_pt = _map(points, fov_deg, pitch_deg, roll_deg)
     if waterline is not None:
-        az_wl, el_wl = _map(waterline, fov_deg, pitch_deg, roll_deg)
+        az_wl, el_w = _map(waterline, fov_deg, pitch_deg, roll_deg)
         o = np.argsort(az_wl)
-        el_pt = el_pt - np.interp(az_rel, az_wl[o], el_wl[o]) + EL_WL
+        el_pt = el_pt - np.interp(az_rel, az_wl[o], el_w[o]) + el_wl
     el = np.zeros(AZ.size)
     wt = np.zeros(AZ.size)
     rel = (AZ - heading + 180.0) % 360.0 - 180.0
@@ -155,30 +188,30 @@ def solve(obs_list, fov_note=''):
 
 
 if __name__ == '__main__':
-    fov = 71.6
     out = {}
-    for mode in ('abs', 'rel'):
-        wl = (lambda n: None) if mode == 'abs' else (lambda n: WATERLINES[n])
-        obs = {name: observation(pts, fov, h, p, r, waterline=wl(name))
-               for name, pts, h, p, r in PHOTOS}
-        for name in obs:
-            out[f'{name}_{mode}'] = r = solve([obs[name]])
-            print(f"photo {name} ({mode}): err {r['err_m']:6.0f} m  "
-                  f"rms {r['rms_mrad']:.1f} mrad  margin {r['margin']:.2f}"
-                  f"{'  BOUNDARY' if r['boundary'] else ''}", flush=True)
-        out[f'joint_{mode}'] = r = solve(list(obs.values()))
-        print(f"joint   ({mode}): err {r['err_m']:6.0f} m  rms "
+    obs = {n: observation(pts, f, h, p, r, waterline=WATERLINES[n],
+                          el_wl=EL_WLS[n])
+           for n, pts, h, p, r, f in PHOTOS}
+    for name in obs:
+        out[name] = r = solve([obs[name]])
+        print(f"photo {name}: err {r['err_m']:6.0f} m  "
+              f"rms {r['rms_mrad']:.1f} mrad  margin {r['margin']:.2f}"
+              f"{'  BOUNDARY' if r['boundary'] else ''}", flush=True)
+    for combo in (('A', 'B'), ('C', 'D'), ('A', 'B', 'C', 'D')):
+        key = '+'.join(combo)
+        out[key] = r = solve([obs[n] for n in combo])
+        print(f"{key:7s}: err {r['err_m']:6.0f} m  rms "
               f"{r['rms_mrad']:.1f} mrad  margin {r['margin']:.2f}"
               f"{'  BOUNDARY' if r['boundary'] else ''}", flush=True)
 
-    # FOV sweep on the waterline-referenced joint solve
-    out['fov_sweep'] = {}
-    for f in (60.0, 65.0, 71.6, 78.0, 90.0, 106.1):
-        o = [observation(pts, f, h, p, r, waterline=WATERLINES[n])
-             for n, pts, h, p, r in PHOTOS]
-        rs = solve(o, fov_note=f'fov {f}')
-        out['fov_sweep'][str(f)] = rs
-        print(f"fov {f:5.1f}: err {rs['err_m']:6.0f} m  "
+    # FOV sensitivity of the telephoto (8x nominal = 10.3 deg)
+    out['fov_sweep_C'] = {}
+    for f in (8.5, 9.4, 10.3, 11.3, 12.4):
+        o = observation(POINTS_C, f, 11.0, 0.2, -0.8,
+                        waterline=WATERLINE_C, el_wl=EL_WLS['C'])
+        rs = solve([o], fov_note=f'fov {f}')
+        out['fov_sweep_C'][str(f)] = rs
+        print(f"C fov {f:4.1f}: err {rs['err_m']:6.0f} m  "
               f"rms {rs['rms_mrad']:.1f} mrad  margin {rs['margin']:.2f}",
               flush=True)
     with open(os.path.join(OUT, 'e4h_results.json'), 'w') as f:
