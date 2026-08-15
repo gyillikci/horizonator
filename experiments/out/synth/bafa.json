@@ -1,14 +1,28 @@
 {
- "lat": 37.47280880085845,
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.09 < 0.15",
+  "minimum on the search-box boundary: the true position may lie outside the box"
+ ],
+ "lat": 37.47269638565771,
  "lon": 27.37668214761264,
- "dn_m": 987.5,
+ "fix_ok": false,
+ "basin_margin": 0.0919992642818916,
+ "relief_mrad": 72.42272499032126,
+ "dn_m": 975.0,
  "de_m": -2625.0,
- "sigma_n_m": 158.66706612682933,
- "sigma_e_m": 617.4977609717074,
- "cost": 6.316357426194003e-05,
- "rms_mrad": 11.23953506706928,
+ "sigma_n_m": 249.27683566493934,
+ "sigma_e_m": 721.6303768581605,
+ "cost": 6.186287069808049e-05,
+ "rms_mrad": 11.12320733404538,
  "heading_offset_deg": 6.0,
  "el_offset_mrad": -10.0,
  "fov_deg": 71.58320735320068,
- "z_m": 16.0
+ "z_m": 16.0,
+ "attitude": {
+  "pitch_deg": 1.5,
+  "roll_deg": 0.5,
+  "source": "prior"
+ },
+ "auto_level": null
 }

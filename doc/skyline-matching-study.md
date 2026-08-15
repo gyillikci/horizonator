@@ -1057,6 +1057,10 @@ sequential estimator.
 > priors. In deployment both are used together — IMU prior as the
 > fallback, horizon levelling as the upgrade whenever open water is
 > visible, which for the study's at-sea observer is nearly always.
+> The extractor fix also refreshes the E4c baseline itself
+> (`out/e4c_results.json`): sea cases 23–239 m under the wide window
+> (the high end is the range wander), and the bafa land case now
+> reports INCONCLUSIVE through the gates instead of a wrong fix.
 
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction

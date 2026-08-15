@@ -92,8 +92,11 @@ steps) — ~100x the NumPy marcher, agreeing with it to 0.02 mrad RMS.
   photos: keep original files (EXIF intact), supply pitch/roll from an
   IMU app to ~0.5 deg, use `--box` for your dead-reckoning uncertainty.
 - `e4c_synth.py` — end-to-end validation on photo-realistic composites
-  with real EXIF (written via piexif): 40–62 m error at the four
-  sea-observer cases in a 5 km box, ~11 s per fix.
+  with real EXIF (written via piexif): 23–239 m error at the four
+  sea-observer cases in a 5 km box, ~11 s per fix, with IMU-prior
+  attitude and the wide ±10 mrad offset window (the large end of that
+  range is wide-window range wander, which auto-levelling below
+  removes).
 - Sea-horizon auto-levelling (`skyfix --auto-level`,
   `extract.sea_horizon_attitude`): estimates pitch/roll from the visible
   sea horizon — its dip below level is exactly known from the camera
