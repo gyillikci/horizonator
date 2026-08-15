@@ -1061,6 +1061,24 @@ sequential estimator.
 > (`out/e4c_results.json`): sea cases 23–239 m under the wide window
 > (the high end is the range wander), and the bafa land case now
 > reports INCONCLUSIVE through the gates instead of a wrong fix.
+>
+> **E4h — second instrumented Bafa pair** (`e4h_bafa2.py`). Two photos
+> seconds apart from the E4a bluff, now with full Theodolite attitude
+> (headings 037/014 true, pitch +5.3/+5.8, roll −0.9/0.0, z 18.3 m
+> from GPS altitude; 1.0× lens confirmed by the level-line position the
+> pitch implies). The photos again arrived file-stripped, so the
+> skylines were hand-digitized from the rendered images — coarser than
+> E4a's session (~±8 mrad structure error vs the ~2 mrad the geometry
+> needs). Solves (absolute and waterline-referenced, single and joint)
+> land 0.5–2.3 km from the GPS with basin margins 0.01–0.33 — mostly
+> BELOW the 0.15 gate, several boundary-railed: skyfix would return
+> INCONCLUSIVE rather than a confident wrong fix, which is the system
+> working as specified on input it cannot trust. Residuals sit at
+> 7–9 mrad (digitization noise) against the 1–3 mrad the automatic
+> extractor achieves on real files (E4c/E4d). The blocker is purely
+> input fidelity: with the two originals pushed to a repo (EXIF
+> intact, full resolution) this pair becomes the definitive
+> in-envelope real-photo test.
 
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
