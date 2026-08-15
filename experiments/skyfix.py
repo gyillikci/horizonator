@@ -122,10 +122,18 @@ def main():
         os.environ.get('HORIZONATOR_DEMS', '~/.horizonator/DEMs_SRTM3')))
     ap.add_argument('--dmin', type=float, default=1000.0)
     ap.add_argument('--min-margin', type=float, default=0.15,
-                    help='reject the fix when the second-best coarse basin '
+                    help='inconclusive when the second-best coarse basin '
                          'is within this relative cost margin of the best '
                          '(degenerate/ambiguous landscape). E3: genuine '
                          'fixes showed margins >= 0.29')
+    ap.add_argument('--max-rms', type=float, default=12.0,
+                    help='inconclusive when the best residual exceeds this '
+                         '(mrad): the DEM cannot explain the observation '
+                         '(clouds, wrong area, extraction failure)')
+    ap.add_argument('--min-relief', type=float, default=1.5,
+                    help='inconclusive when the observed skyline standard '
+                         'deviation is below this (mrad): too little '
+                         'relief to localize (e.g. open sea horizon only)')
     ap.add_argument('--out')
     args = ap.parse_args()
 
@@ -167,15 +175,21 @@ def main():
     i, j = np.unravel_index(np.argmin(cc), cc.shape)
     dn0, de0 = g[i], g[j]
 
-    # margin-based rejection: non-max-suppressed top-2 coarse basins.
-    # A margin near zero means several distant places fit comparably
-    # (degenerate landscape) -- the fix is untrustworthy even though its
-    # residual looks fine
+    # ---- inconclusiveness checks: a solve that converged somewhere is
+    # not automatically a fix. Each failed check adds a reason; any reason
+    # makes the result INCONCLUSIVE (status + exit code 2)
+    reasons = []
     margin = basin_margin(cc, g, min_sep=4 * step0)
-    fix_ok = margin >= args.min_margin
-    if not fix_ok:
-        print(f'WARNING: ambiguous fix (basin margin {margin:.2f} < '
-              f'{args.min_margin:.2f}) -- treat as NO FIX', file=sys.stderr)
+    if margin < args.min_margin:
+        reasons.append(f'ambiguous landscape: basin margin {margin:.2f} '
+                       f'< {args.min_margin:.2f}')
+    if max(abs(dn0), abs(de0)) >= args.box / 2 - step0:
+        reasons.append('minimum on the search-box boundary: the true '
+                       'position may lie outside the box')
+    relief = float(np.std(el_obs[w > 0]) * 1e3)
+    if relief < args.min_relief:
+        reasons.append(f'insufficient skyline relief: {relief:.1f} mrad '
+                       f'std < {args.min_relief:.1f}')
     for step in (step0 / 5, step0 / 20):
         best = (np.inf, dn0, de0)
         for di in range(-2, 3):
@@ -203,8 +217,17 @@ def main():
     lon_e = lon_c + de0 / mlon
     el_syn, _ = cm.skyline(lat_e, lon_e, z, AZ)
     cbest, sbest, bbest = photo_cost(el_obs, w, el_syn, shifts)
-    result = dict(lat=lat_e, lon=lon_e,
-                  fix_ok=bool(fix_ok), basin_margin=float(margin),
+    rms_mrad = float(np.sqrt(2 * cbest) * 1e3)
+    if rms_mrad > args.max_rms:
+        reasons.append(f'residual {rms_mrad:.1f} mrad > {args.max_rms:.1f}: '
+                       'the DEM cannot explain this observation')
+    status = 'ok' if not reasons else 'inconclusive'
+    for r in reasons:
+        print('INCONCLUSIVE:', r, file=sys.stderr)
+    result = dict(status=status, reasons=reasons,
+                  lat=lat_e, lon=lon_e,
+                  fix_ok=(status == 'ok'), basin_margin=float(margin),
+                  relief_mrad=relief,
                   dn_m=dn0, de_m=de0,
                   sigma_n_m=float(sig[0]), sigma_e_m=float(sig[1]),
                   cost=cbest, rms_mrad=float(np.sqrt(2 * cbest) * 1e3),
@@ -239,7 +262,8 @@ def main():
         fig.tight_layout()
         fig.savefig(args.out + '.png', dpi=110)
         print('wrote', args.out + '.json/.png')
+    return 0 if status == 'ok' else 2
 
 
 if __name__ == '__main__':
-    main()
+    sys.exit(main())

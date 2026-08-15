@@ -44,6 +44,9 @@ class SkyNav:
         self.fix_box_m = fix_box_m
         self.cov_scale = cov_scale
         self.min_margin = min_margin
+        self.fix_fresh = False      # True while the latest fix attempt
+                                    # was accepted -> NMEA quality 1;
+                                    # else quality 6 (estimated/DR)
 
         params = gtsam.ISAM2Params()
         self.isam = gtsam.ISAM2(params)
@@ -86,10 +89,12 @@ class SkyNav:
         """Solve a skyline fix around the current estimate and fuse it.
         el_obs: observed skyline on the global 0.1-deg azimuth grid (from
         skyfix.observation() on a camera frame, or a simulator).
-        Returns (fix_enu, cov, margin, accepted). When the coarse basin
-        margin falls below min_margin the landscape is ambiguous: NO
-        factor is added (accepted=False) and the graph coasts on dead
-        reckoning."""
+        Returns (fix_enu, cov, margin, accepted, reasons). A solve that
+        converged somewhere is not automatically a fix: ambiguous basins,
+        a boundary-railed minimum, too little skyline relief, or an
+        unexplainable residual all make the attempt INCONCLUSIVE -- no
+        factor is added (accepted=False, reasons non-empty) and the graph
+        coasts on dead reckoning."""
         est = self.isam.calculateEstimate().atPose2(X(self.k))
         center = np.array([est.x(), est.y()])
 
@@ -116,14 +121,26 @@ class SkyNav:
         fix = center + np.array([de0, dn0])
         cov = laplace_cov(lambda e, n: C(e - center[0], n - center[1]),
                           fix[0], fix[1], scale=self.cov_scale)
+        reasons = []
         if margin < self.min_margin:
-            return fix, cov, margin, False
+            reasons.append(f'ambiguous: margin {margin:.2f}')
+        if max(abs(de0), abs(dn0)) >= half - 250.0:
+            reasons.append('minimum on search-box boundary')
+        rms = np.sqrt(2 * C(de0, dn0)) * 1e3
+        if rms > 12.0:
+            reasons.append(f'residual {rms:.1f} mrad unexplained')
+        if np.std(el_obs) * 1e3 < 1.5:
+            reasons.append('insufficient skyline relief')
+        if reasons:
+            self.fix_fresh = False
+            return fix, cov, margin, False, reasons
         f = skyline_factor(X(self.k), fix[0], fix[1], cov)
         self._factors.append(f)
         graph = gtsam.NonlinearFactorGraph()
         graph.add(f)
         self.isam.update(graph, gtsam.Values())
-        return fix, cov, margin, True
+        self.fix_fresh = True
+        return fix, cov, margin, True, []
 
     # ---------------- state out
     def current(self):
@@ -154,9 +171,12 @@ class SkyNav:
     def nmea_gga(self, utc_hms):
         lat, lon, cov = self.current()
         hdop = float(np.sqrt(np.trace(cov)) / 5.0)  # sigma_m -> HDOP-ish
+        # quality 1 = valid fix; 6 = estimated (dead reckoning) while the
+        # latest skyline-fix attempt was inconclusive
+        q = 1 if self.fix_fresh else 6
         body = (f'GPGGA,{utc_hms},{self._dm(lat, 2)},'
                 f'{"N" if lat >= 0 else "S"},{self._dm(lon, 3)},'
-                f'{"E" if lon >= 0 else "W"},1,08,{hdop:.1f},'
+                f'{"E" if lon >= 0 else "W"},{q},08,{hdop:.1f},'
                 f'{self.z:.1f},M,0.0,M,,')
         return self._nmea(body)
 

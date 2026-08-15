@@ -80,9 +80,14 @@ steps) — ~100x the NumPy marcher, agreeing with it to 0.02 mrad RMS.
 - `skyfix.py` — the end-to-end CLI: photo in, position fix + covariance
   out. Includes margin-based fix rejection: when the second-best coarse
   basin is within `--min-margin` (default 0.15) of the best, the
-  landscape is ambiguous and the result carries `fix_ok: false` — a
-  no-fix, like a navigator refusing a doubtful sight. The same gate in
-  `SkyNav.take_fix` keeps ambiguous fixes out of the factor graph. `python3 skyfix.py IMG --center LAT,LON [--pitch P --roll R ...]`;
+  landscape is ambiguous. Any failed trust check — ambiguous basins,
+  minimum railed on the box boundary, residual the DEM cannot explain
+  (`--max-rms`), or too little skyline relief (`--min-relief`) — makes
+  the result `status: "inconclusive"` (exit code 2, reasons listed), a
+  first-class no-fix like a navigator refusing a doubtful sight. The
+  same checks in `SkyNav.take_fix` keep such fixes out of the factor
+  graph, and the NMEA GGA quality field drops to 6 (estimated/DR)
+  until the next accepted fix. `python3 skyfix.py IMG --center LAT,LON [--pitch P --roll R ...]`;
   FOV/heading/altitude default from EXIF. Run it on your own coastal
   photos: keep original files (EXIF intact), supply pitch/roll from an
   IMU app to ~0.5 deg, use `--box` for your dead-reckoning uncertainty.
