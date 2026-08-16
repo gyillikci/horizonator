@@ -1206,6 +1206,34 @@ sequential estimator.
 > families (e.g. this extractor + a DP seam + an SVM boundary), whose
 > failures could actually decorrelate — that is the prerequisite, not
 > a better scalar.
+>
+> **E4m — the diverse family, built and tested: failures are
+> scene-correlated, and the ensemble road is closed**
+> (`e4m_diverse.py`, `out/e4m_diverse.csv`). We built the genuinely
+> different detector the E4l conclusion called for — the Ahmad et al.
+> IJCNN'21 shallow architecture (16×16 linear patch classifier as one
+> correlation + a DP seam), trained by us on the even half of CH1's
+> masks (their published CH1-trained weights are non-commercial-only
+> and were used solely as an uncommitted research reference), evaluated
+> on the held-out odd half. It works differently (21.5 px median vs
+> our 0.8, right on half the photos, catastrophic on others) — and the
+> decorrelation hypothesis is REFUTED anyway: given our default
+> extraction produced a wrong fix, the seam family's fix is also wrong
+> **92%** of the time — the same rate as our own same-family variants
+> (92–97%). Cross-family position agreement within 500 m still admits
+> 67% wrong fixes (same-family: 72%), and agreement+margin matches
+> margin alone at every threshold. The reason is the real finding:
+> the dominant failure driver is not the detector — it is the SCENE.
+> Hazy, low-relief, ambiguous landscapes defeat every extractor at
+> once, and when extraction succeeds, an impostor basin is a property
+> of the TERRAIN, so every correct extraction lands in the same wrong
+> place. Landscape ambiguity is common-mode across any ensemble; no
+> vote among extractors can gate it. The margin measures it directly,
+> which is why the E4k operating curve — not a better front-end
+> ensemble — is the actual ceiling for single-photo trust, and why
+> integrity beyond it must come from the fusion layer (E5) or from
+> more photos with real baseline/bearing diversity (E4i), not more
+> extractions of the same photo.
 
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
