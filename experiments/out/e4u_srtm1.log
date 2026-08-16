@@ -226,3 +226,26 @@
   accepted: 7  median margin 1.07  standalone(>=0.7): 5  act-on-it(>=1.5): 3
 [181/203 39min] dsc03016_01024: err    559 m  CAUGHT
 [182/203 39min] dsc03102_01024: err    559 m  FALSE-ACCEPT
+[183/203 39min] dsc03118_01024: err   1768 m  FALSE-ACCEPT
+[184/203 39min] dsc03119_01024: err      0 m  OVER-CAUTIOUS
+[185/203 39min] dsc03127_01024: err   2915 m  CAUGHT
+[186/203 39min] dsc03128_01024: err   3010 m  CAUGHT
+[187/203 39min] dsc03145_01024: err   2550 m  CAUGHT
+[188/203 39min] dsc05142_01024: err      0 m  TRUE-ACCEPT
+[189/203 40min] dsc05274_01024: err    250 m  TRUE-ACCEPT
+[190/203 40min] dsc05325_01024: err    250 m  TRUE-ACCEPT
+[191/203 40min] img_3407_01024: err   1904 m  CAUGHT
+[192/203 40min] img_3408_01024: err    707 m  CAUGHT
+[193/203 40min] rapperswildsc00198_01024: err   1031 m  CAUGHT
+[194/203 40min] rigistaffelDSC08881_01024: err      0 m  OVER-CAUTIOUS
+[195/203 40min] stmoritzDSC00551_01024: err      0 m  TRUE-ACCEPT
+[196/203 41min] stmoritzDSC00554_01024: err      0 m  TRUE-ACCEPT
+[197/203 41min] 1332166_01024: err    354 m  TRUE-ACCEPT
+[198/203 41min] 20663115_01024: err    250 m  TRUE-ACCEPT
+[199/203 41min] 24945353_01024: err    354 m  TRUE-ACCEPT
+[200/203 41min] 39298990_01024: err    791 m  FALSE-ACCEPT
+
+===== BATCH 10  (photos dsc03016_01024 .. 39298990_01024, n=20) =====
+  median err     456 m   <500 m: 10/20
+  verdicts: TA 8  FA 3  CAUGHT 7  OC 2
+  accepted: 11  median margin 0.81  standalone(>=0.7): 7  act-on-it(>=1.5): 3
