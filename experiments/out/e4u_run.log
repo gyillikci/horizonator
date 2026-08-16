@@ -200,3 +200,27 @@
   verdicts: TA 9  FA 2  CAUGHT 8  OC 1
   accepted: 11  median margin 0.92  standalone(>=0.7): 9  act-on-it(>=1.5): 3
 [161/203 14min] dsc02606_01024: err    250 m  OVER-CAUTIOUS
+[162/203 14min] dsc02607_01024: err      0 m  OVER-CAUTIOUS
+[163/203 14min] dsc02608_01024: err    250 m  TRUE-ACCEPT
+[164/203 14min] dsc02715_01024: err    559 m  FALSE-ACCEPT
+[165/203 14min] dsc02716_01024: err   2693 m  CAUGHT
+[166/203 14min] dsc02717_01024: err   1601 m  FALSE-ACCEPT
+[167/203 14min] dsc02718_01024: err   1250 m  FALSE-ACCEPT
+[168/203 15min] dsc02719_01024: err   3010 m  CAUGHT
+[169/203 15min] dsc02720_01024: err   2658 m  CAUGHT
+[170/203 15min] dsc02728_01024: err   1414 m  CAUGHT
+[171/203 15min] dsc02729_01024: err   2915 m  CAUGHT
+[172/203 15min] dsc02737_01024: err   2136 m  FALSE-ACCEPT
+[173/203 15min] dsc02754_01024: err      0 m  TRUE-ACCEPT
+[174/203 16min] dsc02806_01024: err   2462 m  CAUGHT
+[175/203 16min] dsc02809_01024: err    250 m  TRUE-ACCEPT
+[176/203 16min] dsc02812_01024: err    250 m  TRUE-ACCEPT
+[177/203 16min] dsc02828_01024: err   2305 m  CAUGHT
+[178/203 16min] dsc02830_01024: err   2372 m  CAUGHT
+[179/203 16min] dsc02833_01024: err   2462 m  CAUGHT
+[180/203 16min] dsc02834_01024: err   3202 m  CAUGHT
+
+===== BATCH  9  (photos dsc02606_01024 .. dsc02834_01024, n=20) =====
+  median err    1868 m   <500 m: 6/20
+  verdicts: TA 4  FA 4  CAUGHT 10  OC 2
+  accepted: 8  median margin 0.97  standalone(>=0.7): 5  act-on-it(>=1.5): 3
