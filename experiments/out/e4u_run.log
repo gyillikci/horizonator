@@ -138,3 +138,15 @@
 [112/203 6min] IMG_5195_01024: err      0 m  TRUE-ACCEPT
 [113/203 6min] IMG_5199_01024: err    559 m  FALSE-ACCEPT
 [114/203 6min] IMG_5200_01024: err      0 m  TRUE-ACCEPT
+[115/203 6min] IMG_5234_01024: err    354 m  TRUE-ACCEPT
+[116/203 6min] IMG_5238_01024: err   2915 m  CAUGHT
+[117/203 7min] IMG_5239_01024: err      0 m  TRUE-ACCEPT
+[118/203 7min] IMG_5241_01024: err      0 m  TRUE-ACCEPT
+[119/203 7min] IMG_5242_01024: err    250 m  TRUE-ACCEPT
+[120/203 7min] IMG_5255_01024: err      0 m  TRUE-ACCEPT
+
+===== BATCH  6  (photos IMG_5133_01024 .. IMG_5255_01024, n=20) =====
+  median err     530 m   <500 m: 9/20
+  verdicts: TA 9  FA 6  CAUGHT 5  OC 0
+  accepted: 15  median margin 0.57  standalone(>=0.7): 7  act-on-it(>=1.5): 1
+[121/203 7min] IMG_5268_01024: err    250 m  TRUE-ACCEPT
