@@ -168,3 +168,14 @@ the elevation-offset window for the pitch source (~0.3 braced IMU,
 a +1.5° platform-dependent bias); and the recorded warning that rms is
 not comparable across different extractions — multi-hypothesis
 selection must use margin/separation, never raw residual.
+
+## SRTM1 full resolution (E4p)
+
+The AWS skadi tiles are 1-arcsecond; `fetch_dems.py` decimates them to
+3″ for the default `DEMs_SRTM3`. Keep the originals in
+`~/.horizonator/DEMs_SRTM1` and pass `--dem` to use them — `CMarcher`
+scales its march step to the posting automatically (90 m → 40 m).
+Decimation was costing 2.18 mrad rms of skyline detail; on the sea
+cases full resolution halves position error (e.g. 136→71 m) at ~2.5×
+solve time. On ambiguous alpine terrain it is a wash — the limiter
+there is the landscape, not the DEM.

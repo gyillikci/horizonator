@@ -1271,6 +1271,24 @@ sequential estimator.
 > `ok` at 57–437 m vs 21–346 m same-DEM — mild degradation, no gate
 > trips. The instrument can carry either DEM family.
 >
+> **E4p — SRTM1 at full resolution: the free upgrade**
+> (`e4p_srtm1.py`; `CMarcher` now scales its march step to the DEM
+> posting, 90 m at 3″ → 40 m at 1″, so `--dem ~/.horizonator/
+> DEMs_SRTM1` just works). The pipeline had always downloaded
+> 1-arcsecond skadi tiles and DECIMATED them to 3″. Measured cost of
+> that decimation: **2.18 mrad rms of skyline detail** (0.3–0.8 mrad
+> far terrain, 2.5–3.2 near) — almost identical to E4o's 2.37 mrad
+> "cross-family" number, i.e. much of what was booked as SRTM↔GLO-30
+> disagreement was self-inflicted resolution loss; the true
+> family-vs-family gap is correspondingly smaller. Where it lands:
+> the sea-observer solves (E4c cases) improve outright — strait1
+> 136→71 m, offshore 267→106 m, strait2 20→17 m — at 2–3× solve time
+> (4–5 s→9–13 s, still interactive). On the hard alpine CH1 subset
+> (n=20, instrumented regime) it is a wash (median 1752→1591 m,
+> margins 0.20→0.30): there the limiter is landscape ambiguity, not
+> DEM posting. Deployment guidance: carry SRTM1 for the operating
+> area; it costs only disk and a factor ~2.5 in solve time.
+>
 > **E5d — the C++ route** (`e5d_export.py` here;
 > `examples/SkylineNavExample.cpp` + `examples/Data/
 > skyline_nav_stream.csv` in the gyillikci/gtsam fork, same branch).
