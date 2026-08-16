@@ -1349,8 +1349,13 @@ sequential estimator.
 > E3 box, 34,466 candidates on a 1 km grid): fix within **10 m** of
 > truth, coast-scale basin margin **1.14** (20 km NMS), **197 s** on
 > four x86 cores — CM5-projected ~10–15 min, and embarrassingly
-> parallel. The "somewhere on this coast" scenario is thus solved by
-> brute force within the existing solver; CrossLocate-class retrieval
+> parallel. The weakest geometry confirms it: the offshore case
+> (land in one narrow sector) still resolves coast-wide to 247 m with
+> margin **6.24** — open water in most directions is itself a
+> discriminative signature, since few places on the coast have land
+> in exactly that sector at those elevations. The "somewhere on this
+> coast" scenario is thus solved by brute force within the existing
+> solver; CrossLocate-class retrieval
 > remains the right architecture only for inland/mountain operation,
 > where the sea mask does not exist.
 >
