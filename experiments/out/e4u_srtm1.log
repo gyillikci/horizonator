@@ -126,3 +126,26 @@
   accepted: 16  median margin 0.71  standalone(>=0.7): 8  act-on-it(>=1.5): 3
 [101/203 28min] IMG_5133_01024: err   1031 m  CAUGHT
 [102/203 28min] IMG_5141_01024: err   2372 m  CAUGHT
+[103/203 28min] IMG_5143_01024: err   2512 m  CAUGHT
+[104/203 28min] IMG_5145_01024: err      0 m  OVER-CAUTIOUS
+[105/203 28min] IMG_5153_01024: err    250 m  TRUE-ACCEPT
+[106/203 29min] IMG_5156_01024: err      0 m  TRUE-ACCEPT
+[107/203 29min] IMG_5159_01024: err    500 m  CAUGHT
+[108/203 29min] IMG_5178_01024: err   1953 m  CAUGHT
+[109/203 29min] IMG_5180_01024: err   3052 m  CAUGHT
+[110/203 29min] IMG_5181_01024: err   1118 m  CAUGHT
+[111/203 29min] IMG_5187_01024: err    559 m  CAUGHT
+[112/203 29min] IMG_5195_01024: err      0 m  TRUE-ACCEPT
+[113/203 29min] IMG_5199_01024: err    559 m  FALSE-ACCEPT
+[114/203 30min] IMG_5200_01024: err      0 m  TRUE-ACCEPT
+[115/203 30min] IMG_5234_01024: err    354 m  TRUE-ACCEPT
+[116/203 30min] IMG_5238_01024: err   2915 m  CAUGHT
+[117/203 30min] IMG_5239_01024: err      0 m  TRUE-ACCEPT
+[118/203 30min] IMG_5241_01024: err      0 m  TRUE-ACCEPT
+[119/203 30min] IMG_5242_01024: err    250 m  TRUE-ACCEPT
+[120/203 30min] IMG_5255_01024: err      0 m  TRUE-ACCEPT
+
+===== BATCH  6  (photos IMG_5133_01024 .. IMG_5255_01024, n=20) =====
+  median err     427 m   <500 m: 10/20
+  verdicts: TA 9  FA 1  CAUGHT 9  OC 1
+  accepted: 10  median margin 1.08  standalone(>=0.7): 7  act-on-it(>=1.5): 1
