@@ -150,3 +150,4 @@
   verdicts: TA 9  FA 6  CAUGHT 5  OC 0
   accepted: 15  median margin 0.57  standalone(>=0.7): 7  act-on-it(>=1.5): 1
 [121/203 7min] IMG_5268_01024: err    250 m  TRUE-ACCEPT
+[122/203 7min] _dsc0011_01024: err   1904 m  FALSE-ACCEPT
