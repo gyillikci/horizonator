@@ -1270,6 +1270,21 @@ sequential estimator.
 > rendered composites solved against GLO-30): all three sea cases stay
 > `ok` at 57–437 m vs 21–346 m same-DEM — mild degradation, no gate
 > trips. The instrument can carry either DEM family.
+>
+> **E5d — the C++ route** (`e5d_export.py` here;
+> `examples/SkylineNavExample.cpp` + `examples/Data/
+> skyline_nav_stream.csv` in the gyillikci/gtsam fork, same branch).
+> The fusion layer ported to C++ as an alternative route to the same
+> results: `SkylineFixFactor` (unary Pose2 fix with anisotropic
+> covariance) and `HeadingBiasFactor` (heading through the shared
+> bias variable), consuming the exported sensor stream with no
+> Python, DEM, or solver in the loop. Parity against the python-gtsam
+> batch reference is exact to ~10 significant digits: final pose
+> (15786.30955, −4020.638423, θ −0.354814401), recovered compass bias
+> +1.315748 deg, mean error 31.394351 m, final 2.800441 m — plus the
+> C++-side marginals (σ 14.9/13.0 m). Built against the fork (GTSAM
+> 4.3, boost-free config). The embedded integration path is now:
+> front-end produces the stream rows, this graph consumes them.
 
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
