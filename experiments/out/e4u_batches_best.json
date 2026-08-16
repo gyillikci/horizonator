@@ -1,0 +1,27 @@
+{
+ "batches": [
+  {
+   "batch": 1,
+   "n": 2,
+   "photos": [
+    "04032011388_01024",
+    "04032011389_01024"
+   ],
+   "median_err_m": 2163.051660487416,
+   "hits_500m": 0,
+   "true_accept": 0,
+   "false_accept": 0,
+   "caught": 2,
+   "over_cautious": 0,
+   "median_accept_margin": null,
+   "standalone": 0,
+   "act_on_it": 0
+  }
+ ],
+ "confusion": {
+  "CAUGHT": 2
+ },
+ "n": 2,
+ "median_err_m": 2163.051660487416,
+ "hits_500m": 0
+}

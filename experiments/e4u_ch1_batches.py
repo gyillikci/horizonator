@@ -15,8 +15,15 @@ plus a final all-set confusion and the standalone/act-on-it tier counts
 photo priors — and therefore the rows — are comparable with
 out/e4f_audit.csv.
 
-Run:   python3 e4u_ch1_batches.py     (CSV to out/e4u_ch1.csv,
-batch summaries to out/e4u_batches.json)
+--best switches to the current-best configuration: full-resolution
+SRTM1 tiles (E4p) and the soft near-field (skyfix --dmin-soft 1000
+ramp with the C0_NOINFO coverage charge) instead of the hard 1 km
+clip; same priors (same seed), outputs to *_best files, for a full-set
+A/B against the E4f-comparable baseline.
+
+Run:   python3 e4u_ch1_batches.py [n] [--best]
+       (CSV to out/e4u_ch1[_best].csv, batches to
+       out/e4u_batches[_best].json)
 """
 
 import os
@@ -35,7 +42,30 @@ from e4e_gate_audit import ensure_tiles, CH1, DIR3, OUT, AZ, BOX
 HEADING_SIGMA_DEG = 1.0
 PITCH_SIGMA_DEG = 0.5
 BATCH = 20
+DIR1 = os.path.expanduser('~/.horizonator/DEMs_SRTM1')
+DMIN_SOFT = 1000.0
+BEST = '--best' in sys.argv          # SRTM1 + soft near-field (sea config)
+SRTM1 = '--srtm1' in sys.argv or BEST  # full-res DEM, hard 1 km clip
 rng = np.random.default_rng(20260819)
+
+
+def ensure_tiles1(lat, lon, margin_lat=0.7, margin_lon=0.9):
+    import math
+    import gzip
+    import urllib.request
+    os.makedirs(DIR1, exist_ok=True)
+    for la in range(math.floor(lat - margin_lat),
+                    math.floor(lat + margin_lat) + 1):
+        for lo in range(math.floor(lon - margin_lon),
+                        math.floor(lon + margin_lon) + 1):
+            t = f"N{la:02d}E{lo:03d}"
+            p1 = os.path.join(DIR1, t + '.hgt')
+            if not os.path.exists(p1):
+                url = ('https://s3.amazonaws.com/elevation-tiles-prod/'
+                       f'skadi/{t[:3]}/{t}.hgt.gz')
+                print('  fetching', t, flush=True)
+                with urllib.request.urlopen(url) as r:
+                    open(p1, 'wb').write(gzip.decompress(r.read()))
 
 
 def audit_photo(meta):
@@ -55,8 +85,14 @@ def audit_photo(meta):
     relief = float(np.std(el_obs[wt > 0]) * 1e3)
 
     ensure_tiles(lat_gt, lon_gt)
-    cm = S.CMarcher(DIR3, (lat_gt - .7, lat_gt + .7),
-                    (lon_gt - .9, lon_gt + .9), d_min=1000.)
+    if SRTM1:
+        ensure_tiles1(lat_gt, lon_gt)
+        cm = S.CMarcher(DIR1, (lat_gt - .7, lat_gt + .7),
+                        (lon_gt - .9, lon_gt + .9),
+                        d_min=150. if BEST else 1000.)
+    else:
+        cm = S.CMarcher(DIR3, (lat_gt - .7, lat_gt + .7),
+                        (lon_gt - .9, lon_gt + .9), d_min=1000.)
     mlat, mlon = S.meters_per_degree(lat_gt)
 
     def z_at(la, lo):
@@ -67,11 +103,16 @@ def audit_photo(meta):
 
     def skyl(dn, de):
         la, lo = lat_gt + dn / mlat, lon_gt + de / mlon
-        el, _ = cm.skyline(la, lo, z_at(la, lo), AZ)
-        return el
+        el, r = cm.skyline(la, lo, z_at(la, lo), AZ)
+        if BEST:
+            ws = np.clip((r - 300.0) / (DMIN_SOFT - 300.0), 0.0, 1.0)
+            return el, ws
+        return el, None
 
-    # reference attitude at the ground truth (FFT full search, once)
-    el_gt = skyl(0.0, 0.0)
+    # reference attitude at the ground truth (FFT full search, once);
+    # the reference stays unweighted so the priors match the baseline
+    # run draw-for-draw
+    el_gt, _ = skyl(0.0, 0.0)
     betas_full = np.arange(-0.100, 0.1001, 0.010)
     _, s_true, b_true = fast_photo_cost(el_obs, wt, el_gt,
                                         range(-1800, 1800, 4), betas_full)
@@ -85,9 +126,12 @@ def audit_photo(meta):
     # position solve within the priors
     step0 = 250.0
     g = np.arange(-BOX / 2, BOX / 2 + 1, step0)
-    cc = np.array([[fast_photo_cost(el_obs, wt, skyl(dn, de),
-                                    shifts_p, betas_p)[0]
-                    for de in g] for dn in g])
+    def cost_at(dn, de):
+        el, ws = skyl(dn, de)
+        return fast_photo_cost(el_obs, wt, el, shifts_p, betas_p,
+                               w_syn=ws)[0]
+
+    cc = np.array([[cost_at(dn, de) for de in g] for dn in g])
     i, j = np.unravel_index(np.argmin(cc), cc.shape)
     dn0, de0 = g[i], g[j]
     err = float(np.hypot(dn0, de0))
@@ -136,12 +180,17 @@ def batch_summary(rows, k):
 if __name__ == '__main__':
     metas = sorted(glob.glob(os.path.join(CH1, '*', '*.png.txt')))
     metas = [m for m in metas if os.path.exists(m[:-8] + '-mask.png')]
-    if len(sys.argv) > 1:
-        metas = metas[:int(sys.argv[1])]
+    nargs = [a for a in sys.argv[1:] if not a.startswith('--')]
+    if nargs:
+        metas = metas[:int(nargs[0])]
+    tag = '_best' if BEST else ('_srtm1' if SRTM1 else '')
     print(f'{len(metas)} photos, batches of {BATCH}, instrumented regime '
           f'(priors N(0,{HEADING_SIGMA_DEG}) deg heading / '
-          f'N(0,{PITCH_SIGMA_DEG}) deg pitch)', flush=True)
-    csv = open(os.path.join(OUT, 'e4u_ch1.csv'), 'w', buffering=1)
+          f'N(0,{PITCH_SIGMA_DEG}) deg pitch)'
+          + (', BEST config: SRTM1 + soft near-field' if BEST else
+             (', SRTM1 full resolution' if SRTM1 else '')),
+          flush=True)
+    csv = open(os.path.join(OUT, f'e4u_ch1{tag}.csv'), 'w', buffering=1)
     csv.write('photo,err_m,margin,boundary,rms_mrad,relief_mrad,verdict\n')
     rows_all, batch_rows, summaries = [], [], []
     t0 = time.time()
@@ -177,7 +226,7 @@ if __name__ == '__main__':
     if total_ok:
         print(f'  false-accept rate among accepted: '
               f'{counts.get("FALSE-ACCEPT", 0)}/{total_ok}')
-    with open(os.path.join(OUT, 'e4u_batches.json'), 'w') as f:
+    with open(os.path.join(OUT, f'e4u_batches{tag}.json'), 'w') as f:
         json.dump(dict(batches=summaries, confusion=counts,
                        n=len(rows_all),
                        median_err_m=float(np.median(errs)),
