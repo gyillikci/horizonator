@@ -151,3 +151,26 @@
   accepted: 15  median margin 0.57  standalone(>=0.7): 7  act-on-it(>=1.5): 1
 [121/203 7min] IMG_5268_01024: err    250 m  TRUE-ACCEPT
 [122/203 7min] _dsc0011_01024: err   1904 m  FALSE-ACCEPT
+[123/203 8min] _dsc0013_01024: err   1803 m  CAUGHT
+[124/203 8min] _dsc0022_01024: err   1581 m  CAUGHT
+[125/203 8min] _dsc0024_01024: err   1953 m  CAUGHT
+[126/203 8min] _dsc0027_01024: err      0 m  OVER-CAUTIOUS
+[127/203 8min] _dsc0028_01024: err      0 m  OVER-CAUTIOUS
+[128/203 8min] _dsc0030_01024: err      0 m  TRUE-ACCEPT
+[129/203 9min] _dsc0034_01024: err   2151 m  CAUGHT
+[130/203 9min] _dsc0035_01024: err   2462 m  CAUGHT
+[131/203 9min] _dsc0037_01024: err   3363 m  CAUGHT
+[132/203 9min] _dsc0051_01024: err    559 m  CAUGHT
+[133/203 9min] _dsc0071_01024: err   1458 m  CAUGHT
+[134/203 9min] _dsc0074_01024: err   1458 m  CAUGHT
+[135/203 9min] chur_DSC02394_01024: err   1521 m  FALSE-ACCEPT
+[136/203 10min] corvatschDSC00564_01024: err      0 m  TRUE-ACCEPT
+[137/203 10min] dsc02493_01024: err    250 m  TRUE-ACCEPT
+[138/203 10min] dsc02494_01024: err   1521 m  CAUGHT
+[139/203 10min] dsc02497_01024: err   2850 m  CAUGHT
+[140/203 10min] dsc02498_01024: err    250 m  TRUE-ACCEPT
+
+===== BATCH  7  (photos IMG_5268_01024 .. dsc02498_01024, n=20) =====
+  median err    1489 m   <500 m: 7/20
+  verdicts: TA 5  FA 2  CAUGHT 11  OC 2
+  accepted: 7  median margin 0.37  standalone(>=0.7): 2  act-on-it(>=1.5): 1
