@@ -112,7 +112,7 @@ def audit_photo(meta):
     for hh, (hname, eo, w) in enumerate(obs):
         cc = ccs[hh]
         i, j = np.unravel_index(np.argmin(cc), cc.shape)
-        out.append(dict(h=hname,
+        out.append(dict(h=hname, dn=float(g[i]), de=float(g[j]),
                         err=float(np.hypot(g[i], g[j])),
                         margin=float(basin_margin(cc, g,
                                                   min_sep=4 * step0))))
@@ -126,7 +126,7 @@ if __name__ == '__main__':
         metas = metas[:int(sys.argv[1])]
     print(f'{len(metas)} photos x {len(HYPS)} hypotheses')
     csv = open(os.path.join(OUT, 'e4l_multihyp.csv'), 'w', buffering=1)
-    csv.write('photo,' + ','.join(f'err_{h},margin_{h}'
+    csv.write('photo,' + ','.join(f'err_{h},margin_{h},dn_{h},de_{h}'
                                   for h, _ in HYPS) + '\n')
     rows_all = []
     t0 = time.time()
@@ -139,7 +139,8 @@ if __name__ == '__main__':
             continue
         rows_all.append(res)
         csv.write(name + ',' + ','.join(
-            f"{r['err']:.0f},{r['margin']:.3f}" for r in res) + '\n')
+            f"{r['err']:.0f},{r['margin']:.3f},{r['dn']:.0f},{r['de']:.0f}"
+            for r in res) + '\n')
         sel = max(res, key=lambda r: r['margin'])
         orc = min(res, key=lambda r: r['err'])
         print(f"[{n+1}/{len(metas)} {(time.time()-t0)/60:.0f}min] {name}: "
