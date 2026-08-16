@@ -180,6 +180,50 @@ def classify_trace(t, y, min_cycles=2.0):
     return dict(pattern=pattern, group=group, period_s=per, colour=None)
 
 
+def blade_flicker_hz(t, y, band=(0.3, 3.0), min_ac=0.5):
+    """Wind-turbine signature in a DAYTIME point trace: periodic glint
+    modulation at the blade-pass rate (rotor 10-20 rpm x 3 blades =
+    0.5-1 Hz), riding on a bright tower — a partial modulation, unlike
+    a nav light's full on/off. Returns the blade-pass frequency (Hz)
+    or None. Same unbiased autocorrelation as classify_trace, applied
+    to the detrended analog trace instead of a binary wave."""
+    t = np.asarray(t, float)
+    y = np.asarray(y, float)
+    if t.size < 16:
+        return None
+    dt = float(np.median(np.diff(t)))
+    b = y - y.mean()
+    if b.std() < 1e-9:
+        return None
+    n = b.size
+    raw = np.correlate(b, b, 'full')[n - 1:]
+    ac = raw / (np.arange(n, 0, -1) * b.var())
+    lo = max(2, int(round(1.0 / (band[1] * dt))))
+    hi = min(n // 2, int(round(1.0 / (band[0] * dt))))
+    if hi - lo < 3:
+        return None
+    # a real oscillation DECORRELATES before it re-peaks; slow drift
+    # keeps ac near 1 through the whole band and must not fire
+    dips = np.where(ac[:hi] < 0.1)[0]
+    if dips.size == 0:
+        return None
+    lo = max(lo, int(dips[0]) + 1)
+    if hi - lo < 3:
+        return None
+    per = None
+    peak = float(ac[lo:hi].max())
+    if peak < min_ac:
+        return None
+    for lag in range(lo, hi):
+        if ac[lag] >= 0.9 * peak and ac[lag] >= ac[lag - 1] \
+                and ac[lag] >= ac[lag + 1]:
+            per = lag * dt
+            break
+    if per is None or t[-1] - t[0] < 3 * per:
+        return None
+    return 1.0 / per
+
+
 def bearing_of(u, v, f_px, heading_rad, width, height=None):
     """Compass bearing (rad, CW from north) of pixel column u for a
     camera at `heading_rad` with focal length f_px — the same pinhole

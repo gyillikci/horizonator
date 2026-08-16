@@ -1456,6 +1456,39 @@ sequential estimator.
 > real dark-frame video (the tracker's MAD threshold and the
 > classifier were tuned on the synthetic sensor model only).
 
+> **E5h — wind turbines as a charted daytime landmark channel**
+> (`experiments/turbines.py`, `blade_flicker_hz` in `lightscan.py`,
+> `e5h_turbines.py`). The user's observation: a scene WITH wind
+> turbines is information in itself. Turbines are surveyed (OSM
+> power=generator + generator:source=wind; fetcher mirrors the lights
+> one, run user-side), ~100 m tall, ridge-crowning, and dense on the
+> Aegean coast — lighthouses of the daytime, identified not by flash
+> character but by (a) blade-pass glint periodicity in video
+> (0.5–1 Hz; detector requires the autocorrelation to decorrelate
+> before re-peaking, else slow illumination drift false-fires — bug
+> found) and (b) the CONSTELLATION of bearings to a farm. Three
+> results on two synthetic farms (8-turbine ridge line + 3-turbine
+> cape cluster): (1) presence filter — candidates that could not see
+> turbines are impossible when the scene shows them (10% of a 24 km
+> box pruned in this two-farm geometry; against a mostly turbine-free
+> coastline the prune is the point); (2) constellation fix — a 1-D
+> Hough over the unknown compass offset solves correspondence AND
+> compass bias together: 11 anonymous bearings -> best cell at 0 m
+> error, bias recovered +1.61 vs true +1.50 deg; (3) the passage:
+> turbine bearings flow through the same shared-bias factor as the
+> night lights (nothing new graph-side). Day without skyline: DR
+> 382/590 m -> +turbines 262/386 m. With skyline: mean unchanged
+> (69 vs 71 m) but bias estimate improves (+1.59 vs +1.32, true
+> +1.50) — the channel's value is availability and compass
+> observability, not beating a healthy skyline fix. The graph
+> DIVERGED on first wiring (mean 2700 km): an evenly spaced turbine
+> line admits a shifted, picket-fence correspondence that aligns n−1
+> bearings, and one wrong Hough alignment poisons everything —
+> defence is acceptance gates (>=3 inliers, offset within ±4 deg,
+> post-alignment rms <= half tolerance) before any bearing enters;
+> with them, 159 bearings fused cleanly. Next integration: turbine
+> presence as a candidate prune in the E4t whole-coast search.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the

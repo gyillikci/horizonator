@@ -1,0 +1,44 @@
+{
+ "stage1": {
+  "turbine_hz": 0.8333333333333363,
+  "mast": null,
+  "slow": null,
+  "ok": true
+ },
+ "stage2": {
+  "n_seen": 11,
+  "pruned": 112,
+  "cells": 1089,
+  "err_m": 0.0,
+  "bias_deg": 1.6122447344272075,
+  "ok": true
+ },
+ "DR": {
+  "mean": 381.8461641585862,
+  "final": 589.5359825500699,
+  "worst": 589.5359825500699,
+  "bias_deg": 1.7894196823510795e-15,
+  "bearings_used": 0
+ },
+ "DR+turbines": {
+  "mean": 261.7298026925635,
+  "final": 385.5566176289168,
+  "worst": 490.6554303923472,
+  "bias_deg": 1.6754192420548513,
+  "bearings_used": 159
+ },
+ "DR+skyline": {
+  "mean": 69.37978364004677,
+  "final": 2.800424426724973,
+  "worst": 474.41636641604015,
+  "bias_deg": 1.3157545604383039,
+  "bearings_used": 0
+ },
+ "DR+skyline+turbines": {
+  "mean": 71.27125266489777,
+  "final": 109.21945457487409,
+  "worst": 444.9165974297324,
+  "bias_deg": 1.586839192934945,
+  "bearings_used": 184
+ }
+}
