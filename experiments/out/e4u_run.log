@@ -250,3 +250,15 @@
   verdicts: TA 8  FA 2  CAUGHT 9  OC 1
   accepted: 10  median margin 1.07  standalone(>=0.7): 7  act-on-it(>=1.5): 2
 [201/203 20min] 45814775_01024: err    559 m  FALSE-ACCEPT
+[202/203 20min] 48605067_01024: err      0 m  TRUE-ACCEPT
+[203/203 20min] 60648419_01024: err    354 m  TRUE-ACCEPT
+
+===== BATCH 11  (photos 45814775_01024 .. 60648419_01024, n=3) =====
+  median err     354 m   <500 m: 2/3
+  verdicts: TA 2  FA 1  CAUGHT 0  OC 0
+  accepted: 3  median margin 0.91  standalone(>=0.7): 2  act-on-it(>=1.5): 1
+
+===== TOTAL =====
+  n 203   median err 1031 m   <500 m: 70/203
+  confusion: {'OVER-CAUTIOUS': 7, 'CAUGHT': 83, 'TRUE-ACCEPT': 63, 'FALSE-ACCEPT': 50}
+  false-accept rate among accepted: 50/113
