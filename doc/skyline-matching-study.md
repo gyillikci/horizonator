@@ -1396,6 +1396,32 @@ sequential estimator.
 > 4.3, boost-free config). The embedded integration path is now:
 > front-end produces the stream rows, this graph consumes them.
 
+> **E4u — the CH1 full set in 20-photo batches, plus the DEM/near-field
+> A/B** (`experiments/e4u_ch1_batches.py`, outputs `out/e4u_*`). The
+> instrumented regime (E4f priors, same seed, FFT solver) over all 203
+> CH1 photos, reported per 20-photo batch. Baseline (SRTM3, hard 1 km
+> clip): median 1031 m, 70/203 within 500 m, confusion TA 63 / FA 50 /
+> CAUGHT 83 / OC 7; batch medians swing 354 m (best terrain) to
+> 1960 m (repetitive foothills), and the margin tiers hold their
+> ordering at full scale but soften from the 14-photo E4k calibration:
+> accepted fixes are 56% correct at margin ≥0.15, 81% at ≥0.7, 88% at
+> ≥1.5, 100% at ≥3.0 — the residual standalone-tier false accepts are
+> "wrong ridge, same shape" basins on high-relief alpine terrain
+> (30–66 mrad relief), all within ~2 km. Two A/Bs against it: (1)
+> full-set SRTM1 (hard clip unchanged) — median 791 m, 75/203 hits,
+> FA 50→37 with CAUGHT 83→91 at similar availability, tiers 63/86/86%:
+> full resolution sharpens the cost landscape more than it moves the
+> optimum, so its real value inland is catching wrong basins (the E4p
+> "wash" verdict was about accuracy only). (2) The sea configuration
+> (SRTM1 + soft near-field with the C0_NOINFO coverage charge) on the
+> first 60 photos: hits 6→3, median 1677→2186 m, availability
+> collapsed to 54/60 CAUGHT — suppressing sub-kilometer terrain
+> discards an alpine viewpoint's own foreground ridges. The soft ramp
+> is confirmed regime-specific: right at sea (where near terrain
+> cannot exist and fake near-field basins are the threat), wrong on
+> land. Config selection between the two regimes is a one-bit input
+> (are we afloat?), not a tuning problem.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
