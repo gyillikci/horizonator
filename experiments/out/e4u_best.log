@@ -40,3 +40,42 @@
 [34/60 15min] 2011-10-04_15.46.39_01024: err   2915 m  CAUGHT
 [35/60 15min] 2011-10-04_15.48.56_01024: err   3182 m  CAUGHT
 [36/60 16min] 2011-10-04_15.50.30_01024: err   1250 m  CAUGHT
+[37/60 16min] 2011-10-04_15.52.38_01024: err   1458 m  CAUGHT
+[38/60 16min] 2011-10-04_16.03.27_01024: err   1521 m  CAUGHT
+[39/60 17min] 2011-10-04_16.13.26_01024: err   1031 m  CAUGHT
+[40/60 17min] 2011-10-04_16.20.03_01024: err   2915 m  CAUGHT
+
+===== BATCH  2  (photos 2011-10-04_15.06.11_01024 .. 2011-10-04_16.20.03_01024, n=20) =====
+  median err    1918 m   <500 m: 0/20
+  verdicts: TA 0  FA 0  CAUGHT 20  OC 0
+  accepted: 0  median margin nan  standalone(>=0.7): 0  act-on-it(>=1.5): 0
+[41/60 17min] 2011-10-04_16.21.36_01024: err   2693 m  CAUGHT
+[42/60 17min] 2011-10-06_11.24.33_01024: err   2305 m  CAUGHT
+[43/60 18min] 2011-10-06_14.41.52_01024: err   1677 m  CAUGHT
+[44/60 18min] 2011-10-06_14.42.18_01024: err   2693 m  CAUGHT
+[45/60 18min] 2011-10-06_14.42.24_01024: err   3536 m  CAUGHT
+[46/60 19min] 2011-10-06_14.43.20_01024: err   1768 m  CAUGHT
+[47/60 19min] 2011-10-06_15.11.17_01024: err   2462 m  CAUGHT
+[48/60 19min] 2011-10-07_10.26.24_01024: err   1250 m  CAUGHT
+[49/60 19min] 2011-10-07_10.52.05_01024: err   3363 m  CAUGHT
+[50/60 20min] 2011-10-07_11.01.09_01024: err   1601 m  CAUGHT
+[51/60 20min] 2011-10-07_11.37.54_01024: err   2610 m  CAUGHT
+[52/60 20min] 2011-10-07_11.56.32_01024: err   2693 m  CAUGHT
+[53/60 21min] 2012-02-18_18.32.18_01024: err   1250 m  CAUGHT
+[54/60 21min] DSCF3435_01024: err   1601 m  CAUGHT
+[55/60 21min] DSCF3436_01024: err   1346 m  CAUGHT
+[56/60 22min] DSCF3440_01024: err    354 m  TRUE-ACCEPT
+[57/60 22min] DSCF3441_01024: err   2704 m  CAUGHT
+[58/60 22min] DSCF3442_01024: err   1904 m  FALSE-ACCEPT
+[59/60 22min] DSCF3452_01024: err   3182 m  CAUGHT
+[60/60 23min] DSCF3456_01024: err    500 m  FALSE-ACCEPT
+
+===== BATCH  3  (photos 2011-10-04_16.21.36_01024 .. DSCF3456_01024, n=20) =====
+  median err    2104 m   <500 m: 1/20
+  verdicts: TA 1  FA 2  CAUGHT 17  OC 0
+  accepted: 3  median margin 0.23  standalone(>=0.7): 0  act-on-it(>=1.5): 0
+
+===== TOTAL =====
+  n 60   median err 2186 m   <500 m: 3/60
+  confusion: {'CAUGHT': 54, 'FALSE-ACCEPT': 3, 'TRUE-ACCEPT': 2, 'OVER-CAUTIOUS': 1}
+  false-accept rate among accepted: 3/5
