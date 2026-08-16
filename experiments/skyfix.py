@@ -107,24 +107,42 @@ def observation(img, fov_deg, heading, roll_deg, pitch_deg=0.0):
             dict(rows=rows, conf=conf, az_rel=az_rel, el_pt=el_pt))
 
 
-def photo_cost(el_obs, w, el_syn, shifts, betas=BETAS):
+C0_NOINFO = 1.35e-5     # Huber cost of a 6 mrad residual: what a
+                        # suppressed bin is charged, so a candidate
+                        # cannot LOWER its cost by hiding terrain behind
+                        # its own near field (costs stay comparable
+                        # across candidates with different suppression)
+
+
+def photo_cost(el_obs, w, el_syn, shifts, betas=BETAS, w_syn=None):
+    """w_syn: optional per-azimuth synthesis-side weight (NOT rolled with
+    the observation) — e.g. the soft near-field ramp for land observers.
+    Suppressed weight is charged C0_NOINFO per unit instead of vanishing
+    from the average."""
     best = (np.inf, 0, 0.0)
     for s in shifts:
         eo = np.roll(el_obs, s)
-        ww = np.roll(w, s)
+        w0 = np.roll(w, s)
+        W_obs = w0.sum()
+        ww = w0 * w_syn if w_syn is not None else w0
         m = ww > 0
         r = el_syn[m] - eo[m]
         wm = ww[m]
+        Weff = wm.sum()
+        if Weff < 1e-9:
+            continue
         for b in betas:
             rb = np.abs(r - b)
             h = np.where(rb <= 3e-3, 0.5 * rb * rb, 3e-3 * (rb - 1.5e-3))
-            c = float(np.sum(h * wm) / np.sum(wm))
+            c = float((np.sum(h * wm) + C0_NOINFO * (W_obs - Weff))
+                      / W_obs)
             if c < best[0]:
                 best = (c, s, b)
     return best
 
 
-def fast_photo_cost(el_obs, w, el_syn, shifts, betas=BETAS, topk=12):
+def fast_photo_cost(el_obs, w, el_syn, shifts, betas=BETAS, topk=12,
+                    w_syn=None):
     """photo_cost with the heading-shift search FFT-accelerated.
 
     The weighted QUADRATIC cost with its offset beta minimized in closed
@@ -143,7 +161,7 @@ def fast_photo_cost(el_obs, w, el_syn, shifts, betas=BETAS, topk=12):
     exhaustive search when the shift set is already tiny."""
     lags = np.asarray(list(shifts), dtype=int)
     if lags.size <= 3 * topk:
-        return photo_cost(el_obs, w, el_syn, lags, betas)
+        return photo_cost(el_obs, w, el_syn, lags, betas, w_syn)
     n = el_obs.size
     corr = lambda a, b: np.fft.irfft(np.conj(np.fft.rfft(a))
                                      * np.fft.rfft(b), n)
@@ -158,7 +176,10 @@ def fast_photo_cost(el_obs, w, el_syn, shifts, betas=BETAS, topk=12):
     top = lags[np.argsort(C2[li])[:topk]]
     cand = np.unique(np.concatenate([top - 1, top, top + 1]))
     cand = cand[np.isin(cand, lags) | np.isin(cand % n, li)]
-    return photo_cost(el_obs, w, el_syn, cand, betas)
+    # the quadratic preselect ignores w_syn (its correlations would need
+    # six FFTs); the exact pass applies it, so wide-search results with a
+    # soft mask are near-optimal rather than exact
+    return photo_cost(el_obs, w, el_syn, cand, betas, w_syn)
 
 
 def per_photo_vals(spec, n, default=None):
@@ -202,6 +223,15 @@ def main():
     ap.add_argument('--dem', default=os.path.expanduser(
         os.environ.get('HORIZONATOR_DEMS', '~/.horizonator/DEMs_SRTM3')))
     ap.add_argument('--dmin', type=float, default=1000.0)
+    ap.add_argument('--dmin-soft', type=float,
+                    help='soft near-field mode for LAND observers: '
+                         'instead of hard-masking terrain nearer than '
+                         '--dmin (which throws away genuine mid-field '
+                         'skyline), march from 150 m and DOWN-WEIGHT '
+                         'each azimuth by a ramp from 0 at 300 m to 1 '
+                         'at this distance (m; try 1500). The observer\'s '
+                         'own bluff still contributes ~nothing, but a '
+                         'ridge at 800 m keeps most of its vote')
     ap.add_argument('--min-margin', type=float, default=0.15,
                     help='inconclusive when the second-best coarse basin '
                          'is within this relative cost margin of the best '
@@ -310,14 +340,18 @@ def main():
 
     mlat, mlon = S.meters_per_degree(lat_c)
     cm = S.CMarcher(args.dem, (lat_c - 0.6, lat_c + 0.6),
-                    (lon_c - 0.8, lon_c + 0.8), d_min=args.dmin)
+                    (lon_c - 0.8, lon_c + 0.8),
+                    d_min=150.0 if args.dmin_soft else args.dmin)
     usum = sum(uw)
 
     def C(dn, de):
-        el, _ = cm.skyline(lat_c + dn / mlat, lon_c + de / mlon, z, AZ)
+        el, r = cm.skyline(lat_c + dn / mlat, lon_c + de / mlon, z, AZ)
+        ws = None
+        if args.dmin_soft:
+            ws = np.clip((r - 300.0) / (args.dmin_soft - 300.0), 0.0, 1.0)
         return sum(p['weight'] * fast_photo_cost(
-            p['el_obs'], p['w'], el, p['shifts'], p['betas'])[0]
-            for p in photos) / usum
+            p['el_obs'], p['w'], el, p['shifts'], p['betas'],
+            w_syn=ws)[0] for p in photos) / usum
 
     step0 = max(args.box / 20, 100.0)
     g = np.arange(-args.box / 2, args.box / 2 + 1, step0)
@@ -365,11 +399,16 @@ def main():
 
     lat_e = lat_c + dn0 / mlat
     lon_e = lon_c + de0 / mlon
-    el_syn, _ = cm.skyline(lat_e, lon_e, z, AZ)
+    el_syn, r_syn = cm.skyline(lat_e, lon_e, z, AZ)
+    ws_fix = None
+    if args.dmin_soft:
+        ws_fix = np.clip((r_syn - 300.0) / (args.dmin_soft - 300.0),
+                         0.0, 1.0)
     pj = []
     for p in photos:
         cb, sb, bb = fast_photo_cost(p['el_obs'], p['w'], el_syn,
-                                     p['shifts'], p['betas'])
+                                     p['shifts'], p['betas'],
+                                     w_syn=ws_fix)
         pj.append(dict(file=os.path.basename(p['path']), fov_deg=p['fov'],
                        heading_deg=p['heading'], pitch_deg=p['pitch'],
                        roll_deg=p['roll'], weight=p['weight'],
