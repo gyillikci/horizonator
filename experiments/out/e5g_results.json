@@ -1,0 +1,95 @@
+{
+ "stage12": {
+  "classification": {
+   "demo:1": {
+    "true": {
+     "pattern": "Fl",
+     "group": 3,
+     "period_s": 15.0,
+     "colour": "W"
+    },
+    "classified": {
+     "pattern": "Fl",
+     "group": 3,
+     "period_s": 14.999999999999947,
+     "colour": null
+    },
+    "ok": true
+   },
+   "demo:2": {
+    "true": {
+     "pattern": "Fl",
+     "group": 1,
+     "period_s": 5.0,
+     "colour": "W"
+    },
+    "classified": {
+     "pattern": "Fl",
+     "group": 1,
+     "period_s": 4.999999999999982,
+     "colour": null
+    },
+    "ok": true
+   },
+   "demo:3": {
+    "true": {
+     "pattern": "Iso",
+     "group": 1,
+     "period_s": 4.0,
+     "colour": "W"
+    },
+    "classified": {
+     "pattern": "Iso",
+     "group": 1,
+     "period_s": 3.999999999999986,
+     "colour": null
+    },
+    "ok": true
+   },
+   "DECOY": {
+    "true": {
+     "pattern": "Fl",
+     "group": 1,
+     "period_s": 2.5,
+     "colour": "W"
+    },
+    "classified": {
+     "pattern": "Fl",
+     "group": 1,
+     "period_s": 2.4933333333333243,
+     "colour": null
+    },
+    "ok": true
+   }
+  },
+  "identification": {
+   "demo:1": [
+    "demo:1"
+   ],
+   "demo:2": [
+    "demo:2"
+   ],
+   "demo:3": [
+    "demo:3"
+   ],
+   "DECOY": []
+  },
+  "ok": true
+ },
+ "oracle": {
+  "mean": 138.13469498062338,
+  "final": 62.06042353012041,
+  "worst": 427.30885382883696,
+  "bias_deg": 1.5387466029578158,
+  "sightings_used": 0,
+  "sightings_rejected": 0
+ },
+ "closed": {
+  "mean": 154.4119341227998,
+  "final": 148.09656962033998,
+  "worst": 361.83299649120556,
+  "bias_deg": 1.639606448218215,
+  "sightings_used": 54,
+  "sightings_rejected": 5
+ }
+}

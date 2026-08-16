@@ -1422,6 +1422,40 @@ sequential estimator.
 > land. Config selection between the two regimes is a one-bit input
 > (are we afloat?), not a tuning problem.
 
+> **E5g — the night channel without an oracle**
+> (`experiments/lights.py`, `lightscan.py`, `e5g_lightscan.py`). E5f
+> assumed something told the camera WHICH charted light it saw; E5g
+> removes that assumption. `lights.py` is the light database layer: an
+> Overpass fetcher for OSM seamark data (position + flash character +
+> range/height; blocked from this container's egress — run user-side
+> and commit the JSON), a chart-notation parser, and a matcher that
+> identifies a classified character within a radius gate.
+> `lightscan.py` is the front end: MAD-thresholded point tracking
+> across night frames (a percentile threshold sits in the noise tail
+> and spawns junk tracks — first bug found), and a chart-like
+> character classifier — binary lit/dark wave, sub-half-second gap
+> closing (a wave occluding the light for a frame must not split a
+> flash — second bug), unbiased-autocorrelation cycle length (the
+> full period aligns every cycle; a group's intra-flash spacing only
+> partially aligns), flashes-per-cycle, duty-cycle pattern class, and
+> uniform-train harmonic reduction (Fl.2.5s sampled at 5 Hz first
+> reads Fl(2)5s; equal edge spacing reduces it to the fundamental —
+> the reduction lives in the classifier, which can see uniformity,
+> NOT in the matcher, where it would falsely equate Fl(3)15s with
+> Fl.5s — third bug, caught by the decoy test). End-to-end on
+> synthetic 40 s / 5 Hz night video with sensor noise and 6% wave
+> dropouts: Fl(3)W.15s, Fl.W.5s, Iso.W.4s all classified and uniquely
+> identified; an uncharted decoy (fishing light, Fl.2.5s) correctly
+> classified and REJECTED (no chart entry — a track that does not
+> match exactly one charted light is never used). The E5f passage
+> re-run with identification in the loop: 54 of 59 sightings
+> identified and used, 5 conservatively rejected, mean 154 m / final
+> 148 m vs the oracle's 138 / 62 m, compass bias recovered +1.64 vs
+> +1.54 deg — full autonomy costs ~10% in accuracy and nothing in
+> integrity. Remaining for a live run: the regional OSM extract and
+> real dark-frame video (the tracker's MAD threshold and the
+> classifier were tuned on the synthetic sensor model only).
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
