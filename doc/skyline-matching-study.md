@@ -1309,6 +1309,35 @@ sequential estimator.
 > what `ewasr_bridge` ships for. Revisit recovery-under-cloud only
 > with a fine-resolution model validated on real maritime imagery.
 >
+> **Literature dig II — four veins, two assayed on the spot.**
+> (1) *The founding lineage*: Cozman & Krotkov (CMU, 1995–97) did
+> Bayesian skyline-vs-DEM matching for planetary rovers — skyline as
+> elevation-vs-azimuth vector, 100–400 m errors, field-tested in the
+> Atacama and against the Apollo 17 site — fifteen years before the
+> Baatz line this study built on; the history section owes them the
+> citation. (2) *Country-scale retrieval exists off the shelf*:
+> CrossLocate (Tomešek & Čadík, WACV 2022; code on GitHub) learns
+> cross-modal embeddings between photos and 10.7M rendered
+> silhouette/depth/semantic views covering the entire Alps at 1M
+> locations — the exact architecture for the "somewhere on the
+> Turkish coast" search scale our dense solver cannot reach; our
+> fastmarch renderer can generate the equivalent coastal database.
+> (3) *Refraction dip empirics* (van der Werf 2016; the SDSU
+> refraction corpus): dip variability is driven by the air–sea
+> temperature difference, and corrections from ΔT + wind cut dip
+> error by ~1/3 and outliers by ~2/3 — directly applicable to
+> auto-level: an optional air–sea ΔT input should correct the assumed
+> dip, and large |ΔT| should widen the ±2 mrad window. The cheapest
+> unclaimed accuracy in the tight-β mode. (4) *Haze ranging*
+> (Koschmieder): assayed immediately, both ways. On our synthetic
+> composites (self-consistent haze) per-azimuth contrast recovers
+> range with corr 0.75, median |err| 0.75 km over 4–14 km — but on 15
+> real CH1 photos only 2 carry the signal (the two genuinely hazy
+> ones; clear air has no gradient and albedo variation swamps the
+> cue). Verdict: a conditional auxiliary for hazy maritime days,
+> never a dependable channel — recorded so the synthetic best case
+> doesn't seduce anyone later.
+>
 > **E5d — the C++ route** (`e5d_export.py` here;
 > `examples/SkylineNavExample.cpp` + `examples/Data/
 > skyline_nav_stream.csv` in the gyillikci/gtsam fork, same branch).
