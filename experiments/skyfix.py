@@ -141,6 +141,27 @@ def photo_cost(el_obs, w, el_syn, shifts, betas=BETAS, w_syn=None):
     return best
 
 
+def photo_cost_curve(el_obs, w, el_syn, shifts, betas=BETAS):
+    """Cost per shift (min over betas) — for RIGID-PAN fusion, where all
+    frames of a pan share ONE compass offset (their relative headings
+    are gyro-accurate), so the joint cost must be minimized over a
+    single shared shift instead of per-photo independent ones."""
+    lags = np.asarray(list(shifts), dtype=int)
+    out = np.full(lags.size, np.inf)
+    for k, s in enumerate(lags):
+        eo = np.roll(el_obs, s)
+        ww = np.roll(w, s)
+        m = ww > 0
+        if not m.any():
+            continue
+        r = el_syn[m] - eo[m]
+        wm = ww[m]
+        rb = np.abs(r[None, :] - np.asarray(betas)[:, None])
+        h = np.where(rb <= 3e-3, 0.5 * rb * rb, 3e-3 * (rb - 1.5e-3))
+        out[k] = float(((h * wm[None, :]).sum(1) / wm.sum()).min())
+    return out
+
+
 def fast_photo_cost(el_obs, w, el_syn, shifts, betas=BETAS, topk=12,
                     w_syn=None):
     """photo_cost with the heading-shift search FFT-accelerated.
@@ -266,6 +287,13 @@ def main():
                          'study branch) would silently poison the '
                          'default window. Sea-horizon auto-levelling '
                          'supersedes this when it succeeds')
+    ap.add_argument('--rigid-pan', action='store_true',
+                    help='multi-photo mode: the frames are a PAN whose '
+                         'relative headings are gyro-accurate, so all '
+                         'photos share ONE compass-offset nuisance '
+                         'instead of independent per-photo shifts — '
+                         'fewer nuisances, stiffer joint fix. Requires '
+                         'a heading for every photo')
     ap.add_argument('--px-err', type=float, default=1.5,
                     help='assumed skyline-extraction error in pixels '
                          '(at the 1600 px working width); raise it for '
@@ -363,11 +391,21 @@ def main():
                     d_min=150.0 if args.dmin_soft else args.dmin)
     usum = sum(uw)
 
+    rigid = args.rigid_pan and len(photos) > 1 \
+        and all(p['heading'] is not None for p in photos)
+
     def C(dn, de):
         el, r = cm.skyline(lat_c + dn / mlat, lon_c + de / mlon, z, AZ)
         ws = None
         if args.dmin_soft:
             ws = np.clip((r - 300.0) / (args.dmin_soft - 300.0), 0.0, 1.0)
+        if rigid:
+            shared = np.arange(-60, 61, 2)
+            tot = np.zeros(shared.size)
+            for p in photos:
+                tot += p['weight'] * photo_cost_curve(
+                    p['el_obs'], p['w'], el, shared, p['betas'])
+            return float(tot.min()) / usum
         return sum(p['weight'] * fast_photo_cost(
             p['el_obs'], p['w'], el, p['shifts'], p['betas'],
             w_syn=ws)[0] for p in photos) / usum
