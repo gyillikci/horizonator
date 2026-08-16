@@ -1163,6 +1163,26 @@ sequential estimator.
 > multi-hypothesis extraction must select on a dimensionless quantity
 > (basin margin / separation), never the raw residual. Recorded here
 > so it cannot be re-learned the hard way.
+>
+> **E4k — the trust-gate operating curve, tuned**
+> (`e4k_gate_curve.py`, `out/e4k_curve.png`). With the FFT solver the
+> full-CH1 audits are cheap enough to treat `--min-margin` as a chosen
+> operating point instead of a first guess. Sweeping the threshold over
+> the recorded E4e/E4f audits: **with attitude priors** the trade is
+> clean and monotone — 0.3 → 37% availability at 26% wrong, 0.5 → 28%
+> at 20%, 0.7 → 24% at 14%, 1.0 → 15% at 7%, and **1.5 → 7%
+> availability (14 photos) at 0% wrong, none beyond 500 m**.
+> **Attitude-free**, no threshold below ~1.0 cleans the accept set
+> (wrong share stays 38–56% until availability collapses to 2%) — the
+> E4e conclusion, now as a curve. Cross-validation: the parallel
+> branch's independent pipeline (different extractor, different
+> solver) chose separation ≥ 1.5 and kept **the same 14 photos'
+> worth** (7%, 93% within 1 km) — two blind implementations agreeing
+> on both the threshold value and the yield. Operating guidance now in
+> the tools: fused/underway (factor-graph cross-check present) keep
+> `--min-margin` 0.15–0.3 for availability; a STANDALONE single-photo
+> fix that must be trusted on its own merits 0.7–1.0 with attitude
+> priors; margin ≥ 1.5 is the "certain enough to act on" tier.
 
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction

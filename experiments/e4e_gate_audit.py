@@ -27,7 +27,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import numpy as np
 from PIL import Image
 import skyline as S
-from skyfix import basin_margin
+from skyfix import basin_margin, fast_photo_cost
 
 
 def ensure_tiles(lat, lon, margin_lat=0.7, margin_lon=0.9):
@@ -93,18 +93,8 @@ def audit_photo(meta):
     def C(dn, de):
         la, lo = lat_gt + dn / mlat, lon_gt + de / mlon
         el, _ = cm.skyline(la, lo, z_at(la, lo), AZ)
-        best = np.inf
-        for s in range(-1800, 1800, SHIFT_STEP):
-            eo = np.roll(el_obs, s)
-            ww = np.roll(wt, s)
-            mm = ww > 0
-            r = el[mm] - eo[mm]
-            rb = np.abs(r[None, :] - BETAS[:, None])
-            h = np.where(rb <= 3e-3, .5 * rb * rb, 3e-3 * (rb - 1.5e-3))
-            cval = h.mean(1).min()
-            if cval < best:
-                best = cval
-        return best
+        return fast_photo_cost(el_obs, wt, el,
+                               range(-1800, 1800, SHIFT_STEP), BETAS)[0]
 
     step0 = 250.0
     g = np.arange(-BOX / 2, BOX / 2 + 1, step0)
@@ -129,7 +119,7 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         metas = metas[:int(sys.argv[1])]
     print(f'{len(metas)} photos')
-    csv = open(os.path.join(OUT, 'e4e_audit.csv'), 'w', buffering=1)
+    csv = open(os.path.join(OUT, 'e4e_audit_fft.csv'), 'w', buffering=1)
     csv.write('photo,err_m,margin,boundary,rms_mrad,relief_mrad,verdict\n')
     counts = {}
     t0 = time.time()

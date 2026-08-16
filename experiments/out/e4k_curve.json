@@ -1,0 +1,118 @@
+{
+ "attitude-free (E4e)": [
+  {
+   "thresh": 0.15,
+   "n": 58,
+   "avail": 0.2857142857142857,
+   "false_rate": 0.5,
+   "far": 12,
+   "median_acc_err": 427.0
+  },
+  {
+   "thresh": 0.3,
+   "n": 36,
+   "avail": 0.17733990147783252,
+   "false_rate": 0.5555555555555556,
+   "far": 6,
+   "median_acc_err": 559.0
+  },
+  {
+   "thresh": 0.5,
+   "n": 16,
+   "avail": 0.07881773399014778,
+   "false_rate": 0.5,
+   "far": 3,
+   "median_acc_err": 427.0
+  },
+  {
+   "thresh": 0.7,
+   "n": 8,
+   "avail": 0.03940886699507389,
+   "false_rate": 0.375,
+   "far": 1,
+   "median_acc_err": 302.0
+  },
+  {
+   "thresh": 1.0,
+   "n": 5,
+   "avail": 0.024630541871921183,
+   "false_rate": 0.0,
+   "far": 0,
+   "median_acc_err": 0.0
+  },
+  {
+   "thresh": 1.5,
+   "n": 1,
+   "avail": 0.0049261083743842365,
+   "false_rate": 0.0,
+   "far": 0,
+   "median_acc_err": 0.0
+  },
+  {
+   "thresh": 2.0,
+   "n": 1,
+   "avail": 0.0049261083743842365,
+   "false_rate": 0.0,
+   "far": 0,
+   "median_acc_err": 0.0
+  }
+ ],
+ "attitude priors (E4f)": [
+  {
+   "thresh": 0.15,
+   "n": 102,
+   "avail": 0.5024630541871922,
+   "false_rate": 0.39215686274509803,
+   "far": 17,
+   "median_acc_err": 354.0
+  },
+  {
+   "thresh": 0.3,
+   "n": 76,
+   "avail": 0.37438423645320196,
+   "false_rate": 0.2631578947368421,
+   "far": 8,
+   "median_acc_err": 250.0
+  },
+  {
+   "thresh": 0.5,
+   "n": 56,
+   "avail": 0.27586206896551724,
+   "false_rate": 0.19642857142857142,
+   "far": 3,
+   "median_acc_err": 250.0
+  },
+  {
+   "thresh": 0.7,
+   "n": 49,
+   "avail": 0.2413793103448276,
+   "false_rate": 0.14285714285714285,
+   "far": 1,
+   "median_acc_err": 250.0
+  },
+  {
+   "thresh": 1.0,
+   "n": 30,
+   "avail": 0.1477832512315271,
+   "false_rate": 0.06666666666666667,
+   "far": 0,
+   "median_acc_err": 250.0
+  },
+  {
+   "thresh": 1.5,
+   "n": 14,
+   "avail": 0.06896551724137931,
+   "false_rate": 0.0,
+   "far": 0,
+   "median_acc_err": 0.0
+  },
+  {
+   "thresh": 2.0,
+   "n": 10,
+   "avail": 0.04926108374384237,
+   "false_rate": 0.0,
+   "far": 0,
+   "median_acc_err": 0.0
+  }
+ ]
+}
