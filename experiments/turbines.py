@@ -82,7 +82,7 @@ def demo_farm(lat0=36.985, lon0=27.395, n=8, spacing_m=420.0,
         dict(id=f'demo:t{k}',
              lat=lat0 + k * spacing_m * math.cos(b) / mlat,
              lon=lon0 + k * spacing_m * math.sin(b) / mlon,
-             hub_m=95.0, synthetic=True)
+             hub_m=95.0, cls='turbine', synthetic=True)
         for k in range(n)])
 
 
@@ -116,17 +116,36 @@ def wrap(a):
     return (np.asarray(a) + np.pi) % (2 * np.pi) - np.pi
 
 
-def hough_align(meas, pred, tol_rad):
+def _compatible(cls_meas, cls_pred):
+    """Class gate for landmark assignment. Detector classes are
+    coarse — 'turbine' (blade flicker) vs 'static' (mast, pylon,
+    anything that doesn't rotate) — so the rule is: a pair is
+    incompatible only when exactly one side is a turbine. None on
+    either side means unclassified and matches anything."""
+    if cls_meas is None or cls_pred is None:
+        return True
+    return (cls_meas == 'turbine') == (cls_pred == 'turbine')
+
+
+def hough_align(meas, pred, tol_rad, cls_meas=None, cls_pred=None):
     """Align measured bearings with predicted ones under an UNKNOWN
     common offset (compass bias): every (meas, pred) pair votes an
     offset; the offset explaining the most measurements wins.
     Returns (offset, n_inliers, rms_rad, pairs) with unique greedy
-    assignment at the winning offset."""
+    assignment at the winning offset. Optional per-bearing class
+    labels (cls_meas / cls_pred) restrict both votes and assignment
+    to compatible pairs — a flickering turbine never matches a
+    pylon."""
     meas = np.asarray(meas, float)
     pred = np.asarray(pred, float)
     if meas.size == 0 or pred.size == 0:
         return 0.0, 0, np.inf, []
-    votes = wrap(meas[:, None] - pred[None, :]).ravel()
+    compat = np.ones((meas.size, pred.size), bool)
+    if cls_meas is not None and cls_pred is not None:
+        for i in range(meas.size):
+            for j in range(pred.size):
+                compat[i, j] = _compatible(cls_meas[i], cls_pred[j])
+    votes = wrap(meas[:, None] - pred[None, :])[compat].ravel()
     if votes.size > 24:
         # coarse Hough: keep only offsets in the most-voted 1-deg bins
         h, edges = np.histogram(votes, bins=360, range=(-np.pi, np.pi))
@@ -139,6 +158,7 @@ def hough_align(meas, pred, tol_rad):
     best = (0, np.inf, 0.0, [])          # (inliers, rms, offset, pairs)
     for off in votes:
         d = np.abs(wrap(meas[:, None] - pred[None, :] - off))
+        d[~compat] = np.inf
         pairs, used_p = [], set()
         for i in np.argsort(d.min(axis=1)):
             for j in np.argsort(d[i]):
@@ -159,14 +179,21 @@ def hough_align(meas, pred, tol_rad):
     return best[2], best[0], best[1], best[3]
 
 
-def constellation_score(db, meas, lat, lon, max_m, tol_rad):
+def constellation_score(db, meas, lat, lon, max_m, tol_rad,
+                        cls_meas=None):
     """Score a candidate viewpoint against a measured bearing set.
-    Presence filter included: no turbines in view -> -1 (impossible
-    when the scene shows turbines). Higher = better."""
-    pred, _ = db.bearings_from(lat, lon, max_m)
+    Presence filter included: no landmarks in view -> -1 (impossible
+    when the scene shows them). Higher = better. cls_meas: optional
+    detector class per measured bearing; charted classes come from
+    each entry's 'cls' key (absent = unclassified)."""
+    pred, keep = db.bearings_from(lat, lon, max_m)
     if pred.size == 0:
         return -1.0, 0.0
-    off, n_in, rms, _ = hough_align(meas, pred, tol_rad)
+    cls_pred = None
+    if cls_meas is not None:
+        cls_pred = [db.turbines[int(k)].get('cls') for k in keep]
+    off, n_in, rms, _ = hough_align(meas, pred, tol_rad,
+                                    cls_meas, cls_pred)
     if n_in == 0:
         return 0.0, 0.0
     return n_in - rms / tol_rad, off

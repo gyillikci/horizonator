@@ -49,7 +49,7 @@ def flash_wave(char, t, phase=0.0):
     if char['pattern'] == 'Iso':
         return (tt < p / 2).astype(float)
     if char['pattern'] in ('Fl', 'LFl'):
-        w = 2.0 if char['pattern'] == 'LFl' else 0.8
+        w = 2.0 if char['pattern'] == 'LFl' else min(0.8, p / 3.0)
         on = np.zeros_like(t)
         for g in range(char.get('group', 1)):
             on = np.maximum(on, ((tt >= g * 2.0)

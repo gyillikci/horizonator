@@ -1489,6 +1489,33 @@ sequential estimator.
 > with them, 159 bearings fused cleanly. Next integration: turbine
 > presence as a candidate prune in the E4t whole-coast search.
 
+> **E5i — pylon rows and comm masts join the landmark web**
+> (`experiments/landmarks.py`, `e5i_landmarks.py`; class-aware
+> matching added to `turbines.py`). Two more charted point classes:
+> transmission towers (OSM power=tower — picket-fence rows over
+> ridges and straits, handled by the E5h Hough + gates) and
+> communication masts (man_made=mast/communications_tower — isolated
+> summit points). The constellation machinery is now class-aware:
+> detector classes are coarse ('turbine' by blade flicker vs 'static'
+> for everything else) and assignment forbids pairs where exactly one
+> side is a turbine. Results: (1) mixed 20-bearing scene (8 turbines
+> + 10 pylons + 2 masts, unknown correspondence and bias) -> 0 m cell
+> error, bias +1.44 vs +1.50 true; in this rich geometry classless
+> matching was already unambiguous — the class gate is a no-harm
+> constraint here and matters for sparse scenes. (2) The night
+> crossover: masts carry red aviation obstruction lights, so
+> `as_light_entries` exports them into the E5g light DB (generic
+> Fl.R character; two masts sharing it are disambiguated by the
+> DR-predicted bearing, gate 5 deg). Night passage: sea lights only
+> 147 m mean -> +mast lights 104 m mean, identifications 50 -> 65.
+> (3) Day passage, whole web (21 points, three classes) vs turbines
+> only: mean 317 -> 253 m, final 425 -> 96 m, 278 bearings fused.
+> Also fixed en route: the synthetic flash generator gave a 1.5 s
+> aviation light a 53% duty cycle (reads as isophase) — flash width
+> now scales with period. The daytime landmark web and the night
+> light set now share one database format, one Hough, one factor,
+> and one compass-bias variable.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
