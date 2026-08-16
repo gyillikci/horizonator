@@ -19,10 +19,12 @@ On-device sizing (CM5-class): the iSAM2 update is milliseconds; the fix
 solve dominates at ~1-2 s (2 km box, native marcher).
 """
 
+import os
 import numpy as np
 import gtsam
 import skyline as S
-from skyline_factor import skyline_factor, heading_bias_factor, laplace_cov
+from skyline_factor import (skyline_factor, heading_bias_factor,
+                            depth_factor, laplace_cov)
 from skyfix import basin_margin, fast_photo_cost
 
 AZ = np.arange(-180.0, 180.0, 0.1) + 0.05
@@ -111,6 +113,31 @@ class SkyNav:
         self.isam.update(graph, vals)
         self.k += 1
         self._last_theta = theta
+
+    def enable_bathymetry(self, dem_dir=None):
+        """Load the bathymetric grid (the raw skadi tiles keep ocean
+        depths as negative elevations; the skyline path clamps them,
+        this one does not)."""
+        d = S.Dem(dem_dir or os.path.expanduser(
+            '~/.horizonator/DEMs_SRTM1'), clamp_negative=False)
+        self._bathy = d
+
+    def bathy_depth(self, e, n):
+        """Charted water depth (m, positive down) at ENU (e, n)."""
+        v = float(self._bathy.sample(
+            np.array([self.lat0 + n / self.mlat]),
+            np.array([self.lon0 + e / self.mlon]))[0])
+        return max(-v, 0.0)
+
+    def add_depth(self, depth_m, sigma_frac=0.03, sigma_floor=2.0):
+        """One echo-sounder reading at the current pose: a TRN factor
+        decorrelated from the skyline — works in fog and at night."""
+        f = depth_factor(X(self.k), depth_m, self.bathy_depth,
+                         max(sigma_frac * depth_m, sigma_floor))
+        self._factors.append(f)
+        graph = gtsam.NonlinearFactorGraph()
+        graph.add(f)
+        self.isam.update(graph, gtsam.Values())
 
     def compass_bias_deg(self):
         """Current estimate of the compass bias (deg; heading_meas =

@@ -46,8 +46,9 @@ class Dem:
     horizonator's convention.
     """
 
-    def __init__(self, dirname):
+    def __init__(self, dirname, clamp_negative=True):
         self.dirname = os.path.expanduser(dirname)
+        self.clamp_negative = clamp_negative   # False: keep bathymetry
         self.tiles = {}  # (lat0,lon0) -> 2D array, row 0 = north edge
 
     def _tile(self, lat0, lon0):
@@ -65,7 +66,8 @@ class Dem:
                 # clamp voids AND negative elevations (some sources, e.g. the
                 # AWS skadi tiles, contain ocean bathymetry) to sea level --
                 # same as horizonator_dem_sample() in dem.c
-                a[a < 0] = 0.0
+                if self.clamp_negative:
+                    a[a < 0] = 0.0
                 self.tiles[key] = a
         return self.tiles[key]
 

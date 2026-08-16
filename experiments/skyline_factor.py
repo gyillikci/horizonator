@@ -67,6 +67,31 @@ def heading_bias_factor(pose_key, bias_key, heading_meas_rad, sigma_rad):
                               error_func)
 
 
+def depth_factor(key, depth_meas, bathy_fn, sigma, h=30.0):
+    """Echo-sounder depth as a unary Pose2 factor: err = predicted
+    depth at the pose's position (from a bathymetric grid, positive
+    down) minus the measured depth. A classic TRN observable that is
+    fully decorrelated from the skyline channel — it works in fog, at
+    night, and with zero terrain relief. Jacobian by finite differences
+    of the grid (h meters)."""
+    noise = gtsam.noiseModel.Isotropic.Sigma(1, sigma)
+
+    def error_func(this, values, H):
+        pose = values.atPose2(this.keys()[0])
+        e, n = pose.x(), pose.y()
+        d0 = bathy_fn(e, n)
+        if H is not None:
+            de = (bathy_fn(e + h, n) - bathy_fn(e - h, n)) / (2 * h)
+            dn = (bathy_fn(e, n + h) - bathy_fn(e, n - h)) / (2 * h)
+            th = pose.theta()
+            c, s = np.cos(th), np.sin(th)
+            # tangent (dx,dy) moves the position by R(theta)[dx,dy]
+            H[0] = np.array([[de * c + dn * s, -de * s + dn * c, 0.0]])
+        return np.array([d0 - depth_meas])
+
+    return gtsam.CustomFactor(noise, gtsam.KeyVector([key]), error_func)
+
+
 def laplace_cov(cost_fn, e0, n0, h=25.0, floor=8.0, scale=1.0):
     """2x2 (east,north) covariance from the local quadratic shape of the
     match cost around its minimum (the same heuristic skyfix.py uses).
