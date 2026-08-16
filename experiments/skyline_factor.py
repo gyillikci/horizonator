@@ -92,6 +92,38 @@ def depth_factor(key, depth_meas, bathy_fn, sigma, h=30.0):
     return gtsam.CustomFactor(noise, gtsam.KeyVector([key]), error_func)
 
 
+def light_bearing_factor(pose_key, bias_key, lm_e, lm_n, bearing_meas,
+                         sigma):
+    """Bearing to an IDENTIFIED charted light (compass convention, CW
+    from north; bearing_meas = true bearing + compass bias). The night
+    channel: a lighthouse identified by its flash characteristic is a
+    surveyed point, and its bearing is a line of position — the skyline
+    instrument's after-dark replacement. Shares the compass-bias
+    variable with the heading factors."""
+    noise = gtsam.noiseModel.Isotropic.Sigma(1, sigma)
+
+    def error_func(this, values, H):
+        pose = values.atPose2(this.keys()[0])
+        b = values.atVector(this.keys()[1])[0]
+        u = lm_e - pose.x()
+        v = lm_n - pose.y()
+        r2 = u * u + v * v
+        pred = np.arctan2(u, v)
+        e = (pred - (bearing_meas - b) + np.pi) % (2 * np.pi) - np.pi
+        if H is not None:
+            th = pose.theta()
+            c, s = np.cos(th), np.sin(th)
+            dbx, dby = -v / r2, u / r2
+            H[0] = np.array([[dbx * c + dby * s,
+                              -dbx * s + dby * c, 0.0]])
+            H[1] = np.array([[1.0]])
+        return np.array([e])
+
+    return gtsam.CustomFactor(noise,
+                              gtsam.KeyVector([pose_key, bias_key]),
+                              error_func)
+
+
 def laplace_cov(cost_fn, e0, n0, h=25.0, floor=8.0, scale=1.0):
     """2x2 (east,north) covariance from the local quadratic shape of the
     match cost around its minimum (the same heuristic skyfix.py uses).

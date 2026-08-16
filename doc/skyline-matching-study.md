@@ -1359,6 +1359,28 @@ sequential estimator.
 > remains the right architecture only for inland/mountain operation,
 > where the sea mask does not exist.
 >
+> **E5e/E5f + rigid pan — the redundancy suite** (three veins worked
+> in one pass). (1) *Rigid-pan fusion* (`skyfix --rigid-pan`): a pan's
+> relative headings are gyro-accurate, so all frames share ONE compass
+> offset instead of independent per-photo shifts — on the E4i
+> synthetic pan, 70→**15 m**. (2) *The echo sounder* (`e5e_depth.py`):
+> the skadi tiles' discarded negatives ARE a bathymetric grid;
+> `depth_factor` fuses NMEA-DPT-class readings, fully decorrelated
+> from the camera. Clear weather it adds little (the skyline
+> dominates); in the no-camera fog regime it bounds final drift
+> **611→170 m**. (3) *The night watch* (`e5f_lights.py`): identified
+> charted lights (flash characteristics make them self-identifying)
+> enter as bearing factors through the shared compass-bias variable —
+> the passage run at night, skyline blind: DR 590 m final →
+> **lights 62 m**, full night suite (lights+depth) **50 m**, and the
+> lights recover the compass bias to +1.54° of the true +1.50° in the
+> dark. The instrument is now a 24-hour, all-weather *suite*: skyline
+> by day, lights by night, depth always, dead reckoning between —
+> every channel through one graph with one self-calibrating compass.
+> Real light positions/characteristics come from any List of Lights
+> or OSM seamark data at deployment; the synthetic stand-ins here
+> only prove the estimator.
+>
 > **E5d — the C++ route** (`e5d_export.py` here;
 > `examples/SkylineNavExample.cpp` + `examples/Data/
 > skyline_nav_stream.csv` in the gyillikci/gtsam fork, same branch).

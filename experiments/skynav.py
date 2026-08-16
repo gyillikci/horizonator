@@ -24,7 +24,8 @@ import numpy as np
 import gtsam
 import skyline as S
 from skyline_factor import (skyline_factor, heading_bias_factor,
-                            depth_factor, laplace_cov)
+                            depth_factor, light_bearing_factor,
+                            laplace_cov)
 from skyfix import basin_margin, fast_photo_cost
 
 AZ = np.arange(-180.0, 180.0, 0.1) + 0.05
@@ -134,6 +135,18 @@ class SkyNav:
         decorrelated from the skyline — works in fog and at night."""
         f = depth_factor(X(self.k), depth_m, self.bathy_depth,
                          max(sigma_frac * depth_m, sigma_floor))
+        self._factors.append(f)
+        graph = gtsam.NonlinearFactorGraph()
+        graph.add(f)
+        self.isam.update(graph, gtsam.Values())
+
+    def add_light_bearing(self, lm_e, lm_n, bearing_rad,
+                          sigma=np.radians(0.4)):
+        """Bearing to an identified charted light (ENU position of the
+        light, measured compass bearing) — the night channel. Requires
+        estimate_compass_bias (the bearing shares the bias variable)."""
+        f = light_bearing_factor(X(self.k), B(0), lm_e, lm_n,
+                                 bearing_rad, sigma)
         self._factors.append(f)
         graph = gtsam.NonlinearFactorGraph()
         graph.add(f)
