@@ -1254,6 +1254,22 @@ sequential estimator.
 > and the tier system covers the residue. A learned front-end is
 > therefore a coverage upgrade (fixing under overcast by masking
 > cloud, not tracing it), not a safety requirement.
+>
+> **E4o — Copernicus GLO-30 as an independent DEM family**
+> (`e4o_glo30.py`; tiles auto-fetched from the AWS open-data bucket and
+> converted to SRTM3-shaped .hgt under `~/.horizonator/DEMs_GLO30`).
+> Until now synthesis and solving shared one DEM, cancelling its
+> systematics; deployment gets no such favor. Measured cross-family
+> skyline discrepancy (SRTM3 vs GLO-30, six coastal viewpoints, ~18k
+> terrain azimuths): **bimodal** — 0.2–0.6 mrad rms where the visible
+> terrain is distant, 2.6–3.3 mrad where near coastal terrain is in
+> view (the same height error subtends more angle up close, plus
+> DSM-vs-DEM canopy differences); overall rms 2.37 mrad, median |d|
+> 0.45. The guessed `--sigma-dem` 1.5 mrad thus sits correctly between
+> the regimes and is now measurement-backed. Cross-DEM solves (SRTM-
+> rendered composites solved against GLO-30): all three sea cases stay
+> `ok` at 57–437 m vs 21–346 m same-DEM — mild degradation, no gate
+> trips. The instrument can carry either DEM family.
 
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
