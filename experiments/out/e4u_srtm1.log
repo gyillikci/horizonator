@@ -93,3 +93,34 @@
 [77/203 25min] IMG_4972_01024: err    707 m  CAUGHT
 [78/203 25min] IMG_4985_01024: err   1031 m  FALSE-ACCEPT
 [79/203 25min] IMG_4986_01024: err    250 m  TRUE-ACCEPT
+[80/203 25min] IMG_4999_01024: err    559 m  FALSE-ACCEPT
+
+===== BATCH  4  (photos DSCF3458_01024 .. IMG_4999_01024, n=20) =====
+  median err     633 m   <500 m: 9/20
+  verdicts: TA 9  FA 4  CAUGHT 7  OC 0
+  accepted: 13  median margin 0.81  standalone(>=0.7): 7  act-on-it(>=1.5): 1
+[81/203 25min] IMG_5004_01024: err      0 m  TRUE-ACCEPT
+[82/203 26min] IMG_5008_01024: err    354 m  TRUE-ACCEPT
+[83/203 26min] IMG_5011_01024: err    750 m  FALSE-ACCEPT
+[84/203 26min] IMG_5021_01024: err    500 m  FALSE-ACCEPT
+[85/203 26min] IMG_5038_01024: err    250 m  TRUE-ACCEPT
+[86/203 26min] IMG_5039_01024: err    250 m  OVER-CAUTIOUS
+[87/203 26min] IMG_5040_01024: err    250 m  TRUE-ACCEPT
+[88/203 26min] IMG_5045_01024: err    791 m  FALSE-ACCEPT
+[89/203 26min] IMG_5046_01024: err      0 m  TRUE-ACCEPT
+[90/203 26min] IMG_5104_01024: err      0 m  OVER-CAUTIOUS
+[91/203 27min] IMG_5106_01024: err    354 m  TRUE-ACCEPT
+[92/203 27min] IMG_5113_01024: err    250 m  TRUE-ACCEPT
+[93/203 27min] IMG_5114_01024: err      0 m  TRUE-ACCEPT
+[94/203 27min] IMG_5117_01024: err   2550 m  CAUGHT
+[95/203 27min] IMG_5118_01024: err    559 m  CAUGHT
+[96/203 27min] IMG_5125_01024: err    354 m  TRUE-ACCEPT
+[97/203 27min] IMG_5126_01024: err    559 m  FALSE-ACCEPT
+[98/203 28min] IMG_5128_01024: err    250 m  TRUE-ACCEPT
+[99/203 28min] IMG_5130_01024: err    250 m  TRUE-ACCEPT
+[100/203 28min] IMG_5131_01024: err    791 m  FALSE-ACCEPT
+
+===== BATCH  5  (photos IMG_5004_01024 .. IMG_5131_01024, n=20) =====
+  median err     302 m   <500 m: 13/20
+  verdicts: TA 11  FA 5  CAUGHT 2  OC 2
+  accepted: 16  median margin 0.71  standalone(>=0.7): 8  act-on-it(>=1.5): 3
