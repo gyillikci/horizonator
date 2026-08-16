@@ -1338,6 +1338,22 @@ sequential estimator.
 > never a dependable channel — recorded so the synthetic best case
 > doesn't seduce anyone later.
 >
+> **E4t — the whole-coast fix: learned retrieval has no job here**
+> (`e4t_coastwide.py`). CrossLocate exists because mountain photos at
+> country scale need learned retrieval to prune candidates before
+> verification. The coastal regime does not: candidates are only sea
+> cells with land in view — a natural prune no mountain photo gets —
+> and the FFT cost makes each candidate ~6 ms. One composite photo
+> with a compass heading and NO position prior, searched against the
+> entire southeast Aegean (36–38°N, 26–28.5°E, 222 × 222 km, ~50× the
+> E3 box, 34,466 candidates on a 1 km grid): fix within **10 m** of
+> truth, coast-scale basin margin **1.14** (20 km NMS), **197 s** on
+> four x86 cores — CM5-projected ~10–15 min, and embarrassingly
+> parallel. The "somewhere on this coast" scenario is thus solved by
+> brute force within the existing solver; CrossLocate-class retrieval
+> remains the right architecture only for inland/mountain operation,
+> where the sea mask does not exist.
+>
 > **E5d — the C++ route** (`e5d_export.py` here;
 > `examples/SkylineNavExample.cpp` + `examples/Data/
 > skyline_nav_stream.csv` in the gyillikci/gtsam fork, same branch).
