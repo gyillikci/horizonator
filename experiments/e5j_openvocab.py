@@ -3,9 +3,14 @@
 
 The landmark web (E5h/E5i) needs an image-space detector for
 turbines, pylons and masts. Rather than training per-class models,
-assay YOLO-World v2 (open-vocabulary: detect anything described by
-text, weights on GitHub release assets — reachable from this
-container) zero-shot on the CH1 photo set with landmark prompts.
+assay an open-vocabulary detector (detect anything described by
+text) zero-shot on the CH1 photo set with landmark prompts.
+
+Model choice is egress-driven: YOLO-World v2's text encoder is
+OpenAI CLIP hosted on Azure (blocked from this container), while
+YOLOE's is MobileCLIP TorchScript on GitHub release assets
+(reachable) — so YOLOE (yoloe-11s-seg) it is; detector weights for
+both live on GitHub assets.
 
 CH1 is Swiss alpine terrain: pylons, cable-car masts and summit
 antennas do appear in mountain photos; turbines and lighthouses do
@@ -41,9 +46,9 @@ CONF = 0.05
 
 
 def main(n=40):
-    from ultralytics import YOLOWorld
-    model = YOLOWorld('yolov8s-worldv2.pt')
-    model.set_classes(PROMPTS)
+    from ultralytics import YOLOE
+    model = YOLOE('yoloe-11s-seg.pt')
+    model.set_classes(PROMPTS, model.get_text_pe(PROMPTS))
     photos = sorted(glob.glob(os.path.join(CH1, '*', '*.png')))
     photos = [p for p in photos if not p.endswith('-mask.png')][:n]
     os.makedirs(os.path.join(OUT, 'e5j'), exist_ok=True)

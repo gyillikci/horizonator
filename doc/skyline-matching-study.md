@@ -1516,6 +1516,44 @@ sequential estimator.
 > light set now share one database format, one Hough, one factor,
 > and one compass-bias variable.
 
+> **E5j — literature dig III: trained models for the landmark
+> channels** (`experiments/e5j_openvocab.py`, out/e5j*). Hunted
+> specifically for downloadable weights; egress decides what is
+> usable here. LANDED AND ASSAYED: YOLOE (yoloe-11s-seg, Ultralytics,
+> AGPL-3.0 — flag for commercial use) — open-vocabulary detection
+> with text prompts; chosen over YOLO-World v2 purely by egress
+> (YOLO-World's text encoder is OpenAI CLIP on a blocked Azure host;
+> YOLOE's MobileCLIP TorchScript lives on GitHub release assets,
+> which are reachable — detector weights for both are too).
+> Zero-shot on 60 CH1 alpine photos, prompts {electricity pylon,
+> transmission tower, communication antenna mast, wind turbine,
+> lighthouse}: 15/60 photos fire, confidences 0.05-0.73; visual
+> audit shows the strong fires are real near-field vertical
+> infrastructure (with class confusion: a roadside pole reads as
+> transmission tower 0.73), the weak ones are posts/fences, and an
+> ACTUAL summit antenna on the skyline went undetected — at 1024 px
+> a landmark 5-15 km out subtends a few pixels, below single-frame
+> detection. CONCLUSION: single-frame open-vocab detection is a
+> proposal generator for near/mid range only; distance landmarks are
+> identified temporally (blade flicker, flash character — resolution-
+> independent while the glint subtends a pixel) and geometrically
+> (constellation + gates), which is exactly how E5g-i are built.
+> Telephoto/pan frames (already in the instrument for skyline work)
+> are the other lever. USER-SIDE LIST (blocked hosts): TTPLA aerial
+> tower/line dataset + YOLACT weights (Google Drive, license
+> unspecified — fine-tune material); PLD-UAV (PLDU/PLDM) wire
+> segmentation datasets; GroundingDINO swint_ogc.pth IS on GitHub
+> releases (694 MB, reachable) as a heavier open-vocab backup if
+> YOLOE proposals prove too weak. Literature without public weights
+> but validating our design: BLDCNet (buoy-light detection + flash-
+> pattern classification on frame sequences, 96-98%) and a
+> multilabel navigation-mark light video classifier (~99%, 9 light
+> types) — both do temporally what our numpy classify_trace does;
+> no weights, so ours stays. OpenCellID (CC BY-SA) is crowd-
+> triangulated cell positions, hundreds of meters off — NOT
+> surveyed mast coordinates; OSM man_made=mast remains the bearing-
+> landmark source, OpenCellID only a coverage cross-check.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
