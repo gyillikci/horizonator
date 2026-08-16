@@ -199,3 +199,4 @@
   median err     572 m   <500 m: 10/20
   verdicts: TA 9  FA 2  CAUGHT 8  OC 1
   accepted: 11  median margin 0.92  standalone(>=0.7): 9  act-on-it(>=1.5): 3
+[161/203 14min] dsc02606_01024: err    250 m  OVER-CAUTIOUS
