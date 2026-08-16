@@ -214,6 +214,17 @@ def main():
                                     'comma list. Accuracy to ~0.5 deg '
                                     'matters: the residual elevation '
                                     'offset window is only +-10 mrad')
+    ap.add_argument('--dt-air-sea', type=float,
+                    help='air minus sea temperature (deg C) for the '
+                         'sea-horizon dip anomaly correction: refraction '
+                         'near the horizon is driven by this gradient '
+                         '(van der Werf 2016), and warm air over cold '
+                         'water raises the apparent horizon. Applies the '
+                         "navigator's rule of thumb (~0.11 arcmin/degC, "
+                         'PROVISIONAL until field-calibrated) to the dip '
+                         'used by --auto-level, and widens its offset '
+                         'window by 0.15 mrad/degC of |dT| since large '
+                         'gradients also mean unstable dip')
     ap.add_argument('--auto-level', action='store_true',
                     help='estimate pitch and roll from the visible sea '
                          'horizon (per photo), overriding --pitch/--roll '
@@ -313,12 +324,20 @@ def main():
         if args.auto_level:
             rows, conf = extract.skyline_seam(img)
             f_px = (img.shape[1] / 2) / np.tan(np.radians(fovs[i]) / 2)
+            dip = S.horizon_dip_rad(max(z, 0.5))
+            if args.dt_air_sea is not None:
+                # dip anomaly ~0.11 arcmin/degC of (T_air - T_sea):
+                # warm air over cold water raises the apparent horizon
+                # (smaller dip). PROVISIONAL coefficient — see --help
+                dip -= 0.032e-3 * args.dt_air_sea
             level = extract.sea_horizon_attitude(
-                rows, conf, img.shape, f_px,
-                S.horizon_dip_rad(max(z, 0.5)), rgb=img)
+                rows, conf, img.shape, f_px, dip, rgb=img)
             if level:
                 pitch, roll = level['pitch_deg'], level['roll_deg']
-                betas = BETAS_TIGHT
+                half = 0.002
+                if args.dt_air_sea is not None:
+                    half += 0.00015 * abs(args.dt_air_sea)
+                betas = np.arange(-half, half * 1.001, half / 4)
         el_obs, w, diag = observation(
             img, fovs[i], headings[i] if headings[i] is not None else 0.0,
             roll, pitch)

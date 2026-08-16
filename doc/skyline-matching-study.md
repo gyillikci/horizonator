@@ -1310,12 +1310,12 @@ sequential estimator.
 > with a fine-resolution model validated on real maritime imagery.
 >
 > **Literature dig II — four veins, two assayed on the spot.**
-> (1) *The founding lineage*: Cozman & Krotkov (CMU, 1995–97) did
-> Bayesian skyline-vs-DEM matching for planetary rovers — skyline as
-> elevation-vs-azimuth vector, 100–400 m errors, field-tested in the
-> Atacama and against the Apollo 17 site — fifteen years before the
-> Baatz line this study built on; the history section owes them the
-> citation. (2) *Country-scale retrieval exists off the shelf*:
+> (1) *The founding lineage*: Cozman & Krotkov's Viper (CMU, 1995–97,
+> already in §3.1) turns out to carry the field's first quantified
+> field accuracies — 100–400 m (2.5–6.5× DEM resolution) across
+> Pittsburgh, the Atacama, the Rockies and a simulated Apollo 17
+> site — numbers our CH1 accepted-set results finally improve on with
+> the same class of instrument, thirty years later. (2) *Country-scale retrieval exists off the shelf*:
 > CrossLocate (Tomešek & Čadík, WACV 2022; code on GitHub) learns
 > cross-modal embeddings between photos and 10.7M rendered
 > silhouette/depth/semantic views covering the entire Alps at 1M
