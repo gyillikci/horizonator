@@ -1,0 +1,250 @@
+{
+ "strait1": {
+  "clean": {
+   "status": "ok",
+   "err_m": 175.16492929605977,
+   "margin": 4.780878091314014,
+   "rms": 0.7788584968754061,
+   "reasons": []
+  },
+  "stratus0.25": {
+   "status": "inconclusive",
+   "err_m": 3690.0606134236596,
+   "margin": 0.00164062936904138,
+   "rms": 46.8325944468046,
+   "reasons": [
+    "ambiguous landscape: basin margin 0.00 < 0.15",
+    "minimum on the search-box boundary: the true position may lie outside the box",
+    "residual 46.8 mrad > 12.0: the DEM cannot explain this observation"
+   ]
+  },
+  "stratus0.5": {
+   "status": "inconclusive",
+   "err_m": 2299.1987976321057,
+   "margin": 0.007817887954196797,
+   "rms": 46.775787013588634,
+   "reasons": [
+    "ambiguous landscape: basin margin 0.01 < 0.15",
+    "minimum on the search-box boundary: the true position may lie outside the box",
+    "residual 46.8 mrad > 12.0: the DEM cannot explain this observation"
+   ]
+  },
+  "stratus0.75": {
+   "status": "inconclusive",
+   "err_m": 2393.050524835377,
+   "margin": 0.003481601007418156,
+   "rms": 46.296485888169585,
+   "reasons": [
+    "ambiguous landscape: basin margin 0.00 < 0.15",
+    "minimum on the search-box boundary: the true position may lie outside the box",
+    "residual 46.3 mrad > 12.0: the DEM cannot explain this observation"
+   ]
+  },
+  "cumulus4": {
+   "status": "inconclusive",
+   "err_m": 2422.417777850943,
+   "margin": 0.0415681441859879,
+   "rms": 5.267719862456618,
+   "reasons": [
+    "ambiguous landscape: basin margin 0.04 < 0.15"
+   ]
+  },
+  "cumulus10": {
+   "status": "inconclusive",
+   "err_m": 4129.961298722373,
+   "margin": 0.009047346267546063,
+   "rms": 7.729803602520144,
+   "reasons": [
+    "ambiguous landscape: basin margin 0.01 < 0.15",
+    "minimum on the search-box boundary: the true position may lie outside the box"
+   ]
+  },
+  "cumulus20": {
+   "status": "inconclusive",
+   "err_m": 3522.866431659056,
+   "margin": 0.0876053613859872,
+   "rms": 7.0577424340745205,
+   "reasons": [
+    "ambiguous landscape: basin margin 0.09 < 0.15",
+    "minimum on the search-box boundary: the true position may lie outside the box"
+   ]
+  },
+  "haze0.5": {
+   "status": "ok",
+   "err_m": 155.36578244275805,
+   "margin": 4.621924864251454,
+   "rms": 0.739962028764385,
+   "reasons": []
+  },
+  "haze0.75": {
+   "status": "inconclusive",
+   "err_m": 846.73782820657,
+   "margin": 0.06065219132621467,
+   "rms": 5.177323629159025,
+   "reasons": [
+    "ambiguous landscape: basin margin 0.06 < 0.15"
+   ]
+  }
+ },
+ "strait2": {
+  "clean": {
+   "status": "ok",
+   "err_m": 64.90981849277689,
+   "margin": 5.98381264330466,
+   "rms": 1.2247944632710428,
+   "reasons": []
+  },
+  "stratus0.25": {
+   "status": "inconclusive",
+   "err_m": 1426.005298108217,
+   "margin": 0.00028448429557652105,
+   "rms": 30.906250632559388,
+   "reasons": [
+    "ambiguous landscape: basin margin 0.00 < 0.15",
+    "minimum on the search-box boundary: the true position may lie outside the box",
+    "residual 30.9 mrad > 12.0: the DEM cannot explain this observation"
+   ]
+  },
+  "stratus0.5": {
+   "status": "inconclusive",
+   "err_m": 2133.1255346406865,
+   "margin": 0.00045370971582561103,
+   "rms": 29.931247833448325,
+   "reasons": [
+    "ambiguous landscape: basin margin 0.00 < 0.15",
+    "minimum on the search-box boundary: the true position may lie outside the box",
+    "residual 29.9 mrad > 12.0: the DEM cannot explain this observation"
+   ]
+  },
+  "stratus0.75": {
+   "status": "inconclusive",
+   "err_m": 2604.1494555293243,
+   "margin": 0.09079383013200767,
+   "rms": 10.945046297397319,
+   "reasons": [
+    "ambiguous landscape: basin margin 0.09 < 0.15",
+    "minimum on the search-box boundary: the true position may lie outside the box"
+   ]
+  },
+  "cumulus4": {
+   "status": "ok",
+   "err_m": 48.06945937574304,
+   "margin": 0.5019567744525315,
+   "rms": 5.5048287634285415,
+   "reasons": []
+  },
+  "cumulus10": {
+   "status": "ok",
+   "err_m": 670.668083273146,
+   "margin": 0.6374595138981881,
+   "rms": 5.726699998478287,
+   "reasons": []
+  },
+  "cumulus20": {
+   "status": "ok",
+   "err_m": 699.9712982694805,
+   "margin": 0.4014459085807278,
+   "rms": 7.558789436266349,
+   "reasons": []
+  },
+  "haze0.5": {
+   "status": "ok",
+   "err_m": 64.90981849277689,
+   "margin": 6.207775586294904,
+   "rms": 1.060276416837497,
+   "reasons": []
+  },
+  "haze0.75": {
+   "status": "ok",
+   "err_m": 44.975816457770584,
+   "margin": 2.741862075300144,
+   "rms": 2.4176417867632383,
+   "reasons": []
+  }
+ },
+ "offshore": {
+  "clean": {
+   "status": "ok",
+   "err_m": 330.9098172956559,
+   "margin": 0.7276302684080241,
+   "rms": 0.9886299697160197,
+   "reasons": []
+  },
+  "stratus0.25": {
+   "status": "inconclusive",
+   "err_m": 1213.4048528121073,
+   "margin": 0.00019505732583746739,
+   "rms": 31.930051801388956,
+   "reasons": [
+    "ambiguous landscape: basin margin 0.00 < 0.15",
+    "residual 31.9 mrad > 12.0: the DEM cannot explain this observation"
+   ]
+  },
+  "stratus0.5": {
+   "status": "inconclusive",
+   "err_m": 2412.0923283027896,
+   "margin": 7.354267036686074e-05,
+   "rms": 45.23476573439617,
+   "reasons": [
+    "ambiguous landscape: basin margin 0.00 < 0.15",
+    "residual 45.2 mrad > 12.0: the DEM cannot explain this observation"
+   ]
+  },
+  "stratus0.75": {
+   "status": "inconclusive",
+   "err_m": 3544.300495396105,
+   "margin": 0.012232671184499676,
+   "rms": 19.65787103214321,
+   "reasons": [
+    "ambiguous landscape: basin margin 0.01 < 0.15",
+    "minimum on the search-box boundary: the true position may lie outside the box",
+    "residual 19.7 mrad > 12.0: the DEM cannot explain this observation"
+   ]
+  },
+  "cumulus4": {
+   "status": "inconclusive",
+   "err_m": 154.32961820924572,
+   "margin": 0.014593863271145311,
+   "rms": 5.277329063829231,
+   "reasons": [
+    "ambiguous landscape: basin margin 0.01 < 0.15"
+   ]
+  },
+  "cumulus10": {
+   "status": "inconclusive",
+   "err_m": 1718.3079490419395,
+   "margin": 0.023696844621162012,
+   "rms": 7.083164622193322,
+   "reasons": [
+    "ambiguous landscape: basin margin 0.02 < 0.15",
+    "minimum on the search-box boundary: the true position may lie outside the box"
+   ]
+  },
+  "cumulus20": {
+   "status": "inconclusive",
+   "err_m": 4081.719253853862,
+   "margin": 0.036991730728651466,
+   "rms": 7.236670013816589,
+   "reasons": [
+    "ambiguous landscape: basin margin 0.04 < 0.15",
+    "minimum on the search-box boundary: the true position may lie outside the box"
+   ]
+  },
+  "haze0.5": {
+   "status": "ok",
+   "err_m": 155.03864850052634,
+   "margin": 0.35595245563970945,
+   "rms": 1.510465020227658,
+   "reasons": []
+  },
+  "haze0.75": {
+   "status": "inconclusive",
+   "err_m": 1195.4365612600286,
+   "margin": 0.047868034016901935,
+   "rms": 3.8088374676622716,
+   "reasons": [
+    "ambiguous landscape: basin margin 0.05 < 0.15"
+   ]
+  }
+ }
+}

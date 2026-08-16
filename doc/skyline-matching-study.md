@@ -1234,6 +1234,26 @@ sequential estimator.
 > integrity beyond it must come from the fusion layer (E5) or from
 > more photos with real baseline/bearing diversity (E4i), not more
 > extractions of the same photo.
+>
+> **E4n — clouds vs the extractor and the gates** (`e4n_clouds.py`,
+> `out/e4n_results.json`; E4c sea composites + painted stratus decks,
+> cumulus fields, and haze, 27 runs through the full CLI). The
+> environmental risk E2 flagged, finally measured — and the system's
+> failure mode is the right one. **Overcast (stratus clipping the
+> ridges): 9/9 INCONCLUSIVE**, residuals 20–47 mrad — the extractor
+> traces the cloud base, the DEM cannot explain it, and the rms gate
+> slams shut; zero wrong fixes at any severity. **Haze: benign** —
+> fixes stay good (45–155 m) through a 50% contrast wash (the
+> local-linear-continuation design goal, confirmed), degrading to
+> honest no-fixes near 75%. **Scattered cumulus is the marginal
+> case**: usually margin-collapse → inconclusive, but 2 of 9 runs
+> produced ~670–700 m fixes that passed the default gates — both with
+> margins 0.40–0.64, i.e. both caught by the standalone tier
+> (`--min-margin` 0.7) from E4k. Net: 25/27 correct behavior (good
+> fix or honest refusal); clouds cost AVAILABILITY, not integrity,
+> and the tier system covers the residue. A learned front-end is
+> therefore a coverage upgrade (fixing under overcast by masking
+> cloud, not tracing it), not a safety requirement.
 
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
