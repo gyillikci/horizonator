@@ -1,0 +1,28 @@
+{
+ "batches": [
+  {
+   "batch": 1,
+   "n": 2,
+   "photos": [
+    "04032011388_01024",
+    "04032011389_01024"
+   ],
+   "median_err_m": 572.0614028176843,
+   "hits_500m": 1,
+   "true_accept": 1,
+   "false_accept": 1,
+   "caught": 0,
+   "over_cautious": 0,
+   "median_accept_margin": 0.8192991250971503,
+   "standalone": 1,
+   "act_on_it": 0
+  }
+ ],
+ "confusion": {
+  "FALSE-ACCEPT": 1,
+  "TRUE-ACCEPT": 1
+ },
+ "n": 2,
+ "median_err_m": 572.0614028176843,
+ "hits_500m": 1
+}
