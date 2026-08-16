@@ -224,3 +224,5 @@
   median err    1868 m   <500 m: 6/20
   verdicts: TA 4  FA 4  CAUGHT 10  OC 2
   accepted: 8  median margin 0.97  standalone(>=0.7): 5  act-on-it(>=1.5): 3
+[181/203 17min] dsc03016_01024: err    559 m  CAUGHT
+[182/203 17min] dsc03102_01024: err    559 m  FALSE-ACCEPT
