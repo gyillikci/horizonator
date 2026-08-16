@@ -1289,6 +1289,26 @@ sequential estimator.
 > DEM posting. Deployment guidance: carry SRTM1 for the operating
 > area; it costs only disk and a factor ~2.5 in solve time.
 >
+> **E4r — segmenter-assisted extraction under cloud: negative, twice**
+> (`e4r_cloudmask.py`, `ewasr_bridge.py`; the pretrained Apache-2.0
+> eWaSR maritime segmenter vs the E4n cloud matrix, paired A/B). Both
+> formulations failed informatively. Masking cloud-base columns is a
+> no-op: the surviving columns still carry the deck-bottom's wrong
+> flat geometry, and the information a mask could protect was never
+> extracted (the top-down extractor stops at the cloud). Replacing
+> extraction with the segmentation's own topmost-land boundary
+> recovers solves under stratus but WRONG ones (1.9–3.8 km), while
+> costing 5–7 mrad of boundary precision on clear scenes (127→253 m,
+> 13→179 m; tally 8 good/2 wrong plain vs 5 good/3 wrong seg) — the
+> E4m lesson from a new direction: segmentation-grade boundaries are
+> not matching-grade boundaries. E4n's conclusion stands: overcast
+> costs availability, honestly. The segmenter's justified roles are
+> diagnostic — naming WHY a scene is inconclusive ("overcast
+> detected", from its sky-over-boundary signature), sea-span selection
+> for auto-levelling, false-horizon second opinions — and those are
+> what `ewasr_bridge` ships for. Revisit recovery-under-cloud only
+> with a fine-resolution model validated on real maritime imagery.
+>
 > **E5d — the C++ route** (`e5d_export.py` here;
 > `examples/SkylineNavExample.cpp` + `examples/Data/
 > skyline_nav_stream.csv` in the gyillikci/gtsam fork, same branch).

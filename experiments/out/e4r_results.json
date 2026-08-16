@@ -1,0 +1,570 @@
+{
+ "strait1": {
+  "clean": {
+   "plain": {
+    "status": "ok",
+    "err_m": 126.58496648936834,
+    "margin": 3.82322222668371,
+    "rms": 0.7625468884681222,
+    "reasons": []
+   },
+   "seg": {
+    "status": "ok",
+    "err_m": 253.19244194069137,
+    "margin": 0.23898429905165877,
+    "rms": 2.311672695402218,
+    "reasons": []
+   },
+   "masked_frac": 0.0
+  },
+  "stratus0.25": {
+   "plain": {
+    "status": "inconclusive",
+    "err_m": -1,
+    "reasons": [
+     "observation fully masked"
+    ]
+   },
+   "seg": {
+    "status": "inconclusive",
+    "err_m": 3821.477205506625,
+    "margin": 0.010945939854447934,
+    "rms": 6.330383998909183,
+    "reasons": [
+     "margin 0.01",
+     "boundary"
+    ]
+   },
+   "masked_frac": -54.07692307692308
+  },
+  "stratus0.5": {
+   "plain": {
+    "status": "inconclusive",
+    "err_m": 2613.6648695216804,
+    "margin": 0.005545709646131172,
+    "rms": 46.74429415982617,
+    "reasons": [
+     "margin 0.01",
+     "boundary",
+     "rms 46.7"
+    ]
+   },
+   "seg": {
+    "status": "inconclusive",
+    "err_m": 1881.6362393573827,
+    "margin": 0.017884612898054947,
+    "rms": 7.146875873058608,
+    "reasons": [
+     "margin 0.02",
+     "boundary"
+    ]
+   },
+   "masked_frac": -18.35135135135135
+  },
+  "stratus0.75": {
+   "plain": {
+    "status": "inconclusive",
+    "err_m": 2974.3810012782474,
+    "margin": 0.002393849420353697,
+    "rms": 46.191786177869524,
+    "reasons": [
+     "margin 0.00",
+     "boundary",
+     "rms 46.2"
+    ]
+   },
+   "seg": {
+    "status": "inconclusive",
+    "err_m": 2044.010832511606,
+    "margin": 0.015598327089818268,
+    "rms": 5.373988084480614,
+    "reasons": [
+     "margin 0.02",
+     "boundary"
+    ]
+   },
+   "masked_frac": -22.096774193548388
+  },
+  "cumulus4": {
+   "plain": {
+    "status": "inconclusive",
+    "err_m": 2410.859605032246,
+    "margin": 0.042452397379484336,
+    "rms": 5.26579733357985,
+    "reasons": [
+     "margin 0.04"
+    ]
+   },
+   "seg": {
+    "status": "inconclusive",
+    "err_m": 2648.969552440348,
+    "margin": 0.0092385986180393,
+    "rms": 5.894170474643762,
+    "reasons": [
+     "margin 0.01",
+     "boundary"
+    ]
+   },
+   "masked_frac": 0.0
+  },
+  "cumulus10": {
+   "plain": {
+    "status": "inconclusive",
+    "err_m": 3929.037273164392,
+    "margin": 0.035144034597940695,
+    "rms": 7.731103398602137,
+    "reasons": [
+     "margin 0.04",
+     "boundary"
+    ]
+   },
+   "seg": {
+    "status": "inconclusive",
+    "err_m": 3556.1456775297497,
+    "margin": 0.006113052367710448,
+    "rms": 7.730910201837046,
+    "reasons": [
+     "margin 0.01",
+     "boundary"
+    ]
+   },
+   "masked_frac": 0.0
+  },
+  "cumulus20": {
+   "plain": {
+    "status": "inconclusive",
+    "err_m": 4081.9288055656584,
+    "margin": 0.07997441180435308,
+    "rms": 6.790610216202435,
+    "reasons": [
+     "margin 0.08",
+     "boundary"
+    ]
+   },
+   "seg": {
+    "status": "inconclusive",
+    "err_m": 4112.572252537491,
+    "margin": 0.0940798892972323,
+    "rms": 6.37706766019866,
+    "reasons": [
+     "margin 0.09",
+     "boundary"
+    ]
+   },
+   "masked_frac": 0.0
+  },
+  "haze0.5": {
+   "plain": {
+    "status": "ok",
+    "err_m": 143.90009285810885,
+    "margin": 4.605029574389048,
+    "rms": 0.7318125254510637,
+    "reasons": []
+   },
+   "seg": {
+    "status": "inconclusive",
+    "err_m": 395.28063111496436,
+    "margin": 0.14902167963233537,
+    "rms": 2.956802296113379,
+    "reasons": [
+     "margin 0.15"
+    ]
+   },
+   "masked_frac": 0.0
+  },
+  "haze0.75": {
+   "plain": {
+    "status": "inconclusive",
+    "err_m": 863.3959377340411,
+    "margin": 0.0533037352365762,
+    "rms": 5.18030973531365,
+    "reasons": [
+     "margin 0.05"
+    ]
+   },
+   "seg": {
+    "status": "inconclusive",
+    "err_m": 2944.6939292972843,
+    "margin": 0.0019206965035050742,
+    "rms": 41.8368836327534,
+    "reasons": [
+     "margin 0.00",
+     "boundary",
+     "rms 41.8"
+    ]
+   },
+   "masked_frac": 0.23463687150837986
+  }
+ },
+ "strait2": {
+  "clean": {
+   "plain": {
+    "status": "ok",
+    "err_m": 72.71679913385573,
+    "margin": 5.581667805009804,
+    "rms": 1.2475031424584913,
+    "reasons": []
+   },
+   "seg": {
+    "status": "ok",
+    "err_m": 197.64572295524036,
+    "margin": 5.887184900704096,
+    "rms": 2.142340108139357,
+    "reasons": []
+   },
+   "masked_frac": 0.0
+  },
+  "stratus0.25": {
+   "plain": {
+    "status": "inconclusive",
+    "err_m": 2246.8923701977196,
+    "margin": 4.745452413286851e-05,
+    "rms": 30.905539697006713,
+    "reasons": [
+     "margin 0.00",
+     "boundary",
+     "rms 30.9"
+    ]
+   },
+   "seg": {
+    "status": "inconclusive",
+    "err_m": 3593.6275487926705,
+    "margin": 0.31116445202170384,
+    "rms": 5.9676505097151455,
+    "reasons": [
+     "boundary"
+    ]
+   },
+   "masked_frac": -3.5897435897435894
+  },
+  "stratus0.5": {
+   "plain": {
+    "status": "inconclusive",
+    "err_m": 1758.991097715591,
+    "margin": 0.00084647132676438,
+    "rms": 29.93292418063741,
+    "reasons": [
+     "margin 0.00",
+     "boundary",
+     "rms 29.9"
+    ]
+   },
+   "seg": {
+    "status": "inconclusive",
+    "err_m": 3062.363079263138,
+    "margin": 0.25241728744379016,
+    "rms": 4.9207107653375814,
+    "reasons": [
+     "boundary"
+    ]
+   },
+   "masked_frac": -3.4749999999999996
+  },
+  "stratus0.75": {
+   "plain": {
+    "status": "inconclusive",
+    "err_m": 2070.271296275706,
+    "margin": 0.02245581004478925,
+    "rms": 11.361995435911673,
+    "reasons": [
+     "margin 0.02",
+     "boundary"
+    ]
+   },
+   "seg": {
+    "status": "inconclusive",
+    "err_m": 2476.39295569045,
+    "margin": 0.1285006920602084,
+    "rms": 7.138488377295313,
+    "reasons": [
+     "margin 0.13",
+     "boundary"
+    ]
+   },
+   "masked_frac": -0.7253012048192771
+  },
+  "cumulus4": {
+   "plain": {
+    "status": "ok",
+    "err_m": 12.781482665341116,
+    "margin": 0.44344670422053606,
+    "rms": 5.4972988164379375,
+    "reasons": []
+   },
+   "seg": {
+    "status": "ok",
+    "err_m": 178.886637855682,
+    "margin": 0.7018645046728579,
+    "rms": 5.301028545002629,
+    "reasons": []
+   },
+   "masked_frac": 0.0
+  },
+  "cumulus10": {
+   "plain": {
+    "status": "ok",
+    "err_m": 703.1952095633303,
+    "margin": 0.6530717757642032,
+    "rms": 5.712403538274103,
+    "reasons": []
+   },
+   "seg": {
+    "status": "ok",
+    "err_m": 731.0664890115032,
+    "margin": 0.5171566370619317,
+    "rms": 6.073071417816271,
+    "reasons": []
+   },
+   "masked_frac": 0.0
+  },
+  "cumulus20": {
+   "plain": {
+    "status": "ok",
+    "err_m": 702.9767587038572,
+    "margin": 0.41556603788840957,
+    "rms": 7.574383132014744,
+    "reasons": []
+   },
+   "seg": {
+    "status": "ok",
+    "err_m": 617.9932948146754,
+    "margin": 0.4865075066854169,
+    "rms": 6.725715186786562,
+    "reasons": []
+   },
+   "masked_frac": 0.0
+  },
+  "haze0.5": {
+   "plain": {
+    "status": "ok",
+    "err_m": 62.2497023189806,
+    "margin": 5.906077724194047,
+    "rms": 1.068431494909743,
+    "reasons": []
+   },
+   "seg": {
+    "status": "ok",
+    "err_m": 12.26586418401772,
+    "margin": 4.418675802187567,
+    "rms": 2.157199522281736,
+    "reasons": []
+   },
+   "masked_frac": 0.0
+  },
+  "haze0.75": {
+   "plain": {
+    "status": "ok",
+    "err_m": 35.001404087609316,
+    "margin": 2.9529478562276714,
+    "rms": 2.4156117142751525,
+    "reasons": []
+   },
+   "seg": {
+    "status": "ok",
+    "err_m": 51.60911631963701,
+    "margin": 0.8201573031373444,
+    "rms": 4.135917679821546,
+    "reasons": []
+   },
+   "masked_frac": 0.0041899441340782495
+  }
+ },
+ "offshore": {
+  "clean": {
+   "plain": {
+    "status": "ok",
+    "err_m": 174.03723729872206,
+    "margin": 0.1636512111340997,
+    "rms": 1.047263593673246,
+    "reasons": []
+   },
+   "seg": {
+    "status": "inconclusive",
+    "err_m": 468.0292040006395,
+    "margin": 0.09742059462013444,
+    "rms": 2.8961153127722654,
+    "reasons": [
+     "margin 0.10"
+    ]
+   },
+   "masked_frac": 0.0
+  },
+  "stratus0.25": {
+   "plain": {
+    "status": "inconclusive",
+    "err_m": 1468.6570712797918,
+    "margin": 0.00024130508352382166,
+    "rms": 31.93749700179478,
+    "reasons": [
+     "margin 0.00",
+     "rms 31.9"
+    ]
+   },
+   "seg": {
+    "status": "inconclusive",
+    "err_m": 3711.8580533637387,
+    "margin": 0.013440234519307169,
+    "rms": 4.713336935970212,
+    "reasons": [
+     "margin 0.01",
+     "boundary"
+    ]
+   },
+   "masked_frac": -5.45045045045045
+  },
+  "stratus0.5": {
+   "plain": {
+    "status": "inconclusive",
+    "err_m": 2349.2722495331163,
+    "margin": 0.0005176081417369701,
+    "rms": 45.24339393965947,
+    "reasons": [
+     "margin 0.00",
+     "boundary",
+     "rms 45.2"
+    ]
+   },
+   "seg": {
+    "status": "inconclusive",
+    "err_m": 3494.173502203534,
+    "margin": 0.013938849018848402,
+    "rms": 4.987553808009294,
+    "reasons": [
+     "margin 0.01",
+     "boundary"
+    ]
+   },
+   "masked_frac": -6.232323232323233
+  },
+  "stratus0.75": {
+   "plain": {
+    "status": "inconclusive",
+    "err_m": 3994.8058406966,
+    "margin": 0.016275624533991468,
+    "rms": 19.531474721537602,
+    "reasons": [
+     "margin 0.02",
+     "boundary",
+     "rms 19.5"
+    ]
+   },
+   "seg": {
+    "status": "inconclusive",
+    "err_m": 3624.730677823588,
+    "margin": 0.04247380027099845,
+    "rms": 5.951561982953342,
+    "reasons": [
+     "margin 0.04",
+     "boundary"
+    ]
+   },
+   "masked_frac": -2.7291666666666665
+  },
+  "cumulus4": {
+   "plain": {
+    "status": "inconclusive",
+    "err_m": 119.58245150698313,
+    "margin": 0.011462658210773307,
+    "rms": 5.277591994751146,
+    "reasons": [
+     "margin 0.01"
+    ]
+   },
+   "seg": {
+    "status": "inconclusive",
+    "err_m": 1018.5303134835137,
+    "margin": 0.027651199695932844,
+    "rms": 5.074287133096493,
+    "reasons": [
+     "margin 0.03"
+    ]
+   },
+   "masked_frac": 0.0
+  },
+  "cumulus10": {
+   "plain": {
+    "status": "inconclusive",
+    "err_m": 3799.2780991258646,
+    "margin": 0.0050559902650850605,
+    "rms": 7.008881332053567,
+    "reasons": [
+     "margin 0.01",
+     "boundary"
+    ]
+   },
+   "seg": {
+    "status": "inconclusive",
+    "err_m": 3856.705521059762,
+    "margin": 0.02097509415300101,
+    "rms": 5.8492635035259335,
+    "reasons": [
+     "margin 0.02",
+     "boundary"
+    ]
+   },
+   "masked_frac": 0.0
+  },
+  "cumulus20": {
+   "plain": {
+    "status": "inconclusive",
+    "err_m": 2072.097896990274,
+    "margin": 0.023970790467372483,
+    "rms": 7.658357648120896,
+    "reasons": [
+     "margin 0.02",
+     "boundary"
+    ]
+   },
+   "seg": {
+    "status": "inconclusive",
+    "err_m": 3972.6962693650344,
+    "margin": 0.0034247356749474616,
+    "rms": 6.337934720239615,
+    "reasons": [
+     "margin 0.00",
+     "boundary"
+    ]
+   },
+   "masked_frac": 0.0
+  },
+  "haze0.5": {
+   "plain": {
+    "status": "ok",
+    "err_m": 250.8998512218139,
+    "margin": 0.5904051880383352,
+    "rms": 1.5096889586642663,
+    "reasons": []
+   },
+   "seg": {
+    "status": "ok",
+    "err_m": 775.1758517539947,
+    "margin": 0.20575947587991275,
+    "rms": 2.915429723640351,
+    "reasons": []
+   },
+   "masked_frac": 0.0
+  },
+  "haze0.75": {
+   "plain": {
+    "status": "inconclusive",
+    "err_m": 1354.44916891246,
+    "margin": 0.03735471901608263,
+    "rms": 3.8048612170958713,
+    "reasons": [
+     "margin 0.04"
+    ]
+   },
+   "seg": {
+    "status": "inconclusive",
+    "err_m": 1163.4252044311509,
+    "margin": 0.0010774167424615782,
+    "rms": 27.129687483267848,
+    "reasons": [
+     "margin 0.00",
+     "rms 27.1"
+    ]
+   },
+   "masked_frac": 0.15083798882681565
+  }
+ }
+}
