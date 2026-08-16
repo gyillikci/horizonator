@@ -137,8 +137,11 @@ class CMarcher:
     """
 
     def __init__(self, dem_dir, lat_range, lon_range,
-                 d_max=40000.0, d_step=90.0, d_min=150.0,
+                 d_max=40000.0, d_step=None, d_min=150.0,
                  refraction_k=K_REFRACTION):
+        """d_step defaults to the DEM's own resolution: 90 m for 3"
+        tiles, 40 m for 1" tiles (point dem_dir at DEMs_SRTM1 and the
+        marcher exploits the full posting automatically)."""
         import ctypes
         import subprocess
         here = os.path.dirname(os.path.abspath(__file__))
@@ -172,6 +175,8 @@ class CMarcher:
         self.mosaic, self.lat_nw, self.lon_nw, self.dpp = \
             build_mosaic(Dem(dem_dir), lat_range[0], lat_range[1],
                          lon_range[0], lon_range[1])
+        if d_step is None:
+            d_step = 40.0 if self.dpp < 1.0 / 2000.0 else 90.0
         self.d_min, self.d_max, self.d_step = d_min, d_max, d_step
         self.refraction_k = refraction_k
 
