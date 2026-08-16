@@ -1183,6 +1183,29 @@ sequential estimator.
 > `--min-margin` 0.15–0.3 for availability; a STANDALONE single-photo
 > fix that must be trusted on its own merits 0.7–1.0 with attitude
 > priors; margin ≥ 1.5 is the "certain enough to act on" tier.
+>
+> **E4l — multi-hypothesis extraction: the headroom is real, no
+> selector claims it** (`e4l_multihyp.py`, `e4l_consensus.py`,
+> `out/e4l_multihyp.csv`; real extractor, 4 parameterizations, all 203
+> CH1 photos, E4f attitude-prior regime). The oracle confirms the
+> parallel branch's finding on our pipeline: the right boundary is
+> often in the set (43% → 52% within 1 km, median 1250 → 791 m). But
+> no selector tried claims it: margin-argmax is a wash (switches on
+> 159 photos, helps 36, hurts 34 — unlike rms it is not
+> anti-predictive, merely uninformative across hypotheses), and the
+> consensus medoid scores 44%. Position AGREEMENT among hypotheses is
+> not an integrity signal either — at k=4/4 agreeing within 500 m the
+> accepted set is still 63% wrong, because the four hypotheses are one
+> detector family and share failure modes: they agree on the same
+> wrong edge. Correlated ensembles cannot vote their way to truth.
+> Two usable residues: agreement works as a TRIM on the high-trust
+> tier (k≥3 AND margin≥1.0: 7% availability at 0% wrong, vs 5% wrong
+> for margin alone at 11%), and max-of-N selection inflates margins,
+> so gate thresholds must be recalibrated under selection. The open
+> road to the oracle's 2× runs through genuinely diverse detector
+> families (e.g. this extractor + a DP seam + an SVM boundary), whose
+> failures could actually decorrelate — that is the prerequisite, not
+> a better scalar.
 
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
