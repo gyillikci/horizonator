@@ -255,6 +255,16 @@ def main():
                          'at 2x the availability and 2.4x the accuracy '
                          'on real maritime imagery (7.6 vs 18.6 mrad '
                          'median edge error, 70% vs 22% within 10 mrad)')
+    ap.add_argument('--conditioning', action='store_true',
+                    help='resolve with parts of the evidence removed '
+                         '(leave-one-photo-out, or left/right halves of '
+                         'a single frame) and report how far the answer '
+                         'moves — the stability test E4v showed is '
+                         'needed, since neither the basin margin nor the '
+                         'covariance separates a good fix from a bad one')
+    ap.add_argument('--max-jackknife', type=float, default=None,
+                    help='reject a fix whose conditioning spread exceeds '
+                         'this many meters')
     ap.add_argument('--max-step', type=float, default=0.20,
                     help='auto-level water check: largest brightness '
                          'step (mean [0,1] intensity) allowed across '
@@ -419,7 +429,9 @@ def main():
     rigid = args.rigid_pan and len(photos) > 1 \
         and all(p['heading'] is not None for p in photos)
 
-    def C(dn, de):
+    def C(dn, de, plist=None, wsum=None):
+        pl = photos if plist is None else plist
+        us = usum if wsum is None else wsum
         el, r = cm.skyline(lat_c + dn / mlat, lon_c + de / mlon, z, AZ)
         ws = None
         if args.dmin_soft:
@@ -427,13 +439,13 @@ def main():
         if rigid:
             shared = np.arange(-60, 61, 2)
             tot = np.zeros(shared.size)
-            for p in photos:
+            for p in pl:
                 tot += p['weight'] * photo_cost_curve(
                     p['el_obs'], p['w'], el, shared, p['betas'])
-            return float(tot.min()) / usum
+            return float(tot.min()) / us
         return sum(p['weight'] * fast_photo_cost(
             p['el_obs'], p['w'], el, p['shifts'], p['betas'],
-            w_syn=ws)[0] for p in photos) / usum
+            w_syn=ws)[0] for p in pl) / us
 
     step0 = max(args.box / 20, 100.0)
     g = np.arange(-args.box / 2, args.box / 2 + 1, step0)
@@ -465,6 +477,56 @@ def main():
                     best = (c, dn0 + di * step, de0 + dj * step)
         _, dn0, de0 = best
 
+    # ---- conditioning: how much does the fix depend on the data?
+    # E4v measured that neither the basin margin nor the covariance
+    # ellipse separates a 400 m fix from a 3 km one on real single-frame
+    # sightings — the margin scores how DISTINCT the winning basin is,
+    # and the Laplace covariance is uniformly overconfident. What does
+    # distinguish them is stability: resolve with part of the evidence
+    # removed and see whether the answer moves. Multi-photo fixes drop
+    # one frame at a time; a single frame is split into left and right
+    # halves of its own field of view, which is the same test at the
+    # only scale available.
+    def coarse_min(plist, wsum):
+        cc2 = np.array([[C(dn, de, plist, wsum) for de in g]
+                        for dn in g])
+        i2, j2 = np.unravel_index(np.argmin(cc2), cc2.shape)
+        return g[i2], g[j2]
+
+    jack = None
+    if args.conditioning:
+        subs = []
+        if N >= 3:
+            for k in range(N):
+                pl = [p for m, p in enumerate(photos) if m != k]
+                subs.append((pl, sum(p['weight'] for p in pl)))
+        else:
+            for p in photos:
+                idx = np.where(p['w'] > 0)[0]
+                if idx.size < 20:
+                    continue
+                mid = idx[idx.size // 2]
+                for lo, hi in ((idx[0], mid), (mid, idx[-1])):
+                    w2 = np.zeros_like(p['w'])
+                    w2[lo:hi + 1] = p['w'][lo:hi + 1]
+                    q = dict(p)
+                    q['w'] = w2
+                    subs.append(([q], p['weight']))
+        pts = []
+        for pl, wsum in subs:
+            try:
+                pts.append(coarse_min(pl, wsum))
+            except Exception:
+                pass
+        if len(pts) >= 2:
+            d = [float(np.hypot(a - dn0, b - de0)) for a, b in pts]
+            jack = dict(n_subsets=len(pts),
+                        spread_m=float(np.median(d)),
+                        max_m=float(np.max(d)))
+            print(f'conditioning: {len(pts)} subset solves, median '
+                  f'{jack["spread_m"]:.0f} m from the full fix, max '
+                  f'{jack["max_m"]:.0f} m', flush=True)
+
     # Laplace covariance from a local quadratic fit of the cost
     h = step0 / 10
     c0 = C(dn0, de0)
@@ -473,11 +535,25 @@ def main():
     cne = (C(dn0 + h, de0 + h) - C(dn0 + h, de0 - h)
            - C(dn0 - h, de0 + h) + C(dn0 - h, de0 - h)) / (4 * h ** 2)
     Hm = np.array([[cnn, cne], [cne, cee]])
+    sig_maj = sig_min = np.nan
+    maj_brg = np.nan
     try:
         cov = 2 * c0 * np.linalg.inv(Hm)  # scaled: residual-level heuristic
         sig = np.sqrt(np.maximum(np.diag(cov), 0))
+        # the ELLIPSE, not just its axis-aligned shadow. A fix from one
+        # narrow field of view is a bearing: the cost barely changes
+        # along the line of sight, so the ellipse is long and thin, and
+        # its length is the honest statement of what was measured
+        # (E4v). The diagonal sigmas hide this whenever the ellipse is
+        # not aligned with north/east.
+        evals, evecs = np.linalg.eigh(0.5 * (cov + cov.T))
+        evals = np.maximum(evals, 0.0)
+        sig_min, sig_maj = np.sqrt(evals[0]), np.sqrt(evals[1])
+        vmaj = evecs[:, 1]                    # (north, east) components
+        maj_brg = float(np.degrees(np.arctan2(vmaj[1], vmaj[0])) % 180.0)
     except np.linalg.LinAlgError:
         sig = [np.nan, np.nan]
+    aniso = float(sig_maj / sig_min) if sig_min > 1e-9 else np.inf
 
     lat_e = lat_c + dn0 / mlat
     lon_e = lon_c + de0 / mlon
@@ -504,6 +580,13 @@ def main():
     if rms_mrad > args.max_rms:
         reasons.append(f'residual {rms_mrad:.1f} mrad > {args.max_rms:.1f}: '
                        'the DEM cannot explain this observation')
+    if jack and args.max_jackknife \
+            and jack['spread_m'] > args.max_jackknife:
+        reasons.append(f"conditioning: the fix moves "
+                       f"{jack['spread_m']:.0f} m when part of the "
+                       f"evidence is removed (limit "
+                       f"{args.max_jackknife:.0f} m) — the geometry does "
+                       f"not pin a position")
     status = 'ok' if not reasons else 'inconclusive'
     for r in reasons:
         print('INCONCLUSIVE:', r, file=sys.stderr)
@@ -513,6 +596,10 @@ def main():
                   relief_mrad=relief,
                   dn_m=dn0, de_m=de0,
                   sigma_n_m=float(sig[0]), sigma_e_m=float(sig[1]),
+                  sigma_major_m=float(sig_maj),
+                  sigma_minor_m=float(sig_min),
+                  major_bearing_deg=maj_brg, anisotropy=aniso,
+                  jackknife=jack,
                   cost=c0, rms_mrad=rms_mrad,
                   n_photos=N, z_m=z,
                   photos=[{k: v for k, v in d.items()
