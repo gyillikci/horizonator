@@ -5,3 +5,10 @@
   EWAC7374     err   1154 m (along  -1042 across   -494)  margin  0.20  rms 1.06  sigma 394/186 m  hdg_off -4.0
   TWBF2645: no solution
   INKX2521     err   1695 m (along   +538 across  -1607)  margin  3.67  rms 3.13  sigma 92/85 m  hdg_off -5.8
+  MYQR7719     err    396 m (along    -64 across   -391)  margin  1.43  rms 1.57  sigma 74/120 m  hdg_off +6.0
+  PQBC6867     err    675 m (along   -640 across   +215)  margin  0.36  rms 1.75  sigma 116/83 m  hdg_off -1.4
+
+6 solved: median error 914 m, best 396 m
+  accepted by the gates: 5, of which within 500 m: 2
+  error / reported sigma: median 4.4x  (1.0 = honest covariance)
+  auto-level vs Theodolite inclinometer: pitch median +0.60 deg, roll median +0.61 deg
