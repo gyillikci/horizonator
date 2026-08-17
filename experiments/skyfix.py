@@ -246,6 +246,17 @@ def main():
                          'used by --auto-level, and widens its offset '
                          'window by 0.15 mrad/degC of |dT| since large '
                          'gradients also mean unstable dip')
+    ap.add_argument('--max-step', type=float, default=0.20,
+                    help='auto-level water check: largest brightness '
+                         'step (mean [0,1] intensity) allowed across '
+                         'the horizon. A true sea horizon is nearly '
+                         'continuous — the water mirrors the sky at '
+                         'grazing incidence (E4q measured 0.03 median '
+                         'on 1325 real maritime photos, vs 0.375 at '
+                         'land boundaries). Raise it only for imagery '
+                         'whose sea is rendered darker than physics '
+                         'warrants, e.g. the E4c synthetic composites '
+                         '(0.17-0.30); default 0.20')
     ap.add_argument('--auto-level', action='store_true',
                     help='estimate pitch and roll from the visible sea '
                          'horizon (per photo), overriding --pitch/--roll '
@@ -359,7 +370,8 @@ def main():
                 # (smaller dip). PROVISIONAL coefficient — see --help
                 dip -= 0.032e-3 * args.dt_air_sea
             level = extract.sea_horizon_attitude(
-                rows, conf, img.shape, f_px, dip, rgb=img)
+                rows, conf, img.shape, f_px, dip, rgb=img,
+                max_step=args.max_step)
             if level:
                 pitch, roll = level['pitch_deg'], level['roll_deg']
                 half = 0.002

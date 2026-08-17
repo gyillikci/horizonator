@@ -1554,6 +1554,53 @@ sequential estimator.
 > surveyed mast coordinates; OSM man_made=mast remains the bearing-
 > landmark source, OpenCellID only a coverage cross-check.
 
+> **E4q — the auto-leveller against measured horizons, and the sign
+> error it exposed** (`experiments/e4q_imu_horizon.py`, out/e4q_*).
+> MaSTr1325 arrived (1325 real maritime images, each with an IMU mask
+> whose boundary is the inertially measured horizon, plus a
+> sea/sky/obstacle segmentation), so the +-2 mrad post-levelling
+> window could finally be checked against something other than the
+> solver's own geometry. First, what the dataset is: shot from a USV
+> in and around a marina, so in the MEDIAN image the horizon is fully
+> occluded by land — 0% of columns have sky directly above water, and
+> only 104 of 1030 usable images show an open horizon over half their
+> width (295 `old_*` images carry no IMU and are excluded). That makes
+> it two tests. **A. Veto correctness**: the levelling stage should
+> accept open-horizon scenes and refuse occluded ones. It did the
+> opposite — 2% availability on open horizons, 19% false accepts on
+> occluded ones. **The cause was a sign error in the physics.** The
+> photometric water check assumed open water is DARKER than the sky by
+> >= 0.30; measured on this data, a true sea horizon has a median
+> sky-minus-water step of 0.031 (p90 0.185) while land boundaries step
+> 0.375 (p10 0.244). Near the horizon the sea reflects the sky at
+> grazing incidence (Fresnel reflectivity -> 1), so a genuine horizon
+> is nearly CONTINUOUS in brightness and a big step means land. The
+> check now tests |step| <= max_step (default 0.20, `--max-step` on
+> skyfix): availability 2% -> 17%, false accepts 19% -> 7%. The old
+> rule had been rejecting 98% of real horizons and admitting the false
+> ones — invisible for eleven experiments because every prior test was
+> synthetic. **B. Accuracy** on open-horizon accepts: the fitted line
+> sits within a median 2.9 px of the IMU line at image center (p90
+> 6.9 px), pitch error median +0.41 deg, roll +0.75 deg, edge
+> elevation error median 21.8 mrad. Caveat that dominates the mrad
+> numbers: at 512x384 with the assumed 65 deg FOV one pixel IS
+> 2.5 mrad, so +-2 mrad is sub-pixel on this imagery — the pixel-space
+> result is the honest measurement, and MaSTr1325's downscaled frames
+> cannot validate a 2 mrad claim. The real limiter found: on
+> open-horizon scenes the terrain seam detector tracks the true
+> horizon (>70% of columns within 3 px) in only 10 of 28 audited
+> images, and when it does, levelling accepts 8/10. So the levelling
+> front end needs a horizon-specific low-contrast line detector, not
+> the mountain seam finder — that is the next concrete piece of work.
+> Two knock-ons: the E4c synthetic composites paint the sea 0.17-0.30
+> darker than sky (unphysical at the horizon, which is why they never
+> exposed the sign error) and now need `--max-step 0.35`; and E4g's
+> four synthetic cases currently yield no sea-horizon fit at all,
+> refused by the GEOMETRIC gates — verified by disabling the
+> photometric check entirely and seeing the same refusals, so this is
+> not the E4q change — the harness now records the refusal instead of
+> crashing, and the cause is an open item.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the

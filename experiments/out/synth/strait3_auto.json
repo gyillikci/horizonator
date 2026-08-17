@@ -1,33 +1,37 @@
 {
- "status": "ok",
- "reasons": [],
- "lat": 36.94127810487324,
- "lon": 27.265902090461612,
- "fix_ok": true,
- "basin_margin": 7.871703209282866,
- "relief_mrad": 8.227664815398818,
- "dn_m": 1237.5,
- "de_m": -712.5,
- "sigma_n_m": 43.5605839036108,
- "sigma_e_m": 42.48391635300597,
- "cost": 1.7571946357898262e-07,
- "rms_mrad": 0.5928228463529094,
- "heading_offset_deg": 0.0,
- "el_offset_mrad": 0.5,
- "fov_deg": 71.58320735320068,
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.00 < 0.15",
+  "minimum on the search-box boundary: the true position may lie outside the box"
+ ],
+ "lat": 36.90856528145795,
+ "lon": 27.287559109214445,
+ "fix_ok": false,
+ "basin_margin": 0.0007420611403723701,
+ "relief_mrad": 6.610324576057396,
+ "dn_m": -2400.0,
+ "de_m": 1212.5,
+ "sigma_n_m": 535.6556725246245,
+ "sigma_e_m": 623.6279021175928,
+ "cost": 9.318629879784317e-06,
+ "rms_mrad": 4.317089269353674,
+ "n_photos": 1,
  "z_m": 5.0,
- "attitude": {
-  "pitch_deg": 0.9235134526679817,
-  "roll_deg": -0.5410897857001248,
-  "source": "sea-horizon"
- },
- "auto_level": {
-  "pitch_deg": 0.9235134526679817,
-  "roll_deg": -0.5410897857001248,
-  "n_inl": 440,
-  "frac": 0.275,
-  "span_frac": 0.5572232645403377,
-  "rms_px": 0.678697171077133,
-  "contrast": 0.433696448802948
- }
+ "photos": [
+  {
+   "file": "strait3.jpg",
+   "fov_deg": 71.58320735320068,
+   "heading_deg": 300.0,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 4.317089269353674,
+   "heading_offset_deg": 6.0,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior"
+  }
+ ],
+ "heading_offset_deg": 6.0,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 71.58320735320068
 }

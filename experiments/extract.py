@@ -97,7 +97,7 @@ def skyline_seam(rgb, search_frac=0.85, m_sustain=8, nsigma=4.0,
 
 def sea_horizon_attitude(rows, conf, shape, f_px, dip_rad, rgb=None,
                          tol_px=1.5, min_frac=0.12, min_span_frac=0.35,
-                         min_contrast=0.30):
+                         max_step=0.20):
     """Estimate camera (pitch, roll) from the visible sea horizon.
 
     For an observer at known height h the sea horizon sits at the exactly
@@ -115,13 +115,21 @@ def sea_horizon_attitude(rows, conf, shape, f_px, dip_rad, rgb=None,
     rises above it) but happens whenever a flat elevated ridge is tried
     while real sea is visible lower in the frame.
 
-    A straight distant ridge under haze can still masquerade as the
-    horizon when no sea is in view at all (the navigator's "false
-    horizon"). When rgb is given, a photometric water check rejects such
-    fits: the band just below a genuine sea horizon is open water,
-    darker than the sky just above it by at least min_contrast (in mean
-    [0,1] intensity). Tuned for daylight maritime scenes; sun glare or
-    night use would need the CNN water/land/sky front-end instead.
+    A straight distant ridge or shoreline can still masquerade as the
+    horizon (the navigator's "false horizon"). When rgb is given, a
+    photometric check rejects such fits — but by CONTINUITY, not by
+    darkness. At grazing incidence the sea's Fresnel reflectivity
+    approaches 1, so the water immediately below a true horizon mirrors
+    the sky immediately above it and the brightness step across the
+    boundary is small; land, foliage or a hull against the sky makes a
+    large step. Measured on MaSTr1325's 1325 real maritime images
+    (E4q): true sea horizons have a median sky-minus-water step of
+    0.031 (p90 0.185), land boundaries 0.375 (p10 0.244) — so
+    |step| <= max_step separates them cleanly, while the earlier
+    "water is darker by >= 0.30" rule had the discriminant backwards
+    and did the opposite of its job (it rejected 98% of real horizons
+    and admitted the land boundaries). Daylight rule; sun glitter or
+    night use still wants a learned water/land/sky front-end.
 
     rows, conf: skyline_seam() output. shape: image shape. f_px: focal
     length in pixels. dip_rad: horizon dip for the camera height
@@ -192,8 +200,8 @@ def sea_horizon_attitude(rows, conf, shape, f_px, dip_rad, rgb=None,
         if len(above) < 8:
             return None
         contrast = float(np.median(above) - np.median(below))
-        if contrast < min_contrast:
-            return None                 # too bright below: false horizon
+        if abs(contrast) > max_step:
+            return None                 # big step across it: not water
     return dict(pitch_deg=float(np.degrees(-dip_rad - np.arctan(a))),
                 roll_deg=float(np.degrees(-np.arctan(b))),
                 n_inl=int(inl.sum()), frac=frac, span_frac=span,

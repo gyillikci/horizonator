@@ -53,7 +53,12 @@ def run_case(name, lat, lon, pitch, roll, center, variant):
     if variant == 'prior':
         args += ['--pitch', str(pitch), '--roll', str(roll)]
     else:
-        args += ['--auto-level']
+        # these are SYNTHETIC composites whose sea is painted darker
+        # than physics allows at the horizon (brightness step 0.17-0.30
+        # vs 0.03 measured on real maritime photos in E4q), so the
+        # continuity water check needs a widened window here — real
+        # imagery uses the 0.20 default
+        args += ['--auto-level', '--max-step', '0.35']
     t0 = time.time()
     p = subprocess.run(args, capture_output=True, text=True)
     dt = time.time() - t0
@@ -82,7 +87,17 @@ for name, lat, lon, z, heading, pitch, roll in CASES:
     if not (A and B):
         continue
     al = B.get('auto_level')
-    att = B['attitude']
+    att = B.get('attitude')
+    if att is None:
+        # no sea horizon found: the levelling stage declined this scene
+        # (land-dominated composites legitimately have none). Record the
+        # refusal instead of crashing — availability is a result too.
+        print(f'{name}: auto-level found no sea horizon, skipping')
+        results.append(dict(name=name, truth=dict(pitch=pitch, roll=roll),
+                            no_horizon=True,
+                            prior=dict(err_m=A['err_m'],
+                                       rms_mrad=A['rms_mrad'])))
+        continue
     dp = att['pitch_deg'] - pitch
     dr = att['roll_deg'] - roll
     results.append(dict(
@@ -108,12 +123,16 @@ for name, lat, lon, z, heading, pitch, roll in CASES:
 
 with open(os.path.join(OUT, 'e4g_results.json'), 'w') as f:
     json.dump(results, f, indent=1)
+levelled = [r for r in results if not r.get('no_horizon')]
 ea = np.array([r['prior']['err_m'] for r in results])
-eb = np.array([r['auto']['err_m'] for r in results])
-print(f'\n{len(results)}/{len(CASES)} cases: '
-      f'prior median {np.median(ea):.1f} m max {ea.max():.1f} m  |  '
-      f'auto-level median {np.median(eb):.1f} m max {eb.max():.1f} m')
-pe = [abs(r['auto']['pitch_err_deg']) for r in results
+print(f'\n{len(results)}/{len(CASES)} cases, sea horizon found on '
+      f'{len(levelled)}: prior median {np.median(ea):.1f} m '
+      f'max {ea.max():.1f} m')
+if levelled:
+    eb = np.array([r['auto']['err_m'] for r in levelled])
+    print(f'  auto-level median {np.median(eb):.1f} m '
+          f'max {eb.max():.1f} m')
+pe = [abs(r['auto']['pitch_err_deg']) for r in levelled
       if r['auto']['source'] == 'sea-horizon']
 if pe:
     print(f'sea-horizon attitude recovered on {len(pe)}/{len(results)}: '

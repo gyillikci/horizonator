@@ -4,22 +4,31 @@
  "lat": 36.96203097113045,
  "lon": 27.238293796155094,
  "fix_ok": true,
- "basin_margin": 9.813671135564478,
+ "basin_margin": 9.826444974250638,
  "relief_mrad": 23.072474119101805,
  "dn_m": -1175.0,
  "de_m": 1037.5,
- "sigma_n_m": 52.22769275217115,
- "sigma_e_m": 70.13889712858906,
- "cost": 5.208563023287962e-07,
- "rms_mrad": 1.020643230839059,
- "heading_offset_deg": 0.0,
- "el_offset_mrad": -2.0,
- "fov_deg": 71.58320735320068,
+ "sigma_n_m": 53.118005457569616,
+ "sigma_e_m": 71.4804425180701,
+ "cost": 5.360676271364009e-07,
+ "rms_mrad": 1.0354396429888137,
+ "n_photos": 1,
  "z_m": 5.0,
- "attitude": {
-  "pitch_deg": -0.5,
-  "roll_deg": 0.5,
-  "source": "prior"
- },
- "auto_level": null
+ "photos": [
+  {
+   "file": "strait2.jpg",
+   "fov_deg": 71.58320735320068,
+   "heading_deg": 25.0,
+   "pitch_deg": -0.5,
+   "roll_deg": 0.5,
+   "weight": 1.0,
+   "rms_mrad": 1.0354396429888137,
+   "heading_offset_deg": 0.0,
+   "el_offset_mrad": -2.0245819323134238,
+   "attitude_source": "prior"
+  }
+ ],
+ "heading_offset_deg": 0.0,
+ "el_offset_mrad": -2.0245819323134238,
+ "fov_deg": 71.58320735320068
 }
