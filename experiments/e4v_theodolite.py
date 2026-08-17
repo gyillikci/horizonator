@@ -34,7 +34,10 @@ import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, 'out')
-PHOTOS = os.path.expanduser('~/celestial-navigation/theodolite')
+PHOTOS = os.environ.get(
+    'THEODOLITE_DIR',
+    os.path.join(os.path.dirname(os.path.dirname(HERE)),
+                 'celestial-navigation', 'theodolite'))
 INDEX = os.path.join(OUT, 'theodolite', 'index.json')
 
 

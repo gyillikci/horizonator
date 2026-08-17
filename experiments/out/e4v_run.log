@@ -1,9 +1,7 @@
 8 prime sightings
-  SRYK4301: no solution
+  SRYK4301     err   3024 m (along  +2386 across  +1859)  margin  1.20  rms 1.60  sigma 123/72 m  hdg_off -2.0
   RSRW2787: no solution
-  KWHC9160: no solution
-  EWAC7374: no solution
+  KWHC9160     err    460 m (along   +293 across   -355)  margin  0.38  rms 0.37  sigma 107/42 m  hdg_off +5.2
+  EWAC7374     err   1154 m (along  -1042 across   -494)  margin  0.20  rms 1.06  sigma 394/186 m  hdg_off -4.0
   TWBF2645: no solution
-  INKX2521: no solution
-  MYQR7719: no solution
-  PQBC6867: no solution
+  INKX2521     err   1695 m (along   +538 across  -1607)  margin  3.67  rms 3.13  sigma 92/85 m  hdg_off -5.8
