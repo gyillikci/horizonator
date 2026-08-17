@@ -84,7 +84,7 @@ def basin_margin(cc, g, min_sep):
 EXTRACTOR = 'seam'      # set from --extractor
 
 
-def extract_boundary(img):
+def extract_boundary(img, horizon_rows=None, tol_px=4):
     """The image-side boundary, from whichever front end is selected.
 
     'seam'    the mountain seam detector (extract.skyline_seam)
@@ -96,19 +96,39 @@ def extract_boundary(img):
               detector following the far coast and the template the
               island), while on a clean single-layer scene they agree
               to 2 px."""
+    # A terrain silhouette seen from sea level lies AT OR ABOVE the sea
+    # horizon; anything a detector returns below that line is water,
+    # a hull, or a reflection, never a skyline. When the horizon is
+    # known, the search is restricted to the band above it (plus a few
+    # pixels of tolerance) instead of letting the detector wander into
+    # the sea and then scoring the result as if it were terrain.
+    sub = img
+    top = 0
+    if horizon_rows is not None:
+        cut = int(np.ceil(np.nanmax(horizon_rows))) + tol_px
+        cut = int(np.clip(cut, 16, img.shape[0]))
+        sub = img[:cut]
     if EXTRACTOR == 'learned':
         from e4m_diverse import seam_extract
         w = np.load(os.path.join(os.path.dirname(
             os.path.abspath(__file__)), 'out', 'e4m_svm.npz'))['w']
-        rows = seam_extract(img, w)
-        return rows, np.ones(img.shape[1])
-    return extract.skyline_seam(img)
+        rows = seam_extract(sub, w) + top
+        conf = np.ones(img.shape[1])
+    else:
+        rows, conf = extract.skyline_seam(sub)
+        rows = rows + top
+    if horizon_rows is not None:
+        # a column whose boundary still sits below the horizon carries
+        # no terrain: drop it rather than feed the waterline in
+        conf = conf * (rows <= np.asarray(horizon_rows) + tol_px)
+    return rows, conf
 
 
-def observation(img, fov_deg, heading, roll_deg, pitch_deg=0.0):
+def observation(img, fov_deg, heading, roll_deg, pitch_deg=0.0,
+                horizon_rows=None):
     """Extract the skyline and map it to the global azimuth grid.
     Returns (el_obs, weights, diag) with diag holding extraction results."""
-    rows, conf = extract_boundary(img)
+    rows, conf = extract_boundary(img, horizon_rows)
     H, W, _ = img.shape
     f = (W / 2) / np.tan(np.radians(fov_deg) / 2)
     u = np.arange(W) - (W - 1) / 2
@@ -296,6 +316,11 @@ def main():
                          'at 2x the availability and 2.4x the accuracy '
                          'on real maritime imagery (7.6 vs 18.6 mrad '
                          'median edge error, 70% vs 22% within 10 mrad)')
+    ap.add_argument('--horizon-mask', action='store_true',
+                    help='restrict the silhouette search to the band '
+                         'above the sea horizon, and drop columns whose '
+                         'boundary falls below it (they are water, not '
+                         'terrain)')
     ap.add_argument('--extractor', default='seam',
                     choices=['seam', 'learned'],
                     help='image-side boundary finder: the mountain seam '
@@ -460,9 +485,30 @@ def main():
                 if args.dt_air_sea is not None:
                     half += 0.00015 * abs(args.dt_air_sea)
                 betas = np.arange(-half, half * 1.001, half / 4)
+        hz_rows = None
+        if args.auto_level and args.horizon_mask:
+            Hh, Ww, _ = img.shape
+            f_px = (Ww / 2) / np.tan(np.radians(fovs[i]) / 2)
+            dip_h = S.horizon_dip_rad(max(z, 0.5))
+            uu = np.arange(Ww) - (Ww - 1) / 2
+            vv = (np.tan(-dip_h - np.radians(pitch)) * np.hypot(uu, f_px)
+                  - np.radians(roll) * uu)
+            hz_rows = (Hh - 1) / 2 - vv
         el_obs, w, diag = observation(
             img, fovs[i], headings[i] if headings[i] is not None else 0.0,
-            roll, pitch)
+            roll, pitch, horizon_rows=hz_rows)
+        if w.sum() < 1e-6 or int((w > 0).sum()) < 20:
+            # every column's boundary fell below the sea horizon: this
+            # frame shows water and foreground, no terrain silhouette.
+            # Refusing is the honest answer — matching an empty
+            # observation yields a confident-looking NaN, which is what
+            # the first masked batch produced.
+            print(json.dumps(dict(
+                status='inconclusive', fix_ok=False,
+                reasons=['no terrain silhouette above the sea horizon'],
+                lat=lat_c, lon=lon_c, basin_margin=0.0,
+                rms_mrad=None, n_photos=N), indent=1))
+            return
         # the azimuth window must match the compass that produced the
         # prior, not a fixed guess: Theodolite records the accuracy iOS
         # reported (median +-10 deg on this field set, worst +-41), and

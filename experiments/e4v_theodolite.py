@@ -43,6 +43,7 @@ MIN_RANGE = (float(sys.argv[sys.argv.index('--min-range') + 1])
              if '--min-range' in sys.argv else 0.0)
 EXTRACTOR = (sys.argv[sys.argv.index('--extractor') + 1]
              if '--extractor' in sys.argv else 'seam')
+HORIZON_MASK = '--horizon-mask' in sys.argv
 
 
 def run_one(s):
@@ -56,6 +57,8 @@ def run_one(s):
            '--auto-level', '--box', '6000']
     if EXTRACTOR != 'seam':
         cmd += ['--extractor', EXTRACTOR]
+    if HORIZON_MASK:
+        cmd += ['--horizon-mask']
     if MIN_RANGE:
         cmd += ['--min-range', str(MIN_RANGE)]
     p = subprocess.run(cmd, capture_output=True, text=True, timeout=900)
@@ -63,6 +66,10 @@ def run_one(s):
     if '{' not in txt:
         return None
     j = json.loads(txt[txt.index('{'):])
+    if 'photos' not in j:            # an explicit refusal, not a fix
+        return dict(id=s['id'], refused=True,
+                    reasons=j.get('reasons'), err_m=None,
+                    fov=a['fov_deg'])
     mlat = 111132.0
     mlon = 111320.0 * np.cos(np.radians(e['lat']))
     dn = (j['lat'] - e['lat']) * mlat
@@ -105,7 +112,7 @@ if __name__ == '__main__':
                  and (s['attitude'].get('fov_deg') or 99) < 25
                  and s['attitude'].get('heading_deg') is not None]
     print(f'{len(prime)} sightings to solve')
-    rows = []
+    rows, refused = [], []
     for s in prime:
         try:
             r = run_one(s)
@@ -115,6 +122,11 @@ if __name__ == '__main__':
         if r is None:
             print(f"  {s['id']}: no solution")
             continue
+        if r.get('refused'):
+            print(f"  {s['id']:12s} refused: {(r.get('reasons') or [''])[0]}",
+                  flush=True)
+            refused.append(r)
+            continue
         rows.append(r)
         print(f"  {r['id']:12s} err {r['err_m']:6.0f} m "
               f"(along {r['along_m']:+6.0f} across {r['across_m']:+6.0f})"
@@ -122,6 +134,9 @@ if __name__ == '__main__':
               f"  sigma {r['sigma_n']:.0f}/{r['sigma_e']:.0f} m"
               f"  hdg_off {r['heading_offset']:+.1f}", flush=True)
 
+    if refused:
+        print(f'\n  {len(refused)} sightings refused outright '
+              f'(no terrain silhouette above the sea horizon)')
     if rows:
         e = np.array([r['err_m'] for r in rows])
         sg = np.array([np.hypot(r['sigma_n'], r['sigma_e'])
@@ -167,6 +182,7 @@ if __name__ == '__main__':
                       f'{np.median(o):.0f} m, <500 m: {(o < 500).sum()}')
     tag = ('_range' if MIN_RANGE else '') + \
           ('' if EXTRACTOR == 'seam' else '_' + EXTRACTOR) + \
+          ('_mask' if HORIZON_MASK else '') + \
           ('_all' if '--all' in sys.argv else '')
     with open(os.path.join(OUT, f'e4v_results{tag}.json'), 'w') as f:
         json.dump(rows, f, indent=1)
