@@ -344,7 +344,8 @@ def save_hud_crops(path, out_dir, sid, frac=0.16):
     return paths
 
 
-def curate(src, out, do_horizon, hud_thresh=1.6, z_default=10.0):
+def curate(src, out, do_horizon, hud_thresh=1.6, z_default=10.0,
+           keep_unpaired=False):
     files = sorted(f for f in glob.glob(os.path.join(src, '**', '*'),
                                         recursive=True)
                    if f.lower().endswith(EXTS))
@@ -390,7 +391,7 @@ def curate(src, out, do_horizon, hud_thresh=1.6, z_default=10.0):
     for i in theo:
         key = (i['pitch_deg'], i['roll_deg'], i['dt_raw'], i['sub'])
         groups.setdefault(key, []).append(i)
-    pairs, singles = [], []
+    pairs, singles, lone = [], [], []
     for key, v in groups.items():
         v.sort(key=lambda x: -(x['width'] * x['height']))
         screen = [x for x in v if x.get('screenish')]
@@ -398,12 +399,16 @@ def curate(src, out, do_horizon, hud_thresh=1.6, z_default=10.0):
         if screen and clean:
             pairs.append((screen[0], clean[0]))
         elif clean:
-            singles.append(clean[0])
-        else:
+            (singles if keep_unpaired else lone).append(clean[0])
+        elif keep_unpaired:
             pairs.append((screen[0], None))
-    print(f'  EXIF: {len(theo)} Theodolite sightings, '
-          f'{len(not_theo)} ordinary photos set aside; '
-          f'{sum(1 for p in pairs if p[1])} exact HUD+original pairs')
+        else:
+            lone.append(screen[0])
+    print(f'  EXIF: {len(theo)} Theodolite frames, {len(not_theo)} '
+          f'ordinary photos set aside; {sum(1 for p in pairs if p[1])} '
+          f'exact HUD+original pairs'
+          + (f', {len(lone)} unpaired frames dropped'
+             if lone else ''))
     if False:
         pairs, singles = pair_up(items)
     crop_dir = os.path.join(out, 'crops')
@@ -554,11 +559,18 @@ def main():
                          'frame (slower, but it decides usability)')
     ap.add_argument('--transcript', help='JSON of read HUD values')
     ap.add_argument('--hud-thresh', type=float, default=1.6)
+    ap.add_argument('--include-unpaired', action='store_true',
+                    help='also keep frames saved in only one version. '
+                         'Off by default: a sighting without both '
+                         'versions gives either no clean image to '
+                         'extract from or no cross-check, and the set '
+                         'has plenty of complete pairs')
     a = ap.parse_args()
     if a.transcript:
         apply_transcript(a.out, a.transcript)
     else:
-        curate(a.src, a.out, a.horizon, a.hud_thresh)
+        curate(a.src, a.out, a.horizon, a.hud_thresh,
+               keep_unpaired=a.include_unpaired)
 
 
 if __name__ == '__main__':
