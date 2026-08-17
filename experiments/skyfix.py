@@ -255,6 +255,11 @@ def main():
                          'at 2x the availability and 2.4x the accuracy '
                          'on real maritime imagery (7.6 vs 18.6 mrad '
                          'median edge error, 70% vs 22% within 10 mrad)')
+    ap.add_argument('--heading-window', type=float, default=6.0,
+                    help='half-width of the co-estimated azimuth search '
+                         'around the heading prior, degrees (default 6; '
+                         'set it from the compass accuracy the device '
+                         'reports)')
     ap.add_argument('--min-range', type=float, default=None,
                     help='reject the sighting when the terrain forming '
                          'the silhouette is nearer than this many '
@@ -410,7 +415,14 @@ def main():
         el_obs, w, diag = observation(
             img, fovs[i], headings[i] if headings[i] is not None else 0.0,
             roll, pitch)
-        shifts = np.arange(-60, 61, 2) if headings[i] is not None \
+        # the azimuth window must match the compass that produced the
+        # prior, not a fixed guess: Theodolite records the accuracy iOS
+        # reported (median +-10 deg on this field set, worst +-41), and
+        # searching +-6 around a prior that is +-11 good simply cannot
+        # reach the truth (E4x: the DEM was being sampled at azimuths
+        # the camera never saw).
+        hw = int(round(args.heading_window / 0.1))
+        shifts = np.arange(-hw, hw + 1, 2) if headings[i] is not None \
             else np.arange(-1800, 1800, 2)
         relief = float(np.std(el_obs[w > 0]) * 1e3)
         photos.append(dict(path=path, img=img, el_obs=el_obs, w=w,
