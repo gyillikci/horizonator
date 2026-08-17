@@ -8,3 +8,8 @@
   TTQR0914     err   3849 m (along   -700 across  +3785)  margin  0.00  rms 9.62  sigma 441/517 m  hdg_off -0.6
   RKDZ1323     err    722 m (along   -530 across   +491)  margin  0.15  rms 2.34  sigma 231/170 m  hdg_off -6.0
   LXHP2922     err   2453 m (along  -2072 across  -1314)  margin  0.04  rms 9.02  sigma 254/270 m  hdg_off +5.8
+  ESPB2747     err   2836 m (along  -1902 across  +2104)  margin  0.58  rms 3.08  sigma 347/314 m  hdg_off +6.0
+  BEIA0530     err   3846 m (along  -1821 across  -3388)  margin  0.25  rms 2.02  sigma 128/113 m  hdg_off +5.6
+  RKZJ0322     err   1124 m (along   +348 across  +1069)  margin  0.49  rms 1.11  sigma 111/99 m  hdg_off +4.8
+  BMMC5325: no solution
+  BNUF5681     err   2169 m (along  +2113 across   -488)  margin  0.60  rms 0.36  sigma 277/82 m  hdg_off +3.8
