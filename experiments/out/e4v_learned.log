@@ -24,3 +24,25 @@
   CLKC4181     err    706 m (along   +493 across   -505)  margin  4.21  rms 0.89  sigma 42/63 m  hdg_off +6.0
   LEER4893: no solution
   CSTS1385     err   3460 m (along  -3012 across  +1703)  margin  0.01  rms 15.63  sigma 3260/3062 m  hdg_off +2.6
+  JKGK0867     err   2479 m (along  -2057 across  -1383)  margin  0.00  rms 31.55  sigma 4043/2859 m  hdg_off +3.8
+  DMPM5117     err   3517 m (along   -277 across  +3506)  margin  0.08  rms 6.79  sigma 247/331 m  hdg_off -6.0
+  ROHO6515: no solution
+  DUXB7255     err   2933 m (along  +1156 across  +2695)  margin  0.00  rms 23.83  sigma 1696/1205 m  hdg_off -4.6
+  OREJ1026     err   2805 m (along  -2789 across   +300)  margin  0.40  rms 3.63  sigma 79/85 m  hdg_off -5.8
+  DVXB8547     err   1510 m (along  -1462 across   +380)  margin  0.12  rms 4.71  sigma 227/236 m  hdg_off +6.0
+  DYID5412     err   4119 m (along  -3959 across  +1137)  margin  0.04  rms 22.23  sigma 818/615 m  hdg_off +6.0
+  KWHC9160     err    352 m (along   +310 across   -167)  margin  0.04  rms 2.33  sigma 347/218 m  hdg_off +3.8
+  LUQH7512     err   1534 m (along  +1406 across   -613)  margin  0.04  rms 1.26  sigma 94/257 m  hdg_off +6.0
+  XZSU2557: no solution
+  ENVL1009     err    616 m (along   +283 across   -548)  margin  8.30  rms 1.02  sigma 54/75 m  hdg_off +6.0
+  EURK8793     err   4414 m (along  -2446 across  -3674)  margin  0.00  rms 38.93  sigma 0/9094 m  hdg_off +3.8
+  EWAC7374     err   1480 m (along  -1440 across   -342)  margin  0.05  rms 8.73  sigma 487/759 m  hdg_off +6.0
+  KBZM0725     err   1940 m (along   -310 across  +1915)  margin  0.00  rms 24.13  sigma 439/397 m  hdg_off -2.8
+  FNOY6514     err    761 m (along   +620 across   +442)  margin  1.62  rms 1.30  sigma 117/82 m  hdg_off -3.6
+  XFNK0744     err   2838 m (along  +2809 across   +403)  margin  0.25  rms 4.90  sigma 421/275 m  hdg_off -6.0
+  TWBF2645: no solution
+  FYMC7458: no solution
+  GAQB1096     err   3704 m (along  -1569 across  +3355)  margin  0.02  rms 15.08  sigma 0/0 m  hdg_off +1.0
+  SCRM5347     err   3168 m (along  -2814 across  -1456)  margin  0.01  rms 11.69  sigma 979/738 m  hdg_off -2.0
+  GINP7735     err    572 m (along   -405 across   -404)  margin  0.24  rms 2.82  sigma 195/226 m  hdg_off +4.8
+  TPHJ4452: no solution
