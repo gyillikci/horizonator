@@ -16,3 +16,4 @@ experiments/out/*.npz
 experiments/__pycache__/
 experiments/*.pt
 experiments/*.ts
+!experiments/out/e4x/*.png
