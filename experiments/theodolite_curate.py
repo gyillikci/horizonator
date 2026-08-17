@@ -198,7 +198,16 @@ def _name_dist(a, b):
     return abs(int(na[-1]) - int(nb[-1]))
 
 
-def pair_up(items, dt_max=90.0, sim_min=0.80):
+def _gps_dist(a, b):
+    if a.get('lat') is None or b.get('lat') is None:
+        return None
+    import math
+    return math.hypot((a['lat'] - b['lat']) * 111132.0,
+                      (a['lon'] - b['lon']) * 111320.0
+                      * math.cos(math.radians(a['lat'])))
+
+
+def pair_up(items, dt_max=25.0, sim_min=0.80, gps_max=60.0):
     """Match each HUD frame to the clean frame of the same sighting:
     closest in capture time AND visually the same scene. Both tests are
     needed — a pan produces frames seconds apart that look different,
@@ -214,8 +223,13 @@ def pair_up(items, dt_max=90.0, sim_min=0.80):
             sim = float((h['_thumb'] * r['_thumb']).sum())
             timed = bool(h.get('t') and r.get('t'))
             dt = abs(h['t'] - r['t']) if timed else None
+            gd = _gps_dist(h, r)
             if timed:
-                if sim < sim_min or dt > dt_max:
+                # A HUD capture and its clean photo show DIFFERENT
+                # fields (the app was zoomed; the photo is 4:3), so
+                # appearance cannot pair them — capture time and
+                # position can.
+                if dt > dt_max or (gd is not None and gd > gps_max):
                     continue
             else:
                 # no capture time (EXIF stripped in transfer): fall back
@@ -224,8 +238,8 @@ def pair_up(items, dt_max=90.0, sim_min=0.80):
                 # a sighting's frames consecutively
                 if sim < max(sim_min, 0.90):
                     continue
-            key = (-sim, dt if timed else _name_dist(h['name'],
-                                                     r['name']))
+            key = ((dt, -sim) if timed
+                   else (1e6, _name_dist(h['name'], r['name'])))
             if best is None or key < best_key:
                 best, best_key = r, key
         if best is not None:
@@ -293,7 +307,16 @@ def curate(src, out, do_horizon, hud_thresh=1.6, z_default=10.0):
             m = read_meta(f)
             g = _gray(f)
             m['hud_score'] = hud_score(g)
-            m['is_hud'] = m['hud_score'] >= hud_thresh
+            ar = m['width'] / max(m['height'], 1)
+            m['aspect'] = float(ar)
+            # Theodolite writes a SCREEN capture: the phone's own
+            # aspect (2622x1206 = 2.17 on this device), never the
+            # camera's 4:3. That is a far harder discriminator than
+            # texture — the app's widgets are translucent and sit all
+            # over the frame, so the border-band score is marginal and
+            # mislabels pan frames as clean.
+            m['screenish'] = bool(ar >= 1.90 or ar <= 0.53)
+            m['is_hud'] = m['screenish'] or m['hud_score'] >= hud_thresh
             m['sharpness'] = sharpness(g)
             m['mean_level'] = float(g.mean())
             m['_thumb'] = thumb(f)

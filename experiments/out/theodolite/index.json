@@ -1,0 +1,6687 @@
+{
+ "source": "/home/user/celestial-navigation/theodolite",
+ "n": 157,
+ "sightings": [
+  {
+   "id": "TH000003",
+   "hud": "TH000003.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "TH000003.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-29T12:59:46",
+    "t": 1785329986.15,
+    "focal35_mm": 14.0,
+    "fov_deg": 104.2500326978036,
+    "focal_mm": 2.220000028611935,
+    "lens": "iPhone 17 Pro back triple camera 2.22mm f/2.2",
+    "lat": 40.98041111111111,
+    "lon": 29.20627222222222,
+    "alt_m": 149.1354311061824,
+    "heading_deg": 101.60323325635103,
+    "heading_ref": "T",
+    "hud_score": 1.1131942148858858,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.027907092871845212,
+    "mean_level": 0.5232326263838869
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/TH000003_hud_top.png",
+    "bottom": "out/theodolite/crops/TH000003_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-clean-frame",
+    "no-sea-horizon"
+   ],
+   "usable": false
+  },
+  {
+   "id": "TH000002",
+   "hud": "TH000002.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "TH000002.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-29T12:59:46",
+    "t": 1785329986.603,
+    "focal35_mm": 14.0,
+    "fov_deg": 104.2500326978036,
+    "focal_mm": 2.220000028611935,
+    "lens": "iPhone 17 Pro back triple camera 2.22mm f/2.2",
+    "lat": 40.98041111111111,
+    "lon": 29.20627222222222,
+    "alt_m": 149.1354311061824,
+    "heading_deg": 72.74377437743775,
+    "heading_ref": "T",
+    "hud_score": 1.0998981816813929,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.027528237859094324,
+    "mean_level": 0.5186737820128051
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/TH000002_hud_top.png",
+    "bottom": "out/theodolite/crops/TH000002_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-clean-frame",
+    "no-sea-horizon"
+   ],
+   "usable": false
+  },
+  {
+   "id": "TH000004",
+   "hud": "TH000004.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "TH000004.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-29T13:00:05",
+    "t": 1785330005.091,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.97493611111111,
+    "lon": 29.21332222222222,
+    "alt_m": 129.60502901353965,
+    "heading_deg": 129.70300287947347,
+    "heading_ref": "T",
+    "hud_score": 1.2606006405278347,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.02523755338472469,
+    "mean_level": 0.4128252551020408
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/TH000004_hud_top.png",
+    "bottom": "out/theodolite/crops/TH000004_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": -2.3539146207765422,
+    "roll_deg": -0.000149594779822329,
+    "n_inl": 1020.0,
+    "frac": 0.6375,
+    "span_frac": 0.7673545966228893,
+    "rms_px": 0.26831859801131214,
+    "contrast": 0.18765432098765433,
+    "score": 7.18461320604057,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "TH000005",
+   "hud": "TH000005.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "TH000005.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-29T13:00:25",
+    "t": 1785330025.131,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.970711111111115,
+    "lon": 29.216369444444442,
+    "alt_m": 152.19227230910764,
+    "heading_deg": 156.61158748551566,
+    "heading_ref": "T",
+    "hud_score": 1.240609977866717,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.02599995736608359,
+    "mean_level": 0.4388629826930772
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/TH000005_hud_top.png",
+    "bottom": "out/theodolite/crops/TH000005_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-clean-frame",
+    "no-sea-horizon"
+   ],
+   "usable": false
+  },
+  {
+   "id": "TH000006",
+   "hud": "TH000006.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "TH000006.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-29T13:01:12",
+    "t": 1785330072.806,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.96200277777778,
+    "lon": 29.220552777777776,
+    "alt_m": 171.2779644743159,
+    "heading_deg": 161.0371246157484,
+    "heading_ref": "T",
+    "hud_score": 1.1940706269754193,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.03285607954977382,
+    "mean_level": 0.4203252759437108
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/TH000006_hud_top.png",
+    "bottom": "out/theodolite/crops/TH000006_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-clean-frame",
+    "no-sea-horizon"
+   ],
+   "usable": false
+  },
+  {
+   "id": "TH000007",
+   "hud": "TH000007.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "TH000007.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-29T13:02:37",
+    "t": 1785330157.171,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.944561111111106,
+    "lon": 29.214794444444443,
+    "alt_m": 190.22625559423173,
+    "heading_deg": 189.20408631772267,
+    "heading_ref": "T",
+    "hud_score": 1.4103849479166954,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.03157266712288222,
+    "mean_level": 0.4534047577364279
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/TH000007_hud_top.png",
+    "bottom": "out/theodolite/crops/TH000007_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-clean-frame",
+    "no-sea-horizon"
+   ],
+   "usable": false
+  },
+  {
+   "id": "TH000008",
+   "hud": "TH000008.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "TH000008.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-29T13:02:38",
+    "t": 1785330158.055,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.944380555555554,
+    "lon": 29.214624999999998,
+    "alt_m": 189.51301832208293,
+    "heading_deg": 191.59783943039528,
+    "heading_ref": "T",
+    "hud_score": 1.3056927592400722,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.0188782204322967,
+    "mean_level": 0.5481116196478591
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/TH000008_hud_top.png",
+    "bottom": "out/theodolite/crops/TH000008_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": -2.1275090919986956,
+    "roll_deg": -0.003984589015382415,
+    "n_inl": 1032.0,
+    "frac": 0.645,
+    "span_frac": 0.9774859287054409,
+    "rms_px": 0.5528213748707614,
+    "contrast": -0.16456063907044305,
+    "score": 12.91588593067956,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "TH000009",
+   "hud": "TH000009.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "TH000009.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-29T13:02:43",
+    "t": 1785330163.41,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.94352222222222,
+    "lon": 29.213822222222223,
+    "alt_m": 186.05028927458835,
+    "heading_deg": 184.48428343100693,
+    "heading_ref": "T",
+    "hud_score": 1.2239418473733665,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.021481725148017352,
+    "mean_level": 0.5118822529011604
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/TH000009_hud_top.png",
+    "bottom": "out/theodolite/crops/TH000009_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": -2.1237436998433528,
+    "roll_deg": -0.0016091550194737624,
+    "n_inl": 1028.0,
+    "frac": 0.6425,
+    "span_frac": 0.8761726078799249,
+    "rms_px": 0.5562711131875708,
+    "contrast": -0.19665940450254182,
+    "score": 13.085064913511273,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "TH000010",
+   "hud": "TH000010.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "TH000010.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-29T13:02:45",
+    "t": 1785330165.436,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.94318055555555,
+    "lon": 29.213505555555553,
+    "alt_m": 184.53431470061668,
+    "heading_deg": 185.43310546875,
+    "heading_ref": "T",
+    "hud_score": 1.386594980161522,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.014528620860230412,
+    "mean_level": 0.5750529586834734
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/TH000010_hud_top.png",
+    "bottom": "out/theodolite/crops/TH000010_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": -2.1223994955957552,
+    "roll_deg": -0.005103003387560581,
+    "n_inl": 1051.0,
+    "frac": 0.656875,
+    "span_frac": 0.858036272670419,
+    "rms_px": 0.5433937026590157,
+    "contrast": -0.1750181554103124,
+    "score": 13.105189247773147,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "TH000011",
+   "hud": "TH000011.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "TH000011.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-29T13:02:53",
+    "t": 1785330173.073,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.94178888888889,
+    "lon": 29.212355555555554,
+    "alt_m": 176.8505711639395,
+    "heading_deg": 180.45356738391845,
+    "heading_ref": "T",
+    "hud_score": 1.2410905679798758,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.017662022064230374,
+    "mean_level": 0.5764938058556756
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/TH000011_hud_top.png",
+    "bottom": "out/theodolite/crops/TH000011_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": -2.1136724821249184,
+    "roll_deg": -0.012298038301579193,
+    "n_inl": 1029.0,
+    "frac": 0.643125,
+    "span_frac": 0.8874296435272045,
+    "rms_px": 0.5196877271314579,
+    "contrast": -0.1869281045751634,
+    "score": 11.433624550569267,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "TH000012",
+   "hud": "TH000012.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "TH000012.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-29T13:02:55",
+    "t": 1785330175.425,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.941430555555556,
+    "lon": 29.212080555555556,
+    "alt_m": 174.7261721329518,
+    "heading_deg": 179.1979674796748,
+    "heading_ref": "T",
+    "hud_score": 1.2461205245918343,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.019591942341023554,
+    "mean_level": 0.5370868764172335
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/TH000012_hud_top.png",
+    "bottom": "out/theodolite/crops/TH000012_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": -2.408785144103749,
+    "roll_deg": -0.0023200745577446843,
+    "n_inl": 1041.0,
+    "frac": 0.650625,
+    "span_frac": 0.8605378361475923,
+    "rms_px": 0.295247620648853,
+    "contrast": 0.15904139433551212,
+    "score": 12.036967470964628,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "TH000013",
+   "hud": "TH000013.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "TH000013.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-29T13:02:56",
+    "t": 1785330176.635,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.94125277777778,
+    "lon": 29.21194722222222,
+    "alt_m": 173.7683829860513,
+    "heading_deg": 178.07171635777598,
+    "heading_ref": "T",
+    "hud_score": 1.2576189287699056,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.018998959253381204,
+    "mean_level": 0.5720545926704015
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/TH000013_hud_top.png",
+    "bottom": "out/theodolite/crops/TH000013_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": -2.1099750314700803,
+    "roll_deg": 0.00416492843687507,
+    "n_inl": 1032.0,
+    "frac": 0.645,
+    "span_frac": 0.9787367104440275,
+    "rms_px": 0.5691375124885831,
+    "contrast": -0.14785766158315172,
+    "score": 13.271926876558814,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "TH000014",
+   "hud": "TH000014.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "TH000014.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-29T13:02:57",
+    "t": 1785330177.613,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.94107222222222,
+    "lon": 29.211813888888887,
+    "alt_m": 172.7232645403377,
+    "heading_deg": 179.2780456444873,
+    "heading_ref": "T",
+    "hud_score": 1.2671674394092929,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.021690945535338076,
+    "mean_level": 0.5210142598706149
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/TH000014_hud_top.png",
+    "bottom": "out/theodolite/crops/TH000014_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": -2.406571506134501,
+    "roll_deg": 0.0010444281045531051,
+    "n_inl": 1003.0,
+    "frac": 0.626875,
+    "span_frac": 0.8105065666041276,
+    "rms_px": 0.27828080154671714,
+    "contrast": 0.19070442992011627,
+    "score": 7.8243969349942635,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "TH000015",
+   "hud": "TH000015.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "TH000015.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-29T13:07:08",
+    "t": 1785330428.281,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.90481388888889,
+    "lon": 29.20968611111111,
+    "alt_m": 96.96152581387702,
+    "heading_deg": 135.9530029296875,
+    "heading_ref": "T",
+    "hud_score": 1.010934563399869,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.017473679908120657,
+    "mean_level": 0.539969175170068
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/TH000015_hud_top.png",
+    "bottom": "out/theodolite/crops/TH000015_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": -2.307660623046589,
+    "roll_deg": 0.009871370168531849,
+    "n_inl": 1020.0,
+    "frac": 0.6375,
+    "span_frac": 0.8180112570356473,
+    "rms_px": 0.27055496261618506,
+    "contrast": 0.19491648511256354,
+    "score": 12.32314896260283,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "TH000016",
+   "hud": "TH000016.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "TH000016.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-29T13:07:10",
+    "t": 1785330430.773,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.90481111111111,
+    "lon": 29.209677777777777,
+    "alt_m": 96.77596044123241,
+    "heading_deg": 131.2397765808897,
+    "heading_ref": "T",
+    "hud_score": 1.9229690117217475,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.01607139243229447,
+    "mean_level": 0.5420252892823797
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/TH000016_hud_top.png",
+    "bottom": "out/theodolite/crops/TH000016_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": -2.009849925071666,
+    "roll_deg": 0.0001247660887934542,
+    "n_inl": 1024.0,
+    "frac": 0.64,
+    "span_frac": 0.7686053783614759,
+    "rms_px": 0.5535014837864022,
+    "contrast": -0.18140885984023247,
+    "score": 12.282081660670983,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "TH000017",
+   "hud": "TH000017.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "TH000017.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-29T13:07:11",
+    "t": 1785330431.987,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.904808333333335,
+    "lon": 29.20967222222222,
+    "alt_m": 96.55357508707232,
+    "heading_deg": 133.67344674556213,
+    "heading_ref": "T",
+    "hud_score": 1.3231869879105158,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.01284641756028767,
+    "mean_level": 0.5740692527010804
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/TH000017_hud_top.png",
+    "bottom": "out/theodolite/crops/TH000017_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": -2.3073524053037238,
+    "roll_deg": -0.00408145108042286,
+    "n_inl": 1031.0,
+    "frac": 0.644375,
+    "span_frac": 0.941213258286429,
+    "rms_px": 0.31827950515724984,
+    "contrast": 0.18315177923021064,
+    "score": 12.71544250509361,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "TH000018",
+   "hud": "TH000018.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "TH000018.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-29T13:07:18",
+    "t": 1785330438.19,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.90479166666667,
+    "lon": 29.20967222222222,
+    "alt_m": 96.17952731256848,
+    "heading_deg": 149.54971319311665,
+    "heading_ref": "T",
+    "hud_score": 1.5141863545194039,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.014868142674612441,
+    "mean_level": 0.5812438725490197
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/TH000018_hud_top.png",
+    "bottom": "out/theodolite/crops/TH000018_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": -2.306724948307293,
+    "roll_deg": 0.000887450637613955,
+    "n_inl": 1020.0,
+    "frac": 0.6375,
+    "span_frac": 0.8017510944340213,
+    "rms_px": 0.27020540643894964,
+    "contrast": 0.18591140159767616,
+    "score": 13.243738568933374,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "TH000019",
+   "hud": "TH000019.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "TH000019.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-29T13:07:29",
+    "t": 1785330449.298,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.904780555555554,
+    "lon": 29.209652777777777,
+    "alt_m": 96.10620186461288,
+    "heading_deg": 139.75546257554626,
+    "heading_ref": "T",
+    "hud_score": 1.032698604147529,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.0255130433613767,
+    "mean_level": 0.535296576964119
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/TH000019_hud_top.png",
+    "bottom": "out/theodolite/crops/TH000019_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": -4.307194887615751,
+    "roll_deg": 1.7183220466082163e-15,
+    "n_inl": 1002.0,
+    "frac": 0.62625,
+    "span_frac": 0.7611006879299562,
+    "rms_px": 0.5762723470175387,
+    "contrast": 0.19520697167755985,
+    "score": 12.473787651621592,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "TH000020",
+   "hud": "TH000020.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "TH000020.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-29T13:07:32",
+    "t": 1785330452.165,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.904777777777774,
+    "lon": 29.20965,
+    "alt_m": 95.8974032586558,
+    "heading_deg": 138.62832643406267,
+    "heading_ref": "T",
+    "hud_score": 1.2761385809947452,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.011804817481120859,
+    "mean_level": 0.5893945703281313
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/TH000020_hud_top.png",
+    "bottom": "out/theodolite/crops/TH000020_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": -0.29533934613809293,
+    "roll_deg": 0.17692134046676775,
+    "n_inl": 433.0,
+    "frac": 0.270625,
+    "span_frac": 0.9174484052532833,
+    "rms_px": 0.9136297964626903,
+    "contrast": 0.017719680464778453,
+    "score": 13.347861918302119,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "TH000021",
+   "hud": "TH000021.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "TH000021.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-29T13:07:53",
+    "t": 1785330473.595,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.904444444444444,
+    "lon": 29.209344444444444,
+    "alt_m": 94.57559933539046,
+    "heading_deg": 134.65655526992288,
+    "heading_ref": "T",
+    "hud_score": 1.7718832093231807,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.014829183425771626,
+    "mean_level": 0.5802421593637455
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/TH000021_hud_top.png",
+    "bottom": "out/theodolite/crops/TH000021_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": -2.3043374849512377,
+    "roll_deg": -0.0028590767420712516,
+    "n_inl": 1038.0,
+    "frac": 0.64875,
+    "span_frac": 0.8874296435272045,
+    "rms_px": 0.30661882006619773,
+    "contrast": 0.16724763979665958,
+    "score": 12.595123267094868,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "TH000022",
+   "hud": "TH000022.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "TH000022.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-29T13:07:58",
+    "t": 1785330478.043,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.90445,
+    "lon": 29.20934722222222,
+    "alt_m": 94.34870229007633,
+    "heading_deg": 130.63188167625307,
+    "heading_ref": "T",
+    "hud_score": 1.1801853665327204,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.01736232199157217,
+    "mean_level": 0.5925586276177136
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/TH000022_hud_top.png",
+    "bottom": "out/theodolite/crops/TH000022_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": -2.303886709070735,
+    "roll_deg": -0.0011469329294059496,
+    "n_inl": 1027.0,
+    "frac": 0.641875,
+    "span_frac": 0.9624765478424016,
+    "rms_px": 0.2942470031745532,
+    "contrast": 0.1888162672476399,
+    "score": 13.191487687895746,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "IMG_7841",
+   "hud": "IMG_7841.HEIC",
+   "raw": "IMG_7847.HEIC",
+   "kind": "pair",
+   "exif": {
+    "name": "IMG_7847.HEIC",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone 17 Pro",
+    "time": "2026-07-31T11:40:05",
+    "t": 1785498005.769,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.90934444444444,
+    "lon": 29.135708333333334,
+    "alt_m": 3.6822140221402213,
+    "heading_deg": 218.8855590934632,
+    "heading_ref": "T",
+    "hud_score": 0.0,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.012749009615536887,
+    "mean_level": 0.7435984094158496
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/IMG_7841_hud_top.png",
+    "bottom": "out/theodolite/crops/IMG_7841_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": 0.7603668651474006,
+    "roll_deg": -0.8867376617719861,
+    "n_inl": 871.0,
+    "frac": 0.544375,
+    "span_frac": 0.9937460913070669,
+    "rms_px": 1.0059216938282916,
+    "contrast": 0.06434277414669587,
+    "score": 19.44343117831664,
+    "source": "radon"
+   },
+   "flags": [],
+   "usable": true
+  },
+  {
+   "id": "IMG_7842",
+   "hud": "IMG_7842.HEIC",
+   "raw": "IMG_7848.HEIC",
+   "kind": "pair",
+   "exif": {
+    "name": "IMG_7848.HEIC",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone 17 Pro",
+    "time": "2026-07-31T11:40:07",
+    "t": 1785498007.99,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.90933888888889,
+    "lon": 29.13571111111111,
+    "alt_m": 3.6895740174158624,
+    "heading_deg": 230.05226130653267,
+    "heading_ref": "T",
+    "hud_score": 0.022431613336867415,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.01183548466377992,
+    "mean_level": 0.7454549377042483
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/IMG_7842_hud_top.png",
+    "bottom": "out/theodolite/crops/IMG_7842_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "IMG_7843",
+   "hud": "IMG_7843.HEIC",
+   "raw": "IMG_7849.HEIC",
+   "kind": "pair",
+   "exif": {
+    "name": "IMG_7849.HEIC",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone 17 Pro",
+    "time": "2026-07-31T11:40:11",
+    "t": 1785498011.76,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.90934444444444,
+    "lon": 29.135697222222223,
+    "alt_m": 3.9154035231462516,
+    "heading_deg": 265.1587526576896,
+    "heading_ref": "T",
+    "hud_score": 0.0,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.00461409716973932,
+    "mean_level": 0.79249600439134
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/IMG_7843_hud_top.png",
+    "bottom": "out/theodolite/crops/IMG_7843_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "IMG_7844",
+   "hud": "IMG_7844.HEIC",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "IMG_7844.HEIC",
+    "width": 5712,
+    "height": 4284,
+    "make": "Apple",
+    "model": "iPhone 17 Pro",
+    "time": "2026-07-31T11:39:52",
+    "t": 1785497992.412,
+    "focal35_mm": 24.0,
+    "fov_deg": 73.73979529168804,
+    "focal_mm": 6.764999866370901,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 40.90933611111111,
+    "lon": 29.1357,
+    "alt_m": 4.028910377828731,
+    "heading_deg": 231.7121123464014,
+    "heading_ref": "T",
+    "hud_score": 34.452152383621794,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": true,
+    "sharpness": 0.005641395861261096,
+    "mean_level": 0.7445584660947713
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/IMG_7844_hud_top.png",
+    "bottom": "out/theodolite/crops/IMG_7844_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-clean-frame",
+    "no-sea-horizon"
+   ],
+   "usable": false
+  },
+  {
+   "id": "IMG_7845",
+   "hud": "IMG_7845.HEIC",
+   "raw": "IMG_7850.HEIC",
+   "kind": "pair",
+   "exif": {
+    "name": "IMG_7850.HEIC",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone 17 Pro",
+    "time": "2026-07-31T11:40:17",
+    "t": 1785498017.557,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.90934444444444,
+    "lon": 29.135716666666667,
+    "alt_m": 4.325600392092795,
+    "heading_deg": 174.4901809780516,
+    "heading_ref": "T",
+    "hud_score": 0.0,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.010006784282570298,
+    "mean_level": 0.7645343647875816
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/IMG_7845_hud_top.png",
+    "bottom": "out/theodolite/crops/IMG_7845_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "IMG_7846",
+   "hud": "IMG_7846.HEIC",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "IMG_7846.HEIC",
+    "width": 5712,
+    "height": 4284,
+    "make": "Apple",
+    "model": "iPhone 17 Pro",
+    "time": "2026-07-31T11:39:56",
+    "t": 1785497996.967,
+    "focal35_mm": 14.0,
+    "fov_deg": 104.2500326978036,
+    "focal_mm": 2.220000028611935,
+    "lens": "iPhone 17 Pro back triple camera 2.22mm f/2.2",
+    "lat": 40.90934444444444,
+    "lon": 29.135697222222223,
+    "alt_m": 4.101654157254245,
+    "heading_deg": 220.8689574839837,
+    "heading_ref": "T",
+    "hud_score": 4.037859218738305,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": true,
+    "sharpness": 0.014308343869560635,
+    "mean_level": 0.7547953048406861
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/IMG_7846_hud_top.png",
+    "bottom": "out/theodolite/crops/IMG_7846_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-clean-frame",
+    "no-sea-horizon"
+   ],
+   "usable": false
+  },
+  {
+   "id": "TH000023",
+   "hud": "TH000023.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "TH000023.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-31T11:43:31",
+    "t": 1785498211.857,
+    "focal35_mm": 48.0,
+    "fov_deg": 41.112090439166934,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 40.90622222222222,
+    "lon": 29.13945,
+    "alt_m": 3.8118483947457564,
+    "heading_deg": 150.40798952193845,
+    "heading_ref": "T",
+    "hud_score": 1.2404618753178023,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.036053396847960564,
+    "mean_level": 0.5423857668067228
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/TH000023_hud_top.png",
+    "bottom": "out/theodolite/crops/TH000023_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": 6.169448022744579,
+    "roll_deg": 0.3038442846304428,
+    "n_inl": 638.0,
+    "frac": 0.39875,
+    "span_frac": 0.5078173858661663,
+    "rms_px": 0.8895155980275655,
+    "contrast": -0.1861292665214236,
+    "score": 3.9569771869571753,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "TH000024",
+   "hud": "TH000024.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "TH000024.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-31T11:43:36",
+    "t": 1785498216.651,
+    "focal35_mm": 48.0,
+    "fov_deg": 41.112090439166934,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 40.90622222222222,
+    "lon": 29.139447222222223,
+    "alt_m": 3.358242014455584,
+    "heading_deg": 251.5658720200753,
+    "heading_ref": "T",
+    "hud_score": 1.000758380711304,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.049920773051110826,
+    "mean_level": 0.47604862778444706
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/TH000024_hud_top.png",
+    "bottom": "out/theodolite/crops/TH000024_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": -0.058635757702018856,
+    "roll_deg": 0.005054491000209254,
+    "n_inl": 415.0,
+    "frac": 0.259375,
+    "span_frac": 0.9237023139462164,
+    "rms_px": 1.0159268940108293,
+    "contrast": 0.003485838779956285,
+    "score": 3.0947773339469444,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "TH000025",
+   "hud": "TH000025.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "TH000025.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-31T11:43:43",
+    "t": 1785498223.491,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.906225,
+    "lon": 29.139447222222223,
+    "alt_m": 3.5159442428871492,
+    "heading_deg": 270.2561038961039,
+    "heading_ref": "T",
+    "hud_score": 1.4725575625084535,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.03786177416344567,
+    "mean_level": 0.5629016189809257
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/TH000025_hud_top.png",
+    "bottom": "out/theodolite/crops/TH000025_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": 1.1497784197043852,
+    "roll_deg": 0.04602658895469496,
+    "n_inl": 900.0,
+    "frac": 0.5625,
+    "span_frac": 0.9305816135084428,
+    "rms_px": 0.7244399029764715,
+    "contrast": 0.06514161220043568,
+    "score": 5.276366819106694,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "TH000026",
+   "hud": "TH000026.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "TH000026.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-31T11:43:44",
+    "t": 1785498224.811,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.906225,
+    "lon": 29.139447222222223,
+    "alt_m": 3.5071281599059376,
+    "heading_deg": 271.94677734375,
+    "heading_ref": "T",
+    "hud_score": 2.263866490995167,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.026926219465143182,
+    "mean_level": 0.5239308014872615
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/TH000026_hud_top.png",
+    "bottom": "out/theodolite/crops/TH000026_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": -1.7713600771840585,
+    "roll_deg": -0.0004727880339728708,
+    "n_inl": 1023.0,
+    "frac": 0.639375,
+    "span_frac": 0.8467792370231395,
+    "rms_px": 0.5495884318297071,
+    "contrast": -0.19636891793754552,
+    "score": 4.883362702620195,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "TH000027",
+   "hud": "TH000027.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "TH000027.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-31T11:43:50",
+    "t": 1785498230.629,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.90623055555555,
+    "lon": 29.139430555555556,
+    "alt_m": 2.632344534078638,
+    "heading_deg": 268.87707492148945,
+    "heading_ref": "T",
+    "hud_score": 2.9505598859562325,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.034770629144512566,
+    "mean_level": 0.5741960951047086
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/TH000027_hud_top.png",
+    "bottom": "out/theodolite/crops/TH000027_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": 1.2537872259704708,
+    "roll_deg": -0.12560627423507542,
+    "n_inl": 1326.0,
+    "frac": 0.82875,
+    "span_frac": 0.9943714821763602,
+    "rms_px": 0.7907266583636372,
+    "contrast": -0.15562817719680477,
+    "score": 8.10499365994349,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "TH000028",
+   "hud": "TH000028.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "TH000028.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-31T11:43:52",
+    "t": 1785498232.633,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.90622777777778,
+    "lon": 29.13943611111111,
+    "alt_m": 2.646666750506181,
+    "heading_deg": 264.38690176322416,
+    "heading_ref": "T",
+    "hud_score": 0.9991873357512602,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.0256673556285916,
+    "mean_level": 0.48795576563958915
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/TH000028_hud_top.png",
+    "bottom": "out/theodolite/crops/TH000028_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": 0.6025445730980666,
+    "roll_deg": -0.2057253776959978,
+    "n_inl": 1454.0,
+    "frac": 0.90875,
+    "span_frac": 1.0,
+    "rms_px": 0.8648878469116639,
+    "contrast": -0.16855482933914312,
+    "score": 7.782938259240504,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "TH000029",
+   "hud": "TH000029.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "TH000029.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-31T11:43:56",
+    "t": 1785498236.904,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.906238888888886,
+    "lon": 29.139427777777776,
+    "alt_m": 2.8982349360925137,
+    "heading_deg": 209.34503190519598,
+    "heading_ref": "T",
+    "hud_score": 2.1003887272211985,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.04703037937860007,
+    "mean_level": 0.4966552037481659
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/TH000029_hud_top.png",
+    "bottom": "out/theodolite/crops/TH000029_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-clean-frame",
+    "no-sea-horizon"
+   ],
+   "usable": false
+  },
+  {
+   "id": "TH000030",
+   "hud": "TH000030.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "TH000030.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-31T11:43:59",
+    "t": 1785498239.845,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.906241666666666,
+    "lon": 29.139419444444442,
+    "alt_m": 3.1791662789615707,
+    "heading_deg": 178.02575689109807,
+    "heading_ref": "T",
+    "hud_score": 1.7495511084314133,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.03651472520301318,
+    "mean_level": 0.4889030195411498
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/TH000030_hud_top.png",
+    "bottom": "out/theodolite/crops/TH000030_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-clean-frame",
+    "no-sea-horizon"
+   ],
+   "usable": false
+  },
+  {
+   "id": "DVHZ2894",
+   "hud": "DVHZ2894.JPG",
+   "raw": "OREJ1026.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "OREJ1026.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-31T11:46:17",
+    "t": 1785498377.855,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.90622222222222,
+    "lon": 29.139447222222223,
+    "alt_m": 2.499520285087719,
+    "heading_deg": 176.089111328125,
+    "heading_ref": "T",
+    "hud_score": 0.0,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.007649674232320578,
+    "mean_level": 0.5031151705473856
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/DVHZ2894_hud_top.png",
+    "bottom": "out/theodolite/crops/DVHZ2894_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "GCBZ4182",
+   "hud": "GCBZ4182.JPG",
+   "raw": "BNUF5681.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "BNUF5681.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-31T11:46:20",
+    "t": 1785498380.811,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.90622222222222,
+    "lon": 29.139447222222223,
+    "alt_m": 2.499520285087719,
+    "heading_deg": 183.651000870322,
+    "heading_ref": "T",
+    "hud_score": 0.0,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.008639124343444339,
+    "mean_level": 0.5102882710375817
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/GCBZ4182_hud_top.png",
+    "bottom": "out/theodolite/crops/GCBZ4182_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "SEZP7841",
+   "hud": "SEZP7841.JPG",
+   "raw": "GTJH0060.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "GTJH0060.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-31T11:46:23",
+    "t": 1785498383.55,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.90622222222222,
+    "lon": 29.139447222222223,
+    "alt_m": 2.499520285087719,
+    "heading_deg": 188.20968629609246,
+    "heading_ref": "T",
+    "hud_score": 0.011322237832584929,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.01100381950852791,
+    "mean_level": 0.4947242774714052
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/SEZP7841_hud_top.png",
+    "bottom": "out/theodolite/crops/SEZP7841_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "RFOO5809",
+   "hud": "RFOO5809.JPG",
+   "raw": "FNOY6514.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "FNOY6514.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-31T11:46:28",
+    "t": 1785498388.954,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.90622222222222,
+    "lon": 29.139447222222223,
+    "alt_m": 2.499520285087719,
+    "heading_deg": 223.3019410496046,
+    "heading_ref": "T",
+    "hud_score": 0.0,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.013856617579903818,
+    "mean_level": 0.4830650531045752
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/RFOO5809_hud_top.png",
+    "bottom": "out/theodolite/crops/RFOO5809_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "GAQB1096",
+   "hud": "GAQB1096.JPG",
+   "raw": "VUXU5055.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "VUXU5055.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-31T11:46:39",
+    "t": 1785498399.936,
+    "focal35_mm": 48.0,
+    "fov_deg": 41.112090439166934,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 40.90622222222222,
+    "lon": 29.139447222222223,
+    "alt_m": 2.499520285087719,
+    "heading_deg": 185.3385009765625,
+    "heading_ref": "T",
+    "hud_score": 0.0,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.01148745229941025,
+    "mean_level": 0.49856395526960784
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/GAQB1096_hud_top.png",
+    "bottom": "out/theodolite/crops/GAQB1096_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "MCWU9088",
+   "hud": "MCWU9088.JPG",
+   "raw": "QNJZ1625.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "QNJZ1625.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-31T11:46:43",
+    "t": 1785498403.888,
+    "focal35_mm": 48.0,
+    "fov_deg": 41.112090439166934,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 40.90622222222222,
+    "lon": 29.139447222222223,
+    "alt_m": 2.499520285087719,
+    "heading_deg": 195.912292358804,
+    "heading_ref": "T",
+    "hud_score": 0.0,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.011644060113384369,
+    "mean_level": 0.4938279718137255
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/MCWU9088_hud_top.png",
+    "bottom": "out/theodolite/crops/MCWU9088_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": -0.25728052946100793,
+    "roll_deg": 0.47234160762885025,
+    "n_inl": 761.0,
+    "frac": 0.475625,
+    "span_frac": 0.9968730456535334,
+    "rms_px": 0.9944805617141135,
+    "contrast": 0.12766884531590406,
+    "score": 3.1091277358877663,
+    "source": "radon"
+   },
+   "flags": [],
+   "usable": true
+  },
+  {
+   "id": "ICET4242",
+   "hud": "ICET4242.JPG",
+   "raw": "LEBT6702.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "LEBT6702.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-31T11:46:46",
+    "t": 1785498406.532,
+    "focal35_mm": 48.0,
+    "fov_deg": 41.112090439166934,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 40.90622222222222,
+    "lon": 29.139447222222223,
+    "alt_m": 2.499520285087719,
+    "heading_deg": 193.555419921875,
+    "heading_ref": "T",
+    "hud_score": 0.0,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.011775624152369343,
+    "mean_level": 0.4949408445669934
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/ICET4242_hud_top.png",
+    "bottom": "out/theodolite/crops/ICET4242_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "QSLM4779",
+   "hud": "QSLM4779.JPG",
+   "raw": "LHCG7767.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "LHCG7767.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-31T11:46:49",
+    "t": 1785498409.405,
+    "focal35_mm": 48.0,
+    "fov_deg": 41.112090439166934,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 40.90622222222222,
+    "lon": 29.139447222222223,
+    "alt_m": 2.499520285087719,
+    "heading_deg": 228.74935897435898,
+    "heading_ref": "T",
+    "hud_score": 0.0,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.009442669676910124,
+    "mean_level": 0.4800183568218954
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/QSLM4779_hud_top.png",
+    "bottom": "out/theodolite/crops/QSLM4779_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": 0.5570245988677349,
+    "roll_deg": 0.13014871947749637,
+    "n_inl": 1465.0,
+    "frac": 0.915625,
+    "span_frac": 0.9968730456535334,
+    "rms_px": 0.8872463053071267,
+    "contrast": 0.1962236746550472,
+    "score": 9.079539150076059,
+    "source": "radon"
+   },
+   "flags": [],
+   "usable": true
+  },
+  {
+   "id": "USNN3417",
+   "hud": "USNN3417.JPG",
+   "raw": "ENVL1009.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "ENVL1009.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-31T11:46:50",
+    "t": 1785498410.208,
+    "focal35_mm": 48.0,
+    "fov_deg": 41.112090439166934,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 40.90622222222222,
+    "lon": 29.139447222222223,
+    "alt_m": 2.499520285087719,
+    "heading_deg": 240.90158082610913,
+    "heading_ref": "T",
+    "hud_score": 0.0,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.009173671463112128,
+    "mean_level": 0.48278661151960783
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/USNN3417_hud_top.png",
+    "bottom": "out/theodolite/crops/USNN3417_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "OBIN4624",
+   "hud": "OBIN4624.JPG",
+   "raw": "KANG4387.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "KANG4387.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-31T11:46:54",
+    "t": 1785498414.683,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.90622222222222,
+    "lon": 29.139447222222223,
+    "alt_m": 2.499520285087719,
+    "heading_deg": 243.57630906768838,
+    "heading_ref": "T",
+    "hud_score": 0.0,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.013052806833256202,
+    "mean_level": 0.5130544960171569
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/OBIN4624_hud_top.png",
+    "bottom": "out/theodolite/crops/OBIN4624_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "JYCA6447",
+   "hud": "JYCA6447.JPG",
+   "raw": "MYQR7719.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "MYQR7719.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-31T11:46:55",
+    "t": 1785498415.611,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.90622222222222,
+    "lon": 29.139447222222223,
+    "alt_m": 2.499520285087719,
+    "heading_deg": 243.8046571798189,
+    "heading_ref": "T",
+    "hud_score": 0.0,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.013232260087589076,
+    "mean_level": 0.5189205601511437
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/JYCA6447_hud_top.png",
+    "bottom": "out/theodolite/crops/JYCA6447_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": 0.48457008366886467,
+    "roll_deg": 0.41664337742186197,
+    "n_inl": 1366.0,
+    "frac": 0.85375,
+    "span_frac": 1.0,
+    "rms_px": 0.844957399291075,
+    "contrast": 0.12244008714596955,
+    "score": 6.471259255214746,
+    "source": "radon"
+   },
+   "flags": [],
+   "usable": true
+  },
+  {
+   "id": "JSZP2229",
+   "hud": "JSZP2229.JPG",
+   "raw": "CLKC4181.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "CLKC4181.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-31T11:46:57",
+    "t": 1785498417.817,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.90622222222222,
+    "lon": 29.139447222222223,
+    "alt_m": 2.499520285087719,
+    "heading_deg": 231.998687664042,
+    "heading_ref": "T",
+    "hud_score": 0.0,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.01695386276580028,
+    "mean_level": 0.4990493515114379
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/JSZP2229_hud_top.png",
+    "bottom": "out/theodolite/crops/JSZP2229_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "SJXL1787",
+   "hud": "SJXL1787.JPG",
+   "raw": "VUPD8547.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "VUPD8547.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-31T11:46:59",
+    "t": 1785498419.456,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.90622222222222,
+    "lon": 29.139447222222223,
+    "alt_m": 2.499520285087719,
+    "heading_deg": 223.53861997940268,
+    "heading_ref": "T",
+    "hud_score": 0.0,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.016130642293997587,
+    "mean_level": 0.5036956444035948
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/SJXL1787_hud_top.png",
+    "bottom": "out/theodolite/crops/SJXL1787_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "MUSU4796",
+   "hud": "MUSU4796.JPG",
+   "raw": "RKDZ1323.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "RKDZ1323.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-31T11:47:02",
+    "t": 1785498422.158,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.90622222222222,
+    "lon": 29.139447222222223,
+    "alt_m": 2.499520285087719,
+    "heading_deg": 224.05252074817292,
+    "heading_ref": "T",
+    "hud_score": 0.0,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.012513489073974867,
+    "mean_level": 0.5004741625816994
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/MUSU4796_hud_top.png",
+    "bottom": "out/theodolite/crops/MUSU4796_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "MOLO7855",
+   "hud": "MOLO7855.JPG",
+   "raw": "SFCL6648.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "SFCL6648.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-31T11:47:04",
+    "t": 1785498424.702,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.90622222222222,
+    "lon": 29.139447222222223,
+    "alt_m": 2.499520285087719,
+    "heading_deg": 229.58848566308242,
+    "heading_ref": "T",
+    "hud_score": 0.0,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.015397059505525836,
+    "mean_level": 0.48094302747140527
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/MOLO7855_hud_top.png",
+    "bottom": "out/theodolite/crops/MOLO7855_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "AURN4956",
+   "hud": "AURN4956.JPG",
+   "raw": "GINP7735.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "GINP7735.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-31T11:47:05",
+    "t": 1785498425.944,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.90622222222222,
+    "lon": 29.139447222222223,
+    "alt_m": 2.499520285087719,
+    "heading_deg": 233.88879384088966,
+    "heading_ref": "T",
+    "hud_score": 0.0,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.011683437717199999,
+    "mean_level": 0.49787760416666665
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/AURN4956_hud_top.png",
+    "bottom": "out/theodolite/crops/AURN4956_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "VZGI9932",
+   "hud": "VZGI9932.JPG",
+   "raw": "KVRT2735.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "KVRT2735.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-31T11:47:06",
+    "t": 1785498426.083,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.90622222222222,
+    "lon": 29.139447222222223,
+    "alt_m": 2.499520285087719,
+    "heading_deg": 238.3244170096022,
+    "heading_ref": "T",
+    "hud_score": 0.0,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.011306958532215094,
+    "mean_level": 0.4968383118872549
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/VZGI9932_hud_top.png",
+    "bottom": "out/theodolite/crops/VZGI9932_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "UTNR8485",
+   "hud": "UTNR8485.JPG",
+   "raw": "KWHC9160.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "KWHC9160.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-31T11:47:08",
+    "t": 1785498428.483,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.90622222222222,
+    "lon": 29.139447222222223,
+    "alt_m": 2.499520285087719,
+    "heading_deg": 244.34526051475203,
+    "heading_ref": "T",
+    "hud_score": 0.0,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.0119797969297552,
+    "mean_level": 0.49716770067401966
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/UTNR8485_hud_top.png",
+    "bottom": "out/theodolite/crops/UTNR8485_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": 0.42098167059685226,
+    "roll_deg": 0.6091549551637335,
+    "n_inl": 1340.0,
+    "frac": 0.8375,
+    "span_frac": 1.0,
+    "rms_px": 1.0345487726625473,
+    "contrast": 0.08438634713144522,
+    "score": 2.982324065581329,
+    "source": "radon"
+   },
+   "flags": [],
+   "usable": true
+  },
+  {
+   "id": "BTTV0933",
+   "hud": "BTTV0933.JPG",
+   "raw": "LUQH7512.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "LUQH7512.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-31T11:47:10",
+    "t": 1785498430.43,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.90622222222222,
+    "lon": 29.139447222222223,
+    "alt_m": 2.499520285087719,
+    "heading_deg": 250.97489928726372,
+    "heading_ref": "T",
+    "hud_score": 0.0,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.008863442086483127,
+    "mean_level": 0.5164497421364379
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/BTTV0933_hud_top.png",
+    "bottom": "out/theodolite/crops/BTTV0933_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "DYYY6170",
+   "hud": "DYYY6170.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "DYYY6170.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-31T11:47:08",
+    "t": 1785498428.483,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.90622222222222,
+    "lon": 29.139447222222223,
+    "alt_m": 2.499520285087719,
+    "heading_deg": 244.34526051475203,
+    "heading_ref": "T",
+    "hud_score": 0.9908936239495847,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.0202635076833094,
+    "mean_level": 0.46481776043750833
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/DYYY6170_hud_top.png",
+    "bottom": "out/theodolite/crops/DYYY6170_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": -2.0603918909207413,
+    "roll_deg": 8.387883669042314e-16,
+    "n_inl": 1016.0,
+    "frac": 0.635,
+    "span_frac": 0.7673545966228893,
+    "rms_px": 0.2623748594446207,
+    "contrast": 0.1893972403776325,
+    "score": 6.149568840522991,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "DZPS3978",
+   "hud": "DZPS3978.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "DZPS3978.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-31T11:47:10",
+    "t": 1785498430.43,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.90622222222222,
+    "lon": 29.139447222222223,
+    "alt_m": 2.499520285087719,
+    "heading_deg": 250.97489928726372,
+    "heading_ref": "T",
+    "hud_score": 1.0946155073143888,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.015559165328834062,
+    "mean_level": 0.4989964527477658
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/DZPS3978_hud_top.png",
+    "bottom": "out/theodolite/crops/DZPS3978_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": -2.0603918909207413,
+    "roll_deg": 8.387883669042314e-16,
+    "n_inl": 1016.0,
+    "frac": 0.635,
+    "span_frac": 0.7673545966228893,
+    "rms_px": 0.2623748594446207,
+    "contrast": 0.18968772694262892,
+    "score": 12.191195289685584,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "XMTO3987",
+   "hud": "XMTO3987.JPG",
+   "raw": "DUXB7255.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "DUXB7255.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-31T19:07:04",
+    "t": 1785524824.823,
+    "focal35_mm": 48.0,
+    "fov_deg": 41.112090439166934,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 40.90622222222222,
+    "lon": 29.139447222222223,
+    "alt_m": 2.499520285087719,
+    "heading_deg": 142.325408997955,
+    "heading_ref": "T",
+    "hud_score": 0.03355950768929019,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.012035585794806585,
+    "mean_level": 0.5421642284517973
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/XMTO3987_hud_top.png",
+    "bottom": "out/theodolite/crops/XMTO3987_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "GDIP5953",
+   "hud": "GDIP5953.JPG",
+   "raw": "CSTS1385.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "CSTS1385.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-31T19:07:05",
+    "t": 1785524825.971,
+    "focal35_mm": 48.0,
+    "fov_deg": 41.112090439166934,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 40.90622222222222,
+    "lon": 29.139447222222223,
+    "alt_m": 2.499520285087719,
+    "heading_deg": 141.1920165175499,
+    "heading_ref": "T",
+    "hud_score": 0.042978064127381393,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.011322413629672685,
+    "mean_level": 0.5490527726715686
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/GDIP5953_hud_top.png",
+    "bottom": "out/theodolite/crops/GDIP5953_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "EURK8793",
+   "hud": "EURK8793.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "EURK8793.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-31T19:12:24",
+    "t": 1785525144.051,
+    "focal35_mm": 14.0,
+    "fov_deg": 104.2500326978036,
+    "focal_mm": 2.220000028611935,
+    "lens": "iPhone 17 Pro back triple camera 2.22mm f/2.2",
+    "lat": 39.11653333333334,
+    "lon": 27.699405555555554,
+    "alt_m": 164.24462954844367,
+    "heading_deg": 164.35043327556326,
+    "heading_ref": "T",
+    "hud_score": 15.119089207778346,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": true,
+    "sharpness": 0.003537083171296985,
+    "mean_level": 0.5283456137663398
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/EURK8793_hud_top.png",
+    "bottom": "out/theodolite/crops/EURK8793_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-clean-frame",
+    "no-sea-horizon"
+   ],
+   "usable": false
+  },
+  {
+   "id": "FOIL8371",
+   "hud": "FOIL8371.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "FOIL8371.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-31T19:12:24",
+    "t": 1785525144.051,
+    "focal35_mm": 14.0,
+    "fov_deg": 104.2500326978036,
+    "focal_mm": 2.220000028611935,
+    "lens": "iPhone 17 Pro back triple camera 2.22mm f/2.2",
+    "lat": 39.11653333333334,
+    "lon": 27.699405555555554,
+    "alt_m": 164.24462954844367,
+    "heading_deg": 164.35043327556326,
+    "heading_ref": "T",
+    "hud_score": 1.694939964404118,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.014622364679222398,
+    "mean_level": 0.5673735952714419
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/FOIL8371_hud_top.png",
+    "bottom": "out/theodolite/crops/FOIL8371_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-clean-frame",
+    "no-sea-horizon"
+   ],
+   "usable": false
+  },
+  {
+   "id": "XHBH5632",
+   "hud": "XHBH5632.JPG",
+   "raw": "MJFQ1511.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "MJFQ1511.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-31T19:12:31",
+    "t": 1785525151.405,
+    "focal35_mm": 24.0,
+    "fov_deg": 73.73979529168804,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 39.11494444444445,
+    "lon": 27.699580555555556,
+    "alt_m": 167.22589345920431,
+    "heading_deg": 165.3893280632411,
+    "heading_ref": "T",
+    "hud_score": 0.0,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.0021722177856037185,
+    "mean_level": 0.5813858889910131
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/XHBH5632_hud_top.png",
+    "bottom": "out/theodolite/crops/XHBH5632_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "VMLM4252",
+   "hud": "VMLM4252.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "VMLM4252.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-31T19:12:33",
+    "t": 1785525153.661,
+    "focal35_mm": 24.0,
+    "fov_deg": 73.73979529168804,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 39.11412222222222,
+    "lon": 27.699658333333332,
+    "alt_m": 167.51699181875392,
+    "heading_deg": 168.02473446820895,
+    "heading_ref": "T",
+    "hud_score": 0.9352310379794516,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.0059565303314191576,
+    "mean_level": 0.5977073329331732
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/VMLM4252_hud_top.png",
+    "bottom": "out/theodolite/crops/VMLM4252_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-clean-frame",
+    "no-sea-horizon"
+   ],
+   "usable": false
+  },
+  {
+   "id": "AVXN1309",
+   "hud": "AVXN1309.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "AVXN1309.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-07-31T19:12:35",
+    "t": 1785525155.961,
+    "focal35_mm": 24.0,
+    "fov_deg": 73.73979529168804,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 39.113572222222224,
+    "lon": 27.69971388888889,
+    "alt_m": 168.10831556503197,
+    "heading_deg": 169.10862745098038,
+    "heading_ref": "T",
+    "hud_score": 0.923460380282727,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.005808642305440858,
+    "mean_level": 0.5839469329398426
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/AVXN1309_hud_top.png",
+    "bottom": "out/theodolite/crops/AVXN1309_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-clean-frame",
+    "no-sea-horizon"
+   ],
+   "usable": false
+  },
+  {
+   "id": "CDKT5817",
+   "hud": "CDKT5817.JPG",
+   "raw": "SRYK4301.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "SRYK4301.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T13:51:32",
+    "t": 1785592292.86,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 38.805616666666666,
+    "lon": 26.973680555555553,
+    "alt_m": 4.119358623386781,
+    "heading_deg": 346.8623046875,
+    "heading_ref": "T",
+    "hud_score": 0.20480919131244713,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.005739270236388762,
+    "mean_level": 0.5424410360498366
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/CDKT5817_hud_top.png",
+    "bottom": "out/theodolite/crops/CDKT5817_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": 0.88641964796923,
+    "roll_deg": 0.19400472723687764,
+    "n_inl": 1176.0,
+    "frac": 0.735,
+    "span_frac": 0.8855534709193246,
+    "rms_px": 0.8756489165936672,
+    "contrast": 0.1608569353667394,
+    "score": 9.682309271729475,
+    "source": "radon"
+   },
+   "flags": [],
+   "usable": true
+  },
+  {
+   "id": "EAVZ5099",
+   "hud": "EAVZ5099.JPG",
+   "raw": "JIWI3999.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "JIWI3999.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T13:51:43",
+    "t": 1785592303.684,
+    "focal35_mm": 48.0,
+    "fov_deg": 41.112090439166934,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 38.805616666666666,
+    "lon": 26.973680555555553,
+    "alt_m": 4.119358623386781,
+    "heading_deg": 340.847412109375,
+    "heading_ref": "T",
+    "hud_score": 1.2997229456243635,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.008819464215204803,
+    "mean_level": 0.5713014705882352
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/EAVZ5099_hud_top.png",
+    "bottom": "out/theodolite/crops/EAVZ5099_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "EWAC7374",
+   "hud": "EWAC7374.JPG",
+   "raw": "APST5638.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "APST5638.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T13:51:44",
+    "t": 1785592304.968,
+    "focal35_mm": 48.0,
+    "fov_deg": 41.112090439166934,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 38.805616666666666,
+    "lon": 26.973680555555553,
+    "alt_m": 4.119358623386781,
+    "heading_deg": 339.85595703125,
+    "heading_ref": "T",
+    "hud_score": 0.941532131782786,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.009244969459408312,
+    "mean_level": 0.5657400684232026
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/EWAC7374_hud_top.png",
+    "bottom": "out/theodolite/crops/EWAC7374_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "UWGV2592",
+   "hud": "UWGV2592.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "UWGV2592.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T13:51:30",
+    "t": 1785592290.472,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 38.805613888888885,
+    "lon": 26.97368333333333,
+    "alt_m": 4.148064503347993,
+    "heading_deg": 347.64508032128515,
+    "heading_ref": "T",
+    "hud_score": 1.276129656110723,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.01988185331019643,
+    "mean_level": 0.5097624258036547
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/UWGV2592_hud_top.png",
+    "bottom": "out/theodolite/crops/UWGV2592_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": -4.074637664682015,
+    "roll_deg": 1.7183220466082163e-15,
+    "n_inl": 1002.0,
+    "frac": 0.62625,
+    "span_frac": 0.7611006879299562,
+    "rms_px": 0.5762723470175387,
+    "contrast": 0.18809005083514885,
+    "score": 9.804989586974433,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "AOKP2255",
+   "hud": "AOKP2255.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "AOKP2255.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T13:51:32",
+    "t": 1785592292.86,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 38.805616666666666,
+    "lon": 26.973680555555553,
+    "alt_m": 4.119358623386781,
+    "heading_deg": 346.8623046875,
+    "heading_ref": "T",
+    "hud_score": 1.409684305619688,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.018894481915171242,
+    "mean_level": 0.5424210309123649
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/AOKP2255_hud_top.png",
+    "bottom": "out/theodolite/crops/AOKP2255_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": -2.073825257154134,
+    "roll_deg": 8.387883669042314e-16,
+    "n_inl": 1016.0,
+    "frac": 0.635,
+    "span_frac": 0.7673545966228893,
+    "rms_px": 0.2623748594446207,
+    "contrast": 0.1917211328976034,
+    "score": 10.974348992620953,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "AFRX1155",
+   "hud": "AFRX1155.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "AFRX1155.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T13:51:43",
+    "t": 1785592303.684,
+    "focal35_mm": 48.0,
+    "fov_deg": 41.112090439166934,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 38.805616666666666,
+    "lon": 26.973680555555553,
+    "alt_m": 4.119358623386781,
+    "heading_deg": 340.847412109375,
+    "heading_ref": "T",
+    "hud_score": 2.2758237557713135,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.020649239094744535,
+    "mean_level": 0.5224327439309057
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/AFRX1155_hud_top.png",
+    "bottom": "out/theodolite/crops/AFRX1155_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-clean-frame",
+    "no-sea-horizon"
+   ],
+   "usable": false
+  },
+  {
+   "id": "HDEU6368",
+   "hud": "HDEU6368.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "HDEU6368.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T13:51:44",
+    "t": 1785592304.968,
+    "focal35_mm": 48.0,
+    "fov_deg": 41.112090439166934,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 38.805616666666666,
+    "lon": 26.973680555555553,
+    "alt_m": 4.119358623386781,
+    "heading_deg": 339.85595703125,
+    "heading_ref": "T",
+    "hud_score": 1.7354848611569085,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.02225939035868227,
+    "mean_level": 0.5125542091836734
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/HDEU6368_hud_top.png",
+    "bottom": "out/theodolite/crops/HDEU6368_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-clean-frame",
+    "no-sea-horizon"
+   ],
+   "usable": false
+  },
+  {
+   "id": "FCBC2139",
+   "hud": "FCBC2139.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "FCBC2139.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T13:51:49",
+    "t": 1785592309.942,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 38.805616666666666,
+    "lon": 26.973680555555553,
+    "alt_m": 4.119358623386781,
+    "heading_deg": 327.4751585623679,
+    "heading_ref": "T",
+    "hud_score": 1.4242450141560414,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.02194109591215479,
+    "mean_level": 0.4676960784313726
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/FCBC2139_hud_top.png",
+    "bottom": "out/theodolite/crops/FCBC2139_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": -3.4872708135770036,
+    "roll_deg": 0.0012491173953336249,
+    "n_inl": 871.0,
+    "frac": 0.544375,
+    "span_frac": 0.7723577235772358,
+    "rms_px": 0.4027636088351299,
+    "contrast": -0.16673928830791573,
+    "score": 8.77684392099481,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "KBZM0725",
+   "hud": "KBZM0725.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "KBZM0725.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T13:51:49",
+    "t": 1785592309.942,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 38.805616666666666,
+    "lon": 26.973680555555553,
+    "alt_m": 4.119358623386781,
+    "heading_deg": 327.4751585623679,
+    "heading_ref": "T",
+    "hud_score": 5.52411818260837,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": true,
+    "sharpness": 0.01409356908583638,
+    "mean_level": 0.500066712622549
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/KBZM0725_hud_top.png",
+    "bottom": "out/theodolite/crops/KBZM0725_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-clean-frame",
+    "no-sea-horizon"
+   ],
+   "usable": false
+  },
+  {
+   "id": "TCIY4706",
+   "hud": "TCIY4706.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "TCIY4706.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T13:51:53",
+    "t": 1785592313.762,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 38.805616666666666,
+    "lon": 26.973680555555553,
+    "alt_m": 4.119358623386781,
+    "heading_deg": 327.8627316403569,
+    "heading_ref": "T",
+    "hud_score": 2.8894514237152693,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": true,
+    "sharpness": 0.008084186895437145,
+    "mean_level": 0.5330227098651961
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/TCIY4706_hud_top.png",
+    "bottom": "out/theodolite/crops/TCIY4706_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-clean-frame",
+    "no-sea-horizon"
+   ],
+   "usable": false
+  },
+  {
+   "id": "XGBB9962",
+   "hud": "XGBB9962.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "XGBB9962.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T13:51:53",
+    "t": 1785592313.762,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 38.805616666666666,
+    "lon": 26.973680555555553,
+    "alt_m": 4.119358623386781,
+    "heading_deg": 327.8627316403569,
+    "heading_ref": "T",
+    "hud_score": 1.9347464705478772,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.01963645871022482,
+    "mean_level": 0.5346489845938376
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/XGBB9962_hud_top.png",
+    "bottom": "out/theodolite/crops/XGBB9962_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": -3.4872558828674554,
+    "roll_deg": 0.0006526725518864242,
+    "n_inl": 871.0,
+    "frac": 0.544375,
+    "span_frac": 0.7723577235772358,
+    "rms_px": 0.40457295429904,
+    "contrast": -0.17342047930283233,
+    "score": 12.593549606154738,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "SRYT2060",
+   "hud": "SRYT2060.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "SRYT2060.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T13:51:54",
+    "t": 1785592314.289,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 38.805616666666666,
+    "lon": 26.973680555555553,
+    "alt_m": 4.119358623386781,
+    "heading_deg": 327.72814910025704,
+    "heading_ref": "T",
+    "hud_score": 5.584884092973049,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": true,
+    "sharpness": 0.013554947641059995,
+    "mean_level": 0.5451003880718954
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/SRYT2060_hud_top.png",
+    "bottom": "out/theodolite/crops/SRYT2060_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-clean-frame",
+    "no-sea-horizon"
+   ],
+   "usable": false
+  },
+  {
+   "id": "WGLV0691",
+   "hud": "WGLV0691.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "WGLV0691.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T13:51:54",
+    "t": 1785592314.289,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 38.805616666666666,
+    "lon": 26.973680555555553,
+    "alt_m": 4.119358623386781,
+    "heading_deg": 327.72814910025704,
+    "heading_ref": "T",
+    "hud_score": 1.495903127484764,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.021107426390729538,
+    "mean_level": 0.50624822845805
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/WGLV0691_hud_top.png",
+    "bottom": "out/theodolite/crops/WGLV0691_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": -3.4872301110331674,
+    "roll_deg": -0.0006449581014748845,
+    "n_inl": 871.0,
+    "frac": 0.544375,
+    "span_frac": 0.8836772983114447,
+    "rms_px": 0.40948933674185806,
+    "contrast": -0.18126361655773426,
+    "score": 9.633643868236607,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "BEIA0530",
+   "hud": "BEIA0530.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "BEIA0530.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T13:51:57",
+    "t": 1785592317.695,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 38.80560277777777,
+    "lon": 26.97368333333333,
+    "alt_m": 1.6615254168853717,
+    "heading_deg": 329.6156008432888,
+    "heading_ref": "T",
+    "hud_score": 3.30361467789535,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": true,
+    "sharpness": 0.018275357468181864,
+    "mean_level": 0.5144180325776144
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/BEIA0530_hud_top.png",
+    "bottom": "out/theodolite/crops/BEIA0530_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-clean-frame",
+    "no-sea-horizon"
+   ],
+   "usable": false
+  },
+  {
+   "id": "CYFI1791",
+   "hud": "CYFI1791.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "CYFI1791.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T13:51:57",
+    "t": 1785592317.695,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 38.80560277777777,
+    "lon": 26.97368333333333,
+    "alt_m": 1.6615254168853717,
+    "heading_deg": 329.6156008432888,
+    "heading_ref": "T",
+    "hud_score": 1.845728971578219,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.025565995876819254,
+    "mean_level": 0.47225602741096445
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/CYFI1791_hud_top.png",
+    "bottom": "out/theodolite/crops/CYFI1791_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": -4.0522337980580705,
+    "roll_deg": -0.00043311430242976907,
+    "n_inl": 1003.0,
+    "frac": 0.626875,
+    "span_frac": 0.7617260787992496,
+    "rms_px": 0.5773704283307569,
+    "contrast": 0.174727668845316,
+    "score": 5.079118999792331,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "UJXG1861",
+   "hud": "UJXG1861.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "UJXG1861.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T13:52:00",
+    "t": 1785592320.123,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 38.80560277777777,
+    "lon": 26.97368611111111,
+    "alt_m": 2.0165205136235516,
+    "heading_deg": 329.96844477836214,
+    "heading_ref": "T",
+    "hud_score": 1.5551656453300415,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.021722659118366683,
+    "mean_level": 0.48390287364945983
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/UJXG1861_hud_top.png",
+    "bottom": "out/theodolite/crops/UJXG1861_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": -3.468973180769831,
+    "roll_deg": -0.00034259826819439025,
+    "n_inl": 871.0,
+    "frac": 0.544375,
+    "span_frac": 0.7729831144465291,
+    "rms_px": 0.39982335088957044,
+    "contrast": -0.17342047930283222,
+    "score": 8.768278122183835,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "UZFU5934",
+   "hud": "UZFU5934.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "UZFU5934.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T13:52:00",
+    "t": 1785592320.123,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 38.80560277777777,
+    "lon": 26.97368611111111,
+    "alt_m": 2.0165205136235516,
+    "heading_deg": 329.96844477836214,
+    "heading_ref": "T",
+    "hud_score": 5.066896712334737,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": true,
+    "sharpness": 0.012913353274543508,
+    "mean_level": 0.5095298585580065
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/UZFU5934_hud_top.png",
+    "bottom": "out/theodolite/crops/UZFU5934_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-clean-frame",
+    "no-sea-horizon"
+   ],
+   "usable": false
+  },
+  {
+   "id": "HBQL5071",
+   "hud": "HBQL5071.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "HBQL5071.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T13:54:41",
+    "t": 1785592481.658,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 38.80560555555555,
+    "lon": 26.973688888888887,
+    "alt_m": 1.5478310132729038,
+    "heading_deg": 293.50756811301716,
+    "heading_ref": "T",
+    "hud_score": 1.8004431442894588,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": true,
+    "sharpness": 0.04204229573497474,
+    "mean_level": 0.5564592013888888
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/HBQL5071_hud_top.png",
+    "bottom": "out/theodolite/crops/HBQL5071_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-clean-frame",
+    "no-sea-horizon"
+   ],
+   "usable": false
+  },
+  {
+   "id": "PUFA9767",
+   "hud": "PUFA9767.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "PUFA9767.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T13:54:41",
+    "t": 1785592481.658,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 38.80560555555555,
+    "lon": 26.973688888888887,
+    "alt_m": 1.5478310132729038,
+    "heading_deg": 293.50756811301716,
+    "heading_ref": "T",
+    "hud_score": 1.29373734425549,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.04128541314901857,
+    "mean_level": 0.5370685149059624
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/PUFA9767_hud_top.png",
+    "bottom": "out/theodolite/crops/PUFA9767_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-clean-frame",
+    "no-sea-horizon"
+   ],
+   "usable": false
+  },
+  {
+   "id": "MNAA7074",
+   "hud": "MNAA7074.JPG",
+   "raw": "QBPN0150.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "QBPN0150.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T14:00:23",
+    "t": 1785592823.419,
+    "focal35_mm": 14.0,
+    "fov_deg": 104.2500326978036,
+    "focal_mm": 2.220000028611935,
+    "lens": "iPhone 17 Pro back triple camera 2.22mm f/2.2",
+    "lat": 38.805677777777774,
+    "lon": 26.97152222222222,
+    "alt_m": 1.9496930783884852,
+    "heading_deg": 19.55979538227568,
+    "heading_ref": "T",
+    "hud_score": 0.38776256885954474,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.008776038683405037,
+    "mean_level": 0.5254204580269608
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/MNAA7074_hud_top.png",
+    "bottom": "out/theodolite/crops/MNAA7074_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "CYFR7214",
+   "hud": "CYFR7214.JPG",
+   "raw": "JKGK0867.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "JKGK0867.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T14:00:27",
+    "t": 1785592827.06,
+    "focal35_mm": 24.0,
+    "fov_deg": 73.73979529168804,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 38.805680555555554,
+    "lon": 26.971530555555553,
+    "alt_m": 1.704787007907491,
+    "heading_deg": 27.614667868951006,
+    "heading_ref": "T",
+    "hud_score": 0.8564556546011615,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.01084481732673791,
+    "mean_level": 0.4986378038194444
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/CYFR7214_hud_top.png",
+    "bottom": "out/theodolite/crops/CYFR7214_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "CHZC1237",
+   "hud": "CHZC1237.JPG",
+   "raw": "UYKQ7227.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "UYKQ7227.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T14:00:31",
+    "t": 1785592831.99,
+    "focal35_mm": 24.0,
+    "fov_deg": 73.73979529168804,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 38.805680555555554,
+    "lon": 26.971527777777776,
+    "alt_m": 1.5867763720546169,
+    "heading_deg": 319.59680182752714,
+    "heading_ref": "T",
+    "hud_score": 0.19243188745426407,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.007440176225335661,
+    "mean_level": 0.561824014501634
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/CHZC1237_hud_top.png",
+    "bottom": "out/theodolite/crops/CHZC1237_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "NUKE4248",
+   "hud": "NUKE4248.JPG",
+   "raw": "NCVO7252.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "NCVO7252.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T14:00:58",
+    "t": 1785592858.429,
+    "focal35_mm": 24.0,
+    "fov_deg": 73.73979529168804,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 38.805680555555554,
+    "lon": 26.971516666666666,
+    "alt_m": 1.140675415327138,
+    "heading_deg": 299.6380005374899,
+    "heading_ref": "T",
+    "hud_score": 0.3704953704029865,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.008844706355351641,
+    "mean_level": 0.5552562040441177
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/NUKE4248_hud_top.png",
+    "bottom": "out/theodolite/crops/NUKE4248_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "ARFB2129",
+   "hud": "ARFB2129.JPG",
+   "raw": "RKZJ0322.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "RKZJ0322.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T14:01:03",
+    "t": 1785592863.252,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 38.805680555555554,
+    "lon": 26.971516666666666,
+    "alt_m": 1.140675415327138,
+    "heading_deg": 296.37646484375,
+    "heading_ref": "T",
+    "hud_score": 0.24289557542738932,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.008849018701174185,
+    "mean_level": 0.5105335860906863
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/ARFB2129_hud_top.png",
+    "bottom": "out/theodolite/crops/ARFB2129_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "TTQR0914",
+   "hud": "TTQR0914.JPG",
+   "raw": "DMPM5117.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "DMPM5117.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T14:01:06",
+    "t": 1785592866.661,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 38.805680555555554,
+    "lon": 26.971516666666666,
+    "alt_m": 1.140675415327138,
+    "heading_deg": 309.42919921875,
+    "heading_ref": "T",
+    "hud_score": 0.22815195581917067,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.005368119884577122,
+    "mean_level": 0.5370609043096405
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/TTQR0914_hud_top.png",
+    "bottom": "out/theodolite/crops/TTQR0914_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "BIKC1528",
+   "hud": "BIKC1528.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "BIKC1528.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T14:01:03",
+    "t": 1785592863.252,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 38.805680555555554,
+    "lon": 26.971516666666666,
+    "alt_m": 1.140675415327138,
+    "heading_deg": 296.37646484375,
+    "heading_ref": "T",
+    "hud_score": 1.1314591495291864,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.02339752875907851,
+    "mean_level": 0.5038559590502867
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/BIKC1528_hud_top.png",
+    "bottom": "out/theodolite/crops/BIKC1528_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": -2.0450323038744758,
+    "roll_deg": 8.387883669042314e-16,
+    "n_inl": 1016.0,
+    "frac": 0.635,
+    "span_frac": 0.7673545966228893,
+    "rms_px": 0.2623748594446207,
+    "contrast": 0.19215686274509802,
+    "score": 8.995666426040213,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "IUXU4263",
+   "hud": "IUXU4263.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "IUXU4263.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T14:01:06",
+    "t": 1785592866.661,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 38.805680555555554,
+    "lon": 26.971516666666666,
+    "alt_m": 1.140675415327138,
+    "heading_deg": 309.42919921875,
+    "heading_ref": "T",
+    "hud_score": 1.431393212661726,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.017148328406371406,
+    "mean_level": 0.5647821420234761
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/IUXU4263_hud_top.png",
+    "bottom": "out/theodolite/crops/IUXU4263_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": -2.0450241928683863,
+    "roll_deg": 0.0002891308097554653,
+    "n_inl": 1017.0,
+    "frac": 0.635625,
+    "span_frac": 0.7673545966228893,
+    "rms_px": 0.2653092010586997,
+    "contrast": 0.18518518518518523,
+    "score": 12.583114759318837,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "BCVP6879",
+   "hud": "BCVP6879.JPG",
+   "raw": "QEMM2520.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "QEMM2520.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T14:10:20",
+    "t": 1785593420.521,
+    "focal35_mm": 24.0,
+    "fov_deg": 73.73979529168804,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 38.80614166666666,
+    "lon": 26.972675,
+    "alt_m": 0.7825027544707178,
+    "heading_deg": 33.25625609359766,
+    "heading_ref": "T",
+    "hud_score": 1.2303265148526974,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.011189538658036562,
+    "mean_level": 0.5079443040236928
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/BCVP6879_hud_top.png",
+    "bottom": "out/theodolite/crops/BCVP6879_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "LXHP2922",
+   "hud": "LXHP2922.JPG",
+   "raw": "BZHD7973.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "BZHD7973.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T14:10:22",
+    "t": 1785593422.549,
+    "focal35_mm": 24.0,
+    "fov_deg": 73.73979529168804,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 38.80614722222222,
+    "lon": 26.97266388888889,
+    "alt_m": 0.7247179744296817,
+    "heading_deg": 50.76612094888072,
+    "heading_ref": "T",
+    "hud_score": 0.35442294341186537,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.011724935554675634,
+    "mean_level": 0.543695516748366
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/LXHP2922_hud_top.png",
+    "bottom": "out/theodolite/crops/LXHP2922_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "CDSQ6159",
+   "hud": "CDSQ6159.JPG",
+   "raw": "SCRM5347.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "SCRM5347.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T14:10:23",
+    "t": 1785593423.135,
+    "focal35_mm": 48.0,
+    "fov_deg": 41.112090439166934,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 38.80614722222222,
+    "lon": 26.972672222222222,
+    "alt_m": 0.6622829448868757,
+    "heading_deg": 50.95988463555322,
+    "heading_ref": "T",
+    "hud_score": 0.202545100489446,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.014416337106782048,
+    "mean_level": 0.5237977175245099
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/CDSQ6159_hud_top.png",
+    "bottom": "out/theodolite/crops/CDSQ6159_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "CVMR2977",
+   "hud": "CVMR2977.JPG",
+   "raw": "DVXB8547.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "DVXB8547.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T14:10:27",
+    "t": 1785593427.485,
+    "focal35_mm": 48.0,
+    "fov_deg": 41.112090439166934,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 38.806152777777775,
+    "lon": 26.97266388888889,
+    "alt_m": 0.685685906632822,
+    "heading_deg": 32.61592102879913,
+    "heading_ref": "T",
+    "hud_score": 0.44159375505926374,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.0122562454781707,
+    "mean_level": 0.5025510620915034
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/CVMR2977_hud_top.png",
+    "bottom": "out/theodolite/crops/CVMR2977_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "GHPI7682",
+   "hud": "GHPI7682.JPG",
+   "raw": "PMUO3415.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "PMUO3415.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T14:10:28",
+    "t": 1785593428.27,
+    "focal35_mm": 48.0,
+    "fov_deg": 41.112090439166934,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 38.80614722222222,
+    "lon": 26.972672222222222,
+    "alt_m": 0.6971072245590731,
+    "heading_deg": 31.93329240843053,
+    "heading_ref": "T",
+    "hud_score": 0.5410333070800888,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.012684507190816216,
+    "mean_level": 0.5018981438929738
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/GHPI7682_hud_top.png",
+    "bottom": "out/theodolite/crops/GHPI7682_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "IWGW9997",
+   "hud": "IWGW9997.JPG",
+   "raw": "LPFA0425.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "LPFA0425.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T14:10:33",
+    "t": 1785593433.189,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 38.80614722222222,
+    "lon": 26.972669444444442,
+    "alt_m": 1.019424663329338,
+    "heading_deg": 57.0482177734375,
+    "heading_ref": "T",
+    "hud_score": 0.1348579038235892,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.03263034436270935,
+    "mean_level": 0.516891033496732
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/IWGW9997_hud_top.png",
+    "bottom": "out/theodolite/crops/IWGW9997_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "VQYK6921",
+   "hud": "VQYK6921.JPG",
+   "raw": "XFNK0744.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "XFNK0744.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T14:10:36",
+    "t": 1785593436.388,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 38.80614722222222,
+    "lon": 26.972666666666665,
+    "alt_m": 1.0763312555654496,
+    "heading_deg": 39.245883940620786,
+    "heading_ref": "T",
+    "hud_score": 0.3676918969299988,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.02431907759128706,
+    "mean_level": 0.4943490859885621
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/VQYK6921_hud_top.png",
+    "bottom": "out/theodolite/crops/VQYK6921_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "TJGR2177",
+   "hud": "TJGR2177.JPG",
+   "raw": "PQBC6867.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "PQBC6867.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T14:10:40",
+    "t": 1785593440.541,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 38.806152777777775,
+    "lon": 26.97266388888889,
+    "alt_m": 1.3412188509674305,
+    "heading_deg": 22.49481582537517,
+    "heading_ref": "T",
+    "hud_score": 0.13496425046649999,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.015398162802849301,
+    "mean_level": 0.5017477532679738
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/TJGR2177_hud_top.png",
+    "bottom": "out/theodolite/crops/TJGR2177_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": -0.38369051165167484,
+    "roll_deg": -0.5813499929924096,
+    "n_inl": 1388.0,
+    "frac": 0.8675,
+    "span_frac": 1.0,
+    "rms_px": 1.0734553444807267,
+    "contrast": 0.07421931735657228,
+    "score": 7.699425349232991,
+    "source": "radon"
+   },
+   "flags": [],
+   "usable": true
+  },
+  {
+   "id": "FUTE8042",
+   "hud": "FUTE8042.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "FUTE8042.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T14:10:36",
+    "t": 1785593436.388,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 38.80614722222222,
+    "lon": 26.972666666666665,
+    "alt_m": 1.0763312555654496,
+    "heading_deg": 39.245883940620786,
+    "heading_ref": "T",
+    "hud_score": 0.5951129608788036,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.04192685707988916,
+    "mean_level": 0.4496332699746565
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/FUTE8042_hud_top.png",
+    "bottom": "out/theodolite/crops/FUTE8042_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": -4.044718270366571,
+    "roll_deg": 1.7183220466082163e-15,
+    "n_inl": 1002.0,
+    "frac": 0.62625,
+    "span_frac": 0.7611006879299562,
+    "rms_px": 0.5762723470175387,
+    "contrast": 0.19266521423384164,
+    "score": 3.132053247385122,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "UYXQ7078",
+   "hud": "UYXQ7078.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "UYXQ7078.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T14:10:40",
+    "t": 1785593440.541,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 38.806152777777775,
+    "lon": 26.97266388888889,
+    "alt_m": 1.3412188509674305,
+    "heading_deg": 22.49481582537517,
+    "heading_ref": "T",
+    "hud_score": 0.8542877348522286,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.032232112278990505,
+    "mean_level": 0.47396254335067356
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/UYXQ7078_hud_top.png",
+    "bottom": "out/theodolite/crops/UYXQ7078_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": -4.048308526674181,
+    "roll_deg": 0.0004111877248334008,
+    "n_inl": 1003.0,
+    "frac": 0.626875,
+    "span_frac": 0.7611006879299562,
+    "rms_px": 0.5786006534964305,
+    "contrast": 0.19941902687000745,
+    "score": 4.640756134173129,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "BEFW4388",
+   "hud": "BEFW4388.JPG",
+   "raw": "ESPB2747.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "ESPB2747.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T14:46:57",
+    "t": 1785595617.157,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 38.80615833333333,
+    "lon": 26.972669444444442,
+    "alt_m": 1.4979801340240484,
+    "heading_deg": 148.46586599241468,
+    "heading_ref": "T",
+    "hud_score": 0.1530648162696939,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.009621386797345451,
+    "mean_level": 0.5820255565767973
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/BEFW4388_hud_top.png",
+    "bottom": "out/theodolite/crops/BEFW4388_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "AIQT7874",
+   "hud": "AIQT7874.JPG",
+   "raw": "KFCF0734.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "KFCF0734.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T14:47:03",
+    "t": 1785595623.916,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 38.80615833333333,
+    "lon": 26.972669444444442,
+    "alt_m": 1.4979801340240484,
+    "heading_deg": 149.69302368445304,
+    "heading_ref": "T",
+    "hud_score": 1.1100562384747983,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.011150846396041759,
+    "mean_level": 0.5846560074550653
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/AIQT7874_hud_top.png",
+    "bottom": "out/theodolite/crops/AIQT7874_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "BQQN4219",
+   "hud": "BQQN4219.JPG",
+   "raw": "PCUF6367.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "PCUF6367.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T14:47:05",
+    "t": 1785595625.496,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 38.80615833333333,
+    "lon": 26.972669444444442,
+    "alt_m": 1.4979801340240484,
+    "heading_deg": 145.24552924117933,
+    "heading_ref": "T",
+    "hud_score": 0.1504859614365063,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.014007757165876012,
+    "mean_level": 0.5801439057393791
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/BQQN4219_hud_top.png",
+    "bottom": "out/theodolite/crops/BQQN4219_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "SZHC7408",
+   "hud": "SZHC7408.JPG",
+   "raw": "DYID5412.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "DYID5412.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T14:47:06",
+    "t": 1785595626.065,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 38.80615833333333,
+    "lon": 26.972669444444442,
+    "alt_m": 1.4979801340240484,
+    "heading_deg": 143.20332333256405,
+    "heading_ref": "T",
+    "hud_score": 0.06327624859986991,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.01689998992214912,
+    "mean_level": 0.5863342013888888
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/SZHC7408_hud_top.png",
+    "bottom": "out/theodolite/crops/SZHC7408_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "KFKE7900",
+   "hud": "KFKE7900.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "KFKE7900.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T14:47:05",
+    "t": 1785595625.496,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 38.80615833333333,
+    "lon": 26.972669444444442,
+    "alt_m": 1.4979801340240484,
+    "heading_deg": 145.24552924117933,
+    "heading_ref": "T",
+    "hud_score": 1.4119423980414993,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.02759411546337305,
+    "mean_level": 0.559392486161131
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/KFKE7900_hud_top.png",
+    "bottom": "out/theodolite/crops/KFKE7900_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": -3.4630956391073506,
+    "roll_deg": -0.0011274883067574754,
+    "n_inl": 872.0,
+    "frac": 0.545,
+    "span_frac": 0.8786741713570981,
+    "rms_px": 0.40981738267843204,
+    "contrast": -0.19484386347131444,
+    "score": 10.134260041969219,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "YIQS8001",
+   "hud": "YIQS8001.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "YIQS8001.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T14:47:06",
+    "t": 1785595626.065,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 38.80615833333333,
+    "lon": 26.972669444444442,
+    "alt_m": 1.4979801340240484,
+    "heading_deg": 143.20332333256405,
+    "heading_ref": "T",
+    "hud_score": 1.3023980190343967,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.030058778238069416,
+    "mean_level": 0.5726317401960784
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/YIQS8001_hud_top.png",
+    "bottom": "out/theodolite/crops/YIQS8001_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": -4.0503261028759105,
+    "roll_deg": 0.0007410968429005995,
+    "n_inl": 1004.0,
+    "frac": 0.6275,
+    "span_frac": 0.809255784865541,
+    "rms_px": 0.5773157735701824,
+    "contrast": 0.19339143064633257,
+    "score": 11.794132397902471,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "KRDK7860",
+   "hud": "KRDK7860.JPG",
+   "raw": "XKAN2190.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "XKAN2190.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T14:47:24",
+    "t": 1785595644.37,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 38.66876388888889,
+    "lon": 27.067338888888887,
+    "alt_m": 94.28180112570357,
+    "heading_deg": 149.04896551724138,
+    "heading_ref": "T",
+    "hud_score": 0.4824440662167588,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.01493212030191739,
+    "mean_level": 0.5698459456699346
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/KRDK7860_hud_top.png",
+    "bottom": "out/theodolite/crops/KRDK7860_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "UIWI6188",
+   "hud": "UIWI6188.JPG",
+   "raw": "LXHT7155.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "LXHT7155.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T14:47:28",
+    "t": 1785595648.665,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 38.668255555555554,
+    "lon": 27.067899999999998,
+    "alt_m": 94.44927678834989,
+    "heading_deg": 147.60461416070007,
+    "heading_ref": "T",
+    "hud_score": 0.5604526154483573,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.013366094524449888,
+    "mean_level": 0.5807843009599674
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/UIWI6188_hud_top.png",
+    "bottom": "out/theodolite/crops/UIWI6188_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "PBQZ6908",
+   "hud": "PBQZ6908.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "PBQZ6908.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T14:47:30",
+    "t": 1785595650.918,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 38.66796111111111,
+    "lon": 27.06819722222222,
+    "alt_m": 93.56876553438276,
+    "heading_deg": 154.68850698174006,
+    "heading_ref": "T",
+    "hud_score": 1.8093794663636262,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.017718093582133054,
+    "mean_level": 0.5791327989529145
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/PBQZ6908_hud_top.png",
+    "bottom": "out/theodolite/crops/PBQZ6908_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": -3.7160926502521616,
+    "roll_deg": 0.0007111853739868014,
+    "n_inl": 871.0,
+    "frac": 0.544375,
+    "span_frac": 0.7736085053158224,
+    "rms_px": 0.4104580911723365,
+    "contrast": -0.19535221496005806,
+    "score": 13.171754784323388,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "WWBC6637",
+   "hud": "WWBC6637.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "WWBC6637.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T14:47:30",
+    "t": 1785595650.918,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 38.66796111111111,
+    "lon": 27.06819722222222,
+    "alt_m": 93.56876553438276,
+    "heading_deg": 154.68850698174006,
+    "heading_ref": "T",
+    "hud_score": 15.263330876286114,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": true,
+    "sharpness": 0.01034580789587451,
+    "mean_level": 0.5801736749387254
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/WWBC6637_hud_top.png",
+    "bottom": "out/theodolite/crops/WWBC6637_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-clean-frame",
+    "no-sea-horizon"
+   ],
+   "usable": false
+  },
+  {
+   "id": "INKX2521",
+   "hud": "INKX2521.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "INKX2521.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T14:47:32",
+    "t": 1785595652.618,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 38.66766388888889,
+    "lon": 27.06848611111111,
+    "alt_m": 92.14255108767304,
+    "heading_deg": 160.1877136346373,
+    "heading_ref": "T",
+    "hud_score": 5.328676075006977,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": true,
+    "sharpness": 0.010820002498387063,
+    "mean_level": 0.5690440027573529
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/INKX2521_hud_top.png",
+    "bottom": "out/theodolite/crops/INKX2521_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": 4.753447404734535,
+    "roll_deg": 4.384530040036178,
+    "n_inl": 1226.0,
+    "frac": 0.76625,
+    "span_frac": 0.9324577861163227,
+    "rms_px": 0.845256929992222,
+    "contrast": -0.11713870733478571,
+    "score": 12.806491642271013,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "JHNZ5318",
+   "hud": "JHNZ5318.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "JHNZ5318.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T14:47:32",
+    "t": 1785595652.618,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 38.66766388888889,
+    "lon": 27.06848611111111,
+    "alt_m": 92.14255108767304,
+    "heading_deg": 160.1877136346373,
+    "heading_ref": "T",
+    "hud_score": 1.3878012197187193,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.020164957638504,
+    "mean_level": 0.5605956966119781
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/JHNZ5318_hud_top.png",
+    "bottom": "out/theodolite/crops/JHNZ5318_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": -4.3010779809130195,
+    "roll_deg": 1.7183220466082163e-15,
+    "n_inl": 1002.0,
+    "frac": 0.62625,
+    "span_frac": 0.7611006879299562,
+    "rms_px": 0.5762723470175387,
+    "contrast": 0.1896877269426288,
+    "score": 8.722288567828837,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "BPLD7873",
+   "hud": "BPLD7873.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "BPLD7873.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T14:47:34",
+    "t": 1785595654.924,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 38.667366666666666,
+    "lon": 27.068766666666665,
+    "alt_m": 90.06745685898554,
+    "heading_deg": 163.7946930079411,
+    "heading_ref": "T",
+    "hud_score": 1.5228995793211222,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.018916457037040105,
+    "mean_level": 0.5868840661264506
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/BPLD7873_hud_top.png",
+    "bottom": "out/theodolite/crops/BPLD7873_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": -3.7106266910616195,
+    "roll_deg": -0.0007024631470734887,
+    "n_inl": 869.0,
+    "frac": 0.543125,
+    "span_frac": 0.7717323327079425,
+    "rms_px": 0.40620290690971933,
+    "contrast": -0.19724037763253455,
+    "score": 9.860114530771535,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "SNDX1016",
+   "hud": "SNDX1016.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "SNDX1016.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T14:47:34",
+    "t": 1785595654.924,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 38.667366666666666,
+    "lon": 27.068766666666665,
+    "alt_m": 90.06745685898554,
+    "heading_deg": 163.7946930079411,
+    "heading_ref": "T",
+    "hud_score": 6.3493237832871,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": true,
+    "sharpness": 0.010864165299118215,
+    "mean_level": 0.5853751531862745
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/SNDX1016_hud_top.png",
+    "bottom": "out/theodolite/crops/SNDX1016_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-clean-frame",
+    "no-sea-horizon"
+   ],
+   "usable": false
+  },
+  {
+   "id": "MZDA3059",
+   "hud": "MZDA3059.JPG",
+   "raw": "AQKF0510.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "AQKF0510.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T20:43:34",
+    "t": 1785617014.961,
+    "focal35_mm": 48.0,
+    "fov_deg": 41.112090439166934,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 38.43774444444444,
+    "lon": 27.140794444444445,
+    "alt_m": 1.3004478972610884,
+    "heading_deg": 233.63735946958778,
+    "heading_ref": "T",
+    "hud_score": 0.5624576403531419,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.009099836040028597,
+    "mean_level": 0.5802972962622549
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/MZDA3059_hud_top.png",
+    "bottom": "out/theodolite/crops/MZDA3059_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "OFUI6820",
+   "hud": "OFUI6820.JPG",
+   "raw": "JXCU1088.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "JXCU1088.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-01T20:43:37",
+    "t": 1785617017.179,
+    "focal35_mm": 48.0,
+    "fov_deg": 41.112090439166934,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 38.43774444444444,
+    "lon": 27.140797222222222,
+    "alt_m": 1.2670715805366826,
+    "heading_deg": 234.12896725440805,
+    "heading_ref": "T",
+    "hud_score": 0.15766839925611162,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.007093483056913494,
+    "mean_level": 0.5396846149918301
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/OFUI6820_hud_top.png",
+    "bottom": "out/theodolite/crops/OFUI6820_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "VVLZ0774",
+   "hud": "VVLZ0774.JPG",
+   "raw": "YBPL9738.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "YBPL9738.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-08T19:46:47",
+    "t": 1786218407.368,
+    "focal35_mm": 14.0,
+    "fov_deg": 104.2500326978036,
+    "focal_mm": 2.220000028611935,
+    "lens": "iPhone 17 Pro back triple camera 2.22mm f/2.2",
+    "lat": 37.02713055555555,
+    "lon": 27.361769444444445,
+    "alt_m": 61.1994954045774,
+    "heading_deg": 208.98544303797468,
+    "heading_ref": "T",
+    "hud_score": 0.5312647880032392,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.00945175528113603,
+    "mean_level": 0.48219660181781043
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/VVLZ0774_hud_top.png",
+    "bottom": "out/theodolite/crops/VVLZ0774_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "LCPF5668",
+   "hud": "LCPF5668.JPG",
+   "raw": "QMLO5628.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "QMLO5628.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-08T19:46:55",
+    "t": 1786218415.152,
+    "focal35_mm": 24.0,
+    "fov_deg": 73.73979529168804,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 37.02712777777778,
+    "lon": 27.36178055555556,
+    "alt_m": 61.35991773308958,
+    "heading_deg": 205.34164420485175,
+    "heading_ref": "T",
+    "hud_score": 0.036225947685187596,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.005313484133694539,
+    "mean_level": 0.5452940155228757
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/LCPF5668_hud_top.png",
+    "bottom": "out/theodolite/crops/LCPF5668_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "SJPO3345",
+   "hud": "SJPO3345.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "SJPO3345.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-08T19:47:02",
+    "t": 1786218422.532,
+    "focal35_mm": 48.0,
+    "fov_deg": 41.112090439166934,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 37.02712777777778,
+    "lon": 27.361777777777778,
+    "alt_m": 61.63407733417164,
+    "heading_deg": 195.15324384787473,
+    "heading_ref": "T",
+    "hud_score": 1.5979869174751102,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.010700377303578127,
+    "mean_level": 0.6463241755035347
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/SJPO3345_hud_top.png",
+    "bottom": "out/theodolite/crops/SJPO3345_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-clean-frame",
+    "no-sea-horizon"
+   ],
+   "usable": false
+  },
+  {
+   "id": "TLPO3094",
+   "hud": "TLPO3094.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "TLPO3094.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-08T19:47:02",
+    "t": 1786218422.532,
+    "focal35_mm": 48.0,
+    "fov_deg": 41.112090439166934,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 37.02712777777778,
+    "lon": 27.361777777777778,
+    "alt_m": 61.63407733417164,
+    "heading_deg": 195.15324384787473,
+    "heading_ref": "T",
+    "hud_score": 3.561335531553792,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": true,
+    "sharpness": 0.005137520781895088,
+    "mean_level": 0.6068097043504902
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/TLPO3094_hud_top.png",
+    "bottom": "out/theodolite/crops/TLPO3094_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-clean-frame",
+    "no-sea-horizon"
+   ],
+   "usable": false
+  },
+  {
+   "id": "BMMC5325",
+   "hud": "BMMC5325.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "BMMC5325.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-08T19:47:03",
+    "t": 1786218423.294,
+    "focal35_mm": 48.0,
+    "fov_deg": 41.112090439166934,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 37.02712777777778,
+    "lon": 27.361777777777778,
+    "alt_m": 61.66450899905273,
+    "heading_deg": 195.79142747799463,
+    "heading_ref": "T",
+    "hud_score": 20.922255243848372,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": true,
+    "sharpness": 0.0037626052853415083,
+    "mean_level": 0.6157290517769608
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/BMMC5325_hud_top.png",
+    "bottom": "out/theodolite/crops/BMMC5325_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-clean-frame",
+    "no-sea-horizon"
+   ],
+   "usable": false
+  },
+  {
+   "id": "NSRT9992",
+   "hud": "NSRT9992.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "NSRT9992.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-08T19:47:03",
+    "t": 1786218423.294,
+    "focal35_mm": 48.0,
+    "fov_deg": 41.112090439166934,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 37.02712777777778,
+    "lon": 27.361777777777778,
+    "alt_m": 61.66450899905273,
+    "heading_deg": 195.79142747799463,
+    "heading_ref": "T",
+    "hud_score": 1.6262282179312242,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.009618131150916125,
+    "mean_level": 0.654126713185274
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/NSRT9992_hud_top.png",
+    "bottom": "out/theodolite/crops/NSRT9992_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-clean-frame",
+    "no-sea-horizon"
+   ],
+   "usable": false
+  },
+  {
+   "id": "GLTX3685",
+   "hud": "GLTX3685.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "GLTX3685.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-08T19:47:06",
+    "t": 1786218426.674,
+    "focal35_mm": 48.0,
+    "fov_deg": 41.112090439166934,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 37.02712777777778,
+    "lon": 27.36178055555556,
+    "alt_m": 61.75536505714952,
+    "heading_deg": 203.91481019426126,
+    "heading_ref": "T",
+    "hud_score": 1.6794313868639528,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.01126409466697844,
+    "mean_level": 0.661998632786448
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/GLTX3685_hud_top.png",
+    "bottom": "out/theodolite/crops/GLTX3685_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-clean-frame",
+    "no-sea-horizon"
+   ],
+   "usable": false
+  },
+  {
+   "id": "TPHJ4452",
+   "hud": "TPHJ4452.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "TPHJ4452.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-08T19:47:06",
+    "t": 1786218426.674,
+    "focal35_mm": 48.0,
+    "fov_deg": 41.112090439166934,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 37.02712777777778,
+    "lon": 27.36178055555556,
+    "alt_m": 61.75536505714952,
+    "heading_deg": 203.91481019426126,
+    "heading_ref": "T",
+    "hud_score": 2.759688406195193,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": true,
+    "sharpness": 0.005185201755279802,
+    "mean_level": 0.615754723243464
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/TPHJ4452_hud_top.png",
+    "bottom": "out/theodolite/crops/TPHJ4452_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-clean-frame",
+    "no-sea-horizon"
+   ],
+   "usable": false
+  },
+  {
+   "id": "CRWR6769",
+   "hud": "CRWR6769.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "CRWR6769.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-08T19:47:09",
+    "t": 1786218429.193,
+    "focal35_mm": 48.0,
+    "fov_deg": 41.112090439166934,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 37.02710555555556,
+    "lon": 27.361772222222225,
+    "alt_m": 61.5610300081103,
+    "heading_deg": 216.64047252182846,
+    "heading_ref": "T",
+    "hud_score": 1.8185507887854968,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.012356571158739494,
+    "mean_level": 0.6289244656195812
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/CRWR6769_hud_top.png",
+    "bottom": "out/theodolite/crops/CRWR6769_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-clean-frame",
+    "no-sea-horizon"
+   ],
+   "usable": false
+  },
+  {
+   "id": "LEER4893",
+   "hud": "LEER4893.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "LEER4893.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-08T19:47:09",
+    "t": 1786218429.193,
+    "focal35_mm": 48.0,
+    "fov_deg": 41.112090439166934,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 37.02710555555556,
+    "lon": 27.361772222222225,
+    "alt_m": 61.5610300081103,
+    "heading_deg": 216.64047252182846,
+    "heading_ref": "T",
+    "hud_score": 1.8817783821063319,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": true,
+    "sharpness": 0.005912846388694922,
+    "mean_level": 0.5857180606617647
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/LEER4893_hud_top.png",
+    "bottom": "out/theodolite/crops/LEER4893_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-clean-frame",
+    "no-sea-horizon"
+   ],
+   "usable": false
+  },
+  {
+   "id": "GDVZ1705",
+   "hud": "GDVZ1705.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "GDVZ1705.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-08T19:47:13",
+    "t": 1786218433.962,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 37.02710277777778,
+    "lon": 27.36176111111111,
+    "alt_m": 61.86768837803321,
+    "heading_deg": 215.93939208984375,
+    "heading_ref": "T",
+    "hud_score": 7.61821341486116,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": true,
+    "sharpness": 0.0032843806582509394,
+    "mean_level": 0.6129262152777777
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/GDVZ1705_hud_top.png",
+    "bottom": "out/theodolite/crops/GDVZ1705_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-clean-frame",
+    "no-sea-horizon"
+   ],
+   "usable": false
+  },
+  {
+   "id": "CAVO9254",
+   "hud": "CAVO9254.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "CAVO9254.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-08T19:47:18",
+    "t": 1786218438.744,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 37.02710555555556,
+    "lon": 27.361772222222225,
+    "alt_m": 61.76633746585417,
+    "heading_deg": 219.2099609375,
+    "heading_ref": "T",
+    "hud_score": 1.4381262136667483,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.014633982288788969,
+    "mean_level": 0.5969349823262637
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/CAVO9254_hud_top.png",
+    "bottom": "out/theodolite/crops/CAVO9254_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": -3.6617955423462902,
+    "roll_deg": -2.949902401456095e-15,
+    "n_inl": 870.0,
+    "frac": 0.54375,
+    "span_frac": 0.7723577235772358,
+    "rms_px": 0.4087495598077376,
+    "contrast": -0.1891793754538852,
+    "score": 14.469198896551534,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "LEPO0968",
+   "hud": "LEPO0968.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "LEPO0968.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-08T19:47:18",
+    "t": 1786218438.744,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 37.02710555555556,
+    "lon": 27.361772222222225,
+    "alt_m": 61.76633746585417,
+    "heading_deg": 219.2099609375,
+    "heading_ref": "T",
+    "hud_score": 4.19527359664631,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": true,
+    "sharpness": 0.005181037264826215,
+    "mean_level": 0.616003293504902
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/LEPO0968_hud_top.png",
+    "bottom": "out/theodolite/crops/LEPO0968_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-clean-frame",
+    "no-sea-horizon"
+   ],
+   "usable": false
+  },
+  {
+   "id": "FUVE7386",
+   "hud": "FUVE7386.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "FUVE7386.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-08T19:47:22",
+    "t": 1786218442.514,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 37.02710277777778,
+    "lon": 27.361772222222225,
+    "alt_m": 61.75745816153287,
+    "heading_deg": 223.94696066746127,
+    "heading_ref": "T",
+    "hud_score": 1.3970782905046917,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.013858294117811035,
+    "mean_level": 0.6058855417166866
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/FUVE7386_hud_top.png",
+    "bottom": "out/theodolite/crops/FUVE7386_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": -4.248941465556997,
+    "roll_deg": -3.1540967162274983e-05,
+    "n_inl": 1004.0,
+    "frac": 0.6275,
+    "span_frac": 0.7611006879299562,
+    "rms_px": 0.5768631241167,
+    "contrast": 0.1988380537400145,
+    "score": 20.947784328862088,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "TWBF2645",
+   "hud": "TWBF2645.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "TWBF2645.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-08T19:47:22",
+    "t": 1786218442.514,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 37.02710277777778,
+    "lon": 27.361772222222225,
+    "alt_m": 61.75745816153287,
+    "heading_deg": 223.94696066746127,
+    "heading_ref": "T",
+    "hud_score": 5.267050290764668,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": true,
+    "sharpness": 0.004829562651720294,
+    "mean_level": 0.6141731770833333
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/TWBF2645_hud_top.png",
+    "bottom": "out/theodolite/crops/TWBF2645_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": 1.3063526631096147,
+    "roll_deg": -4.58617283947258,
+    "n_inl": 464.0,
+    "frac": 0.29,
+    "span_frac": 0.949343339587242,
+    "rms_px": 1.002637068011369,
+    "contrast": 0.05141612200435719,
+    "score": 3.566131955020723,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "IJBH7189",
+   "hud": "IJBH7189.JPG",
+   "raw": "IWNE5289.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "IWNE5289.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-08T19:48:37",
+    "t": 1786218517.826,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 37.02713055555555,
+    "lon": 27.361669444444445,
+    "alt_m": 58.61411332633788,
+    "heading_deg": 185.41337579617834,
+    "heading_ref": "T",
+    "hud_score": 1.0515663201907604,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.004804315311320515,
+    "mean_level": 0.6263184870302287
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/IJBH7189_hud_top.png",
+    "bottom": "out/theodolite/crops/IJBH7189_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "RBXO3391",
+   "hud": "RBXO3391.JPG",
+   "raw": "HXEX1303.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "HXEX1303.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-08T19:48:41",
+    "t": 1786218521.44,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 37.027138888888885,
+    "lon": 27.361686111111112,
+    "alt_m": 58.395398042845805,
+    "heading_deg": 185.97679141282273,
+    "heading_ref": "T",
+    "hud_score": 1.4396701526656666,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.0026876360146194616,
+    "mean_level": 0.6271065027573529
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/RBXO3391_hud_top.png",
+    "bottom": "out/theodolite/crops/RBXO3391_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "EDDJ3188",
+   "hud": "EDDJ3188.JPG",
+   "raw": "XZSU2557.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "XZSU2557.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-08T19:48:47",
+    "t": 1786218527.001,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 37.02715277777778,
+    "lon": 27.36171388888889,
+    "alt_m": 59.679966634227725,
+    "heading_deg": 183.23532110091742,
+    "heading_ref": "T",
+    "hud_score": 0.0,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.0039015010237289675,
+    "mean_level": 0.601735089869281
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/EDDJ3188_hud_top.png",
+    "bottom": "out/theodolite/crops/EDDJ3188_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "ICVV3679",
+   "hud": "ICVV3679.JPG",
+   "raw": "XRQV0283.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "XRQV0283.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-10T15:41:29",
+    "t": 1786376489.654,
+    "focal35_mm": 24.0,
+    "fov_deg": 73.73979529168804,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 37.47678888888889,
+    "lon": 27.41421111111111,
+    "alt_m": 14.014743699639979,
+    "heading_deg": 352.38485705309455,
+    "heading_ref": "T",
+    "hud_score": 0.631679479969642,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.02001909316679972,
+    "mean_level": 0.532335120506536
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/ICVV3679_hud_top.png",
+    "bottom": "out/theodolite/crops/ICVV3679_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "ODCX3134",
+   "hud": "ODCX3134.JPG",
+   "raw": "BYST5221.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "BYST5221.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-10T15:41:50",
+    "t": 1786376510.618,
+    "focal35_mm": 48.0,
+    "fov_deg": 41.112090439166934,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 37.476847222222226,
+    "lon": 27.414205555555554,
+    "alt_m": 18.46731217753905,
+    "heading_deg": 80.39953609741954,
+    "heading_ref": "T",
+    "hud_score": 0.0,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.003775749078916817,
+    "mean_level": 0.5524344618055556
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/ODCX3134_hud_top.png",
+    "bottom": "out/theodolite/crops/ODCX3134_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "XKYU3498",
+   "hud": "XKYU3498.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "XKYU3498.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-10T15:41:40",
+    "t": 1786376500.43,
+    "focal35_mm": 24.0,
+    "fov_deg": 73.73979529168804,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 37.47685833333333,
+    "lon": 27.414205555555554,
+    "alt_m": 14.16584799499866,
+    "heading_deg": 355.3101503759398,
+    "heading_ref": "T",
+    "hud_score": 18.70140218533137,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": true,
+    "sharpness": 0.01784772276419333,
+    "mean_level": 0.5419463975694444
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/XKYU3498_hud_top.png",
+    "bottom": "out/theodolite/crops/XKYU3498_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": 0.43828182539790156,
+    "roll_deg": -0.5845694964448572,
+    "n_inl": 1318.0,
+    "frac": 0.82375,
+    "span_frac": 0.9987492182614134,
+    "rms_px": 0.9183174220184556,
+    "contrast": 0.14880174291939008,
+    "score": 8.33006840476217,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "HATY3309",
+   "hud": "HATY3309.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "HATY3309.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-10T15:41:44",
+    "t": 1786376504.474,
+    "focal35_mm": 24.0,
+    "fov_deg": 73.73979529168804,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 37.47685555555556,
+    "lon": 27.414205555555554,
+    "alt_m": 14.202289652106257,
+    "heading_deg": 40.52535246104378,
+    "heading_ref": "T",
+    "hud_score": 121.15420888871613,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": true,
+    "sharpness": 0.015078910437133847,
+    "mean_level": 0.5032696716707517
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/HATY3309_hud_top.png",
+    "bottom": "out/theodolite/crops/HATY3309_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": 2.051570509366655,
+    "roll_deg": -0.015354889575574147,
+    "n_inl": 943.0,
+    "frac": 0.589375,
+    "span_frac": 0.6572858036272671,
+    "rms_px": 1.0049812303458814,
+    "contrast": 0.17603485838779964,
+    "score": 9.96769876363343,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "RNSU1210",
+   "hud": "RNSU1210.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "RNSU1210.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-10T15:41:44",
+    "t": 1786376504.474,
+    "focal35_mm": 24.0,
+    "fov_deg": 73.73979529168804,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 37.47685555555556,
+    "lon": 27.414205555555554,
+    "alt_m": 14.202289652106257,
+    "heading_deg": 40.52535246104378,
+    "heading_ref": "T",
+    "hud_score": 1.8461834436287048,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.018091345219182077,
+    "mean_level": 0.5456930897358944
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/RNSU1210_hud_top.png",
+    "bottom": "out/theodolite/crops/RNSU1210_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": 2.0515430043322693,
+    "roll_deg": -0.028881856836587578,
+    "n_inl": 964.0,
+    "frac": 0.6025,
+    "span_frac": 0.716072545340838,
+    "rms_px": 1.031652746120142,
+    "contrast": 0.17574437182280322,
+    "score": 8.648830656020923,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "FYMC7458",
+   "hud": "FYMC7458.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "FYMC7458.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-10T15:41:47",
+    "t": 1786376507.612,
+    "focal35_mm": 24.0,
+    "fov_deg": 73.73979529168804,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 37.476847222222226,
+    "lon": 27.414205555555554,
+    "alt_m": 18.512357094821787,
+    "heading_deg": 80.10504149634585,
+    "heading_ref": "T",
+    "hud_score": 9.898789415469981,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": true,
+    "sharpness": 0.015529844730721058,
+    "mean_level": 0.5241413909313726
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/FYMC7458_hud_top.png",
+    "bottom": "out/theodolite/crops/FYMC7458_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-clean-frame",
+    "no-sea-horizon"
+   ],
+   "usable": false
+  },
+  {
+   "id": "PKMI2716",
+   "hud": "PKMI2716.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "PKMI2716.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-10T15:41:47",
+    "t": 1786376507.612,
+    "focal35_mm": 24.0,
+    "fov_deg": 73.73979529168804,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 37.476847222222226,
+    "lon": 27.414205555555554,
+    "alt_m": 18.512357094821787,
+    "heading_deg": 80.10504149634585,
+    "heading_ref": "T",
+    "hud_score": 1.75890654993077,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.01778022123666661,
+    "mean_level": 0.552173265139389
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/PKMI2716_hud_top.png",
+    "bottom": "out/theodolite/crops/PKMI2716_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-clean-frame",
+    "no-sea-horizon"
+   ],
+   "usable": false
+  },
+  {
+   "id": "PTRY1713",
+   "hud": "PTRY1713.JPG",
+   "raw": "RSRW2787.JPG",
+   "kind": "pair",
+   "exif": {
+    "name": "RSRW2787.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-10T15:42:13",
+    "t": 1786376533.607,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 37.476847222222226,
+    "lon": 27.414202777777778,
+    "alt_m": 18.322372999304104,
+    "heading_deg": 11.278946871756158,
+    "heading_ref": "T",
+    "hud_score": 0.0,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.008399393489172086,
+    "mean_level": 0.5358722426470589
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/PTRY1713_hud_top.png",
+    "bottom": "out/theodolite/crops/PTRY1713_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": 1.3494389710249564,
+    "roll_deg": -0.38898971354691514,
+    "n_inl": 1342.0,
+    "frac": 0.83875,
+    "span_frac": 0.9987492182614134,
+    "rms_px": 0.8376613674124141,
+    "contrast": 0.05446623093681913,
+    "score": 2.5485447537704284,
+    "source": "radon"
+   },
+   "flags": [],
+   "usable": true
+  },
+  {
+   "id": "DSJZ3490",
+   "hud": "DSJZ3490.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "DSJZ3490.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-10T15:41:53",
+    "t": 1786376513.41,
+    "focal35_mm": 48.0,
+    "fov_deg": 41.112090439166934,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 37.476844444444446,
+    "lon": 27.414205555555554,
+    "alt_m": 18.135073643874986,
+    "heading_deg": 100.33717342110677,
+    "heading_ref": "T",
+    "hud_score": 1.4307709335735348,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.015890380917697396,
+    "mean_level": 0.5667453022875817
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/DSJZ3490_hud_top.png",
+    "bottom": "out/theodolite/crops/DSJZ3490_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-clean-frame",
+    "no-sea-horizon"
+   ],
+   "usable": false
+  },
+  {
+   "id": "ROHO6515",
+   "hud": "ROHO6515.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "ROHO6515.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-10T15:41:53",
+    "t": 1786376513.41,
+    "focal35_mm": 48.0,
+    "fov_deg": 41.112090439166934,
+    "focal_mm": 6.764999865652793,
+    "lens": "iPhone 17 Pro back triple camera 6.765mm f/1.78",
+    "lat": 37.476844444444446,
+    "lon": 27.414205555555554,
+    "alt_m": 18.135073643874986,
+    "heading_deg": 100.33717342110677,
+    "heading_ref": "T",
+    "hud_score": 7.576254286587402,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": true,
+    "sharpness": 0.007971089061433755,
+    "mean_level": 0.5470702997344771
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/ROHO6515_hud_top.png",
+    "bottom": "out/theodolite/crops/ROHO6515_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-clean-frame",
+    "no-sea-horizon"
+   ],
+   "usable": false
+  },
+  {
+   "id": "AQXF8976",
+   "hud": "AQXF8976.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "AQXF8976.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-10T15:42:13",
+    "t": 1786376533.607,
+    "focal35_mm": 200.0,
+    "fov_deg": 10.285529115768483,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 37.476847222222226,
+    "lon": 27.414202777777778,
+    "alt_m": 18.322372999304104,
+    "heading_deg": 11.278946871756158,
+    "heading_ref": "T",
+    "hud_score": 1.4773067133987408,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.021209679434771013,
+    "mean_level": 0.508485394157663
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/AQXF8976_hud_top.png",
+    "bottom": "out/theodolite/crops/AQXF8976_hud_bottom.png"
+   },
+   "horizon": {
+    "pitch_deg": -2.1412203669652903,
+    "roll_deg": -4.393367504400985e-06,
+    "n_inl": 1012.0,
+    "frac": 0.6325,
+    "span_frac": 0.7673545966228893,
+    "rms_px": 0.2628622841845279,
+    "contrast": 0.19070442992011605,
+    "score": 4.655771421019448,
+    "source": "radon"
+   },
+   "flags": [
+    "no-clean-frame"
+   ],
+   "usable": false
+  },
+  {
+   "id": "PIYU1495",
+   "hud": "PIYU1495.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "PIYU1495.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-10T15:42:17",
+    "t": 1786376537.896,
+    "focal35_mm": 14.0,
+    "fov_deg": 104.2500326978036,
+    "focal_mm": 2.220000028611935,
+    "lens": "iPhone 17 Pro back triple camera 2.22mm f/2.2",
+    "lat": 37.476847222222226,
+    "lon": 27.414205555555554,
+    "alt_m": 18.31673360107095,
+    "heading_deg": 14.365955359332842,
+    "heading_ref": "T",
+    "hud_score": 2.2345662619048916,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.018510558876281228,
+    "mean_level": 0.533763609610511
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/PIYU1495_hud_top.png",
+    "bottom": "out/theodolite/crops/PIYU1495_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-clean-frame",
+    "no-sea-horizon"
+   ],
+   "usable": false
+  },
+  {
+   "id": "VSFK5163",
+   "hud": "VSFK5163.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "VSFK5163.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-10T15:42:17",
+    "t": 1786376537.896,
+    "focal35_mm": 14.0,
+    "fov_deg": 104.2500326978036,
+    "focal_mm": 2.220000028611935,
+    "lens": "iPhone 17 Pro back triple camera 2.22mm f/2.2",
+    "lat": 37.476847222222226,
+    "lon": 27.414205555555554,
+    "alt_m": 18.31673360107095,
+    "heading_deg": 14.365955359332842,
+    "heading_ref": "T",
+    "hud_score": 8.324652450713648,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": true,
+    "sharpness": 0.018902834714703227,
+    "mean_level": 0.5145705039828431
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/VSFK5163_hud_top.png",
+    "bottom": "out/theodolite/crops/VSFK5163_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-clean-frame",
+    "no-sea-horizon"
+   ],
+   "usable": false
+  },
+  {
+   "id": "JOSZ5809",
+   "hud": "JOSZ5809.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "JOSZ5809.JPG",
+    "width": 2622,
+    "height": 1206,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-10T15:42:21",
+    "t": 1786376541.513,
+    "focal35_mm": 14.0,
+    "fov_deg": 104.2500326978036,
+    "focal_mm": 2.220000028611935,
+    "lens": "iPhone 17 Pro back triple camera 2.22mm f/2.2",
+    "lat": 37.476847222222226,
+    "lon": 27.414202777777778,
+    "alt_m": 18.776700318809777,
+    "heading_deg": 36.45476911430735,
+    "heading_ref": "T",
+    "hud_score": 2.2640353947827636,
+    "aspect": 2.174129353233831,
+    "screenish": true,
+    "is_hud": true,
+    "sharpness": 0.018770653112629956,
+    "mean_level": 0.5224815551220489
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/JOSZ5809_hud_top.png",
+    "bottom": "out/theodolite/crops/JOSZ5809_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-clean-frame",
+    "no-sea-horizon"
+   ],
+   "usable": false
+  },
+  {
+   "id": "UYXQ4404",
+   "hud": "UYXQ4404.JPG",
+   "raw": null,
+   "kind": "hud-only",
+   "exif": {
+    "name": "UYXQ4404.JPG",
+    "width": 4032,
+    "height": 3024,
+    "make": "Apple",
+    "model": "iPhone",
+    "time": "2026-08-10T15:42:21",
+    "t": 1786376541.513,
+    "focal35_mm": 14.0,
+    "fov_deg": 104.2500326978036,
+    "focal_mm": 2.220000028611935,
+    "lens": "iPhone 17 Pro back triple camera 2.22mm f/2.2",
+    "lat": 37.476847222222226,
+    "lon": 27.414202777777778,
+    "alt_m": 18.776700318809777,
+    "heading_deg": 36.45476911430735,
+    "heading_ref": "T",
+    "hud_score": 8.327531603718825,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": true,
+    "sharpness": 0.018451519133276452,
+    "mean_level": 0.510949946384804
+   },
+   "hud_crops": {
+    "top": "out/theodolite/crops/UYXQ4404_hud_top.png",
+    "bottom": "out/theodolite/crops/UYXQ4404_hud_bottom.png"
+   },
+   "horizon": null,
+   "flags": [
+    "no-clean-frame",
+    "no-sea-horizon"
+   ],
+   "usable": false
+  },
+  {
+   "id": "IMG_7833",
+   "hud": null,
+   "raw": "IMG_7833.HEIC",
+   "kind": "raw-only",
+   "exif": {
+    "name": "IMG_7833.HEIC",
+    "width": 5712,
+    "height": 4284,
+    "make": "Apple",
+    "model": "iPhone 17 Pro",
+    "time": "2026-07-31T11:38:45",
+    "t": 1785497925.69,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.90935833333333,
+    "lon": 29.135702777777777,
+    "alt_m": 2.7118506580141104,
+    "heading_deg": 176.97489928726372,
+    "heading_ref": "T",
+    "hud_score": 0.0,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.008315541529819035,
+    "mean_level": 0.5197190053104574
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "IMG_7834",
+   "hud": null,
+   "raw": "IMG_7834.HEIC",
+   "kind": "raw-only",
+   "exif": {
+    "name": "IMG_7834.HEIC",
+    "width": 5712,
+    "height": 4284,
+    "make": "Apple",
+    "model": "iPhone 17 Pro",
+    "time": "2026-07-31T11:38:47",
+    "t": 1785497927.572,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.909349999999996,
+    "lon": 29.135705555555557,
+    "alt_m": 2.2797869358003924,
+    "heading_deg": 185.16825863335782,
+    "heading_ref": "T",
+    "hud_score": 0.0,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.01189034042040134,
+    "mean_level": 0.5316793045343137
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "IMG_7835",
+   "hud": null,
+   "raw": "IMG_7835.HEIC",
+   "kind": "raw-only",
+   "exif": {
+    "name": "IMG_7835.HEIC",
+    "width": 5712,
+    "height": 4284,
+    "make": "Apple",
+    "model": "iPhone 17 Pro",
+    "time": "2026-07-31T11:38:49",
+    "t": 1785497929.254,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.909349999999996,
+    "lon": 29.135708333333334,
+    "alt_m": 2.5187579934631237,
+    "heading_deg": 203.59634387351778,
+    "heading_ref": "T",
+    "hud_score": 0.0,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.010725254745992133,
+    "mean_level": 0.5435935329861111
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "IMG_7836",
+   "hud": null,
+   "raw": "IMG_7836.HEIC",
+   "kind": "raw-only",
+   "exif": {
+    "name": "IMG_7836.HEIC",
+    "width": 5712,
+    "height": 4284,
+    "make": "Apple",
+    "model": "iPhone 17 Pro",
+    "time": "2026-07-31T11:38:50",
+    "t": 1785497930.676,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.909349999999996,
+    "lon": 29.135708333333334,
+    "alt_m": 2.7738756355103638,
+    "heading_deg": 215.2997208653175,
+    "heading_ref": "T",
+    "hud_score": 0.0,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.014462016906451882,
+    "mean_level": 0.518033101000817
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "IMG_7837",
+   "hud": null,
+   "raw": "IMG_7837.HEIC",
+   "kind": "raw-only",
+   "exif": {
+    "name": "IMG_7837.HEIC",
+    "width": 5712,
+    "height": 4284,
+    "make": "Apple",
+    "model": "iPhone 17 Pro",
+    "time": "2026-07-31T11:38:52",
+    "t": 1785497932.07,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.909349999999996,
+    "lon": 29.13571111111111,
+    "alt_m": 2.7165494608532583,
+    "heading_deg": 235.27346794190578,
+    "heading_ref": "T",
+    "hud_score": 0.0,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.011080428069265288,
+    "mean_level": 0.5124264961192811
+   },
+   "horizon": {
+    "pitch_deg": 0.09985758167543476,
+    "roll_deg": -0.6381958685037552,
+    "n_inl": 1334.0,
+    "frac": 0.83375,
+    "span_frac": 0.9993746091307066,
+    "rms_px": 0.8996311949653549,
+    "contrast": 0.07697893972403774,
+    "score": 7.370419917842786,
+    "source": "radon"
+   },
+   "flags": [],
+   "usable": true
+  },
+  {
+   "id": "IMG_7838",
+   "hud": null,
+   "raw": "IMG_7838.HEIC",
+   "kind": "raw-only",
+   "exif": {
+    "name": "IMG_7838.HEIC",
+    "width": 5712,
+    "height": 4284,
+    "make": "Apple",
+    "model": "iPhone 17 Pro",
+    "time": "2026-07-31T11:38:53",
+    "t": 1785497933.698,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.909349999999996,
+    "lon": 29.135708333333334,
+    "alt_m": 2.7302493675460786,
+    "heading_deg": 252.19993581514763,
+    "heading_ref": "T",
+    "hud_score": 0.0,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.006796884918960028,
+    "mean_level": 0.4927990706699347
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "IMG_7839",
+   "hud": null,
+   "raw": "IMG_7839.HEIC",
+   "kind": "raw-only",
+   "exif": {
+    "name": "IMG_7839.HEIC",
+    "width": 5712,
+    "height": 4284,
+    "make": "Apple",
+    "model": "iPhone 17 Pro",
+    "time": "2026-07-31T11:38:55",
+    "t": 1785497935.783,
+    "focal35_mm": 100.0,
+    "fov_deg": 20.407947443463367,
+    "focal_mm": 16.890625,
+    "lens": "iPhone 17 Pro back triple camera 16.891mm f/2.8",
+    "lat": 40.90935555555556,
+    "lon": 29.135705555555557,
+    "alt_m": 2.538516728343781,
+    "heading_deg": 266.0508574807806,
+    "heading_ref": "T",
+    "hud_score": 0.0,
+    "aspect": 1.3333333333333333,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.006377882974101888,
+    "mean_level": 0.516299977022059
+   },
+   "horizon": null,
+   "flags": [
+    "no-sea-horizon"
+   ],
+   "usable": true
+  },
+  {
+   "id": "XUOH5673",
+   "hud": null,
+   "raw": "XUOH5673.JPG",
+   "kind": "raw-only",
+   "exif": {
+    "name": "XUOH5673.JPG",
+    "width": 3840,
+    "height": 2160,
+    "make": "Apple",
+    "model": "iPhone 17 Pro",
+    "time": "2026-07-31T19:04:01",
+    "t": 1785524641.189,
+    "focal35_mm": 28.0,
+    "fov_deg": 65.4704525442152,
+    "focal_mm": 2.220000028611935,
+    "lens": "iPhone 17 Pro back triple camera 2.22mm f/2.2",
+    "hud_score": 0.9076647570747894,
+    "aspect": 1.7777777777777777,
+    "screenish": false,
+    "is_hud": false,
+    "sharpness": 0.0058594853040615175,
+    "mean_level": 0.5076419866557734
+   },
+   "horizon": null,
+   "flags": [
+    "no-gps",
+    "no-sea-horizon"
+   ],
+   "usable": true
+  }
+ ]
+}
