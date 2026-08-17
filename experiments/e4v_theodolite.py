@@ -81,10 +81,21 @@ if __name__ == '__main__':
         if '--index' in sys.argv else INDEX
     with open(idx) as f:
         S = json.load(f)['sightings']
-    prime = [s for s in S if s.get('horizon')
-             and (s['attitude'].get('fov_deg') or 99) < 25
-             and s['attitude'].get('heading_deg') is not None]
-    print(f'{len(prime)} prime sightings')
+    # E4v first ran a three-way filter (paired + horizon detected +
+    # telephoto) that left 8 of 83 pairs. The telephoto cut was
+    # backwards: the limiting factor measured there is angular
+    # COVERAGE, not angular resolution, and a 104 deg frame spans ten
+    # times the azimuth of a 10.3 deg one. --all drops the filter and
+    # runs every curated pair with a heading, which is also what makes
+    # error-vs-FOV measurable instead of assumed.
+    if '--all' in sys.argv:
+        prime = [s for s in S
+                 if s['attitude'].get('heading_deg') is not None]
+    else:
+        prime = [s for s in S if s.get('horizon')
+                 and (s['attitude'].get('fov_deg') or 99) < 25
+                 and s['attitude'].get('heading_deg') is not None]
+    print(f'{len(prime)} sightings to solve')
     rows = []
     for s in prime:
         try:
@@ -121,5 +132,16 @@ if __name__ == '__main__':
             print(f'  auto-level vs Theodolite inclinometer: pitch '
                   f'median {np.median(dp):+.2f} deg, roll median '
                   f'{np.median(dr):+.2f} deg')
-    with open(os.path.join(OUT, 'e4v_results.json'), 'w') as f:
+    if rows:
+        import collections
+        by = collections.defaultdict(list)
+        for r in rows:
+            by[round(r['fov'], 1)].append(r['err_m'])
+        print('\n  error by field of view:')
+        for fov in sorted(by):
+            v = np.array(by[fov])
+            print(f'    fov {fov:5.1f} deg  n={v.size:3d}  median '
+                  f'{np.median(v):6.0f} m  best {v.min():5.0f} m')
+    tag = '_all' if '--all' in sys.argv else ''
+    with open(os.path.join(OUT, f'e4v_results{tag}.json'), 'w') as f:
         json.dump(rows, f, indent=1)
