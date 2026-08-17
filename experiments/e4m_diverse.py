@@ -106,7 +106,7 @@ def seam_extract(img_rgb, w, max_step=20, lam=0.004):
     # would also promote terrain-interior texture the template nulls
     if np.median(g[:g.shape[0] // 6]) < np.median(g[g.shape[0] // 2:]):
         score = -score
-    cost = 1.0 - (score - score.min()) / (score.ptp() + 1e-9)
+    cost = 1.0 - (score - score.min()) / (np.ptp(score) + 1e-9)
     # gentle topmost-edge prior: among comparable transitions the
     # skyline is the highest one, not the strongest terrain edge
     cost = cost + 0.30 * (np.arange(cost.shape[0], dtype=float)

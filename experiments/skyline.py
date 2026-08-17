@@ -391,3 +391,59 @@ def solve_position(skyline_fn, el_obs, z,
 
     info = dict(evals=evals[0], coarse_cost=cc, coarse_grid=g)
     return dn2, de2, info
+
+def visible_layers(dem, lat, lon, z, az_deg, n_layers=3, d_min=1000.0,
+                   d_max=60000.0, d_step=60.0, gap=1500.0,
+                   refraction_k=1.13):
+    """Every visible crest along each ray, not just the highest one.
+
+    A coastal scene is layered — an island in front, a hazy coast
+    behind — and a skyline matcher that keeps only the topmost
+    boundary throws the near layers away. They are what carries the
+    position: a 500 m move swings a 41 km coast by 12 mrad and a 6 km
+    island by 81, and moving along the sight line changes a near
+    layer's angular width while leaving the far ridge fixed (E4y).
+
+    Marches every azimuth at once, keeps the points where the running
+    maximum of the elevation angle increases (those are the visible
+    crests), groups them by range gaps, and returns the n_layers
+    nearest features per azimuth.
+
+    Returns (el, rng), both (n_layers, n_az), ordered near to far and
+    padded with NaN where a ray has fewer features. The last non-NaN
+    entry of each column is the sky boundary the ordinary skyline
+    would have returned."""
+    az = np.radians(np.asarray(az_deg, dtype=float))
+    d = np.arange(d_min, d_max, d_step)
+    mlat, mlon = meters_per_degree(lat)
+    la = lat + (d[None, :] * np.cos(az)[:, None]) / mlat
+    lo = lon + (d[None, :] * np.sin(az)[:, None]) / mlon
+    h = dem.sample(la.ravel(), lo.ravel()).reshape(la.shape)
+    R = 6371000.0 * refraction_k
+    el = (h - z - d[None, :] ** 2 / (2 * R)) / d[None, :]
+    run = np.maximum.accumulate(el, axis=1)
+    rise = np.empty_like(el, dtype=bool)
+    rise[:, 0] = True
+    rise[:, 1:] = run[:, 1:] > run[:, :-1] + 2e-4
+    out_el = np.full((n_layers, az.size), np.nan)
+    out_r = np.full((n_layers, az.size), np.nan)
+    for j in range(az.size):
+        idx = np.where(rise[j])[0]
+        if idx.size == 0:
+            continue
+        groups, cur = [], [idx[0]]
+        for i in idx[1:]:
+            if (d[i] - d[cur[-1]]) > gap:
+                groups.append(cur)
+                cur = [i]
+            else:
+                cur.append(i)
+        groups.append(cur)
+        feats = [(d[g[-1]], float(el[j, g].max())) for g in groups]
+        for k, (rr, ee) in enumerate(feats[:n_layers]):
+            out_r[k, j] = rr
+            out_el[k, j] = ee
+        if len(feats) > n_layers:      # always keep the sky boundary
+            out_r[-1, j] = feats[-1][0]
+            out_el[-1, j] = feats[-1][1]
+    return out_el, out_r
