@@ -102,21 +102,19 @@ def extract_boundary(img, horizon_rows=None, tol_px=4):
     # known, the search is restricted to the band above it (plus a few
     # pixels of tolerance) instead of letting the detector wander into
     # the sea and then scoring the result as if it were terrain.
-    sub = img
-    top = 0
-    if horizon_rows is not None:
-        cut = int(np.ceil(np.nanmax(horizon_rows))) + tol_px
-        cut = int(np.clip(cut, 16, img.shape[0]))
-        sub = img[:cut]
+    # NOTE: the detector runs on the FULL frame. Cropping to the band
+    # above the horizon changes what it finds — measured at 14 to 109
+    # px on real frames, because the seam detector's own statistics
+    # and search band shift with the crop — so it would not be a
+    # filter but a different detector. Mask after, never before.
     if EXTRACTOR == 'learned':
         from e4m_diverse import seam_extract
         w = np.load(os.path.join(os.path.dirname(
             os.path.abspath(__file__)), 'out', 'e4m_svm.npz'))['w']
-        rows = seam_extract(sub, w) + top
+        rows = seam_extract(img, w)
         conf = np.ones(img.shape[1])
     else:
-        rows, conf = extract.skyline_seam(sub)
-        rows = rows + top
+        rows, conf = extract.skyline_seam(img)
     if horizon_rows is not None:
         # a column whose boundary still sits below the horizon carries
         # no terrain: drop it rather than feed the waterline in
