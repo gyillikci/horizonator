@@ -41,6 +41,7 @@ Usage:
 """
 
 import os
+import re
 import sys
 import json
 import glob
@@ -113,6 +114,15 @@ def read_meta(path):
         lens = ge('LensModel')
         if lens:
             out['lens'] = str(lens)
+        zoom = _rat(ge('DigitalZoomRatio'))
+        if zoom:
+            out['zoom'] = zoom
+        out['sub'] = str(ge('SubsecTimeOriginal') or '')
+        out['dt_raw'] = str(dt or '')
+        sw = str(g('Software') or '')
+        out['software'] = sw
+        out['theodolite'] = 'Theodolite' in sw
+        out.update(theodolite_meta(exif, ifd))
         gps = exif.get_ifd(0x8825) if hasattr(exif, 'get_ifd') else {}
         if gps:
             def gg(tag):
@@ -137,6 +147,46 @@ def read_meta(path):
             if hd is not None:
                 out['heading_deg'] = hd
                 out['heading_ref'] = str(gg('GPSImgDirectionRef') or '')
+    return out
+
+
+def theodolite_meta(exif, ifd):
+    """Theodolite's own record, which makes every heuristic in this
+    file a fallback rather than the method.
+
+    The app writes the sighting into EXIF twice: a human line in
+    ImageDescription ('vert_angle_deg=-0.4 / horiz_angle_deg=-0.2')
+    and the full XML in the MakerNote, which also carries the
+    ACCURACIES iOS reported at the moment of capture — GPS horizontal
+    and vertical in meters, and the compass azimuth accuracy in
+    degrees. That last one matters more than it looks: it is routinely
+    +-10 to +-20 deg, which is the width the heading prior deserves,
+    not the single GPSImgDirection number.
+
+    The two saved versions of one sighting (HUD screen capture and
+    clean camera frame) carry IDENTICAL angles and timestamps, which
+    is what pairs them exactly."""
+    out = {}
+    desc = exif.get(TAGS.get('ImageDescription', -1))
+    if desc:
+        m = re.search(r'vert_angle_deg=([-\d.]+)\s*/\s*'
+                      r'horiz_angle_deg=([-\d.]+)', str(desc))
+        if m:
+            out['pitch_deg'] = float(m.group(1))
+            out['roll_deg'] = float(m.group(2))
+    note = ifd.get(TAGS.get('MakerNote', -1))
+    if note:
+        s = (note.decode('utf-8', 'ignore') if isinstance(note, bytes)
+             else str(note))
+        if '<theodolite>' in s:
+            for tag, key in (('vert_angle_deg', 'pitch_deg'),
+                             ('horiz_angle_deg', 'roll_deg'),
+                             ('gps_horz_m', 'gps_horz_m'),
+                             ('gps_vert_m', 'gps_vert_m'),
+                             ('azimuth_deg', 'azimuth_acc_deg')):
+                m = re.search(rf'<{tag}>([-\d.]+)</{tag}>', s)
+                if m:
+                    out[key] = float(m.group(1))
     return out
 
 
@@ -327,24 +377,69 @@ def curate(src, out, do_horizon, hud_thresh=1.6, z_default=10.0):
           f'{sum(1 for i in items if i["is_hud"])} look HUD-overlaid, '
           f'{sum(1 for i in items if not i["is_hud"])} clean')
 
-    pairs, singles = pair_up(items)
+    # ---- exact grouping on Theodolite's own record. The app stamps
+    # both saved versions of one sighting with the same inclinometer
+    # angles and the same timestamp down to the subsecond, so pairing
+    # is a dictionary lookup, not a similarity problem. Images without
+    # that record are not sightings at all (ordinary camera roll
+    # photos travelling in the same folder) and are set aside.
+    theo = [i for i in items if i.get('theodolite')
+            and i.get('pitch_deg') is not None and i.get('dt_raw')]
+    not_theo = [i for i in items if i not in theo]
+    groups = {}
+    for i in theo:
+        key = (i['pitch_deg'], i['roll_deg'], i['dt_raw'], i['sub'])
+        groups.setdefault(key, []).append(i)
+    pairs, singles = [], []
+    for key, v in groups.items():
+        v.sort(key=lambda x: -(x['width'] * x['height']))
+        screen = [x for x in v if x.get('screenish')]
+        clean = [x for x in v if not x.get('screenish')]
+        if screen and clean:
+            pairs.append((screen[0], clean[0]))
+        elif clean:
+            singles.append(clean[0])
+        else:
+            pairs.append((screen[0], None))
+    print(f'  EXIF: {len(theo)} Theodolite sightings, '
+          f'{len(not_theo)} ordinary photos set aside; '
+          f'{sum(1 for p in pairs if p[1])} exact HUD+original pairs')
+    if False:
+        pairs, singles = pair_up(items)
     crop_dir = os.path.join(out, 'crops')
     sightings = []
     for h, r in pairs:
-        sid = os.path.splitext(h['name'])[0]
+        sid = os.path.splitext((r or h)['name'])[0]
         s = dict(id=sid, hud=h['name'], raw=r['name'] if r else None,
                  kind='pair' if r else 'hud-only')
         s['exif'] = {k: v for k, v in (r or h).items()
                      if not k.startswith('_') and k != 'path'}
+        # attitude comes from Theodolite's record, not from reading
+        # the HUD: pitch/roll from the inclinometer, heading from
+        # GPSImgDirection (true), each with its reported accuracy
+        e = s['exif']
+        s['attitude'] = dict(
+            heading_deg=e.get('heading_deg'),
+            pitch_deg=e.get('pitch_deg'), roll_deg=e.get('roll_deg'),
+            azimuth_acc_deg=e.get('azimuth_acc_deg'),
+            gps_horz_m=e.get('gps_horz_m'), zoom=e.get('zoom'),
+            fov_deg=e.get('fov_deg'))
         s['hud_crops'] = save_hud_crops(h['path'], crop_dir, sid)
         sightings.append((s, (r or h)))
     for r in singles:
         sid = os.path.splitext(r['name'])[0]
-        sightings.append((dict(id=sid, hud=None, raw=r['name'],
-                               kind='raw-only',
-                               exif={k: v for k, v in r.items()
-                                     if not k.startswith('_')
-                                     and k != 'path'}), r))
+        e = {k: v for k, v in r.items()
+             if not k.startswith('_') and k != 'path'}
+        sightings.append((dict(
+            id=sid, hud=None, raw=r['name'], kind='original-only',
+            exif=e,
+            attitude=dict(heading_deg=e.get('heading_deg'),
+                          pitch_deg=e.get('pitch_deg'),
+                          roll_deg=e.get('roll_deg'),
+                          azimuth_acc_deg=e.get('azimuth_acc_deg'),
+                          gps_horz_m=e.get('gps_horz_m'),
+                          zoom=e.get('zoom'),
+                          fov_deg=e.get('fov_deg'))), r))
 
     out_rows = []
     for s, src_item in sightings:
@@ -356,6 +451,9 @@ def curate(src, out, do_horizon, hud_thresh=1.6, z_default=10.0):
         flags = []
         if s['kind'] == 'hud-only':
             flags.append('no-clean-frame')       # HUD sits on the skyline
+        a = s.get('attitude') or {}
+        if a.get('azimuth_acc_deg') and a['azimuth_acc_deg'] > 15:
+            flags.append(f"compass+-{a['azimuth_acc_deg']:.0f}deg")
         if not fov:
             flags.append('no-focal-exif')
         if e.get('lat') is None:
