@@ -1,114 +1,100 @@
 83 sightings to solve
-  JIWI3999     refused: no terrain silhouette above the sea horizon
-  BQQN4219     err   1468 m (along  +1322 across   -637)  margin  0.45  rms 1.43  sigma 36/48 m  hdg_off +1.0
-  SRYK4301     refused: no terrain silhouette above the sea horizon
-  APST5638     refused: no terrain silhouette above the sea horizon
+  JIWI3999     err   2391 m (along  +1925 across  +1418)  margin  0.04  rms 3.82  sigma 169/141 m  hdg_off +2.6
+  BQQN4219     err   1468 m (along  +1322 across   -637)  margin  0.43  rms 1.43  sigma 36/48 m  hdg_off +1.0
+  SRYK4301     err   2926 m (along  +2288 across  +1825)  margin  0.29  rms 0.73  sigma 67/30 m  hdg_off -1.2
+  APST5638     err    157 m (along   +155 across    +25)  margin  0.53  rms 1.07  sigma 163/107 m  hdg_off -5.8
   AQKF0510: no solution
   RSRW2787: no solution
   TTQR0914     refused: no terrain silhouette above the sea horizon
-  RKDZ1323     err   2525 m (along  -1805 across  +1765)  margin  0.07  rms 0.45  sigma 25/56 m  hdg_off +4.4
-  LXHP2922     refused: no terrain silhouette above the sea horizon
-  ESPB2747     err   2718 m (along  -1838 across  +2003)  margin  0.41  rms 2.81  sigma 0/0 m  hdg_off +5.0
-  BEIA0530     err   3822 m (along  -1813 across  -3365)  margin  0.23  rms 1.73  sigma 135/117 m  hdg_off +4.8
-  RKZJ0322     refused: no terrain silhouette above the sea horizon
+  RKDZ1323     err    558 m (along   -551 across    -91)  margin  0.82  rms 0.75  sigma 83/79 m  hdg_off +0.4
+  LXHP2922     err   3619 m (along  +3183 across  +1722)  margin  0.52  rms 4.98  sigma 292/252 m  hdg_off -5.0
+  ESPB2747     err   2836 m (along  -1902 across  +2104)  margin  0.58  rms 3.08  sigma 347/314 m  hdg_off +6.0
+  BEIA0530     err   3846 m (along  -1821 across  -3388)  margin  0.25  rms 2.02  sigma 128/113 m  hdg_off +5.6
+  RKZJ0322     err   3443 m (along  +3288 across  +1024)  margin  0.53  rms 0.80  sigma 26/30 m  hdg_off -5.8
   BMMC5325     refused: no terrain silhouette above the sea horizon
-  BNUF5681     err   2987 m (along  -1060 across  +2792)  margin  0.33  rms 0.27  sigma 882/67 m  hdg_off -1.4
-  SNDX1016     err    840 m (along   -821 across   -175)  margin  0.30  rms 1.14  sigma 268/164 m  hdg_off +4.2
-  KVRT2735     err   2417 m (along  -1599 across  +1813)  margin  0.36  rms 0.33  sigma 15/11 m  hdg_off -2.6
-  BYST5221     refused: no terrain silhouette above the sea horizon
-  BZHD7973     refused: no terrain silhouette above the sea horizon
-  LEPO0968     refused: no terrain silhouette above the sea  DUXB725  CDKT5817     err   1107 m (along  +1107 across     -7)  margin  0.53  rms 1.12  sigma 487/268 m  hd  OREJ1026     err   1759 m (along   -676 across  -1624)  margin  0.03  rms 0.95  sigma 401/160 m  hdg_off +5.0
-  DVXB8547     err   3677 m (along  -1188 across  +3480)  margin  0.27  rms 1.42  sigma 120/101 m  hdg_off -3.2
-  DYID5412     err   2851 m (along  -2373 across  +1579)  margin  0.03  rms 8.11  sigma 1019/868 m  hdg_off +4.0
-  KWHC9160     err    674 m (along   +534 across   -412)  margin  0.39  rms 0.38  sigma 92/39 m  hdg_off +5.6
-  LUQH7512: 'photos'
+  BNUF5681     err   2169 m (along  +2113 across   -488)  margin  0.60  rms 0.36  sigma 277/82 m  hdg_off +3.8
+  SNDX1016     err   1026 m (along   -923 across   -448)  margin  0.11  rms 2.02  sigma 74/81 m  hdg_off +5.6
+  KVRT2735     err    389 m (along     -5 across   -389)  margin  1.63  rms 0.96  sigma 76/105 m  hdg_off +4.8
+  BYST5221: no solution
+  BZHD7973     err   2808 m (along  -2691 across   -803)  margin  0.03  rms 3.69  sigma 114/168 m  hdg_off -2.0
+  LEPO0968: no solution
+  CDKT5817     err   1107 m (along  +1107 across     -7)  margin  0.55  rms 1.12  sigma 543/292 m  hdg_off -6.0
+  QEMM2520     err   2424 m (along  +2400 across   +339)  margin  0.22  rms 3.64  sigma 472/424 m  hdg_off -4.8
+  UYKQ7227     refused: no terrain silhouette above the sea horizon
+  CLKC4181     err    560 m (along   +364 across   -426)  margin  8.50  rms 0.57  sigma 51/64 m  hdg_off +5.2
+  LEER4893     refused: no terrain silhouette above the sea horizon
+  CSTS1385     err   2472 m (along  -2397 across   -604)  margin  0.72  rms 4.09  sigma 203/206 m  hdg_off -5.2
+  JKGK0867     refused: no terrain silhouette above the sea horizon
+  DMPM5117     refused: no terrain silhouette above the sea horizon
+  ROHO6515: no solution
+  DUXB7255     err   2519 m (along  -2446 across   -601)  margin  0.77  rms 3.94  sigma 153/142 m  hdg_off -5.8
+  OREJ1026     err   1585 m (along  +1564 across   -255)  margin  0.02  rms 2.24  sigma 7279/615 m  hdg_off +2.8
+  DVXB8547     err    490 m (along   +450 across   +195)  margin  0.06  rms 2.43  sigma 85/68 m  hdg_off -6.0
+  DYID5412     err   3035 m (along  -2613 across  +1543)  margin  0.02  rms 8.01  sigma 987/911 m  hdg_off +4.4
+  KWHC9160     err    460 m (along   +293 across   -355)  margin  0.38  rms 0.37  sigma 107/42 m  hdg_off +5.2
+  LUQH7512     err    466 m (along   -158 across   -438)  margin  0.38  rms 0.34  sigma 0/0 m  hdg_off +5.6
   XZSU2557: no solution
-  ENVL1009     err   4393 m (along  +4181 across  -1349)  margin  0.04  rms 9.38  sigma 287/111 m  hdg_off +1.2
-  EURK8793     err   2339 m (along   +785 across  +2204)  margin  0.24  rms 8.66  sigma 542/552 m  hdg_off +1.8
-  EWAC7374: 'photos'
-  KBZM0725     err   1981 m (along  +1978 across   +109)  margin  0.40  rms 0.48  sigma 82/62 m  hdg_off -5.8
-  FNOY6514     err    433 m (along   -115 across   -417)  margin  0.80  rms 0.36  sigma 0/0 m  hdg_off +5.8
-  XFNK0744     err   3395 m (along  -3351 across   -543)  margin  0.05  rms 2.11  sigma 37/47 m  hdg_off -3.4
+  ENVL1009     err    597 m (along   -552 across   +227)  margin  0.03  rms 8.23  sigma 333/212 m  hdg_off +0.4
+  EURK8793     err   1445 m (along    -56 across  -1444)  margin  0.08  rms 8.42  sigma 1022/431 m  hdg_off -6.0
+  EWAC7374     err   1232 m (along  -1198 across   -287)  margin  0.14  rms 1.02  sigma 263/141 m  hdg_off -4.6
+  KBZM0725     err    309 m (along   +305 across    +51)  margin  0.37  rms 1.20  sigma 143/119 m  hdg_off -6.0
+  FNOY6514     err    365 m (along   +286 across   +227)  margin  2.20  rms 0.49  sigma 57/44 m  hdg_off -1.2
+  XFNK0744     err    183 m (along   +174 across    +58)  margin  0.16  rms 2.11  sigma 187/166 m  hdg_off -2.8
   TWBF2645: no solution
-  FYMC7458: 'photos'
-  GAQB1096     err   4249 m (along  -4238 across   -300)  margin  0.09  rms 44.14  sigma 1231/490 m  hdg_off +6.0
-  SCRM5347: 'photos'
-  GINP7735: 'photos'
-  TPHJ4452: 'photos'
-  GTJH0060     err   3037 m (along   -308 across  +3021)  margin  0.21  rms 0.32  sigma 48/62 m  hdg_off -3.8
+  FYMC7458: no solution
+  GAQB1096     err   4249 m (along  -4238 across   -300)  margin  0.07  rms 43.15  sigma 1347/535 m  hdg_off +6.0
+  SCRM5347     err    891 m (along    -56 across   -889)  margin  0.22  rms 3.31  sigma 195/222 m  hdg_off -2.4
+  GINP7735     err    490 m (along    +23 across   -489)  margin  0.81  rms 0.73  sigma 31/50 m  hdg_off +6.0
+  TPHJ4452     refused: no terrain silhouette above the sea horizon
+  GTJH0060     err   2579 m (along   -280 across  +2563)  margin  0.42  rms 1.38  sigma 190/95 m  hdg_off +2.8
   HATY3309: no solution
-  HBQL5071     err   3998 m (along  -3658 across  -1613)  margin  0.04  rms 14.10  sigma 291/402 m  hdg_off -6.0
-  HXEX1303: 'photos'
-  VUXU5055: 'photos'
+  HBQL5071     err   3947 m (along  -3793 across  -1092)  margin  0.09  rms 13.44  sigma 211/249 m  hdg_off +6.0
+  HXEX1303: no solution
+  VUXU5055     err    666 m (along   +506 across   -433)  margin  1.63  rms 1.79  sigma 209/163 m  hdg_off +4.0
   XRQV0283: no solution
   IWNE5289: no solution
-  INKX2521     err   1695 m (along   +538 across  -1607)  margin  3.68  rms 3.13  sigma 93/87 m  hdg_off -5.8
-  UYXQ4404: 'photos'
-  KANG4387: 'photos'
-  JXCU1088: 'photos'
-  KFCF0734     err   2773 m (along  -1910 across  +2011)  margin  1.67  rms 1.82  sigma 178/207 m  hdg_off +4.4
-  PCUF6367     err   2572 m (along  -1386 across  +2167)  margin  0.04  rms 4.58  sigma 396/375 m  hdg_off -1.2
-  XKAN2190     err    844 m (along   +770 across   -346)  margin  0.89  rms 0.54  sigma 78/50 m  hdg_off +3.6
-  QMLO5628: 'photos'
-  LEBT6702: 'photos'
-  LHCG7767: 'photos'
-  LPFA0425     err     34 m (along     -7 across    +33)  margin  0.12  rms 2.84  sigma 48/41 m  hdg_off -6.0
-  LXHT7155     err   2251 m (along   +172 across  +2244)  margin  0.00  rms 1.99  sigma 390/350 m  hdg_off -6.0
-  MJFQ1511     err   2360 m (along  -1379 across  -1915)  margin  0.19  rms 1.16  sigma 148/122 m  hdg_off +1.8
-  QBPN0150: 'photos'
-  VUPD8547: 'photos'
-  MYQR7719     err   2796 m (along  -2756 across   -470)  margin  0.45  rms 0.96  sigma 38/56 m  hdg_off -5.2
-  NCVO7252     err   3129 m (along  -1884 across  -2498)  margin  5.05  rms 2.94  sigma 445/87 m  hdg_off -4.8
+  INKX2521     err   1695 m (along   +538 across  -1607)  margin  3.67  rms 3.13  sigma 92/85 m  hdg_off -5.8
+  UYXQ4404: no solution
+  KANG4387     err    456 m (along   -195 across   -412)  margin  6.31  rms 0.84  sigma 70/61 m  hdg_off +5.4
+  JXCU1088: no solution
+  KFCF0734     err   2826 m (along  -1990 across  +2007)  margin  0.53  rms 2.65  sigma 247/275 m  hdg_off +5.4
+  PCUF6367     err   2572 m (along  -1386 across  +2167)  margin  0.04  rms 4.56  sigma 383/380 m  hdg_off -1.2
+  XKAN2190     err    823 m (along   +749 across   -339)  margin  0.85  rms 0.54  sigma 77/53 m  hdg_off +3.6
+  QMLO5628     refused: no terrain silhouette above the sea horizon
+  LEBT6702     err    909 m (along   +775 across   -475)  margin  4.71  rms 1.32  sigma 135/131 m  hdg_off +4.6
+  LHCG7767     err    676 m (along   +426 across   -525)  margin  0.84  rms 3.70  sigma 307/440 m  hdg_off +6.0
+  LPFA0425     err     34 m (along     -7 across    +33)  margin  0.10  rms 2.84  sigma 51/43 m  hdg_off -6.0
+  LXHT7155     err    390 m (along   +302 across   -247)  margin  0.02  rms 2.00  sigma 303/217 m  hdg_off +4.2
+  MJFQ1511     err   1788 m (along  -1300 across  -1227)  margin  0.00  rms 7.29  sigma 1394/602 m  hdg_off -6.0
+  QBPN0150     err   3869 m (along  +1534 across  -3552)  margin  0.09  rms 4.39  sigma 1147/1207 m  hdg_off -6.0
+  VUPD8547     err    456 m (along   +365 across   -274)  margin  6.48  rms 0.49  sigma 50/61 m  hdg_off +2.8
+  MYQR7719     err    396 m (along    -64 across   -391)  margin  1.43  rms 1.57  sigma 74/120 m  hdg_off +6.0
+  NCVO7252     err   3220 m (along  -2042 across  -2490)  margin  5.17  rms 2.85  sigma 358/81 m  hdg_off -2.4
   XKYU3498: no solution
-  WWBC6637     err   3679 m (along  -2952 across  +2196)  margin  0.26  rms 4.02  sigma 248/268 m  hdg_off +3.4
-  VSFK5163: 'photos'
-  PMUO3415     err    134 m (along   -134 across     +2)  margin  0.24  rms 1.51  sigma 74/75 m  hdg_off -4.4
-  PQBC6867     err   2834 m (along  +2501 across  +1333)  margin  0.21  rms 1.03  sigma 103/76 m  hdg_off -4.0
-  QNJZ1625: 'photos'
-  SFCL6648     err    446 m (along    -75 across   -439)  margin  2.83  rms 0.47  sigma 58/77 m  hdg_off +5.0
-  TLPO3094: 'photos'
-  SRYT2060     err   1819 m (along   -238 across  +1804)  margin  0.71  rms 0.71  sigma 21/47 m  hdg_off -2.2
-  TCIY4706: 'photos'
-  UZFU5934     err   2774 m (along   +925 across  +2615)  margin  0.25  rms 0.20  sigma 12/12 m  hdg_off -1.6
-  YBPL9738: 'photos'
-
-38 solved: median error 2471 m, best 34 m
-  accepted by the gates: 16, of which within 500 m: 3
-/home/user/horizonator/experiments/e4v_theodolite.py:138: RuntimeWarning: divide by zero encountered in divide
-  print(f'\n  {len(refused)} sightings refused outright '
-  error / reported sigma: median 11.2x  (1.0 = honest covariance)
-  auto-level vs Theodolite inclinometer: pitch median +0.25 deg, roll median +0.65 deg
-
-  error by field of view:
-    fov  10.3 deg  n=  8  median   2088 m  best   433 m
-    fov  20.4 deg  n= 21  median   2572 m  best    34 m
-    fov  41.1 deg  n=  5  median   2696 m  best   134 m
-    fov  73.7 deg  n=  2  median   2744 m  best  2360 m
-    fov 104.3 deg  n=  2  median   3294 m  best  2339 m
-2952 across  +2196)  margin  0.26  rms 4.02  sigma 248/268 m  hdg_off +3.4
+  WWBC6637     err   3176 m (along  -2926 across  +1234)  margin  0.65  rms 5.61  sigma 50/66 m  hdg_off +6.0
   VSFK5163     refused: no terrain silhouette above the sea horizon
-  PMUO3415     err    134 m (along   -134 across     +2)  margin  0.24  rms 1.51  sigma 74/75 m  hdg_off -4.4
-  PQBC6867     err   2834 m (along  +2501 across  +1333)  margin  0.21  rms 1.03  sigma 103/76 m  hdg_off -4.0
-  QNJZ1625     refused: no terrain silhouette above the sea horizon
-  SFCL6648     err    446 m (along    -75 across   -439)  margin  2.83  rms 0.47  sigma 58/77 m  hdg_off +5.0
-  TLPO3094     refused: no terrain silhouette above the sea horizon
-  SRYT2060     err   1819 m (along   -238 across  +1804)  margin  0.71  rms 0.71  sigma 21/47 m  hdg_off -2.2
+  PMUO3415     err   1992 m (along  -1989 across   +102)  margin  0.37  rms 2.71  sigma 74/73 m  hdg_off -2.6
+  PQBC6867     err    675 m (along   -640 across   +215)  margin  0.42  rms 1.64  sigma 107/78 m  hdg_off -1.4
+  QNJZ1625     err    778 m (along   +588 across   -509)  margin  2.14  rms 1.52  sigma 0/0 m  hdg_off +5.8
+  SFCL6648     err    606 m (along   +265 across   -546)  margin  0.74  rms 0.78  sigma 51/78 m  hdg_off +6.0
+  TLPO3094: no solution
+  SRYT2060     err   1672 m (along    +28 across  +1672)  margin  0.03  rms 3.38  sigma 61/34 m  hdg_off +6.0
   TCIY4706     refused: no terrain silhouette above the sea horizon
-  UZFU5934     err   2774 m (along   +925 across  +2615)  margin  0.25  rms 0.20  sigma 12/12 m  hdg_off -1.6
-  YBPL9738     refused: no terrain silhouette above the sea horizon
+  UZFU5934     err   2971 m (along  +1081 across  +2767)  margin  0.08  rms 3.25  sigma 310/284 m  hdg_off +5.6
+  YBPL9738: no solution
 
-  36 sightings refused outright (no terrain silhouette above the sea horizon)
+  10 sightings refused outright (no terrain silhouette above the sea horizon)
 
-38 solved: median error 2471 m, best 34 m
-  accepted by the gates: 16, of which within 500 m: 3
+56 solved: median error 1338 m, best 34 m
+  accepted by the gates: 31, of which within 500 m: 11
 /home/user/horizonator/experiments/e4v_theodolite.py:150: RuntimeWarning: divide by zero encountered in divide
   f'{np.median(e / sg):.1f}x  (1.0 = honest covariance)')
-  error / reported sigma: median 11.2x  (1.0 = honest covariance)
-  auto-level vs Theodolite inclinometer: pitch median +0.25 deg, roll median +0.65 deg
+  error / reported sigma: median 5.4x  (1.0 = honest covariance)
+  auto-level vs Theodolite inclinometer: pitch median +0.20 deg, roll median +0.51 deg
 
   error by field of view:
-    fov  10.3 deg  n=  8  median   2088 m  best   433 m
-    fov  20.4 deg  n= 21  median   2572 m  best    34 m
-    fov  41.1 deg  n=  5  median   2696 m  best   134 m
-    fov  73.7 deg  n=  2  median   2744 m  best  2360 m
-    fov 104.3 deg  n=  2  median   3294 m  best  2339 m
+    fov  10.3 deg  n= 12  median    582 m  best   365 m
+    fov  20.4 deg  n= 24  median   1169 m  best    34 m
+    fov  41.1 deg  n= 12  median    834 m  best   157 m
+    fov  73.7 deg  n=  4  median   2616 m  best  1788 m
+    fov 104.3 deg  n=  4  median   3744 m  best  1445 m
