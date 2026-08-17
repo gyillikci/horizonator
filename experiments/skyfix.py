@@ -246,6 +246,15 @@ def main():
                          'used by --auto-level, and widens its offset '
                          'window by 0.15 mrad/degC of |dT| since large '
                          'gradients also mean unstable dip')
+    ap.add_argument('--level-detector', default='radon',
+                    choices=['radon', 'seam'],
+                    help='front end for --auto-level: radon (default) '
+                         'searches directly for the long straight '
+                         'low-contrast horizon line; seam reuses the '
+                         'mountain skyline detector. E4q measured radon '
+                         'at 2x the availability and 2.4x the accuracy '
+                         'on real maritime imagery (7.6 vs 18.6 mrad '
+                         'median edge error, 70% vs 22% within 10 mrad)')
     ap.add_argument('--max-step', type=float, default=0.20,
                     help='auto-level water check: largest brightness '
                          'step (mean [0,1] intensity) allowed across '
@@ -369,9 +378,13 @@ def main():
                 # warm air over cold water raises the apparent horizon
                 # (smaller dip). PROVISIONAL coefficient — see --help
                 dip -= 0.032e-3 * args.dt_air_sea
-            level = extract.sea_horizon_attitude(
-                rows, conf, img.shape, f_px, dip, rgb=img,
-                max_step=args.max_step)
+            if args.level_detector == 'radon':
+                level = extract.sea_horizon_attitude_radon(
+                    img, f_px, dip, max_step=args.max_step)
+            else:
+                level = extract.sea_horizon_attitude(
+                    rows, conf, img.shape, f_px, dip, rgb=img,
+                    max_step=args.max_step)
             if level:
                 pitch, roll = level['pitch_deg'], level['roll_deg']
                 half = 0.002

@@ -55,12 +55,16 @@ DATA = os.environ.get(
 CAM_Z = 1.0            # USV camera height above waterline, meters
 LBL_WATER, LBL_SKY = 1, 2
 
-FOV_DEG, OPEN_T = 65.0, 0.5
+FOV_DEG, OPEN_T, DETECTOR, TRUTH = 65.0, 0.5, 'seam', 'seg'
 for i, a in enumerate(sys.argv):
     if a == '--fov':
         FOV_DEG = float(sys.argv[i + 1])
     elif a == '--open':
         OPEN_T = float(sys.argv[i + 1])
+    elif a == '--detector':
+        DETECTOR = sys.argv[i + 1]     # seam | radon
+    elif a == '--truth':
+        TRUTH = sys.argv[i + 1]        # seg (hand-drawn) | imu
 
 
 def open_horizon_frac(seg):
@@ -83,6 +87,26 @@ def fit_line(cols, rows, W):
     sol, *_ = np.linalg.lstsq(A, rows.astype(float), rcond=None)
     rms = float(np.sqrt(np.mean((A @ sol - rows) ** 2)))
     return float(sol[0]), float(sol[1]), rms
+
+
+def seg_line(seg, min_cols_frac=0.25):
+    """The horizon from the HAND-ANNOTATED segmentation: columns where
+    sky sits directly on water. This is the precision reference —
+    MaSTr1325's IMU mask is an approximate onboard prior (published as
+    an extra input channel for segmentation networks, not as
+    calibration truth). Measured over the 104 open-horizon images, it
+    agrees with the drawn boundary to a median 0.2 px in row offset but
+    differs by a median 0.42 deg in ROLL (p90 1.15 deg) — the same
+    order as the estimator's own roll error, so roll must be scored
+    against the annotation, not the IMU."""
+    H, W = seg.shape
+    nonsky = seg != LBL_SKY
+    top = np.where(nonsky.any(0), nonsky.argmax(0), -1)
+    cols = np.array([c for c in range(W)
+                     if top[c] > 0 and seg[top[c], c] == LBL_WATER])
+    if cols.size < min_cols_frac * W:
+        return None
+    return fit_line(cols, top[cols].astype(float), W)
 
 
 def imu_line(imu):
@@ -129,15 +153,19 @@ def main(n=None):
         f_px = (W / 2) / np.tan(np.radians(FOV_DEG) / 2)
 
         openf = open_horizon_frac(seg)
-        truth = imu_line(imu)
-        srows, conf = extract.skyline_seam(rgb)
-        est = extract.sea_horizon_attitude(srows, conf, rgb.shape, f_px,
-                                           dip, rgb=rgb)
+        truth = seg_line(seg) if TRUTH == 'seg' else imu_line(imu)
+        if DETECTOR == 'radon':
+            est = extract.sea_horizon_attitude_radon(rgb, f_px, dip)
+        else:
+            srows, conf = extract.skyline_seam(rgb)
+            est = extract.sea_horizon_attitude(srows, conf, rgb.shape,
+                                               f_px, dip, rgb=rgb)
         r = dict(image=stem, open_frac=openf,
                  water_frac=float((seg == LBL_WATER).mean()),
                  truth_line=truth, accepted=est is not None)
         if est is not None:
-            r['est'] = {k2: float(v2) for k2, v2 in est.items()}
+            r['est'] = {k2: (v2 if isinstance(v2, str) else float(v2))
+                        for k2, v2 in est.items()}
             el = est_line(est, f_px, H, W)
             r['est_line'] = el
             if truth is not None:
@@ -198,9 +226,9 @@ def main(n=None):
             edge_p90_mrad=float(np.percentile(ed, 90)),
             frac_within_2mrad=float((ed <= 2).mean()),
             frac_within_10mrad=float((ed <= 10).mean()))
-    with open(os.path.join(OUT, 'e4q_results.json'), 'w') as f:
+    with open(os.path.join(OUT, f'e4q_results_{DETECTOR}_{TRUTH}.json'), 'w') as f:
         json.dump(dict(summary=summary, images=rows_out), f, indent=1)
-    print(f"\nwrote {os.path.join(OUT, 'e4q_results.json')}")
+    print(f"\nwrote {os.path.join(OUT, f'e4q_results_{DETECTOR}_{TRUTH}.json')}")
     return summary
 
 

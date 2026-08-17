@@ -208,6 +208,160 @@ def sea_horizon_attitude(rows, conf, shape, f_px, dip_rad, rgb=None,
                 rms_px=rms, contrast=contrast)
 
 
+def horizon_candidates(rgb, max_roll_deg=12.0, n_slopes=49, topk=5,
+                       min_sep_px=8):
+    """Find candidate SEA HORIZON lines directly, without the terrain
+    seam detector.
+
+    E4q measured why the seam finder is the wrong front end here: it
+    was built for mountain skylines — high-contrast, broken, vertically
+    structured boundaries — and it tracks a real sea horizon in only
+    10 of 28 open-horizon scenes, because that horizon is a very LOW
+    contrast step (median 0.03 in [0,1] brightness, Fresnel reflection
+    making water mirror the sky) that is nevertheless perfectly
+    STRAIGHT and spans the whole frame.
+
+    So this searches for exactly that: coherence, not magnitude. The
+    vertical brightness derivative is normalised per column by its own
+    robust scale (so a 0.03 step in a dim scene counts as much as a
+    large one in a bright scene), then summed along every near-
+    horizontal line — a Radon transform restricted to lines the camera
+    roll can actually produce. A horizon adds up over hundreds of
+    columns with a consistent sign; wave texture and clutter do not.
+
+    Returns up to topk (row_at_center, slope_px_per_px, score) tuples,
+    strongest first, non-max suppressed by min_sep_px."""
+    g = np.asarray(rgb, float)
+    if g.ndim == 3:
+        g = g.mean(axis=2)
+    H, W = g.shape
+    gy = g[1:, :] - g[:-1, :]                  # (H-1, W)
+    med = np.median(gy, axis=0)
+    scale = 1.4826 * np.median(np.abs(gy - med), axis=0) + 1e-3
+    gn = (gy - med) / scale                    # per-column normalised
+    u = np.arange(W) - (W - 1) / 2.0
+    slopes = np.tan(np.radians(
+        np.linspace(-max_roll_deg, max_roll_deg, n_slopes)))
+    rows = np.arange(H - 1)
+    best = []
+    for m in slopes:
+        # shear so a line of this slope becomes a single row
+        idx = rows[:, None] + np.round(m * u)[None, :].astype(int)
+        np.clip(idx, 0, H - 2, out=idx)
+        prof = np.take_along_axis(gn, idx, axis=0).sum(axis=1) / W
+        best.append(prof)
+    S = np.abs(np.array(best))                 # (n_slopes, H-1)
+    order = np.argsort(S, axis=None)[::-1]
+    out = []
+    for o in order:
+        si, ri = np.unravel_index(o, S.shape)
+        if any(abs(ri - r0) < min_sep_px for r0, _, _ in out):
+            continue
+        out.append((float(ri), float(slopes[si]), float(S[si, ri])))
+        if len(out) >= topk:
+            break
+    return out
+
+
+def sea_horizon_attitude_radon(rgb, f_px, dip_rad, max_step=0.20,
+                               tol_px=2.0, min_frac=0.25,
+                               min_span_frac=0.5, search_px=4,
+                               min_score=0.15, **kw):
+    """Camera (pitch, roll) from the sea horizon, using
+    horizon_candidates() as the front end instead of skyline_seam.
+
+    Each candidate line is refined column-wise (the true edge within
+    search_px of it), fitted with the same physical model as
+    sea_horizon_attitude — v = tan(-dip-pitch)*hypot(u,f) - roll*u —
+    and subjected to the same two defences: nothing may lie BELOW a
+    sea horizon, and the brightness step across it must be small
+    (|step| <= max_step; a large step means land, E4q). The strongest
+    candidate that survives wins; if none does, the scene has no
+    usable horizon and levelling declines it.
+
+    Returns the same dict shape as sea_horizon_attitude, plus
+    'score' (line coherence) and 'source'='radon'."""
+    img = np.asarray(rgb, float)
+    g = img.mean(axis=2) if img.ndim == 3 else img
+    H, W = g.shape
+    gy = g[1:, :] - g[:-1, :]
+    med = np.median(gy, axis=0)
+    scale = 1.4826 * np.median(np.abs(gy - med), axis=0) + 1e-3
+    gn = np.abs((gy - med) / scale)
+    u = np.arange(W) - (W - 1) / 2.0
+    Hu = np.hypot(u, f_px)
+
+    for r0, m, score in horizon_candidates(g, **kw):
+        if score < min_score:
+            break                              # candidates are sorted
+        # ---- column-wise refinement around the candidate line
+        pred = r0 + m * u
+        rows_ref = np.full(W, np.nan)
+        for x in range(W):
+            lo = int(round(pred[x])) - search_px
+            hi = lo + 2 * search_px + 1
+            if lo < 1 or hi >= H - 1:
+                continue
+            seg = gn[lo:hi, x]
+            k = int(np.argmax(seg))
+            if seg[k] > 2.0:                   # a real edge, not noise
+                rows_ref[x] = lo + k
+        ok = np.isfinite(rows_ref)
+        if ok.sum() < max(16, min_frac * W):
+            continue
+        v = (H - 1) / 2.0 - rows_ref
+
+        # ---- fit the physical model, IRLS on the inliers. The start
+        # MUST come from the candidate line itself: v = a*hypot(u,f) +
+        # b*u with a = (center_row - r0)/f and b = -slope. Starting
+        # from level instead leaves every point tens of pixels outside
+        # the tolerance, so the fit never gets going.
+        a = ((H - 1) / 2.0 - r0) / f_px
+        b = -m
+        inl = ok
+        for it in range(5):
+            tol = tol_px * (4.0 if it == 0 else 2.0 if it == 1 else 1.0)
+            res = np.where(ok, v - (a * Hu + b * u), np.nan)
+            inl = ok & (np.abs(res) <= tol)
+            if inl.sum() < 16:
+                break
+            A = np.stack([Hu[inl], u[inl]], axis=1)
+            sol, *_ = np.linalg.lstsq(A, v[inl], rcond=None)
+            a, b = float(sol[0]), float(sol[1])
+        if inl.sum() < 16:
+            continue
+        res = np.where(ok, v - (a * Hu + b * u), np.nan)
+        # nothing may sit BELOW a sea horizon (terrain only rises)
+        if np.nansum((res < -3.0) & ok) > 0.02 * W:
+            continue
+        rms = float(np.sqrt(np.nanmean(res[inl] ** 2)))
+        frac = float(inl.mean())
+        span = float((u[inl].max() - u[inl].min())
+                     / max(u[-1] - u[0], 1.0))
+        if frac < min_frac or span < min_span_frac or rms > tol_px:
+            continue
+
+        # ---- continuity: a true horizon barely changes brightness
+        line = (H - 1) / 2.0 - (a * Hu + b * u)
+        above, below = [], []
+        for x in np.where(inl)[0]:
+            k = int(round(line[x]))
+            if k - 14 >= 0 and k + 14 < H:
+                above.append(g[k - 12:k - 3, x].mean())
+                below.append(g[k + 3:k + 12, x].mean())
+        if len(above) < 8:
+            continue
+        step = float(np.median(above) - np.median(below))
+        if abs(step) > max_step:
+            continue
+        return dict(pitch_deg=float(np.degrees(-dip_rad - np.arctan(a))),
+                    roll_deg=float(np.degrees(-np.arctan(b))),
+                    n_inl=int(inl.sum()), frac=frac, span_frac=span,
+                    rms_px=rms, contrast=step, score=float(score),
+                    source='radon')
+    return None
+
+
 def _ratio(v):
     try:
         return float(v[0]) / float(v[1])

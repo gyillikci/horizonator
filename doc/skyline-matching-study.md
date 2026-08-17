@@ -1601,6 +1601,54 @@ sequential estimator.
 > not the E4q change — the harness now records the refusal instead of
 > crashing, and the cause is an open item.
 
+> **E4q-2 — the horizon-specific detector** (`horizon_candidates` and
+> `sea_horizon_attitude_radon` in `extract.py`, `skyfix
+> --level-detector`). E4q identified the front end as the limiter, so
+> this replaces it. The insight is that a sea horizon is defined by
+> COHERENCE, not contrast: the step is tiny (median 0.03) but the line
+> is perfectly straight across the whole frame. So the vertical
+> brightness derivative is normalised per column by its own robust
+> scale — making a faint step in a dim scene count as much as a strong
+> one in a bright scene — and summed along every near-horizontal line,
+> a Radon transform restricted to the slopes camera roll can produce.
+> Candidates are refined column-wise, fitted to the same physical
+> model, and passed through the same two defences (nothing below the
+> line; |brightness step| <= max_step). One bug worth recording: the
+> IRLS fit must be initialised from the CANDIDATE line, not from
+> level — starting level leaves every point tens of pixels outside the
+> tolerance so the fit never starts, which showed up as 0% acceptance.
+> Scored against the HAND-ANNOTATED water/sky boundary over all 1030
+> usable images:
+>
+> |                           | seam front end | radon front end |
+> |---------------------------|----------------|-----------------|
+> | availability, open scenes | 17% (18/104)   | **32% (33/104)** |
+> | row offset, median        | 2.9 px         | **2.1 px**      |
+> | roll error, median        | +0.33 deg      | **+0.04 deg**   |
+> | edge elevation err, median| 18.6 mrad      | **7.6 mrad**    |
+> | within 10 mrad            | 22%            | **70%**         |
+> | within 2 mrad             | 0%             | **12%**         |
+>
+> Availability doubles and error drops 2.4x; the roll bias essentially
+> vanishes. The cost: accepts on segmentation-"occluded" scenes rise
+> 7% -> 27% — but those accepts sit a median 17 mrad from the horizon
+> (against seam's 51 mrad), i.e. the detector is levelling off distant
+> low shoreline lying close to the true horizon rather than inventing
+> a line. Whether to spend that availability is a policy choice; the
+> harmful-error tail is what to watch, not the label. Radon is now the
+> skyfix default (`--level-detector seam` restores the old path).
+> REFERENCE CORRECTION made here: MaSTr1325's IMU mask is an
+> approximate onboard prior, not calibration truth — over the 104
+> open-horizon images it agrees with the drawn boundary to a median
+> 0.2 px in row but differs by a median 0.42 deg in ROLL (p90 1.15),
+> the same order as the estimator's own error, so accuracy is scored
+> against the hand annotation and the IMU mask is kept only as a
+> coarse cross-check. (An early single-image spot check suggested
+> 1.7 deg; the full-set measurement corrects that.) Still open: 12%
+> within 2 mrad means the window remains unvalidated at this image
+> scale, where one pixel IS 2.5 mrad — it needs native-resolution
+> imagery, not more of this dataset.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
