@@ -39,6 +39,8 @@ PHOTOS = os.environ.get(
     os.path.join(os.path.dirname(os.path.dirname(HERE)),
                  'celestial-navigation', 'theodolite'))
 INDEX = os.path.join(OUT, 'theodolite', 'index.json')
+MIN_RANGE = (float(sys.argv[sys.argv.index('--min-range') + 1])
+             if '--min-range' in sys.argv else 0.0)
 
 
 def run_one(s):
@@ -50,6 +52,8 @@ def run_one(s):
            '--heading', f"{a['heading_deg']:.2f}",
            '--z', f"{max(e.get('alt_m') or 5.0, 2.0):.1f}",
            '--auto-level', '--box', '6000']
+    if MIN_RANGE:
+        cmd += ['--min-range', str(MIN_RANGE)]
     p = subprocess.run(cmd, capture_output=True, text=True, timeout=900)
     txt = p.stdout
     if '{' not in txt:
@@ -68,6 +72,7 @@ def run_one(s):
         along_m=float(dn * np.cos(h) + de * np.sin(h)),
         across_m=float(-dn * np.sin(h) + de * np.cos(h)),
         margin=j.get('basin_margin'), rms_mrad=j.get('rms_mrad'),
+        subject_km=j.get('subject_km'), reasons=j.get('reasons'),
         fix_ok=j.get('fix_ok'),
         sigma_n=j.get('sigma_n_m'), sigma_e=j.get('sigma_e_m'),
         heading_offset=j.get('heading_offset_deg'),
@@ -142,6 +147,21 @@ if __name__ == '__main__':
             v = np.array(by[fov])
             print(f'    fov {fov:5.1f} deg  n={v.size:3d}  median '
                   f'{np.median(v):6.0f} m  best {v.min():5.0f} m')
-    tag = '_all' if '--all' in sys.argv else ''
+    if rows and MIN_RANGE:
+        keep = [r for r in rows if not any('too near' in x
+                                           for x in (r.get('reasons') or []))]
+        drop = len(rows) - len(keep)
+        if keep:
+            k = np.array([r['err_m'] for r in keep])
+            print(f'\n  range gate at {MIN_RANGE / 1000:.1f} km: '
+                  f'{drop} rejected as unsuitable, {len(keep)} kept — '
+                  f'median {np.median(k):.0f} m, <500 m: {(k < 500).sum()}')
+            ok = [r for r in keep if r['fix_ok']]
+            if ok:
+                o = np.array([r['err_m'] for r in ok])
+                print(f'    of those the gates accept {len(ok)}: median '
+                      f'{np.median(o):.0f} m, <500 m: {(o < 500).sum()}')
+    tag = ('_range' if MIN_RANGE else '') + \
+          ('_all' if '--all' in sys.argv else '')
     with open(os.path.join(OUT, f'e4v_results{tag}.json'), 'w') as f:
         json.dump(rows, f, indent=1)

@@ -255,6 +255,12 @@ def main():
                          'at 2x the availability and 2.4x the accuracy '
                          'on real maritime imagery (7.6 vs 18.6 mrad '
                          'median edge error, 70% vs 22% within 10 mrad)')
+    ap.add_argument('--min-range', type=float, default=None,
+                    help='reject the sighting when the terrain forming '
+                         'the silhouette is nearer than this many '
+                         'meters (3000 is the measured knee, E4x): too '
+                         'close and the silhouette is canopy and '
+                         'rooftops the DEM does not carry')
     ap.add_argument('--conditioning', action='store_true',
                     help='resolve with parts of the evidence removed '
                          '(leave-one-photo-out, or left/right halves of '
@@ -426,6 +432,31 @@ def main():
                     d_min=150.0 if args.dmin_soft else args.dmin)
     usum = sum(uw)
 
+    # ---- is the subject even far enough for this method?
+    # E4x measured that the field failures are largely a subject
+    # mismatch: binned by the range of the terrain forming the
+    # silhouette, sightings of terrain within 3 km miss by a median
+    # 2463 m against 778 m for 3-10 km. At a kilometre, trees and
+    # buildings subtend tens of mrad and appear in no DEM, and SRTM's
+    # posting cannot shape the ridge — so the silhouette being matched
+    # is mostly not in the model at all. The check runs at the BOX
+    # CENTRE, the position actually known in the field, never at truth.
+    subject_km = None
+    if args.min_range:
+        el_c, rng_c = cm.skyline(lat_c, lon_c, z, AZ)
+        med = []
+        for p in photos:
+            if p['heading'] is None:
+                continue
+            rel = (AZ - p['heading'] + 180.0) % 360.0 - 180.0
+            m = np.abs(rel) <= p['fov'] / 2
+            if m.sum() >= 5:
+                med.append(float(np.median(rng_c[m])))
+        if med:
+            subject_km = float(np.median(med)) / 1000.0
+            print(f'subject range at the box centre: '
+                  f'{subject_km:.1f} km', flush=True)
+
     rigid = args.rigid_pan and len(photos) > 1 \
         and all(p['heading'] is not None for p in photos)
 
@@ -580,6 +611,12 @@ def main():
     if rms_mrad > args.max_rms:
         reasons.append(f'residual {rms_mrad:.1f} mrad > {args.max_rms:.1f}: '
                        'the DEM cannot explain this observation')
+    if subject_km is not None \
+            and subject_km * 1000.0 < args.min_range:
+        reasons.append(f'subject too near: the silhouette comes from '
+                       f'terrain a median {subject_km:.1f} km away '
+                       f'(limit {args.min_range / 1000:.1f} km), where '
+                       f'canopy and buildings dominate a DEM skyline')
     if jack and args.max_jackknife \
             and jack['spread_m'] > args.max_jackknife:
         reasons.append(f"conditioning: the fix moves "
@@ -599,7 +636,7 @@ def main():
                   sigma_major_m=float(sig_maj),
                   sigma_minor_m=float(sig_min),
                   major_bearing_deg=maj_brg, anisotropy=aniso,
-                  jackknife=jack,
+                  jackknife=jack, subject_km=subject_km,
                   cost=c0, rms_mrad=rms_mrad,
                   n_photos=N, z_m=z,
                   photos=[{k: v for k, v in d.items()
