@@ -41,6 +41,8 @@ PHOTOS = os.environ.get(
 INDEX = os.path.join(OUT, 'theodolite', 'index.json')
 MIN_RANGE = (float(sys.argv[sys.argv.index('--min-range') + 1])
              if '--min-range' in sys.argv else 0.0)
+EXTRACTOR = (sys.argv[sys.argv.index('--extractor') + 1]
+             if '--extractor' in sys.argv else 'seam')
 
 
 def run_one(s):
@@ -52,6 +54,8 @@ def run_one(s):
            '--heading', f"{a['heading_deg']:.2f}",
            '--z', f"{max(e.get('alt_m') or 5.0, 2.0):.1f}",
            '--auto-level', '--box', '6000']
+    if EXTRACTOR != 'seam':
+        cmd += ['--extractor', EXTRACTOR]
     if MIN_RANGE:
         cmd += ['--min-range', str(MIN_RANGE)]
     p = subprocess.run(cmd, capture_output=True, text=True, timeout=900)
@@ -162,6 +166,7 @@ if __name__ == '__main__':
                 print(f'    of those the gates accept {len(ok)}: median '
                       f'{np.median(o):.0f} m, <500 m: {(o < 500).sum()}')
     tag = ('_range' if MIN_RANGE else '') + \
+          ('' if EXTRACTOR == 'seam' else '_' + EXTRACTOR) + \
           ('_all' if '--all' in sys.argv else '')
     with open(os.path.join(OUT, f'e4v_results{tag}.json'), 'w') as f:
         json.dump(rows, f, indent=1)

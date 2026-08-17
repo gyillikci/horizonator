@@ -81,10 +81,34 @@ def basin_margin(cc, g, min_sep):
     return float('inf')
 
 
+EXTRACTOR = 'seam'      # set from --extractor
+
+
+def extract_boundary(img):
+    """The image-side boundary, from whichever front end is selected.
+
+    'seam'    the mountain seam detector (extract.skyline_seam)
+    'learned' E4m's patch template + dynamic-programming seam, trained
+              on CH1's even half — the approach Ahmad's skyline work
+              takes. E4y found the two do not merely differ in
+              accuracy: on a layered coastal scene they lock onto
+              DIFFERENT LAYERS (86 px apart on OREJ1026, the seam
+              detector following the far coast and the template the
+              island), while on a clean single-layer scene they agree
+              to 2 px."""
+    if EXTRACTOR == 'learned':
+        from e4m_diverse import seam_extract
+        w = np.load(os.path.join(os.path.dirname(
+            os.path.abspath(__file__)), 'out', 'e4m_svm.npz'))['w']
+        rows = seam_extract(img, w)
+        return rows, np.ones(img.shape[1])
+    return extract.skyline_seam(img)
+
+
 def observation(img, fov_deg, heading, roll_deg, pitch_deg=0.0):
     """Extract the skyline and map it to the global azimuth grid.
     Returns (el_obs, weights, diag) with diag holding extraction results."""
-    rows, conf = extract.skyline_seam(img)
+    rows, conf = extract_boundary(img)
     H, W, _ = img.shape
     f = (W / 2) / np.tan(np.radians(fov_deg) / 2)
     u = np.arange(W) - (W - 1) / 2
@@ -272,6 +296,11 @@ def main():
                          'at 2x the availability and 2.4x the accuracy '
                          'on real maritime imagery (7.6 vs 18.6 mrad '
                          'median edge error, 70% vs 22% within 10 mrad)')
+    ap.add_argument('--extractor', default='seam',
+                    choices=['seam', 'learned'],
+                    help='image-side boundary finder: the mountain seam '
+                         'detector, or E4m\'s learned patch template '
+                         'with a DP seam')
     ap.add_argument('--heading-window', type=float, default=6.0,
                     help='half-width of the co-estimated azimuth search '
                          'around the heading prior, degrees (default 6; '
@@ -363,6 +392,8 @@ def main():
     ap.add_argument('--out',
                     help='write PREFIX.json and PREFIX.png diagnostics')
     args = ap.parse_args()
+    global EXTRACTOR
+    EXTRACTOR = args.extractor
     N = len(args.images)
 
     exs = [extract.read_exif(p) for p in args.images]
