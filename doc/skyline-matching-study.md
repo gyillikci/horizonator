@@ -1695,6 +1695,38 @@ sequential estimator.
 > through single-frame bearings; a conditioning term from the
 > covariance ellipse is the fix.
 
+> **E4y — depth layers: the information the matcher throws away.**
+> Raised from the field photographs: a coastal scene is layered — an
+> island in front, a hazy coast behind — and the matcher keeps only
+> the topmost sky boundary. Marching each ray past the near-field mask
+> and grouping the running maxima by range gaps shows what is being
+> discarded. At OREJ1026's azimuth the DEM has three visible layers:
+> 1.0 km at 0.5 mrad, an island at 6.2 km at 7.5 mrad, and the far
+> coast at 41.1 km at 17.9 mrad. Only the last one reaches the cost.
+>
+> The near layers are where the position information lives. A 500 m
+> lateral move swings the 41 km coast by 12 mrad but the 6.2 km island
+> by 81 — seven times more — and a move ALONG the sight line changes
+> the island's angular width while leaving the far ridge essentially
+> unchanged. That is precisely the direction every single-frame field
+> fix failed in (along-sight errors of +307 m and similar), and it
+> explains why a single narrow frame behaved like a bearing: its only
+> observable was the layer least sensitive to position.
+>
+> Building it needs three pieces. The DEM side is a marcher that
+> returns every visible crest per azimuth instead of the maximum
+> (prototyped, ~30 lines). The image side is depth-layer extraction,
+> for which atmospheric perspective is the natural cue — farther
+> layers are lighter, bluer and lower in contrast, which is how the
+> haze assay (E4s) measured range in the first place. The cost then
+> weights layers by what each constrains: near layers pin position,
+> far layers pin heading. Note also what does NOT work: reading range
+> from the depression angle of an island's waterline, the classical
+> vertical sextant angle, is useless at these eye heights — at 2.5 m
+> the horizon is 5.7 km away, so anything further has its waterline
+> hidden. Angular width, not depression, is the near-layer range
+> observable.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
