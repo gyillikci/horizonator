@@ -1649,6 +1649,52 @@ sequential estimator.
 > scale, where one pixel IS 2.5 mrad — it needs native-resolution
 > imagery, not more of this dataset.
 
+> **E4v — the instrument on its own field data** (`experiments/
+> theodolite_curate.py`, `e4v_theodolite.py`; 83 curated pairs from
+> five sites, July–August 2026, iPhone 17 Pro + Theodolite). The first
+> photographs taken FOR this pipeline: clean frame, app-recorded
+> attitude with the accuracies iOS reported (compass median ±10 deg,
+> worst ±41; GPS median 4.7 m), GPS kept for scoring only.
+>
+> Single narrow-FOV sightings do not localise. Six of eight prime
+> sightings solve, median error 914 m, best 396 m; five pass the
+> gates but only two of those land within 500 m, and the worst false
+> accept carries margin 3.67 at 1695 m error. The errors are large
+> along AND across the line of sight, because the compass offset is
+> co-estimated and frees the across-sight axis too — a 10–20 deg
+> slice of distant terrain is close to a bearing measurement. Two
+> explanations were tested and refuted: relief is adequate (4.5–8.8
+> mrad, well above the 1.5 gate), and the tight ±2 mrad window is not
+> at fault — substituting the phone's own inclinometer with the wide
+> window makes every case worse (460→1099, 396→1066, 675→2646 m) and
+> all four then fail the gates, so the auto-leveller beats the
+> device's inclinometer here.
+>
+> Fusing a pan fixes it. The Marmara site holds a real pan: 20 frames
+> from one spot (<25 m) inside ten minutes, spanning 75 deg. Six
+> telephoto frames of it fuse to **168 m** — against a 914 m median
+> for the same kind of frame solved singly — with the reported sigma
+> (389/367 m) finally honest rather than the 4.4x optimism the single
+> fixes showed. RIGID-pan, one shared compass offset, gives 451 m and
+> a joint rms of 3.00 mrad against 0.37–1.75 for the frames singly:
+> its premise is that the RELATIVE headings are gyro-accurate and
+> only their common offset unknown, which holds for a sweep taken in
+> seconds but not for handheld sightings spread over ten minutes,
+> each carrying an independent compass reading. So the capture
+> procedure decides the fusion mode, and for this procedure the
+> per-frame free offset is correct.
+>
+> Two calibrations for the record: the Laplace covariance is a median
+> 4.4x optimistic on single field fixes (its shape is right — on
+> KWHC9160 the reported north:east ratio matched the actual error
+> ratio to 1%), and the auto-leveller differs from the Theodolite
+> inclinometer by a median 0.60 deg in pitch and roll, consistent
+> with the 7.6 mrad it measured against MaSTr1325 annotations. Open:
+> the basin margin measures how distinct the winning basin is, not
+> whether the geometry can support a position, which is why it waves
+> through single-frame bearings; a conditioning term from the
+> covariance ellipse is the fix.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the

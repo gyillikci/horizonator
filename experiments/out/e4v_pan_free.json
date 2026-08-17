@@ -1,0 +1,98 @@
+photo 0: OREJ1026.JPG  fov 10.3, heading 176.1, pitch +0.00, roll +0.00, weight 1.00
+photo 1: BNUF5681.JPG  fov 10.3, heading 183.7, pitch +0.00, roll +0.00, weight 1.00
+photo 2: FNOY6514.JPG  fov 10.3, heading 223.3, pitch +0.00, roll +0.00, weight 1.00
+photo 3: RKDZ1323.JPG  fov 10.3, heading 224.1, pitch +0.00, roll +0.00, weight 1.00
+photo 4: KWHC9160.JPG  fov 10.3, heading 244.3, pitch +0.40, roll +0.95, weight 1.00, auto-level (957 sea cols)
+photo 5: LUQH7512.JPG  fov 10.3, heading 251.0, pitch +0.00, roll +0.00, weight 1.00
+z 2.5 m, box 6000 m at (40.90622,29.13945)
+{
+ "status": "ok",
+ "reasons": [],
+ "lat": 40.907568982408876,
+ "lon": 29.140342441020834,
+ "fix_ok": true,
+ "basin_margin": 0.787622093364391,
+ "relief_mrad": 10.34884812090146,
+ "dn_m": 150.0,
+ "de_m": 75.0,
+ "sigma_n_m": 388.8985288518747,
+ "sigma_e_m": 366.8990804430721,
+ "cost": 2.6096547300761255e-06,
+ "rms_mrad": 2.2845808062207498,
+ "n_photos": 6,
+ "z_m": 2.5,
+ "photos": [
+  {
+   "file": "OREJ1026.JPG",
+   "fov_deg": 10.3,
+   "heading_deg": 176.1,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 4.166994714002678,
+   "heading_offset_deg": -2.2,
+   "el_offset_mrad": 8.098327729253686,
+   "attitude_source": "prior"
+  },
+  {
+   "file": "BNUF5681.JPG",
+   "fov_deg": 10.3,
+   "heading_deg": 183.7,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 0.9878941739766463,
+   "heading_offset_deg": 2.4000000000000004,
+   "el_offset_mrad": 2.02458193231342,
+   "attitude_source": "prior"
+  },
+  {
+   "file": "FNOY6514.JPG",
+   "fov_deg": 10.3,
+   "heading_deg": 223.3,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 1.704158547510047,
+   "heading_offset_deg": 0.8,
+   "el_offset_mrad": 6.073745796940264,
+   "attitude_source": "prior"
+  },
+  {
+   "file": "RKDZ1323.JPG",
+   "fov_deg": 10.3,
+   "heading_deg": 224.1,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 2.585599383749375,
+   "heading_offset_deg": -1.4000000000000001,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior"
+  },
+  {
+   "file": "KWHC9160.JPG",
+   "fov_deg": 10.3,
+   "heading_deg": 244.3,
+   "pitch_deg": 0.39811994975369286,
+   "roll_deg": 0.9501194192592817,
+   "weight": 1.0,
+   "rms_mrad": 0.9086908103995914,
+   "heading_offset_deg": 1.6,
+   "el_offset_mrad": -2.0,
+   "attitude_source": "sea-horizon"
+  },
+  {
+   "file": "LUQH7512.JPG",
+   "fov_deg": 10.3,
+   "heading_deg": 251.0,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 1.6002741634510214,
+   "heading_offset_deg": 0.0,
+   "el_offset_mrad": 8.098327729253686,
+   "attitude_source": "prior"
+  }
+ ]
+}
