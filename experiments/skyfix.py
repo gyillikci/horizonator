@@ -95,6 +95,23 @@ def observation(img, fov_deg, heading, roll_deg, pitch_deg=0.0):
     az_rel = np.degrees(np.arctan2(ur, f))
     el_pt = np.arctan2(vr, np.hypot(ur, f)) + np.radians(pitch_deg)
 
+    # ---- drop masts, poles and rigging before they reach the cost.
+    # A ship's mast or a lamp post is a one- or two-column spike tens
+    # of mrad tall that no DEM carries, and the robust cost only
+    # softens it — it still drags the fit. Terrain silhouettes have
+    # bounded slope in angle; anything far outside the local trend
+    # over a few columns is man-made and its columns are dropped.
+    if el_pt.size > 32:
+        k = max(5, el_pt.size // 200) | 1
+        pad = np.pad(el_pt, k // 2, mode='edge')
+        med = np.median(np.lib.stride_tricks.sliding_window_view(pad, k),
+                        axis=-1)
+        dev = el_pt - med
+        scale = 1.4826 * np.median(np.abs(dev)) + 1e-6
+        spike = np.abs(dev) > max(6.0 * scale, 3e-3)
+        if spike.any() and spike.mean() < 0.25:
+            conf = conf * (~spike)
+
     el = np.full(AZ.size, np.nan)
     wt = np.zeros(AZ.size)
     rel = (AZ - heading + 180.0) % 360.0 - 180.0
