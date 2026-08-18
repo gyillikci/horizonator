@@ -1727,6 +1727,37 @@ sequential estimator.
 > hidden. Angular width, not depression, is the near-layer range
 > observable.
 
+> **Horizonator vs PeakFinder — what each is for.** PeakFinder is the
+> better panorama: a polished commercial renderer with named peaks in
+> ten locales, sun and moon tracks, and a telescope mode, embeddable by
+> URL, iframe or canvas (gyillikci/PeakFinder-API). Its own terms are
+> 'all rights reserved', its terrain lives on its servers, and its
+> Javascript surface — loadViewpoint, azimut, altitude, fieldofview,
+> elevationOffset, plus events for viewpoint/sun/moon/poi — displays a
+> view and returns strings about it. Nothing in that surface returns
+> the rendered geometry.
+>
+> That is the whole difference for this project, and it is not about
+> quality. Fixing a position means evaluating a hypothesis: elevation
+> and RANGE per azimuth at a candidate position, 625 of them per fix on
+> a 6 km box, then again at every layer once the near ones matter.
+> Measured here, our marcher produces a full 3600-azimuth skyline in
+> 6.5 ms on 3-arcsecond data and 21.2 ms on 1-arcsecond — 4.1 s and
+> 13.2 s per fix, offline, with the range array that E4y needs for the
+> depth layers. A display API cannot answer that question at any speed:
+> it renders pixels of a viewpoint, over the network, for a human to
+> look at.
+>
+> So they are complementary rather than competing. PeakFinder is the
+> reference a navigator can check a viewpoint against by eye, and the
+> URL format takes our sighting parameters directly
+> (?lat=&lng=&ele=&azi=&fov=), which is how the E5a panels are made
+> comparable. Horizonator (LGPL, and its own README points at
+> PeakFinder as the more polished tool) is the building block the
+> solver runs inside. Note also the licence asymmetry: nothing of
+> PeakFinder's can be vendored, while the horizonator can be modified
+> and shipped.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
