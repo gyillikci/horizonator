@@ -1,1 +1,4 @@
 MYQR7719: compass-heading err    396 m -> perfect-heading err    387 m   (device was +5.4 deg off)
+KWHC9160: compass-heading err    460 m -> perfect-heading err    379 m   (device was +3.8 deg off)
+PQBC6867: compass-heading err    675 m -> perfect-heading err    407 m   (device was +2.6 deg off)
+EWAC7374: compass-heading err   1154 m -> perfect-heading err   1065 m   (device was -4.4 deg off)
