@@ -28,6 +28,8 @@ PHOTOS = os.path.join(os.path.dirname(os.path.dirname(HERE)),
                       'celestial-navigation', 'theodolite')
 FRAC = 0.40
 BETA_MAX = 0.004
+USE_SAM = False
+EDGES = False
 DEM = os.path.expanduser('~/.horizonator/DEMs_SRTM1')
 
 
@@ -90,7 +92,18 @@ def run(sid, rmin_km, rmax_km, box=6000.0, step0=250.0):
           - np.radians(roll) * u)
     hz = (H - 1) / 2 - vv
 
-    rows = foreground_rows(img, hz, frac=FRAC)
+    if USE_SAM:
+        import json as _j
+        jp = os.path.join(HERE, 'out', 'e5k', f'{sid}.json')
+        with open(jp) as fh:
+            saved = _j.load(fh)['rows']
+        rows = np.array([np.nan if v is None else v for v in saved])
+        # e5k contours are at the photo's native load width; e5b works
+        # at the same extract.load_image width, so no rescale needed
+        print(f'{sid}: using the MobileSAM contour '
+              f'({100*np.isfinite(rows).mean():.0f}% of columns)')
+    else:
+        rows = foreground_rows(img, hz, frac=FRAC)
     ok = np.isfinite(rows)
     print(f'{sid}: foreground found in {100*ok.mean():.0f}% of columns')
     if ok.sum() < 30:
@@ -102,6 +115,61 @@ def run(sid, rmin_km, rmax_km, box=6000.0, step0=250.0):
     az_obs = a['heading_deg'] + np.degrees(np.arctan2(ur, f_px))
     el_obs = np.arctan2(vr, np.hypot(ur, f_px)) + np.radians(pitch)
     o = np.argsort(az_obs); az_obs, el_obs = az_obs[o], el_obs[o]
+
+    if EDGES:
+        # height-free observables: the island's angular WIDTH pins the
+        # range (width ~ size/distance, immune to the ~7 mrad DEM
+        # height bias E4x measured) and its centre bearing pins the
+        # direction, with the compass shift clamped to the prior
+        okc = np.isfinite(rows)
+        span = np.where(okc)[0]
+        if span.size < 20:
+            print('  too little contour for edges'); return None
+        u_all = np.arange(W) - (W - 1) / 2
+        azL = a['heading_deg'] + np.degrees(np.arctan2(
+            u_all[span[0]], f_px))
+        azR = a['heading_deg'] + np.degrees(np.arctan2(
+            u_all[span[-1]], f_px))
+        w_obs = azR - azL
+        c_obs = 0.5 * (azR + azL)
+        dem = S.Dem(DEM)
+        # the SAME window for model and photo: the DEM run must be
+        # truncated by the frame exactly as the observation is, or a
+        # feature extending past the frame edge inflates the predicted
+        # width (measured: 10.1 deg at truth vs 7.36 observed, with
+        # the DEM run reaching 184 deg against a frame ending at 181)
+        half = a['fov_deg'] / 2
+        az = np.linspace(a['heading_deg'] - half,
+                         a['heading_deg'] + half, 500)
+        mlat, mlon = S.meters_per_degree(lat)
+        g = np.arange(-box / 2, box / 2 + 1, step0)
+        cc = np.full((g.size, g.size), np.inf)
+        for i, dn in enumerate(g):
+            for j, de in enumerate(g):
+                fg = dem_foreground(dem, lat + dn / mlat,
+                                    lon + de / mlon, z,
+                                    az, rmin_km * 1e3, rmax_km * 1e3)
+                m = np.isfinite(fg)
+                if m.sum() < 5:
+                    continue
+                idx = np.where(m)[0]
+                # longest contiguous run = the island
+                brk = np.where(np.diff(idx) > 3)[0]
+                runs = np.split(idx, brk + 1)
+                r0 = max(runs, key=len)
+                wL, wR = az[r0[0]], az[r0[-1]]
+                w_pred = wR - wL
+                c_pred = 0.5 * (wR + wL)
+                dc = np.clip(c_obs - c_pred, -6.0, 6.0)  # compass prior
+                cc[i, j] = ((w_obs - w_pred) ** 2
+                            + (c_obs - c_pred - dc) ** 2
+                            + 0.05 * dc ** 2)
+        i, j = np.unravel_index(np.argmin(cc), cc.shape)
+        err = float(np.hypot(g[i], g[j]))
+        margin = SF.basin_margin(cc, g, min_sep=4 * step0)
+        print(f'  EDGE fix: err {err:.0f} m   width_obs {w_obs:.2f} deg'
+              f'   cost {cc[i, j]:.3f}   margin {margin:.2f}')
+        return dict(id=sid, err_m=err, margin=margin, mode='edges')
 
     dem = S.Dem(DEM)
     az = np.linspace(az_obs[0] - 8, az_obs[-1] + 8, 400)
@@ -151,13 +219,15 @@ if __name__ == '__main__':
             skip = False
             continue
         if x.startswith('--'):
-            skip = True          # the next token is this flag's value
+            skip = x not in ('--sam', '--edges')
             continue
         args.append(x)
     gv = lambda f, d: (float(sys.argv[sys.argv.index(f) + 1])
                        if f in sys.argv else d)
     globals()['FRAC'] = gv('--frac', 0.40)
     globals()['BETA_MAX'] = gv('--beta', 4.0) * 1e-3
+    globals()['USE_SAM'] = '--sam' in sys.argv
+    globals()['EDGES'] = '--edges' in sys.argv
     out = [run(s, gv('--rmin', 2.0), gv('--rmax', 15.0)) for s in args]
     with open(os.path.join(HERE, 'out', 'e5b_foreground.json'), 'w') as f:
         json.dump([x for x in out if x], f, indent=1)

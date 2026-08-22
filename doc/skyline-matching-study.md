@@ -1826,6 +1826,41 @@ sequential estimator.
 > set, so the honest test after training is CH1 PLUS our Theodolite
 > frames, which no one trained or validated on.
 
+> **E5k — MobileSAM closes the extraction problem; the island frame
+> then measures what remains** (`e5k_mobilesam.py`, `e5b --sam
+> --edges`). MobileSAM (Apache-2.0, 40 MB in-repo weights, CPU ~2 s a
+> frame) replaces the fragile nearness threshold for the near layer,
+> with one design correction along the way: prompting from 'dark
+> pixels above the horizon' segmented the hazy FAR COAST, because the
+> island body sits below the drawn horizon line — the working scheme
+> seeds SAM from the sparse E5b detections (fragile as a contour,
+> correct as points). Result on the island frame: column coverage 12%
+> -> 64% (the island's true span) and a 0.0 px contour spread across
+> prompt seeds, on all four scene types tried — the threshold
+> sensitivity that swung the fix 559 -> 3250 m is gone.
+>
+> With extraction solved, the remaining failures are attributable and
+> were measured one by one on OREJ1026. (1) Full-contour height
+> matching, offset locked: 3162 m at rms 3.39 mrad — the ~7 mrad DEM
+> height bias over the island (E4x) dominates once the whole flank is
+> matched; the earlier 559 m via the sparse top-only contour rode
+> partly on luck. (2) Width-and-bearing matching (height-free): the
+> DEM's 2-15 km band at truth spans 10.1 deg against 7.36 observed —
+> part model (neighbouring features merged into the run), part FRAME
+> TRUNCATION, the DEM run reaching 184 deg where the photo ends at
+> 181. (3) With the window clipped to the frame for both sides, the
+> cost collapses to 0.044 but the margin to 0.13 at 2761 m: the
+> island fills 7.4 of the frame's 10.3 deg, both edges sit near the
+> frame limits, and the truncated width barely changes with position
+> — the observable SATURATES. So the near-layer channel is
+> information-rich in principle (81 vs 12 mrad per 500 m, E4y) but
+> needs (a) the feature FULLY framed with sky/sea margins — a 20-41
+> deg frame, not a 10 deg tele filled edge to edge — and (b) a model
+> that carries small-island heights honestly. Field-procedure
+> consequence: photograph islands with margins around them; the only
+> island frame in this set does not satisfy that, through no fault of
+> the sighting procedure at the time.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
