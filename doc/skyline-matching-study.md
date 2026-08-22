@@ -2043,6 +2043,36 @@ sequential estimator.
 > ~1 km) rather than regressed. (`e5p_visual.py` draws the
 > per-frame bars and the healed SRYK sector.)
 
+> **E5q — the lost boat** (`e5q_voyage.py`; nine-stop cruise through
+> the Izmir gulf, Mytilene strait and Chios strait). The end-to-end
+> scenario the study builds toward: a boat with NO position prior
+> takes a 360-deg skyline panorama at each stop and searches the
+> whole 155 x 104 km region (1.5 km sea-only grid, refined to 60 m).
+> Honesty rules: the panorama is rendered from GLO-30 and matched
+> against water-masked SRTM1 (independent families — the E5o-measured
+> model error, not an inverse crime), each stop draws a compass bias
+> (sigma 2.5 deg), an elevation bias (1.5 mrad) and correlated 1-mrad
+> extraction noise, and between stops a log+compass dead-reckoning
+> track (5% / 2 deg) is fused with the fix by inverse covariance,
+> falling back to DR when the margin gate refuses.
+>
+> Result: all nine blind fixes land — median 61 m, worst 238 m —
+> while DR alone drifts to 1-2 km within a leg or two. No stop was
+> vetoed; margins ran 0.45-9.06. Fusion neither helped nor hurt
+> (median 69 m): with fixes this good its only job is bridging
+> vetoes that never came.
+>
+> The number to hold against the field data: the SAME matching
+> machinery scored 914 m median on real single frames (E4v) and
+> 61 m here. The gap is the measured price of narrow angular
+> coverage plus real extraction against a synthetic 360-deg
+> panorama with 1-mrad noise — which is E5m's ranking read in the
+> other direction: give the instrument wide coverage and a clean
+> silhouette, and two independent DEM families disagreeing with the
+> world only costs tens of meters. A camera that sweeps the full
+> horizon (or a pan stitched with per-frame offsets, E4v) is worth
+> more than every other improvement in this study combined.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
