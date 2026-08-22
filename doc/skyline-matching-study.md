@@ -1758,6 +1758,50 @@ sequential estimator.
 > PeakFinder's can be vendored, while the horizonator can be modified
 > and shipped.
 
+> **Lit dig IV — the whole horizon-navigation landscape** (search
+> pass over every sense of the term; repos probed from here where
+> reachable). The field splits into five families, and knowing which
+> family a paper belongs to saves misreading its claims:
+>
+> 1. TERRESTRIAL SKYLINE GEOLOCALIZATION — our core family, already
+> surveyed (sec. 3, CrossLocate, E4t). New finds: two US patents,
+> 11678140 and 12101693 'Localization by using skyline data' (plus the
+> older 9165217/9292766 on DEM photo geolocation) — an IP-awareness
+> note for any commercial turn, not an obstacle to research use.
+> 2. HORIZON ATTITUDE (UAV/USV) — Ettinger-to-Grelsson line, still
+> active: U-Net horizon detectors with sub-2-degree rms attitude
+> (2022-24 surveys), thermal-image variants, fisheye Hough methods.
+> Our radon detector plus inclinometer cross-check sits squarely in
+> this family's accuracy envelope, measured against hand annotation.
+> 3. PLANETARY ROVER SKYLINE LOCALIZATION — the most direct cousins,
+> GPS-denied by construction: the 2017 Mars-rover horizon-to-DEM
+> matcher (already cited), Mercator (2016, 6 m from panoramic
+> horizon), and NEW: ALPER (Acta Astronautica 2025) with a Skyline
+> Matching mode among three complementary absolute localizers, and
+> AAS 25-358 (2025) fusing celestial with horizon matching for lunar
+> surface ops — the same skyline+celestial pairing this project's
+> parallel branch explored. No public code found for either.
+> 4. SPACECRAFT LIMB OPNAV ('horizon-based optical navigation',
+> Christian et al.) — different physics (planet limb as an ellipse,
+> position from a conic fit) but a mature covariance literature: the
+> Christian-Robinson non-iterative solver, the 2023 EW-TLS short-arc
+> variant, and a 2021 tutorial. Their treatment of measurement
+> covariance under partial arcs is the polished version of what our
+> jackknife is approximating.
+> 5. MARITIME COASTAL VISUAL GEO-LOCALIZATION — deep retrieval against
+> rendered coastlines (the Lyon/Brest 2025 line, already cited), plus
+> 2025 JFR work on featureless GNSS-denied maritime aerial nav.
+>
+> Front-end news: YUNet (arXiv 2502.12449, 2025) — YOLOv11+UNet
+> skyline detector, IoU 0.9858, 1.36 px mean error — has its code at
+> github.com/kuazhangxiaoai/SkylineDet-YOLOv11Seg (verified reachable
+> from this container; AGPL-3.0, ultralytics fork). It trains on
+> GeoPose3K and VALIDATES ON CH1 — the exact datasets on hand here —
+> but ships no pretrained weights, so a head-to-head against our
+> seam/radon extractors requires a training run (GeoPose3K is on the
+> user-side download list already). SkylineDet joins eWaSR as the only
+> reachable, license-clean model families in the space.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
