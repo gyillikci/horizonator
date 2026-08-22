@@ -1,0 +1,8 @@
+MYQR7719 wm err=390 margin=3.44 rms=1.31
+MYQR7719 lc8 err=410 margin=1.01 rms=1.87
+MYQR7719 lc15 err=560 margin=0.49 rms=2.38
+KWHC9160 wm err=429 margin=1.95 rms=0.39
+KWHC9160 lc8 err=463 margin=3.38 rms=0.43
+KWHC9160 lc15 err=678 margin=0.88 rms=0.54
+PQBC6867 wm err=613 margin=0.15 rms=1.28
+PQBC6867 lc8 err=805 margin=0.84 rms=1.41
