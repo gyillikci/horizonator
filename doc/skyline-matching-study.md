@@ -2104,6 +2104,21 @@ sequential estimator.
 > same frames. So the vertical-angle check earns its keep in the
 > same role as dem_split (E5o): a WITNESS that flags a suspect fix,
 > not a judge that moves it.
+>
+> Wired into the instrument as `skyfix.py --max-peak-dh` (the
+> residuals are always reported as `peak_dh_m` / `peak_dh_mad_m` /
+> `n_peaks` when computable). The gate fires on either measured
+> failure signature: |median| over the limit (a shared height offset
+> across the crests), or the crest SPREAD over 3x the limit — the
+> EURK8793 re-solve showed why the second is needed: a wrong fix
+> whose crest residuals straddle zero (median +4 m) while
+> scattering 476 m. At the measured separation (30/90 m) the gate
+> rejects five of the eight >1.4 km failures on the field set with
+> ZERO false positives (every fix under 1 km measured |median|
+> <= 16 m, spread <= 39 m); the three it passes are bearing-type
+> misses that do not touch the height channel and remain
+> margin/jackknife business. Validated live: KWHC9160 passes
+> (+1 m, 1 crest), EURK8793 is refused by the witness alone.
 
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction

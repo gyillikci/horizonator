@@ -173,6 +173,44 @@ C0_NOINFO = 1.35e-5     # Huber cost of a 6 mrad residual: what a
                         # across candidates with different suppression)
 
 
+def peak_heights(el_obs, w, el_syn, rng, shift, beta, dip):
+    """Per-crest height residuals at the fix, in meters — E5r's
+    vertical-angle WITNESS. The profile cost already consumed these
+    pixels, so this never moves the fix; it decomposes the leftover
+    residual into a global offset (weighted-median residual: pitch,
+    refraction and uniform DEM bias, inseparable in one frame, E5n)
+    and per-crest deviations converted to meters via each crest's own
+    range. Crests are local maxima of the SYNTHETIC skyline (>=2 mrad
+    above their 1-deg neighbourhood, above the sea horizon), found per
+    contiguous azimuth segment so a frame crossing +-180 deg never
+    fabricates one at the seam."""
+    eo = np.roll(el_obs, shift) + beta
+    wm = np.roll(w, shift)
+    good = (wm > 0.2) & np.isfinite(el_syn) & np.isfinite(eo) \
+        & (el_syn > -dip + 1.5e-3)
+    idx = np.where(good)[0]
+    if idx.size < 20:
+        return []
+    res = eo - el_syn
+    off = np.median(res[idx])
+    out = []
+    for sg in np.split(idx, np.where(np.diff(idx) > 3)[0] + 1):
+        if sg.size < 8:
+            continue
+        e = el_syn[sg]
+        for k in range(3, sg.size - 3):
+            lo, hi = max(k - 10, 0), min(k + 11, sg.size)
+            if lo + np.argmax(e[lo:hi]) != k \
+                    or e[k] - e[lo:hi].min() < 2e-3:
+                continue
+            p = sg[k]
+            if not good[p - 3:p + 4].all():
+                continue
+            out.append(float((np.mean(res[p - 3:p + 4]) - off)
+                             * rng[p]))
+    return out
+
+
 def photo_cost(el_obs, w, el_syn, shifts, betas=BETAS, w_syn=None):
     """w_syn: optional per-azimuth synthesis-side weight (NOT rolled with
     the observation) — e.g. the soft near-field ramp for land observers.
@@ -351,6 +389,22 @@ def main():
     ap.add_argument('--max-dem-split', type=float, default=None,
                     help='reject the fix when the two DEM families '
                          'place it further apart than this many meters')
+    ap.add_argument('--max-peak-dh', type=float, default=None,
+                    help='reject the fix when the matched skyline '
+                         'crests stand further (median, meters) from '
+                         'their modeled height than this — the E5r '
+                         'vertical-angle witness (rank corr +0.60 '
+                         'with actual error where the basin margin '
+                         'scored +0.34). Needs >=2 crests. On the '
+                         'field set every fix under 1 km measured '
+                         '<=16 m and the height-channel failures '
+                         '38-395 m, so 30 is the measured separation. '
+                         'The crest SPREAD is gated at 3x this value '
+                         '(good frames measured <=39 m, failures to '
+                         '503): a small median with wild scatter is '
+                         'the other failure signature. Bearing-type '
+                         'misses do not leak into this channel and '
+                         'stay for margin/jackknife')
     ap.add_argument('--min-range', type=float, default=None,
                     help='reject the sighting when the terrain forming '
                          'the silhouette is nearer than this many '
@@ -781,6 +835,20 @@ def main():
                        attitude_source=('sea-horizon' if p['level']
                                         else 'prior'),
                        best_shift=sb, best_beta=bb))
+    dip_fix = S.horizon_dip_rad(z)
+    dh_all = []
+    for p, d in zip(photos, pj):
+        dh_all += peak_heights(p['el_obs'], p['w'], el_syn, r_syn,
+                               d['best_shift'], d['best_beta'], dip_fix)
+    peak_dh_med = peak_dh_mad = None
+    if dh_all:
+        peak_dh_med = float(np.median(dh_all))
+        peak_dh_mad = float(np.median(np.abs(np.array(dh_all)
+                                             - peak_dh_med)))
+        print(f'peak witness: {len(dh_all)} crests, median height '
+              f'residual {peak_dh_med:+.0f} m '
+              f'(spread {peak_dh_mad:.0f} m)', flush=True)
+
     rms_mrad = float(np.sqrt(2 * c0) * 1e3)
     if rms_mrad > args.max_rms:
         reasons.append(f'residual {rms_mrad:.1f} mrad > {args.max_rms:.1f}: '
@@ -796,6 +864,20 @@ def main():
         reasons.append(f'DEM families disagree: the two independent '
                        f'terrain models place the fix {dem_split:.0f} m'
                        f' apart (limit {args.max_dem_split:.0f} m)')
+    if args.max_peak_dh and len(dh_all) >= 2 \
+            and (abs(peak_dh_med) > args.max_peak_dh
+                 or peak_dh_mad > 3 * args.max_peak_dh):
+        # two failure signatures, both measured (E5r + the EURK8793
+        # re-solve): a shared height offset across the crests, or
+        # crests scattering wildly around a small median — either way
+        # the height channel says this is not the place
+        reasons.append(f'peak heights disagree: matched crests stand '
+                       f'a median {peak_dh_med:+.0f} m (spread '
+                       f'{peak_dh_mad:.0f} m) from the model at this '
+                       f'fix (limits {args.max_peak_dh:.0f}/'
+                       f'{3 * args.max_peak_dh:.0f} m) — position '
+                       f'error or DEM bias is leaking into the '
+                       f'height channel')
     if jack and args.max_jackknife \
             and jack['spread_m'] > args.max_jackknife:
         reasons.append(f"conditioning: the fix moves "
@@ -817,6 +899,8 @@ def main():
                   major_bearing_deg=maj_brg, anisotropy=aniso,
                   jackknife=jack, subject_km=subject_km,
                   dem_split_m=dem_split,
+                  peak_dh_m=peak_dh_med, peak_dh_mad_m=peak_dh_mad,
+                  n_peaks=len(dh_all),
                   cost=c0, rms_mrad=rms_mrad,
                   n_photos=N, z_m=z,
                   photos=[{k: v for k, v in d.items()
