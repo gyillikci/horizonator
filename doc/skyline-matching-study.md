@@ -1918,6 +1918,42 @@ sequential estimator.
 > consequence: a better compass is nearly worthless here — wide
 > capture and better terrain handling are where the meters are.
 
+> **E5n — reducing the DEM's share** (GLO-30 full-res store fetched
+> from the reachable Copernicus S3 bucket; A/B on the field frames).
+> The fit at the GPS truth improves with GLO-30 on some frames
+> (PQBC6867 3.08 -> 1.65 mrad, fix 690 -> 551 m) and ties or slightly
+> loses on others (median across seven frames 2.65 -> 1.65 mrad,
+> carried by one frame): a second DEM family is worth having but not
+> as a replacement — as a CONSENSUS instrument, where agreement
+> raises confidence and disagreement flags model error per azimuth.
+> Notably KWHC9160's margin rises 1.83 -> 3.18 on GLO-30 at equal
+> error, again confidence rather than accuracy.
+>
+> The island bias is NOT an SRTM defect: GLO-30 carries the same
+> profile (8.1 vs 7.8 mrad against a much lower observed top). Both
+> are surface models, so shared canopy is one suspect — but the size
+> of the residual (~7 mrad = ~43 m at 6.2 km) and OREJ1026's failed
+> auto-level (sea horizon hidden behind the island) point at a
+> simpler culprit for that frame: the PITCH PRIOR. Without a horizon
+> the attitude falls back to the phone inclinometer (+-0.5 deg =
+> +-9 mrad), and a constant pitch error shifts the whole observed
+> profile — indistinguishable from a DEM height bias in a single
+> frame, and fatal to the locked-offset foreground matching that E5b
+> relies on. Foreground absolute-height work therefore requires
+> frames where the horizon IS visible beside the feature.
+>
+> The menu, ranked by measured or expected return: (1) SRTM1 over
+> SRTM3 — done, integrity gain measured (E4u); (2) dual-DEM
+> consensus SRTM1+GLO-30 — data in place, cheap, flags model error;
+> (3) canopy correction — ESA WorldCover 10 m landcover is on a
+> reachable S3 bucket, so a per-class height offset (a poor man's
+> FABDEM, which itself is CC BY-NC-SA) is implementable here;
+> (4) local calibration survey — at a known point, measure per-azimuth
+> DEM-vs-observed offsets once and apply them as a correction field
+> for the operating area, the practical navigator's move; (5)
+> coastline registration — the waterline from SAM against the OSM
+> coastline vector to correct azimuth registration per frame.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
