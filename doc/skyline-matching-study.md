@@ -1954,6 +1954,48 @@ sequential estimator.
 > coastline registration — the waterline from SAM against the OSM
 > coastline vector to correct azimuth registration per frame.
 
+> **E5o — the consensus term, built and measured** (`skyfix.py
+> --dem2`, six-frame A/B against the field truth, SRTM1 vs GLO-30).
+> Two candidate mechanisms were implemented and the data kept one.
+> (a) Disagreement WEIGHTING — a Lorentzian per-azimuth down-weight
+> where the families disagree, suppressed weight charged `C0_NOINFO`
+> — LOSES: median 563 -> 849 m over the six frames (APST5638
+> 162 -> 545, PQBC6867 690 -> 1371), because disagreement azimuths
+> carry discriminative relief along with the model error, and
+> removing them costs more position information than the error they
+> contain. It survives as the study-only flag `--dem2-weight`.
+> (b) The SPLIT STATISTIC — cross-solve the fix on the second family
+> alone, report the separation as `dem_split_m` — is the missing
+> error predictor this toolkit has been hunting since E4v:
+>
+> | frame    | error (SRTM1) | dem_split | basin margin |
+> |----------|--------------|-----------|--------------|
+> | APST5638 |   162 m |  136 m | 0.52 |
+> | MYQR7719 |   396 m |  148 m | 1.45 |
+> | KWHC9160 |   436 m |  101 m | 1.83 |
+> | PQBC6867 |   690 m |  735 m | 0.59 |
+> | EWAC7374 |  1181 m |  229 m | 0.25 |
+> | SRYK4301 |  3066 m | 5286 m | 1.19 |
+>
+> Rank correlation with the actual error: split +0.77, margin
+> -0.14 on the same frames. The decisive case is SRYK4301: the
+> margin is a CONFIDENT 1.19 while the fix is 3 km off — the one
+> failure mode a single-model statistic cannot see, because the DEM
+> is wrong in a self-consistent way. The split sees it, and the
+> autopsy explains why: the SRTM1 tile carries phantom terrain over
+> open water north of Foça (raw-SRTM sea noise, 13-20 m of false
+> height out to ~2 km offshore), which sustains a flat false ridge
+> across az 350-352 deg where GLO-30 — water-masked — correctly
+> shows the distant coast. Angularly the wedge is small (p90
+> disagreement 1.6 mrad) but positionally it is worth kilometers,
+> which is exactly what a cross-solve integrates and a per-azimuth
+> weight does not. Interface: `--dem2 <store>` computes the
+> statistic, `--max-dem-split <m>` gates on it ("DEM families
+> disagree"), and the E5n menu's item (2) is hereby measured: the
+> second family's value is as a WITNESS, not a judge — it should
+> never touch the cost, only the confidence. (`e5o_visual.py`
+> draws the scatter and the per-azimuth disagreement panels.)
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the

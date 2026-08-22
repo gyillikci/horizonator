@@ -1,3 +1,13 @@
 MYQR7719 plain err=396 margin=1.45 split=-1
 MYQR7719 cons err=396 margin=0.73 split=148
 KWHC9160 plain err=436 margin=1.83 split=-1
+KWHC9160 cons err=404 margin=0.57 split=101
+PQBC6867 plain err=690 margin=0.59 split=-1
+PQBC6867 cons err=1371 margin=0.22 split=735
+EWAC7374 plain err=1181 margin=0.25 split=-1
+EWAC7374 cons err=1153 margin=0.27 split=229
+SRYK4301 plain err=3066 margin=1.19 split=-1
+SRYK4301 cons err=3272 margin=0.16 split=5286
+APST5638 plain err=162 margin=0.52 split=-1
+APST5638 cons err=545 margin=0.52 split=136
+BATCH-DONE

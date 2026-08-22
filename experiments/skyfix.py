@@ -332,12 +332,22 @@ def main():
     ap.add_argument('--dem2', default=None,
                     help='second, independent DEM family (e.g. '
                          '~/.horizonator/DEMs_GLO30_1). Enables the '
-                         'CONSENSUS term: azimuths where the two DEMs '
-                         'disagree are down-weighted in the cost (that '
-                         'is where the model error lives, E5n), and the '
-                         'fix is cross-solved on the second DEM alone — '
-                         'the separation between the two answers is '
-                         'reported as dem_split_m')
+                         'CONSENSUS statistic: the fix is cross-solved '
+                         'on the second DEM alone and the separation '
+                         'between the two answers is reported as '
+                         'dem_split_m — E5o measured it as the best '
+                         'error predictor in the toolkit (rank corr '
+                         '0.77 with actual error, where the basin '
+                         'margin scores -0.14). Gate it with '
+                         '--max-dem-split')
+    ap.add_argument('--dem2-weight', action='store_true',
+                    help='also down-weight azimuths where the two DEM '
+                         'families disagree (Lorentzian, half-weight '
+                         'at 2.5 mrad). E5o measured this variant to '
+                         'LOSE on field data (median 563 -> 849 m): '
+                         'disagreement azimuths carry discriminative '
+                         'relief along with the model error. Study '
+                         'flag, not recommended')
     ap.add_argument('--max-dem-split', type=float, default=None,
                     help='reject the fix when the two DEM families '
                          'place it further apart than this many meters')
@@ -600,14 +610,16 @@ def main():
         ws = None
         if args.dmin_soft:
             ws = np.clip((r - 300.0) / (args.dmin_soft - 300.0), 0.0, 1.0)
-        if cm2 is not None:
-            # consensus: where two independent DEM families disagree,
-            # the model is wrong in at least one of them — those
-            # azimuths carry model error, not information, so their
-            # weight falls off smoothly (no hard mask: suppressed
-            # weight is charged C0_NOINFO by photo_cost, so candidates
-            # stay comparable). Lorentzian falloff, half-weight at
-            # DEM_TOL of disagreement.
+        if cm2 is not None and args.dem2_weight:
+            # consensus WEIGHTING (opt-in): down-weight azimuths where
+            # the families disagree. E5o measured this against the
+            # field truth and it LOSES — disagreement azimuths carry
+            # discriminative relief along with the model error, and
+            # suppressing them costs more position information than
+            # the model error they remove (median 563 -> 849 m over
+            # six frames). Kept behind --dem2-weight for study only;
+            # the default consensus use is the dem_split statistic.
+            # Lorentzian falloff, half-weight at DEM_TOL.
             el2, _ = cm2.skyline(lat_c + dn / mlat, lon_c + de / mlon,
                                  z, AZ)
             wd = 1.0 / (1.0 + ((el - el2) / DEM_TOL) ** 2)
