@@ -1802,6 +1802,30 @@ sequential estimator.
 > user-side download list already). SkylineDet joins eWaSR as the only
 > reachable, license-clean model families in the space.
 
+> **SkylineDet/YUNet: the training recipe, and the benchmark that
+> justifies it** (clone inspected; extractor benchmark run here).
+> The repo is an ultralytics fork; training is a two-stage recipe in
+> `ultralytics/cfg/skyseg.yaml`: (1) pretrain the yolo11-skyseg model
+> on Skyfinder sky masks, (2) fine-tune on GeoPose3K, validating on
+> CH1 (`GeoPose3K.yaml`: path/train/images + parallel labels/, one
+> class 'sky'; entry `models/yolo/skyseg/train.py`, defaults 50
+> epochs, batch 16, imgsz 640, single_cls, mask_ratio 1). No
+> pretrained weights ship, and both stages need a GPU: 50 epochs over
+> ~3k GeoPose3K images is hours on a consumer GPU and out of reach of
+> this container's 4 CPU cores. The container CAN prepare everything
+> (configs with our paths, CH1 masks already in the right form) so
+> the user-side run is one command once GeoPose3K lands.
+>
+> Why bother is now measured, not assumed: on CH1 ground truth our
+> seam detector scores a mean 22.4 px per-image boundary error
+> (median 3.6 — the mean is carried by a failing tail) and the E4m
+> learned template 82.8 px on its held-out half, against YUNet's
+> published 1.36 px mean on the same dataset. If that number
+> reproduces, the front end stops being the accuracy limiter at
+> CH1-style scales; the caveat is that CH1 is also their validation
+> set, so the honest test after training is CH1 PLUS our Theodolite
+> frames, which no one trained or validated on.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
