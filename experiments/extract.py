@@ -266,7 +266,8 @@ def horizon_candidates(rgb, max_roll_deg=12.0, n_slopes=49, topk=5,
 def sea_horizon_attitude_radon(rgb, f_px, dip_rad, max_step=0.20,
                                tol_px=2.0, min_frac=0.25,
                                min_span_frac=0.5, search_px=4,
-                               min_score=0.15, **kw):
+                               min_score=0.15, extra_candidates=None,
+                               **kw):
     """Camera (pitch, roll) from the sea horizon, using
     horizon_candidates() as the front end instead of skyline_seam.
 
@@ -291,7 +292,15 @@ def sea_horizon_attitude_radon(rgb, f_px, dip_rad, max_step=0.20,
     u = np.arange(W) - (W - 1) / 2.0
     Hu = np.hypot(u, f_px)
 
-    for r0, m, score in horizon_candidates(g, **kw):
+    cands = list(horizon_candidates(g, **kw))
+    if extra_candidates:
+        # externally proposed lines (e.g. the MobileSAM water-mask
+        # boundary, E5l: 74% availability where the Radon transform
+        # reaches 32%) are tried FIRST, then refined and gated exactly
+        # like native candidates — the proposal only chooses where to
+        # look, the sub-pixel refinement still decides the answer
+        cands = [(r0, m, 999.0) for r0, m in extra_candidates] + cands
+    for r0, m, score in cands:
         if score < min_score:
             break                              # candidates are sorted
         # ---- column-wise refinement around the candidate line

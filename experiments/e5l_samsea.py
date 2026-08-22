@@ -79,6 +79,22 @@ def sam_sea_line(rgb_u8, n_pts=5):
     return r0, sl, float(cols[inl].size / W), best
 
 
+def sam_attitude(img01, f_px, dip_rad):
+    """skyfix-compatible attitude from the SAM sea line: same output
+    dict as extract.sea_horizon_attitude_radon. img01: float RGB 0-1."""
+    H, W, _ = img01.shape
+    got = sam_sea_line((img01 * 255).astype(np.uint8))
+    if got is None:
+        return None
+    r0, sl, frac, _ = got
+    v_c = (H - 1) / 2.0 - r0
+    pitch = float(np.degrees(-dip_rad - np.arctan2(v_c, f_px)))
+    roll = float(np.degrees(-np.arctan(sl)))
+    return dict(pitch_deg=pitch, roll_deg=roll, n_inl=int(frac * W),
+                frac=frac, span_frac=frac, rms_px=0.0, contrast=0.0,
+                score=1.0, source='mobilesam')
+
+
 def benchmark(n=None):
     imgs = sorted(glob.glob(os.path.join(DATA, '*.jpg')))
     rows_out, n_open = [], 0

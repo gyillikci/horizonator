@@ -1861,6 +1861,32 @@ sequential estimator.
 > island frame in this set does not satisfy that, through no fault of
 > the sighting procedure at the time.
 
+> **E5l — MobileSAM finds the sea line; the hybrid keeps the
+> refinement** (`e5l_samsea.py`, `skyfix --level-detector sam`,
+> `extract.sea_horizon_attitude_radon(extra_candidates=...)`).
+> Prompting SAM low in the frame and taking the water mask's upper
+> boundary, scored against MaSTr1325's hand annotation over the
+> open-horizon subset, beats both existing detectors on BOTH axes:
+> 74% availability at 1.0 px median row offset (p90 3.6) against
+> radon's 32% at 2.1 px and seam's 17% at 2.9 px; on jointly-accepted
+> frames SAM is 0.9 px to radon's 2.0. The union covers 79% (SAM-only
+> 49 images, radon-only 5). One sampling lesson recorded: the first
+> 25 images gave 40% at 6.1 px — a hard marina sequence — so subset
+> numbers on this dataset mislead in either direction.
+>
+> The field frames then showed the catch: SAM alone mis-tilts. On
+> KWHC9160 its line agrees in row but differs 1.6 deg in ROLL (mask
+> blockiness that 512 px scoring cannot see), and the fix degrades
+> 436 -> 1367 m. So the integration is a proposal hybrid: the SAM
+> line enters the radon detector as an extra candidate, and the
+> column-wise sub-pixel refinement and gates decide as always. Where
+> radon already worked the hybrid converges to the identical answer
+> (436 m, same attitude); where the only line in view is a shoreline
+> (APST5638) the gates refuse the proposal — correctly. Availability
+> gains land in MaSTr-like scenes; nothing regresses. The pattern is
+> now uniform across three tools (eWaSR, the learned template, SAM):
+> segmentation proposes, geometry refines and gates decide.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the

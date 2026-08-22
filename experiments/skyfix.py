@@ -306,7 +306,7 @@ def main():
                          'window by 0.15 mrad/degC of |dT| since large '
                          'gradients also mean unstable dip')
     ap.add_argument('--level-detector', default='radon',
-                    choices=['radon', 'seam'],
+                    choices=['radon', 'seam', 'sam'],
                     help='front end for --auto-level: radon (default) '
                          'searches directly for the long straight '
                          'low-contrast horizon line; seam reuses the '
@@ -470,7 +470,17 @@ def main():
                 # warm air over cold water raises the apparent horizon
                 # (smaller dip). PROVISIONAL coefficient — see --help
                 dip -= 0.032e-3 * args.dt_air_sea
-            if args.level_detector == 'radon':
+            if args.level_detector == 'sam':
+                # hybrid: SAM proposes the line, the radon detector's
+                # column-wise refinement and gates decide (E5l: SAM
+                # alone mis-tilts roll on high-res frames)
+                from e5l_samsea import sam_sea_line
+                got = sam_sea_line((img * 255).astype(np.uint8))
+                seed = [(got[0], got[1])] if got else None
+                level = extract.sea_horizon_attitude_radon(
+                    img, f_px, dip, max_step=args.max_step,
+                    extra_candidates=seed)
+            elif args.level_detector == 'radon':
                 level = extract.sea_horizon_attitude_radon(
                     img, f_px, dip, max_step=args.max_step)
             else:

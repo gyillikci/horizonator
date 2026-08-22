@@ -13,3 +13,11 @@
 /tmp/claude-0/-home-user/792503f9-74c5-5111-83ca-eeeda63e838d/scratchpad/MobileSAM/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_21m_512 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_21m_512. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
   return register_model(fn_wrapper)
   [20]
+  [60]
+  [80]
+  [100]
+
+open-horizon images tried: 112, SAM line accepted on 77 (69% availability)
+  |row offset|  median 1.0 px  p90 3.6
+  |slope|error  median 0.23 deg
+  reference: seam 2.9 px @ 17%,  radon 2.1 px @ 32%
