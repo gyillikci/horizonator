@@ -1996,6 +1996,53 @@ sequential estimator.
 > never touch the cost, only the confidence. (`e5o_visual.py`
 > draws the scatter and the per-azimuth disagreement panels.)
 
+> **E5p — the landcover correction, applied and calibrated**
+> (`canopy.py`: ESA WorldCover 10 m classes from the public S3
+> bucket, CC BY 4.0 — the licence-clean poor man's FABDEM — drive a
+> per-class offset on the DEM store; six-frame batch against the
+> field truth). Building the stores first widened E5o's autopsy:
+> essentially 100% of water pixels in the SRTM1 Aegean/Marmara
+> tiles carry nonzero height (GLO-30: 1-3%) — raw-SRTM sea noise is
+> not a Foça anomaly, it is the whole coastline. The calibration,
+> medians over the six frames:
+>
+> | variant                    | median error |
+> |----------------------------|--------------|
+> | raw SRTM1                  | 563 m |
+> | water mask only            | **521 m** |
+> | water mask + tree -8 m     | 637 m |
+> | water mask + tree -15 m    | 619 m |
+>
+> Verdict in two halves. The WATER MASK is kept: it never hurts,
+> helps modestly wherever it can (APST 162 -> 153, PQBC 690 -> 613,
+> MYQR 396 -> 390) and visibly heals the confidence statistics
+> (MYQR margin 1.45 -> 3.44 at half the rms). The CANOPY CONSTANT
+> is rejected by measurement: it swings single frames wildly in
+> both directions (PQBC 690 -> 365 at -15 m, but APST 162 -> 541)
+> and loses at the median — C-band penetrates partway into the
+> canopy and canopy height varies, so a constant is the wrong
+> model; per-pixel canopy height (FABDEM's actual move) is the only
+> version worth revisiting. `canopy.py` defaults are now water mask
+> only, and `DEMs_SRTM1_WM` is the operational store.
+>
+> Two honest corrections to E5o's story. (1) Erasing the phantom
+> offshore plateau does NOT rescue SRYK4301 (3066 -> 3066 m): the
+> sector profiles now agree between families and the fix does not
+> move, so that frame's 3 km failure is deeper than the water
+> noise — the 10.3 deg window is simply ill-conditioned against the
+> remaining model error. (2) Re-running the consensus split on the
+> water-masked pair shows the split was never the phantom ridge's
+> doing either: SRYK's split barely moves (5286 -> 5091 m) and
+> still towers over the clean frames (81-525 m), so the GATE
+> survives intact — but the fine-grained rank correlation among the
+> well-solved frames washes out (0.77 -> ~0.2 over the full set,
+> APST now 525 m of split at 153 m of error). The right reading:
+> `dem_split_m` is a FAILURE DETECTOR, not a proportional error
+> estimator — a model-perturbation jackknife whose large values
+> mark ill-conditioned frames, to be thresholded (`--max-dem-split`
+> ~1 km) rather than regressed. (`e5p_visual.py` draws the
+> per-frame bars and the healed SRYK sector.)
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the

@@ -16,15 +16,16 @@ a per-class height offset.
     everything else       -> unchanged
 
 Offsets are constants, not per-pixel canopy heights — that is the
-"poor man's" part — and the right values are an empirical question
-answered by the field frames (e5p batch), not by the literature:
-C-band SRTM penetrates partway into Mediterranean pine, so the
-effective bias is well under the ~10-15 m canopy.
+"poor man's" part — and the field frames answered the empirical
+question (E5p): a constant is the WRONG model for the canopy
+(C-band penetrates partway into Mediterranean pine and canopy
+height varies, so -8/-15 m swing single frames in both directions
+and lose at the median), while the water mask helps or ties on
+every frame. Defaults are therefore water mask only.
 
 Run:
   python3 canopy.py --src ~/.horizonator/DEMs_SRTM1 \
-                    --dst ~/.horizonator/DEMs_SRTM1_LC \
-                    --tree 8 --built 5
+                    --dst ~/.horizonator/DEMs_SRTM1_WM
 Only tiles covered by a downloaded WorldCover tile are written; the
 destination store is regional by design.
 """
@@ -78,10 +79,17 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--src', required=True)
     ap.add_argument('--dst', required=True)
-    ap.add_argument('--tree', type=float, default=8.0,
-                    help='height subtracted under tree cover, m')
-    ap.add_argument('--built', type=float, default=5.0,
-                    help='height subtracted under built-up, m')
+    ap.add_argument('--tree', type=float, default=0.0,
+                    help='height subtracted under tree cover, m. '
+                         'E5p measured a constant offset to be NOISE '
+                         'on the field frames (medians: water mask '
+                         'only 521 m, +tree-8 637, +tree-15 619, '
+                         'single frames swinging both ways), so the '
+                         'default is 0: the water mask is the part '
+                         'of this correction that earns its keep')
+    ap.add_argument('--built', type=float, default=0.0,
+                    help='height subtracted under built-up, m '
+                         '(default 0, same E5p verdict as --tree)')
     ap.add_argument('--only', nargs='*', default=None,
                     help='restrict to these tiles (e.g. N38E026)')
     args = ap.parse_args()
