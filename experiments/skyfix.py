@@ -329,6 +329,18 @@ def main():
                          'around the heading prior, degrees (default 6; '
                          'set it from the compass accuracy the device '
                          'reports)')
+    ap.add_argument('--dem2', default=None,
+                    help='second, independent DEM family (e.g. '
+                         '~/.horizonator/DEMs_GLO30_1). Enables the '
+                         'CONSENSUS term: azimuths where the two DEMs '
+                         'disagree are down-weighted in the cost (that '
+                         'is where the model error lives, E5n), and the '
+                         'fix is cross-solved on the second DEM alone — '
+                         'the separation between the two answers is '
+                         'reported as dem_split_m')
+    ap.add_argument('--max-dem-split', type=float, default=None,
+                    help='reject the fix when the two DEM families '
+                         'place it further apart than this many meters')
     ap.add_argument('--min-range', type=float, default=None,
                     help='reject the sighting when the terrain forming '
                          'the silhouette is nearer than this many '
@@ -544,6 +556,13 @@ def main():
     cm = S.CMarcher(args.dem, (lat_c - 0.6, lat_c + 0.6),
                     (lon_c - 0.8, lon_c + 0.8),
                     d_min=150.0 if args.dmin_soft else args.dmin)
+    cm2 = None
+    if args.dem2:
+        cm2 = S.CMarcher(os.path.expanduser(args.dem2),
+                         (lat_c - 0.6, lat_c + 0.6),
+                         (lon_c - 0.8, lon_c + 0.8),
+                         d_min=150.0 if args.dmin_soft else args.dmin)
+    DEM_TOL = 2.5e-3      # disagreement scale: ~the DEM noise floor
     usum = sum(uw)
 
     # ---- is the subject even far enough for this method?
@@ -581,6 +600,18 @@ def main():
         ws = None
         if args.dmin_soft:
             ws = np.clip((r - 300.0) / (args.dmin_soft - 300.0), 0.0, 1.0)
+        if cm2 is not None:
+            # consensus: where two independent DEM families disagree,
+            # the model is wrong in at least one of them — those
+            # azimuths carry model error, not information, so their
+            # weight falls off smoothly (no hard mask: suppressed
+            # weight is charged C0_NOINFO by photo_cost, so candidates
+            # stay comparable). Lorentzian falloff, half-weight at
+            # DEM_TOL of disagreement.
+            el2, _ = cm2.skyline(lat_c + dn / mlat, lon_c + de / mlon,
+                                 z, AZ)
+            wd = 1.0 / (1.0 + ((el - el2) / DEM_TOL) ** 2)
+            ws = wd if ws is None else ws * wd
         if rigid:
             shared = np.arange(-60, 61, 2)
             tot = np.zeros(shared.size)
@@ -672,6 +703,23 @@ def main():
                   f'{jack["spread_m"]:.0f} m from the full fix, max '
                   f'{jack["max_m"]:.0f} m', flush=True)
 
+    # ---- cross-solve on the second DEM family alone: the distance
+    # between the two answers is the consensus statistic. Coarse grid
+    # only — a separation metric does not need the refinement.
+    dem_split = None
+    if cm2 is not None:
+        def C2(dn, de):
+            el2, _ = cm2.skyline(lat_c + dn / mlat, lon_c + de / mlon,
+                                 z, AZ)
+            return sum(p['weight'] * fast_photo_cost(
+                p['el_obs'], p['w'], el2, p['shifts'], p['betas'])[0]
+                for p in photos) / usum
+        cc_b = np.array([[C2(dn, de) for de in g] for dn in g])
+        ib, jb = np.unravel_index(np.argmin(cc_b), cc_b.shape)
+        dem_split = float(np.hypot(g[ib] - dn0, g[jb] - de0))
+        print(f'consensus: second DEM places the fix {dem_split:.0f} m '
+              f'away', flush=True)
+
     # Laplace covariance from a local quadratic fit of the cost
     h = step0 / 10
     c0 = C(dn0, de0)
@@ -731,6 +779,11 @@ def main():
                        f'terrain a median {subject_km:.1f} km away '
                        f'(limit {args.min_range / 1000:.1f} km), where '
                        f'canopy and buildings dominate a DEM skyline')
+    if dem_split is not None and args.max_dem_split \
+            and dem_split > args.max_dem_split:
+        reasons.append(f'DEM families disagree: the two independent '
+                       f'terrain models place the fix {dem_split:.0f} m'
+                       f' apart (limit {args.max_dem_split:.0f} m)')
     if jack and args.max_jackknife \
             and jack['spread_m'] > args.max_jackknife:
         reasons.append(f"conditioning: the fix moves "
@@ -751,6 +804,7 @@ def main():
                   sigma_minor_m=float(sig_min),
                   major_bearing_deg=maj_brg, anisotropy=aniso,
                   jackknife=jack, subject_km=subject_km,
+                  dem_split_m=dem_split,
                   cost=c0, rms_mrad=rms_mrad,
                   n_photos=N, z_m=z,
                   photos=[{k: v for k, v in d.items()
