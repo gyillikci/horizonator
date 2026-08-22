@@ -1887,6 +1887,37 @@ sequential estimator.
 > now uniform across three tools (eWaSR, the learned template, SAM):
 > segmentation proposes, geometry refines and gates decide.
 
+> **E5m — what actually breaks the fix: the perfect-compass bound**
+> (`e5m_blame.py`). The standing suspicion, repeated throughout E4v-x,
+> was that the phone compass dominates single-frame error. Measured,
+> it does not. Per prime sighting the reference heading was recovered
+> at the GPS truth (offset floating +-15 deg in a 400 m box) and the
+> full 6 km solve re-run with heading clamped to +-0.5 deg:
+>
+> |          | compass | perfect heading |         |
+> |----------|--------:|----------------:|---------|
+> | MYQR7719 |   396 m |           387 m | -2%     |
+> | KWHC9160 |   460 m |           379 m | -18%    |
+> | PQBC6867 |   675 m |           407 m | -40%    |
+> | EWAC7374 |  1154 m |          1065 m | -8%     |
+> | INKX2521 |  1695 m |          1189 m | -30%    |
+> | SRYK4301 |  3024 m |          3091 m | +2%     |
+> | median   |   914 m |           736 m | **-19%**|
+>
+> A perfect compass buys 19% at the median, and nothing at all on the
+> worst frame. The device heading was a median 4.2 deg off — inside
+> its own +-10 claim. Yet the six-frame pan, with the SAME compass
+> errors, reaches 168 m. So what the pan buys is not compass
+> correction: it is ANGULAR COVERAGE (75 deg of terrain against a
+> 10-20 deg slice) and the partial cancellation of independent DEM
+> errors across frames. Corrected ranking of what breaks a
+> single-frame fix on this coast: (1) DEM-versus-world model error —
+> the floor a perfect compass cannot touch (736 m median; SRYK4301
+> immune to heading entirely); (2) angular coverage; (3) heading;
+> (4) roll; (5) extraction, now largely solved. Investment
+> consequence: a better compass is nearly worthless here — wide
+> capture and better terrain handling are where the meters are.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
