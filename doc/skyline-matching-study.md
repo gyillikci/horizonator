@@ -2073,6 +2073,38 @@ sequential estimator.
 > horizon (or a pan stitched with per-frame offsets, E4v) is worth
 > more than every other improvement in this study combined.
 
+> **E5r — per-peak height residuals: the vertical-angle check as a
+> diagnostic** (`e5r_peaks.py`; every solved E4v frame, 34 usable of
+> 56 after refusing garbage extractions at |offset| > 100 mrad,
+> 81 matched crests). The classical navigator's move — compare a
+> peak's apparent height above the sea to its charted height — is
+> already inside the profile cost (E5b measured its worth: locking
+> the offset took the foreground fix 2850 -> 559 m), so re-solving
+> with it would double-count pixels. What it CAN do post-fix is
+> decompose the residual: a global offset (median residual —
+> pitch/refraction/uniform-bias mixture, inseparable in one frame
+> per E5n) and per-crest height residuals in METERS via each
+> crest's range.
+>
+> Measured, aggregated: the central mass sits at median -1.2 m,
+> IQR -24..+3 m — on well-fixed frames the DEM's silhouette-crest
+> heights are good to ~10 m. Per site: Maltepe +0.6 m (31 crests,
+> essentially perfect), Foça -3..-7 m (photo slightly BELOW the
+> model — the expected sign if the DSM carries canopy the rock
+> silhouette lacks, but small), and the two inland Bergama frames
+> -395 m — not a height error but the position error of bad fixes
+> leaking into the height channel, exactly the ambiguity the
+> decomposition cannot break on a single frame.
+>
+> As an error predictor on frames with >=2 crests (n=21, where the
+> statistic is non-degenerate — with one crest the median-offset
+> removal absorbs the signal by construction): rank correlation
+> with actual error is +0.60 for |median dh| and +0.50 for the
+> crest-residual spread, against +0.34 for the basin margin on the
+> same frames. So the vertical-angle check earns its keep in the
+> same role as dem_split (E5o): a WITNESS that flags a suspect fix,
+> not a judge that moves it.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
