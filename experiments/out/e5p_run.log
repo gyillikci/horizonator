@@ -6,3 +6,14 @@ KWHC9160 lc8 err=463 margin=3.38 rms=0.43
 KWHC9160 lc15 err=678 margin=0.88 rms=0.54
 PQBC6867 wm err=613 margin=0.15 rms=1.28
 PQBC6867 lc8 err=805 margin=0.84 rms=1.41
+PQBC6867 lc15 err=365 margin=0.41 rms=1.69
+EWAC7374 wm err=1181 margin=0.25 rms=1.08
+EWAC7374 lc8 err=1081 margin=0.26 rms=1.08
+EWAC7374 lc15 err=1081 margin=0.25 rms=1.08
+SRYK4301 wm err=3066 margin=1.17 rms=1.59
+SRYK4301 lc8 err=3060 margin=0.13 rms=1.58
+SRYK4301 lc15 err=3060 margin=0.83 rms=1.57
+APST5638 wm err=153 margin=0.46 rms=1.22
+APST5638 lc8 err=469 margin=1.33 rms=1.11
+APST5638 lc15 err=541 margin=0.81 rms=1.19
+BATCH-DONE
