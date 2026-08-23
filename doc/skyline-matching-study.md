@@ -2180,6 +2180,23 @@ sequential estimator.
 > headings (three of the five form such a pan; E4v measured pan
 > fusion at 168 m vs 914 m single-frame).
 
+> **E5u — the waterline anchor: built, gated, and honestly parked.**
+> The E5t proposal (1) implemented end to end: multi-row SAM prompts
+> (beach frames are not MaSTr's USV geometry), upward region growth
+> past glare bands, the seam boundary as a ceiling (a waterline is
+> below the silhouette by definition), waterline-physics gates for
+> segmentation-proposed seeds (soft haze edge -> threshold 1.5 and
+> frac 0.15; boats legitimately float below -> below-veto 8%), and
+> a roll sanity clamp after the one unclamped acceptance measured
+> roll +14 deg off a glare-band edge. Measured on the five Kumlubük
+> frames: availability 0/5, fixes identical to the E5t baseline,
+> zero poisonings. Each physical obstacle is now named: glare bands
+> split SAM's water region, haze softens the far waterline below
+> the edge detector's floor, boats sit on the line, the near-coast
+> limb curves it. The chain stays in as safe infrastructure; its
+> missing piece is a TRAINED water segmenter as the mask source
+> (eWaSR is already in hand) instead of prompt-grown SAM masks.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
