@@ -2120,6 +2120,30 @@ sequential estimator.
 > margin/jackknife business. Validated live: KWHC9160 passes
 > (+1 m, 1 crest), EURK8793 is refused by the witness alone.
 
+> **E5s — why an AR skyline overlay cannot sit on the photograph
+> from metadata alone** (`e5s_pfoto.py`; two PeakFinder-labeled
+> iPhone frames, Kumlubük, seconds apart, same spot). The app crops
+> the 4:3 sensor to screen aspect, so the intrinsics are exact
+> (f_px = H * 24/36 = 2688); the file carries GPS and a compass
+> heading and NOTHING about pitch/roll. Fitting attitude against
+> the extracted silhouette at the fixed GPS position decomposes the
+> misfit: (1) PITCH dominates — +24 vs +168 mrad between the two
+> shots (the photographer recomposed; a level-camera assumption
+> misses by up to 9.6 deg of ridge placement); (2) compass — raw
+> headings differed by 8.0 deg between the shots, yet the fitted
+> TRUE azimuths agree to 1.2 deg (220.3 / 221.5), i.e. the compass
+> wandered, the camera barely did (E5m's 4.2-deg median compass
+> error, live); (3) roll 0-2 deg. Two contamination effects worth
+> recording: the seam extractor climbs the app's white label pill
+> and leader line (masked by a wide rolling-median upward-outlier
+> rule: terrain has no 20-mrad plateau a quarter-frame wide), and
+> in haze the strongest edge mid-frame is PEAKFINDER'S OWN DRAWN
+> TRACE, so an extractor can inherit the overlay's error — ink on
+> the photograph becomes evidence. After the attitude fit our curve
+> sits on the true ridge where the app's overlay visibly does not:
+> the overlay's misfit is sensor-pose error, not terrain-model
+> error, and pixels beat sensors whenever both are on offer.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
