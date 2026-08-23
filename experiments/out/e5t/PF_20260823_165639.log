@@ -1,0 +1,53 @@
+photo 0: PF_20260823_165639.jpg  fov 38.1, heading 324.7, pitch +0.00, roll +0.00, weight 1.00
+z 4.0 m, box 6000 m at (36.64116,28.09566)
+peak witness: 1 crests, median height residual -7 m (spread 0 m)
+INCONCLUSIVE: minimum on the search-box boundary: the true position may lie outside the box
+INCONCLUSIVE: residual 12.1 mrad > 12.0: the DEM cannot explain this observation
+{
+ "status": "inconclusive",
+ "reasons": [
+  "minimum on the search-box boundary: the true position may lie outside the box",
+  "residual 12.1 mrad > 12.0: the DEM cannot explain this observation"
+ ],
+ "lat": 36.66341820974649,
+ "lon": 28.1294522728114,
+ "fix_ok": false,
+ "basin_margin": 0.4662531883449487,
+ "relief_mrad": 44.16263233435594,
+ "dn_m": 2475.0,
+ "de_m": 3015.0,
+ "sigma_n_m": 162.70679484421885,
+ "sigma_e_m": 204.75793998527118,
+ "sigma_major_m": 229.5413596279924,
+ "sigma_minor_m": 125.33985517632969,
+ "major_bearing_deg": 57.3499496782699,
+ "anisotropy": 1.831351722124385,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -6.737277789838542,
+ "peak_dh_mad_m": 0.0,
+ "n_peaks": 1,
+ "cost": 7.372261377282584e-05,
+ "rms_mrad": 12.142702645854904,
+ "n_photos": 1,
+ "z_m": 4.0,
+ "photos": [
+  {
+   "file": "PF_20260823_165639.jpg",
+   "fov_deg": 38.07,
+   "heading_deg": 324.7,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 12.142702645854904,
+   "heading_offset_deg": 4.2,
+   "el_offset_mrad": -10.12290966156711,
+   "attitude_source": "prior"
+  }
+ ],
+ "heading_offset_deg": 4.2,
+ "el_offset_mrad": -10.12290966156711,
+ "fov_deg": 38.07
+}
+wrote out/e5t/PF_20260823_165639.json/.png

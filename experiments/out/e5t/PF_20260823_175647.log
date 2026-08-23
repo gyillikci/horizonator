@@ -1,0 +1,48 @@
+photo 0: PF_20260823_175647.jpg  fov 38.1, heading 198.6, pitch +0.00, roll +0.00, weight 1.00
+z 4.0 m, box 6000 m at (36.64935,28.09263)
+peak witness: 2 crests, median height residual +29 m (spread 27 m)
+{
+ "status": "ok",
+ "reasons": [],
+ "lat": 36.64719162814579,
+ "lon": 28.090780474980765,
+ "fix_ok": true,
+ "basin_margin": 1.9854352075391684,
+ "relief_mrad": 51.92512284401224,
+ "dn_m": -240.0,
+ "de_m": -165.0,
+ "sigma_n_m": 160.1001486980508,
+ "sigma_e_m": 167.9103763845435,
+ "sigma_major_m": 194.8852355286363,
+ "sigma_minor_m": 125.87969289637225,
+ "major_bearing_deg": 48.3231325139565,
+ "anisotropy": 1.5481864552137998,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": 29.279394606961638,
+ "peak_dh_mad_m": 27.08728056488686,
+ "n_peaks": 2,
+ "cost": 7.286569251401858e-06,
+ "rms_mrad": 3.817478029118664,
+ "n_photos": 1,
+ "z_m": 4.0,
+ "photos": [
+  {
+   "file": "PF_20260823_175647.jpg",
+   "fov_deg": 38.07,
+   "heading_deg": 198.6,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 3.817478029118664,
+   "heading_offset_deg": -3.8000000000000003,
+   "el_offset_mrad": 2.02458193231342,
+   "attitude_source": "prior"
+  }
+ ],
+ "heading_offset_deg": -3.8000000000000003,
+ "el_offset_mrad": 2.02458193231342,
+ "fov_deg": 38.07
+}
+wrote out/e5t/PF_20260823_175647.json/.png

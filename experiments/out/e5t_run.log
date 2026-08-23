@@ -1,0 +1,6 @@
+PF_20260823_175709 err=647 margin=0.70 rms=5.0 hdgoff=-3.8 pitch=+0.00 peakdh=0.13566204283463024 npk=1 ok=True reasons=0
+PF_20260823_175647 err=291 margin=1.99 rms=3.8 hdgoff=-3.8 pitch=+0.00 peakdh=29.279394606961638 npk=2 ok=True reasons=0
+PF_20260823_175124 err=680 margin=0.03 rms=5.6 hdgoff=-1.8 pitch=+0.00 peakdh=None npk=0 ok=False reasons=1
+PF_20260823_165639 err=3902 margin=0.47 rms=12.1 hdgoff=+4.2 pitch=+0.00 peakdh=-6.737277789838542 npk=1 ok=False reasons=2
+PF_20260823_153457 err=1592 margin=0.03 rms=29.1 hdgoff=-6.0 pitch=+0.00 peakdh=None npk=0 ok=False reasons=2
+BATCH-DONE

@@ -2144,6 +2144,42 @@ sequential estimator.
 > the overlay's misfit is sensor-pose error, not terrain-model
 > error, and pixels beat sensors whenever both are on offer.
 
+> **E5t — five blind solves on PeakFinder field frames** (Kumlubük;
+> search engine as-is: 6 km box, water-masked SRTM1, --auto-level,
+> peak witness armed; GPS for scoring only). Errors 291 / 647 / 680
+> / 1592 / 3902 m — and the GATES WERE RIGHT 5/5: the two accepted
+> fixes were the two best (291, 647), all three failures refused
+> with correct reasons (margin 0.03 / box boundary + rms 12.1 /
+> margin 0.03 + rms 29.1). Zero false accepts, again.
+>
+> The shared root cause of the failures: the sea-horizon auto-level
+> never engaged on ANY frame (attitude_source=prior on all five) —
+> in a bay the waterline is terrain-backed, not sky-backed, and the
+> E4q-2 photometric continuity rule correctly refuses it as a sky
+> horizon. Pitch then falls back to the zero prior and el_offset
+> saturates at the +-10 mrad bound on the pitched-up frames — the
+> telltale is IN the output.
+>
+> The obvious fix was tried and MEASURED TO LOSE: rerunning the
+> three failures with --pitch-sigma 6 (wide pitch freedom in the
+> joint solve) improved the fit (rms 12.1 -> 5.3) and worsened the
+> position (680 -> 3230 m; 3902 -> 4382) — the study's recurring
+> lesson again: unanchored nuisance freedom eats position
+> information (E5b, E4v heading-window, E5o weighting). Attitude
+> from pixels works at a KNOWN position (E5s); as a free parameter
+> of the position search it collapses.
+>
+> What the code should gain instead (proposed): (1) a TERRAIN-BACKED
+> WATERLINE level — a second acceptance class for the horizon
+> detector (water-to-land step instead of water-to-sky) that anchors
+> roll and approximate pitch in bays, where these five frames all
+> had a usable waterline; (2) the E5s overlay-ink/graphics mask
+> (wide rolling-median upward-outlier rule) in observation(), which
+> also catches power lines and drawn AR traces; (3) same-station
+> pan fusion for phone frames taken seconds apart at different
+> headings (three of the five form such a pan; E4v measured pan
+> fusion at 168 m vs 914 m single-frame).
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
