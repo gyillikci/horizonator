@@ -565,7 +565,16 @@ def main():
                     max_step=args.max_step)
             if level:
                 pitch, roll = level['pitch_deg'], level['roll_deg']
-                half = 0.002
+                # a terrain-backed waterline (E5t: bays hide the true
+                # horizon) anchors roll exactly but sits z/d + d/2Re
+                # below level for a shore at distance d, not at the
+                # horizon dip — a few mrad of unknown depression, so
+                # the elevation-offset band widens to cover shores
+                # beyond ~800 m. Still an anchor, not freedom: E5t
+                # measured the unanchored wide-pitch alternative to
+                # LOSE (rms better, position 680 -> 3230 m).
+                half = 0.005 if level.get('source') == 'waterline' \
+                    else 0.002
                 if args.dt_air_sea is not None:
                     half += 0.00015 * abs(args.dt_air_sea)
                 betas = np.arange(-half, half * 1.001, half / 4)
@@ -832,8 +841,9 @@ def main():
                        rms_mrad=float(np.sqrt(2 * cb) * 1e3),
                        heading_offset_deg=sb * 0.1,
                        el_offset_mrad=bb * 1e3,
-                       attitude_source=('sea-horizon' if p['level']
-                                        else 'prior'),
+                       attitude_source=(
+                           (p['level'].get('source') or 'sea-horizon')
+                           if p['level'] else 'prior'),
                        best_shift=sb, best_beta=bb))
     dip_fix = S.horizon_dip_rad(z)
     dh_all = []

@@ -361,13 +361,29 @@ def sea_horizon_attitude_radon(rgb, f_px, dip_rad, max_step=0.20,
         if len(above) < 8:
             continue
         step = float(np.median(above) - np.median(below))
+        src = 'radon'
         if abs(step) > max_step:
-            continue
+            # A large step means the line is backed by LAND, not sky —
+            # not a sea horizon. For a native radon candidate that is
+            # the end of it. An EXTERNAL candidate (score 999) arrived
+            # with independent water evidence — the segmentation water
+            # mask's upper boundary (E5l) — so the same geometry with a
+            # large step is a TERRAIN-BACKED WATERLINE: the E5t frames'
+            # case, where a bay's far shore hides the true horizon.
+            # It anchors roll exactly; the pitch is approximate, since
+            # the waterline of a shore at distance d sits z/d + d/2Re
+            # below level rather than at the horizon dip — the caller
+            # must widen its elevation-offset freedom accordingly
+            # (skyfix: +-5 mrad instead of the +-2 sky-horizon band,
+            # covering shores beyond ~800 m at deck height).
+            if score < 999.0:
+                continue
+            src = 'waterline'
         return dict(pitch_deg=float(np.degrees(-dip_rad - np.arctan(a))),
                     roll_deg=float(np.degrees(-np.arctan(b))),
                     n_inl=int(inl.sum()), frac=frac, span_frac=span,
                     rms_px=rms, contrast=step, score=float(score),
-                    source='radon')
+                    source=src)
     return None
 
 
