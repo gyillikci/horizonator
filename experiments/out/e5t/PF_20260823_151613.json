@@ -1,0 +1,46 @@
+{
+ "status": "inconclusive",
+ "reasons": [
+  "minimum on the search-box boundary: the true position may lie outside the box"
+ ],
+ "lat": 36.614160148304215,
+ "lon": 28.097181201273507,
+ "fix_ok": false,
+ "basin_margin": 1.1709081888441892,
+ "relief_mrad": 105.73449267185354,
+ "dn_m": -2970.0,
+ "de_m": 150.0,
+ "sigma_n_m": 360.9683854821041,
+ "sigma_e_m": 474.673295506915,
+ "sigma_major_m": 570.0817838645714,
+ "sigma_minor_m": 174.98477788293485,
+ "major_bearing_deg": 125.5845720391306,
+ "anisotropy": 3.2578935765827426,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": null,
+ "peak_dh_mad_m": null,
+ "n_peaks": 0,
+ "cost": 4.138081630392387e-05,
+ "rms_mrad": 9.097342062814157,
+ "n_photos": 1,
+ "z_m": 6.0,
+ "photos": [
+  {
+   "file": "PF_20260823_151613.jpg",
+   "fov_deg": 38.07,
+   "heading_deg": 218.6,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 9.097342062814157,
+   "heading_offset_deg": -2.2,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior"
+  }
+ ],
+ "heading_offset_deg": -2.2,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 38.07
+}

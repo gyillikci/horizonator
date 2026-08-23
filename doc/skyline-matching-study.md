@@ -2197,6 +2197,34 @@ sequential estimator.
 > missing piece is a TRAINED water segmenter as the mask source
 > (eWaSR is already in hand) instead of prompt-grown SAM masks.
 
+> **E5v/E5w — what PeakFinder embeds, and the terrace station.**
+> Byte-level walk of the exported JPEGs (every APP segment, XMP
+> search, trailer check): PeakFinder embeds NO DEM data. The file
+> carries standard EXIF (GPS, GPSImgDirection, lens), two IPTC
+> date blocks, UserComment 'Labeled by PeakFinder' — and nothing
+> else; the rendered skyline exists only as a 1-3 px stroke
+> rasterized into the pixels. The only access road is optical:
+> e5w_pfline.py un-rasterizes the stroke (local-background median,
+> darkest thin run per column, pill/leader outlier rule) and
+> recovered it on 72% of columns of the cleanest frame. Caveat
+> measured: the detector cannot fully separate the ink from the
+> ridge edge it rides on, so the recovered curve is stroke+ridge
+> where they touch — fine for qualitative comparison, not a
+> ground-truth channel.
+>
+> The terrace station (four frames, 218-325 deg): singles 2972 and
+> 3270 m, four-frame pan 3872 m — ALL refused by the gates (margin
+> 0.39-1.17 with rms 9-24: the model cannot explain the scene).
+> Root cause is structural, not attitudinal: the observer stands
+> UNDER a cliff whose 150-600 m near field dominates the
+> silhouette, and the solver's synthesis starts at d_min = 1000 m —
+> the dominant observable is excluded by design (the E4x near-range
+> regime). A same-station pan cannot rescue what no frame models:
+> Foça's 168 m pan had far terrain in every frame; here three of
+> four share the unmodelable cliff. The honest-refusal streak
+> holds: 8 of 8 bad fixes across E5t/E5v were vetoed, zero false
+> accepts.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the

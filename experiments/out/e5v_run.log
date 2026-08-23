@@ -1,0 +1,4 @@
+PF_20260823_151556 err=3270 margin=0.47 rms=15.4 ok=False nreasons=2
+PF_20260823_151613 err=2972 margin=1.17 rms=9.1 ok=False nreasons=1
+PAN_terrace err=3872 margin=0.39 rms=23.6 ok=False nreasons=2
+BATCH-DONE

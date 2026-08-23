@@ -1,0 +1,89 @@
+photo 0: PF_20260823_151613.jpg  fov 38.1, heading 218.6, pitch +0.00, roll +0.00, weight 1.00
+photo 1: PF_20260823_151556.jpg  fov 38.1, heading 232.1, pitch +0.00, roll +0.00, weight 1.00
+photo 2: PF_20260823_153457.jpg  fov 38.1, heading 266.8, pitch +0.00, roll +0.00, weight 1.00
+photo 3: PF_20260823_165639.jpg  fov 38.1, heading 324.7, pitch +0.00, roll +0.00, weight 1.00
+z 6.0 m, box 6000 m at (36.64087,28.09550)
+peak witness: 2 crests, median height residual +2 m (spread 6 m)
+INCONCLUSIVE: minimum on the search-box boundary: the true position may lie outside the box
+INCONCLUSIVE: residual 23.6 mrad > 12.0: the DEM cannot explain this observation
+{
+ "status": "inconclusive",
+ "reasons": [
+  "minimum on the search-box boundary: the true position may lie outside the box",
+  "residual 23.6 mrad > 12.0: the DEM cannot explain this observation"
+ ],
+ "lat": 36.662858413264715,
+ "lon": 28.129124025470148,
+ "fix_ok": false,
+ "basin_margin": 0.3874739174192325,
+ "relief_mrad": 244.53797873369956,
+ "dn_m": 2445.0,
+ "de_m": 3000.0,
+ "sigma_n_m": 314.71588049278563,
+ "sigma_e_m": 296.0656067897674,
+ "sigma_major_m": 335.0575152471492,
+ "sigma_minor_m": 272.83216532247235,
+ "major_bearing_deg": 36.23673753689462,
+ "anisotropy": 1.2280718985282764,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": 1.8391645250365074,
+ "peak_dh_mad_m": 6.04589769993518,
+ "n_peaks": 2,
+ "cost": 0.00027964396795481346,
+ "rms_mrad": 23.649269246842003,
+ "n_photos": 4,
+ "z_m": 6.0,
+ "photos": [
+  {
+   "file": "PF_20260823_151613.jpg",
+   "fov_deg": 38.07,
+   "heading_deg": 218.6,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 22.17667455928474,
+   "heading_offset_deg": -6.0,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior"
+  },
+  {
+   "file": "PF_20260823_151556.jpg",
+   "fov_deg": 38.07,
+   "heading_deg": 232.1,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 23.594371115134273,
+   "heading_offset_deg": -6.0,
+   "el_offset_mrad": -10.12290966156711,
+   "attitude_source": "prior"
+  },
+  {
+   "file": "PF_20260823_153457.jpg",
+   "fov_deg": 38.07,
+   "heading_deg": 266.8,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 31.837123105322725,
+   "heading_offset_deg": -6.0,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior"
+  },
+  {
+   "file": "PF_20260823_165639.jpg",
+   "fov_deg": 38.07,
+   "heading_deg": 324.7,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 13.230649764388918,
+   "heading_offset_deg": 6.0,
+   "el_offset_mrad": -10.12290966156711,
+   "attitude_source": "prior"
+  }
+ ]
+}
+wrote out/e5t/PAN_terrace.json/.png
