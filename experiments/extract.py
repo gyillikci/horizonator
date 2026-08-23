@@ -303,6 +303,16 @@ def sea_horizon_attitude_radon(rgb, f_px, dip_rad, max_step=0.20,
     for r0, m, score in cands:
         if score < min_score:
             break                              # candidates are sorted
+        # An external candidate (score 999: the segmentation waterline
+        # chain, E5u) faces gates tuned to waterline physics instead
+        # of sky-horizon physics: the edge is SOFT (haze over the far
+        # shore — threshold 1.5 vs 2.0, fraction 0.15 vs 0.25), and
+        # boats or swimmers legitimately float below it (below-veto
+        # 8% vs 2% — for a true sky horizon nothing may be below).
+        ext = score >= 999.0
+        edge_thr = 1.5 if ext else 2.0
+        frac_min = min(min_frac, 0.15) if ext else min_frac
+        below_lim = (0.08 if ext else 0.02) * W
         # ---- column-wise refinement around the candidate line
         pred = r0 + m * u
         rows_ref = np.full(W, np.nan)
@@ -313,10 +323,10 @@ def sea_horizon_attitude_radon(rgb, f_px, dip_rad, max_step=0.20,
                 continue
             seg = gn[lo:hi, x]
             k = int(np.argmax(seg))
-            if seg[k] > 2.0:                   # a real edge, not noise
+            if seg[k] > edge_thr:              # a real edge, not noise
                 rows_ref[x] = lo + k
         ok = np.isfinite(rows_ref)
-        if ok.sum() < max(16, min_frac * W):
+        if ok.sum() < max(16, frac_min * W):
             continue
         v = (H - 1) / 2.0 - rows_ref
 
@@ -340,14 +350,15 @@ def sea_horizon_attitude_radon(rgb, f_px, dip_rad, max_step=0.20,
         if inl.sum() < 16:
             continue
         res = np.where(ok, v - (a * Hu + b * u), np.nan)
-        # nothing may sit BELOW a sea horizon (terrain only rises)
-        if np.nansum((res < -3.0) & ok) > 0.02 * W:
+        # nothing may sit BELOW a sea horizon (terrain only rises);
+        # below a waterline, boats do (external candidates: 8%)
+        if np.nansum((res < -3.0) & ok) > below_lim:
             continue
         rms = float(np.sqrt(np.nanmean(res[inl] ** 2)))
         frac = float(inl.mean())
         span = float((u[inl].max() - u[inl].min())
                      / max(u[-1] - u[0], 1.0))
-        if frac < min_frac or span < min_span_frac or rms > tol_px:
+        if frac < frac_min or span < min_span_frac or rms > tol_px:
             continue
 
         # ---- continuity: a true horizon barely changes brightness
@@ -362,6 +373,13 @@ def sea_horizon_attitude_radon(rgb, f_px, dip_rad, max_step=0.20,
             continue
         step = float(np.median(above) - np.median(below))
         src = 'radon'
+        roll_est = abs(np.degrees(np.arctan(b)))
+        if ext and roll_est > 6.0:
+            # sanity clamp on the waterline chain (E5u): a handheld
+            # phone is roughly upright, and the one mis-acceptance
+            # observed produced roll +14 deg from a glare-band edge —
+            # a poisoned anchor is worse than none
+            continue
         if abs(step) > max_step:
             # A large step means the line is backed by LAND, not sky —
             # not a sea horizon. For a native radon candidate that is

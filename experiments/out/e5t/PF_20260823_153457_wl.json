@@ -1,0 +1,47 @@
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.03 < 0.15",
+  "residual 29.1 mrad > 12.0: the DEM cannot explain this observation"
+ ],
+ "lat": 36.64125469472266,
+ "lon": 28.11333072887246,
+ "fix_ok": false,
+ "basin_margin": 0.030423850988804256,
+ "relief_mrad": 244.53797873369956,
+ "dn_m": 45.0,
+ "de_m": 1590.0,
+ "sigma_n_m": 437.27950231010607,
+ "sigma_e_m": 354.0992090667296,
+ "sigma_major_m": 439.9622797987946,
+ "sigma_minor_m": 350.7603246613059,
+ "major_bearing_deg": 10.52496283864869,
+ "anisotropy": 1.2543102764647687,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": null,
+ "peak_dh_mad_m": null,
+ "n_peaks": 0,
+ "cost": 0.0004230569490108889,
+ "rms_mrad": 29.088037025928337,
+ "n_photos": 1,
+ "z_m": 4.0,
+ "photos": [
+  {
+   "file": "PF_20260823_153457.jpg",
+   "fov_deg": 38.07,
+   "heading_deg": 266.8,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 29.088037025928337,
+   "heading_offset_deg": -6.0,
+   "el_offset_mrad": -6.073745796940267,
+   "attitude_source": "prior"
+  }
+ ],
+ "heading_offset_deg": -6.0,
+ "el_offset_mrad": -6.073745796940267,
+ "fov_deg": 38.07
+}

@@ -551,7 +551,10 @@ def main():
                 # column-wise refinement and gates decide (E5l: SAM
                 # alone mis-tilts roll on high-res frames)
                 from e5l_samsea import sam_sea_line
-                got = sam_sea_line((img * 255).astype(np.uint8))
+                # the seam boundary is the ceiling: a waterline is by
+                # definition below the terrain silhouette (E5u)
+                got = sam_sea_line((img * 255).astype(np.uint8),
+                                   ceiling_rows=rows)
                 seed = [(got[0], got[1])] if got else None
                 level = extract.sea_horizon_attitude_radon(
                     img, f_px, dip, max_step=args.max_step,
