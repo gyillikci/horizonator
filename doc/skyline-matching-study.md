@@ -2263,6 +2263,24 @@ sequential estimator.
 > pair of frames bounds the story: the toolkit's failures on
 > labeled exports are the overlay's doing, not the scene's.
 
+> **E5aa — the first false accept, and the gate it bought.** The
+> clean control frame's blind solve (PF_20260824_122139, 6 km box)
+> landed 1709 m off and every armed gate PASSED it: margin 0.32,
+> rms 3.95 mrad, peak witness -9 +- 39 m — the first false accept
+> of the field campaign. Its signature was sitting in the output
+> all along: sigma_major = sigma_minor = 0, anisotropy inf — the
+> Laplace curvature fit had failed, meaning the cost surface has no
+> measurable curvature at the "minimum". The miss is ACROSS-sight
+> (error azimuth ~195 deg vs sight 297 deg), the direction a single
+> frame normally pins best, which is what a degenerate basin looks
+> like in practice. New unconditional gate: a fix whose covariance
+> cannot be computed is refused outright ("covariance degenerate")
+> — confidence that cannot be computed is confidence that must not
+> be offered. Rerun: the same fix now refuses; the known-good
+> KWHC9160 still passes with sigma_major 116 m. Ledger after the
+> correction: 9 bad fixes, 9 vetoes, restored by adding the gate
+> the failure itself named.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the

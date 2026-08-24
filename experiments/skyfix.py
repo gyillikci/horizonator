@@ -825,6 +825,14 @@ def main():
     except np.linalg.LinAlgError:
         sig = [np.nan, np.nan]
     aniso = float(sig_maj / sig_min) if sig_min > 1e-9 else np.inf
+    # A fix whose local curvature cannot produce a covariance is a fix
+    # the cost surface does not actually pin: PF_20260824_122139 was
+    # the first field FALSE ACCEPT (1709 m off with margin 0.32, rms
+    # 3.95, peak witness passing) and its signature was exactly this —
+    # sigma 0/0, anisotropy inf. Confidence that cannot be computed is
+    # confidence that must not be offered.
+    cov_ok = (np.isfinite(sig_maj) and np.isfinite(sig_min)
+              and sig_min > 1e-6 and np.isfinite(aniso))
 
     lat_e = lat_c + dn0 / mlat
     lon_e = lon_c + de0 / mlon
@@ -877,6 +885,11 @@ def main():
         reasons.append(f'DEM families disagree: the two independent '
                        f'terrain models place the fix {dem_split:.0f} m'
                        f' apart (limit {args.max_dem_split:.0f} m)')
+    if not cov_ok:
+        reasons.append('covariance degenerate: the cost surface has no '
+                       'measurable curvature at the fix (sigma cannot '
+                       'be computed) — the landscape does not pin a '
+                       'position here')
     if args.max_peak_dh and len(dh_all) >= 2 \
             and (abs(peak_dh_med) > args.max_peak_dh
                  or peak_dh_mad > 3 * args.max_peak_dh):
