@@ -744,6 +744,19 @@ def main():
     i, j = np.unravel_index(np.argmin(cc), cc.shape)
     dn0, de0 = g[i], g[j]
 
+    # search trace: every time the running best improved during the
+    # scan, plus each refinement-stage winner — the convergence path
+    # a navigator would have watched
+    trace = []
+    _run = np.inf
+    for _i in range(g.size):
+        for _j in range(g.size):
+            if cc[_i, _j] < _run:
+                _run = cc[_i, _j]
+                trace.append(dict(dn=float(g[_i]), de=float(g[_j]),
+                                  cost=float(cc[_i, _j]),
+                                  stage='coarse'))
+
     # ---- inconclusiveness checks: a solve that converged somewhere is
     # not automatically a fix. Each failed check adds a reason; any reason
     # makes the result INCONCLUSIVE (status + exit code 2)
@@ -767,6 +780,9 @@ def main():
                 if c < best[0]:
                     best = (c, dn0 + di * step, de0 + dj * step)
         _, dn0, de0 = best
+        trace.append(dict(dn=float(dn0), de=float(de0),
+                          cost=float(best[0]),
+                          stage=f'refine_{step:.0f}m'))
 
     # ---- conditioning: how much does the fix depend on the data?
     # E4v measured that neither the basin margin nor the covariance
@@ -963,7 +979,7 @@ def main():
                   jackknife=jack, subject_km=subject_km,
                   dem_split_m=dem_split,
                   peak_dh_m=peak_dh_med, peak_dh_mad_m=peak_dh_mad,
-                  n_peaks=len(dh_all),
+                  n_peaks=len(dh_all), search_trace=trace,
                   cost=c0, rms_mrad=rms_mrad,
                   n_photos=N, z_m=z,
                   photos=[{k: v for k, v in d.items()
