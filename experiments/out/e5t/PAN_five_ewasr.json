@@ -1,0 +1,92 @@
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.01 < 0.15",
+  "residual 23.3 mrad > 12.0: the DEM cannot explain this observation"
+ ],
+ "lat": 36.660240448446956,
+ "lon": 28.11195578959054,
+ "fix_ok": false,
+ "basin_margin": 0.007475212242279547,
+ "relief_mrad": 182.56719636460164,
+ "dn_m": 2145.0,
+ "de_m": 1470.0,
+ "sigma_n_m": 608.049074698714,
+ "sigma_e_m": 466.52065342457496,
+ "sigma_major_m": 608.9748212032467,
+ "sigma_minor_m": 465.3115778208494,
+ "major_bearing_deg": 175.09865618263902,
+ "anisotropy": 1.3087463330596718,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -4.849715157926813,
+ "peak_dh_mad_m": 18.178171794499217,
+ "n_peaks": 6,
+ "cost": 0.0002717627303500152,
+ "rms_mrad": 23.31363250761302,
+ "n_photos": 5,
+ "z_m": 5.0,
+ "photos": [
+  {
+   "file": "PF_20260823_151613.jpg",
+   "fov_deg": 38.07,
+   "heading_deg": 218.6,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 19.33411739343678,
+   "heading_offset_deg": -6.0,
+   "el_offset_mrad": -10.12290966156711,
+   "attitude_source": "prior"
+  },
+  {
+   "file": "PF_20260823_151556.jpg",
+   "fov_deg": 38.07,
+   "heading_deg": 232.1,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 30.077227250162423,
+   "heading_offset_deg": -3.8000000000000003,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior"
+  },
+  {
+   "file": "PF_20260823_153457.jpg",
+   "fov_deg": 38.07,
+   "heading_deg": 266.8,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 18.733616977405326,
+   "heading_offset_deg": 3.8000000000000003,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior"
+  },
+  {
+   "file": "PF_20260824_122139.jpg",
+   "fov_deg": 38.07,
+   "heading_deg": 297.0,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 20.53262529620164,
+   "heading_offset_deg": 0.2,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior"
+  },
+  {
+   "file": "PF_20260823_165639.jpg",
+   "fov_deg": 38.07,
+   "heading_deg": 324.7,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 25.819421032406893,
+   "heading_offset_deg": 6.0,
+   "el_offset_mrad": -10.12290966156711,
+   "attitude_source": "prior"
+  }
+ ]
+}

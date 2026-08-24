@@ -12,39 +12,47 @@
   return register_model(fn_wrapper)
 /tmp/claude-0/-home-user/792503f9-74c5-5111-83ca-eeeda63e838d/scratchpad/MobileSAM/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_21m_512 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_21m_512. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
   return register_model(fn_wrapper)
+/root/.local/lib/python3.11/site-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/root/.local/lib/python3.11/site-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
 photo 0: PF_20260823_151613.jpg  fov 38.1, heading 218.6, pitch +0.00, roll +0.00, weight 1.00
 photo 1: PF_20260823_151556.jpg  fov 38.1, heading 232.1, pitch +0.00, roll +0.00, weight 1.00
-photo 2: PF_20260824_122139.jpg  fov 38.1, heading 297.0, pitch +0.00, roll +0.00, weight 1.00
+photo 2: PF_20260823_153457.jpg  fov 38.1, heading 266.8, pitch +0.00, roll +0.00, weight 1.00
+photo 3: PF_20260824_122139.jpg  fov 38.1, heading 297.0, pitch +0.00, roll +0.00, weight 1.00
+photo 4: PF_20260823_165639.jpg  fov 38.1, heading 324.7, pitch +0.00, roll +0.00, weight 1.00
 z 5.0 m, box 6000 m at (36.64095,28.09548)
-peak witness: 8 crests, median height residual -6 m (spread 30 m)
-INCONCLUSIVE: residual 20.1 mrad > 12.0: the DEM cannot explain this observation
+peak witness: 6 crests, median height residual -5 m (spread 18 m)
+INCONCLUSIVE: ambiguous landscape: basin margin 0.01 < 0.15
+INCONCLUSIVE: residual 23.3 mrad > 12.0: the DEM cannot explain this observation
 {
  "status": "inconclusive",
  "reasons": [
-  "residual 20.1 mrad > 12.0: the DEM cannot explain this observation"
+  "ambiguous landscape: basin margin 0.01 < 0.15",
+  "residual 23.3 mrad > 12.0: the DEM cannot explain this observation"
  ],
- "lat": 36.63339569851028,
- "lon": 28.099346766944716,
+ "lat": 36.660240448446956,
+ "lon": 28.11195578959054,
  "fix_ok": false,
- "basin_margin": 0.36697907822722053,
- "relief_mrad": 105.73449267185354,
- "dn_m": -840.0,
- "de_m": 345.0,
- "sigma_n_m": 264.62385723745194,
- "sigma_e_m": 378.47069765890683,
- "sigma_major_m": 398.4288281152059,
- "sigma_minor_m": 233.4958751935261,
- "major_bearing_deg": 67.31244667245687,
- "anisotropy": 1.7063634541080437,
+ "basin_margin": 0.007475212242279547,
+ "relief_mrad": 182.56719636460164,
+ "dn_m": 2145.0,
+ "de_m": 1470.0,
+ "sigma_n_m": 608.049074698714,
+ "sigma_e_m": 466.52065342457496,
+ "sigma_major_m": 608.9748212032467,
+ "sigma_minor_m": 465.3115778208494,
+ "major_bearing_deg": 175.09865618263902,
+ "anisotropy": 1.3087463330596718,
  "jackknife": null,
  "subject_km": null,
  "dem_split_m": null,
- "peak_dh_m": -6.313802473874028,
- "peak_dh_mad_m": 29.62508275235232,
- "n_peaks": 8,
- "cost": 0.0002017108234684988,
- "rms_mrad": 20.085359019370244,
- "n_photos": 3,
+ "peak_dh_m": -4.849715157926813,
+ "peak_dh_mad_m": 18.178171794499217,
+ "n_peaks": 6,
+ "cost": 0.0002717627303500152,
+ "rms_mrad": 23.31363250761302,
+ "n_photos": 5,
  "z_m": 5.0,
  "photos": [
   {
@@ -54,9 +62,9 @@ INCONCLUSIVE: residual 20.1 mrad > 12.0: the DEM cannot explain this observation
    "pitch_deg": 0.0,
    "roll_deg": 0.0,
    "weight": 1.0,
-   "rms_mrad": 21.503214060041664,
-   "heading_offset_deg": 6.0,
-   "el_offset_mrad": 10.122909661567109,
+   "rms_mrad": 19.33411739343678,
+   "heading_offset_deg": -6.0,
+   "el_offset_mrad": -10.12290966156711,
    "attitude_source": "prior"
   },
   {
@@ -66,9 +74,21 @@ INCONCLUSIVE: residual 20.1 mrad > 12.0: the DEM cannot explain this observation
    "pitch_deg": 0.0,
    "roll_deg": 0.0,
    "weight": 1.0,
-   "rms_mrad": 26.996570274930164,
-   "heading_offset_deg": -6.0,
-   "el_offset_mrad": -10.12290966156711,
+   "rms_mrad": 30.077227250162423,
+   "heading_offset_deg": -3.8000000000000003,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior"
+  },
+  {
+   "file": "PF_20260823_153457.jpg",
+   "fov_deg": 38.07,
+   "heading_deg": 266.8,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 18.733616977405326,
+   "heading_offset_deg": 3.8000000000000003,
+   "el_offset_mrad": 10.122909661567109,
    "attitude_source": "prior"
   },
   {
@@ -78,11 +98,23 @@ INCONCLUSIVE: residual 20.1 mrad > 12.0: the DEM cannot explain this observation
    "pitch_deg": 0.0,
    "roll_deg": 0.0,
    "weight": 1.0,
-   "rms_mrad": 4.365995795895432,
-   "heading_offset_deg": -1.8,
-   "el_offset_mrad": 8.098327729253686,
+   "rms_mrad": 20.53262529620164,
+   "heading_offset_deg": 0.2,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior"
+  },
+  {
+   "file": "PF_20260823_165639.jpg",
+   "fov_deg": 38.07,
+   "heading_deg": 324.7,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 25.819421032406893,
+   "heading_offset_deg": 6.0,
+   "el_offset_mrad": -10.12290966156711,
    "attitude_source": "prior"
   }
  ]
 }
-wrote out/e5t/PAN_trio_seam.json/.png
+wrote out/e5t/PAN_five_ewasr.json/.png

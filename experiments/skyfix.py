@@ -130,9 +130,26 @@ def extract_boundary(img, horizon_rows=None, tol_px=4):
                            os.path.join(scratch, 'ewasr_resnet18.pth'))
         cls = _EWASR.predict(img)
         sky = cls == 2
-        rows = np.argmax(~sky, axis=0).astype(float)
-        conf = np.where(sky[0] & ~sky.all(0), 1.0, 0.0)
-        rows[conf == 0] = img.shape[0] - 1
+        # boundary = first non-sky row BELOW the first sky run, per
+        # column — requiring row 0 itself to be sky killed the whole
+        # 151556 frame (an awning spans the top; the sky, and under
+        # it the ridge, are both visible BENEATH it). Columns with no
+        # sky run at least 3 px thick carry no boundary and are
+        # zero-weighted rather than guessed.
+        Hh, Ww = sky.shape
+        rows = np.full(Ww, Hh - 1, dtype=float)
+        conf = np.zeros(Ww)
+        has = sky.any(0)
+        top = np.where(has, sky.argmax(0), 0)
+        for x in range(Ww):
+            if not has[x]:
+                continue
+            below = ~sky[top[x]:, x]
+            if below.any():
+                k = int(np.argmax(below))
+                if k >= 3:
+                    rows[x] = top[x] + k
+                    conf[x] = 1.0
     else:
         rows, conf = extract.skyline_seam(img)
     if horizon_rows is not None:

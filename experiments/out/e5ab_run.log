@@ -1,0 +1,5 @@
+PAN_trio_seam dlat=-840m dlon=+345m (tot 908) margin=0.37 rms=20.1 ok=False reasons=1
+PAN_trio_ewasr FAILED [Errno 2] No such file or directory: 'out/e5t/PAN_trio_ewasr.json'
+PAN_five_seam dlat=+2159m dlon=+2253m (tot 3120) margin=0.23 rms=26.7 ok=False reasons=1
+PAN_five_ewasr FAILED [Errno 2] No such file or directory: 'out/e5t/PAN_five_ewasr.json'
+BATCH-DONE

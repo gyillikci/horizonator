@@ -14,37 +14,39 @@
   return register_model(fn_wrapper)
 photo 0: PF_20260823_151613.jpg  fov 38.1, heading 218.6, pitch +0.00, roll +0.00, weight 1.00
 photo 1: PF_20260823_151556.jpg  fov 38.1, heading 232.1, pitch +0.00, roll +0.00, weight 1.00
-photo 2: PF_20260824_122139.jpg  fov 38.1, heading 297.0, pitch +0.00, roll +0.00, weight 1.00
+photo 2: PF_20260823_153457.jpg  fov 38.1, heading 266.8, pitch +0.00, roll +0.00, weight 1.00
+photo 3: PF_20260824_122139.jpg  fov 38.1, heading 297.0, pitch +0.00, roll +0.00, weight 1.00
+photo 4: PF_20260823_165639.jpg  fov 38.1, heading 324.7, pitch +0.00, roll +0.00, weight 1.00
 z 5.0 m, box 6000 m at (36.64095,28.09548)
-peak witness: 8 crests, median height residual -6 m (spread 30 m)
-INCONCLUSIVE: residual 20.1 mrad > 12.0: the DEM cannot explain this observation
+peak witness: 1 crests, median height residual -17 m (spread 0 m)
+INCONCLUSIVE: residual 26.7 mrad > 12.0: the DEM cannot explain this observation
 {
  "status": "inconclusive",
  "reasons": [
-  "residual 20.1 mrad > 12.0: the DEM cannot explain this observation"
+  "residual 26.7 mrad > 12.0: the DEM cannot explain this observation"
  ],
- "lat": 36.63339569851028,
- "lon": 28.099346766944716,
+ "lat": 36.66037534668784,
+ "lon": 28.120698045291643,
  "fix_ok": false,
- "basin_margin": 0.36697907822722053,
- "relief_mrad": 105.73449267185354,
- "dn_m": -840.0,
- "de_m": 345.0,
- "sigma_n_m": 264.62385723745194,
- "sigma_e_m": 378.47069765890683,
- "sigma_major_m": 398.4288281152059,
- "sigma_minor_m": 233.4958751935261,
- "major_bearing_deg": 67.31244667245687,
- "anisotropy": 1.7063634541080437,
+ "basin_margin": 0.23076760289604129,
+ "relief_mrad": 244.53797873369956,
+ "dn_m": 2160.0,
+ "de_m": 2250.0,
+ "sigma_n_m": 178.4206062665428,
+ "sigma_e_m": 577.5574615209887,
+ "sigma_major_m": 577.5619290552476,
+ "sigma_minor_m": 178.406143966709,
+ "major_bearing_deg": 89.7630545834917,
+ "anisotropy": 3.2373432675223444,
  "jackknife": null,
  "subject_km": null,
  "dem_split_m": null,
- "peak_dh_m": -6.313802473874028,
- "peak_dh_mad_m": 29.62508275235232,
- "n_peaks": 8,
- "cost": 0.0002017108234684988,
- "rms_mrad": 20.085359019370244,
- "n_photos": 3,
+ "peak_dh_m": -17.247471550153897,
+ "peak_dh_mad_m": 0.0,
+ "n_peaks": 1,
+ "cost": 0.00035747270039223543,
+ "rms_mrad": 26.738462947306278,
+ "n_photos": 5,
  "z_m": 5.0,
  "photos": [
   {
@@ -54,7 +56,7 @@ INCONCLUSIVE: residual 20.1 mrad > 12.0: the DEM cannot explain this observation
    "pitch_deg": 0.0,
    "roll_deg": 0.0,
    "weight": 1.0,
-   "rms_mrad": 21.503214060041664,
+   "rms_mrad": 17.526380763394645,
    "heading_offset_deg": 6.0,
    "el_offset_mrad": 10.122909661567109,
    "attitude_source": "prior"
@@ -66,9 +68,21 @@ INCONCLUSIVE: residual 20.1 mrad > 12.0: the DEM cannot explain this observation
    "pitch_deg": 0.0,
    "roll_deg": 0.0,
    "weight": 1.0,
-   "rms_mrad": 26.996570274930164,
+   "rms_mrad": 28.025803390192795,
    "heading_offset_deg": -6.0,
    "el_offset_mrad": -10.12290966156711,
+   "attitude_source": "prior"
+  },
+  {
+   "file": "PF_20260823_153457.jpg",
+   "fov_deg": 38.07,
+   "heading_deg": 266.8,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 31.421121117305972,
+   "heading_offset_deg": 5.800000000000001,
+   "el_offset_mrad": 6.073745796940264,
    "attitude_source": "prior"
   },
   {
@@ -78,11 +92,23 @@ INCONCLUSIVE: residual 20.1 mrad > 12.0: the DEM cannot explain this observation
    "pitch_deg": 0.0,
    "roll_deg": 0.0,
    "weight": 1.0,
-   "rms_mrad": 4.365995795895432,
-   "heading_offset_deg": -1.8,
-   "el_offset_mrad": 8.098327729253686,
+   "rms_mrad": 28.208217983192295,
+   "heading_offset_deg": -6.0,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior"
+  },
+  {
+   "file": "PF_20260823_165639.jpg",
+   "fov_deg": 38.07,
+   "heading_deg": 324.7,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 26.440819040593624,
+   "heading_offset_deg": 6.0,
+   "el_offset_mrad": -10.12290966156711,
    "attitude_source": "prior"
   }
  ]
 }
-wrote out/e5t/PAN_trio_seam.json/.png
+wrote out/e5t/PAN_five_seam.json/.png
