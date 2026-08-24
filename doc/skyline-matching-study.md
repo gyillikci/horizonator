@@ -2225,6 +2225,28 @@ sequential estimator.
 > holds: 8 of 8 bad fixes across E5t/E5v were vetoed, zero false
 > accepts.
 
+> **E5z — every boundary front-end on one adversarial frame.** An
+> extremely hazy PeakFinder export (Kumlubük toward the Datça/Symi
+> coast, overlay floating well above the washed-out real ridge) was
+> pushed through all ten boundary determiners, refusals included.
+> Result: EVERY pixel-based method locked onto the app's burned-in
+> RENDERING instead of the real terrain — the seam detector and the
+> learned template ride the ink's top edge, eWaSR classifies the
+> shaded drawing as obstacle/land (its boundary follows the ink),
+> and the ink-recovery tool does so by design. The three horizon
+> chains (radon level, SAM waterline, SAM+radon) refused honestly.
+> The only curves not captured by the ink are the sensor+DEM pair:
+> DEM-as-shot lands nearest the real ridge, and the attitude FIT is
+> dragged upward (pitch -100 mrad, roll at the bound, rms 12) the
+> moment it trusts the ink-following extraction. Lesson with teeth:
+> a rasterized AR overlay is ADVERSARIAL content for every
+> downstream vision method — in deep haze the crisp drawing
+> outcompetes the faint real ridge for every detector's attention,
+> and E5s's thin-stroke outlier mask cannot help because the
+> rendering is a wide shaded region, not a spike. For navigation
+> work the originals must be unlabeled; the labeled exports are
+> for scoring PeakFinder, never for feeding the instrument.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
