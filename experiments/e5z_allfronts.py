@@ -40,11 +40,14 @@ import skyfix as SF
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, 'out', 'e5z')
-PHOTO = os.path.join(os.path.dirname(os.path.dirname(HERE)),
-                     'celestial-navigation', 'peakfinder',
-                     'PF_20260824_115038.jpg')
 DEM = os.path.expanduser('~/.horizonator/DEMs_SRTM1_WM')
-LAT, LON, HEADING, Z = 36.64088, 28.09631, 254.5, 20.0
+# photo id and pose from the command line; defaults = the E5z frame
+_id = sys.argv[1] if len(sys.argv) > 1 else 'PF_20260824_115038'
+_pose = ([float(x) for x in sys.argv[2].split(',')]
+         if len(sys.argv) > 2 else [36.64088, 28.09631, 254.5, 20.0])
+PHOTO = os.path.join(os.path.dirname(os.path.dirname(HERE)),
+                     'celestial-navigation', 'peakfinder', _id + '.jpg')
+LAT, LON, HEADING, Z = _pose
 SCRATCH = ('/tmp/claude-0/-home-user/'
            '792503f9-74c5-5111-83ca-eeeda63e838d/scratchpad')
 
@@ -198,13 +201,13 @@ def main():
         ax.set_title(name, fontsize=10)
         ax.set_xticks([]); ax.set_yticks([])
         ax.set_ylim(r_hi - r_lo, 0)
-    fig.suptitle('PF_20260824_115038 — every boundary front-end, '
+    fig.suptitle(f'{_id} — every boundary front-end, '
                  'horizon band crop', fontsize=12)
     os.makedirs(OUT, exist_ok=True)
     fig.tight_layout()
-    fig.savefig(os.path.join(OUT, 'grid.png'), dpi=100)
+    fig.savefig(os.path.join(OUT, _id + '_grid.png'), dpi=100)
     plt.close(fig)
-    print(os.path.join(OUT, 'grid.png'))
+    print(os.path.join(OUT, _id + '_grid.png'))
 
     # ---- full-frame composite
     fig, ax = plt.subplots(figsize=(8, 17))
@@ -231,9 +234,9 @@ def main():
     ax.set_title('composite — all boundaries on the full frame',
                  fontsize=10)
     fig.tight_layout()
-    fig.savefig(os.path.join(OUT, 'composite.png'), dpi=100)
+    fig.savefig(os.path.join(OUT, _id + '_composite.png'), dpi=100)
     plt.close(fig)
-    print(os.path.join(OUT, 'composite.png'))
+    print(os.path.join(OUT, _id + '_composite.png'))
     for n in names:
         k = results[n][0]
         print(f'  {n}: {"REFUSED - " + results[n][1] if k == "refused" else k}')

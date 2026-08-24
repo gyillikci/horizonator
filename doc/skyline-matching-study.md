@@ -2246,6 +2246,22 @@ sequential estimator.
 > rendering is a wide shaded region, not a spike. For navigation
 > work the originals must be unlabeled; the labeled exports are
 > for scoring PeakFinder, never for feeding the instrument.
+>
+> The control ran the next day: the same ten-front battery on a
+> CLEAN frame from the same shore (PF_20260824_122139, crisp ridge,
+> no drawn overlay). Roles restored across the board: seam and
+> learned template ride the true ridge, eWaSR's segmentation is
+> correct (land/water/sky) with its boundary on the ridge, and the
+> SAM waterline chain scored its FIRST live field acceptance —
+> mask and line exactly on the water/terrain boundary. The
+> attitude fit is clean (dheading +0.1 deg, pitch +16 mrad, roll
+> 0.0, rms 4.5 mrad vs the EXIF compass). Two honest blemishes:
+> the ink-recovery tool reports 'ink' on dark rock texture when no
+> ink exists (it has no notion of absence), and the SAM+radon
+> hybrid still refused the seed its own chain produced — the
+> refinement gates remain stricter than the proposal. Together the
+> pair of frames bounds the story: the toolkit's failures on
+> labeled exports are the overlay's doing, not the scene's.
 
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
