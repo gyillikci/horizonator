@@ -1,0 +1,66 @@
+/root/.local/lib/python3.11/site-packages/timm/models/layers/__init__.py:49: FutureWarning: Importing from timm.models.layers is deprecated, please import via timm.layers
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.layers", FutureWarning)
+/root/.local/lib/python3.11/site-packages/timm/models/registry.py:4: FutureWarning: Importing from timm.models.registry is deprecated, please import via timm.models
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.models", FutureWarning)
+/tmp/claude-0/-home-user/792503f9-74c5-5111-83ca-eeeda63e838d/scratchpad/MobileSAM/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_5m_224 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_5m_224. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+/tmp/claude-0/-home-user/792503f9-74c5-5111-83ca-eeeda63e838d/scratchpad/MobileSAM/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_11m_224 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_11m_224. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+/tmp/claude-0/-home-user/792503f9-74c5-5111-83ca-eeeda63e838d/scratchpad/MobileSAM/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_21m_224 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_21m_224. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+/tmp/claude-0/-home-user/792503f9-74c5-5111-83ca-eeeda63e838d/scratchpad/MobileSAM/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_21m_384 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_21m_384. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+/tmp/claude-0/-home-user/792503f9-74c5-5111-83ca-eeeda63e838d/scratchpad/MobileSAM/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_21m_512 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_21m_512. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+/root/.local/lib/python3.11/site-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/root/.local/lib/python3.11/site-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+photo 0: PF_20260824_122139.jpg  fov 38.1, heading 297.0, pitch +0.00, roll +0.00, weight 1.00
+z 4.0 m, box 6000 m at (36.64095,28.09548)
+peak witness: 5 crests, median height residual -13 m (spread 18 m)
+{
+ "status": "ok",
+ "reasons": [],
+ "lat": 36.6331259020285,
+ "lon": 28.094975639094166,
+ "fix_ok": true,
+ "basin_margin": 0.17738577138469555,
+ "relief_mrad": 7.71030880479782,
+ "dn_m": -870.0,
+ "de_m": -45.0,
+ "sigma_n_m": 215.90369513963248,
+ "sigma_e_m": 217.78689810774776,
+ "sigma_major_m": 248.4324785013996,
+ "sigma_minor_m": 179.7966690125084,
+ "major_bearing_deg": 134.20384305028324,
+ "anisotropy": 1.381741273994994,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -12.654263156158322,
+ "peak_dh_mad_m": 18.264344441975535,
+ "n_peaks": 5,
+ "cost": 7.366127400345022e-06,
+ "rms_mrad": 3.8382619505044264,
+ "n_photos": 1,
+ "z_m": 4.0,
+ "photos": [
+  {
+   "file": "PF_20260824_122139.jpg",
+   "fov_deg": 38.07,
+   "heading_deg": 297.0,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 3.8382619505044264,
+   "heading_offset_deg": -0.6000000000000001,
+   "el_offset_mrad": 8.098327729253686,
+   "attitude_source": "prior"
+  }
+ ],
+ "heading_offset_deg": -0.6000000000000001,
+ "el_offset_mrad": 8.098327729253686,
+ "fov_deg": 38.07
+}
+wrote out/e5t/CF_ewasr_1000.json/.png

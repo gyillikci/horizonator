@@ -1,0 +1,65 @@
+/root/.local/lib/python3.11/site-packages/timm/models/layers/__init__.py:49: FutureWarning: Importing from timm.models.layers is deprecated, please import via timm.layers
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.layers", FutureWarning)
+/root/.local/lib/python3.11/site-packages/timm/models/registry.py:4: FutureWarning: Importing from timm.models.registry is deprecated, please import via timm.models
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.models", FutureWarning)
+/tmp/claude-0/-home-user/792503f9-74c5-5111-83ca-eeeda63e838d/scratchpad/MobileSAM/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_5m_224 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_5m_224. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+/tmp/claude-0/-home-user/792503f9-74c5-5111-83ca-eeeda63e838d/scratchpad/MobileSAM/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_11m_224 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_11m_224. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+/tmp/claude-0/-home-user/792503f9-74c5-5111-83ca-eeeda63e838d/scratchpad/MobileSAM/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_21m_224 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_21m_224. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+/tmp/claude-0/-home-user/792503f9-74c5-5111-83ca-eeeda63e838d/scratchpad/MobileSAM/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_21m_384 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_21m_384. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+/tmp/claude-0/-home-user/792503f9-74c5-5111-83ca-eeeda63e838d/scratchpad/MobileSAM/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_21m_512 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_21m_512. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+photo 0: PF_20260824_122139.jpg  fov 38.1, heading 297.0, pitch +0.00, roll +0.00, weight 1.00
+z 4.0 m, box 6000 m at (36.64095,28.09548)
+peak witness: 3 crests, median height residual -12 m (spread 28 m)
+INCONCLUSIVE: ambiguous landscape: basin margin 0.02 < 0.15
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.02 < 0.15"
+ ],
+ "lat": 36.634339986196494,
+ "lon": 28.092958195470835,
+ "fix_ok": false,
+ "basin_margin": 0.01974976388605412,
+ "relief_mrad": 8.234316943520584,
+ "dn_m": -735.0,
+ "de_m": -225.0,
+ "sigma_n_m": 45.924296550689846,
+ "sigma_e_m": 47.55164569875806,
+ "sigma_major_m": 57.06258007851772,
+ "sigma_minor_m": 33.377566974221956,
+ "major_bearing_deg": 47.03612315829416,
+ "anisotropy": 1.709608735789163,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -11.95091504647096,
+ "peak_dh_mad_m": 27.681792777383833,
+ "n_peaks": 3,
+ "cost": 8.86865347749476e-06,
+ "rms_mrad": 4.211568229886526,
+ "n_photos": 1,
+ "z_m": 4.0,
+ "photos": [
+  {
+   "file": "PF_20260824_122139.jpg",
+   "fov_deg": 38.07,
+   "heading_deg": 297.0,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 4.211568229886526,
+   "heading_offset_deg": -1.4000000000000001,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior"
+  }
+ ],
+ "heading_offset_deg": -1.4000000000000001,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 38.07
+}
+wrote out/e5t/CF_seam_300.json/.png

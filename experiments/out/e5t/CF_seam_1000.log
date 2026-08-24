@@ -1,0 +1,65 @@
+/root/.local/lib/python3.11/site-packages/timm/models/layers/__init__.py:49: FutureWarning: Importing from timm.models.layers is deprecated, please import via timm.layers
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.layers", FutureWarning)
+/root/.local/lib/python3.11/site-packages/timm/models/registry.py:4: FutureWarning: Importing from timm.models.registry is deprecated, please import via timm.models
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.models", FutureWarning)
+/tmp/claude-0/-home-user/792503f9-74c5-5111-83ca-eeeda63e838d/scratchpad/MobileSAM/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_5m_224 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_5m_224. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+/tmp/claude-0/-home-user/792503f9-74c5-5111-83ca-eeeda63e838d/scratchpad/MobileSAM/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_11m_224 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_11m_224. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+/tmp/claude-0/-home-user/792503f9-74c5-5111-83ca-eeeda63e838d/scratchpad/MobileSAM/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_21m_224 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_21m_224. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+/tmp/claude-0/-home-user/792503f9-74c5-5111-83ca-eeeda63e838d/scratchpad/MobileSAM/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_21m_384 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_21m_384. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+/tmp/claude-0/-home-user/792503f9-74c5-5111-83ca-eeeda63e838d/scratchpad/MobileSAM/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_21m_512 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_21m_512. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+photo 0: PF_20260824_122139.jpg  fov 38.1, heading 297.0, pitch +0.00, roll +0.00, weight 1.00
+z 4.0 m, box 6000 m at (36.64095,28.09548)
+peak witness: 5 crests, median height residual -9 m (spread 39 m)
+INCONCLUSIVE: covariance degenerate: the cost surface has no measurable curvature at the fix (sigma cannot be computed) — the landscape does not pin a position here
+{
+ "status": "inconclusive",
+ "reasons": [
+  "covariance degenerate: the cost surface has no measurable curvature at the fix (sigma cannot be computed) \u2014 the landscape does not pin a position here"
+ ],
+ "lat": 36.62611119350234,
+ "lon": 28.09043639094167,
+ "fix_ok": false,
+ "basin_margin": 0.31751427269175864,
+ "relief_mrad": 8.234316943520584,
+ "dn_m": -1650.0,
+ "de_m": -450.0,
+ "sigma_n_m": 0.0,
+ "sigma_e_m": 0.0,
+ "sigma_major_m": 0.0,
+ "sigma_minor_m": 0.0,
+ "major_bearing_deg": 88.17553858468943,
+ "anisotropy": Infinity,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -8.697513290852562,
+ "peak_dh_mad_m": 38.71685433227228,
+ "n_peaks": 5,
+ "cost": 7.809841113894105e-06,
+ "rms_mrad": 3.9521743670779776,
+ "n_photos": 1,
+ "z_m": 4.0,
+ "photos": [
+  {
+   "file": "PF_20260824_122139.jpg",
+   "fov_deg": 38.07,
+   "heading_deg": 297.0,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 3.9521743670779776,
+   "heading_offset_deg": -2.0,
+   "el_offset_mrad": 2.02458193231342,
+   "attitude_source": "prior"
+  }
+ ],
+ "heading_offset_deg": -2.0,
+ "el_offset_mrad": 2.02458193231342,
+ "fov_deg": 38.07
+}
+wrote out/e5t/CF_seam_1000.json/.png

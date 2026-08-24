@@ -1,0 +1,73 @@
+/root/.local/lib/python3.11/site-packages/timm/models/layers/__init__.py:49: FutureWarning: Importing from timm.models.layers is deprecated, please import via timm.layers
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.layers", FutureWarning)
+/root/.local/lib/python3.11/site-packages/timm/models/registry.py:4: FutureWarning: Importing from timm.models.registry is deprecated, please import via timm.models
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.models", FutureWarning)
+/tmp/claude-0/-home-user/792503f9-74c5-5111-83ca-eeeda63e838d/scratchpad/MobileSAM/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_5m_224 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_5m_224. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+/tmp/claude-0/-home-user/792503f9-74c5-5111-83ca-eeeda63e838d/scratchpad/MobileSAM/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_11m_224 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_11m_224. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+/tmp/claude-0/-home-user/792503f9-74c5-5111-83ca-eeeda63e838d/scratchpad/MobileSAM/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_21m_224 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_21m_224. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+/tmp/claude-0/-home-user/792503f9-74c5-5111-83ca-eeeda63e838d/scratchpad/MobileSAM/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_21m_384 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_21m_384. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+/tmp/claude-0/-home-user/792503f9-74c5-5111-83ca-eeeda63e838d/scratchpad/MobileSAM/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_21m_512 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_21m_512. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+/root/.local/lib/python3.11/site-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/root/.local/lib/python3.11/site-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+photo 0: PF_20260824_122139.jpg  fov 38.1, heading 297.0, pitch +0.00, roll +0.00, weight 1.00
+z 4.0 m, box 6000 m at (36.64095,28.09548)
+peak witness: 5 crests, median height residual -133 m (spread 122 m)
+INCONCLUSIVE: ambiguous landscape: basin margin 0.02 < 0.15
+INCONCLUSIVE: minimum on the search-box boundary: the true position may lie outside the box
+INCONCLUSIVE: peak heights disagree: matched crests stand a median -133 m (spread 122 m) from the model at this fix (limits 30/90 m) — position error or DEM bias is leaking into the height channel
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.02 < 0.15",
+  "minimum on the search-box boundary: the true position may lie outside the box",
+  "peak heights disagree: matched crests stand a median -133 m (spread 122 m) from the model at this fix (limits 30/90 m) \u2014 position error or DEM bias is leaking into the height channel"
+ ],
+ "lat": 36.61977097618061,
+ "lon": 28.063537142630583,
+ "fix_ok": false,
+ "basin_margin": 0.017034752273952965,
+ "relief_mrad": 7.71030880479782,
+ "dn_m": -2355.0,
+ "de_m": -2850.0,
+ "sigma_n_m": 195.9225396868588,
+ "sigma_e_m": 331.4828799253205,
+ "sigma_major_m": 356.7166873272782,
+ "sigma_minor_m": 144.9818823963397,
+ "major_bearing_deg": 113.84886053175818,
+ "anisotropy": 2.4604225123254717,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -132.8648272947114,
+ "peak_dh_mad_m": 121.59033482884446,
+ "n_peaks": 5,
+ "cost": 8.198647614064565e-06,
+ "rms_mrad": 4.049357384589452,
+ "n_photos": 1,
+ "z_m": 4.0,
+ "photos": [
+  {
+   "file": "PF_20260824_122139.jpg",
+   "fov_deg": 38.07,
+   "heading_deg": 297.0,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 4.049357384589452,
+   "heading_offset_deg": 6.0,
+   "el_offset_mrad": -4.049163864626846,
+   "attitude_source": "prior"
+  }
+ ],
+ "heading_offset_deg": 6.0,
+ "el_offset_mrad": -4.049163864626846,
+ "fov_deg": 38.07
+}
+wrote out/e5t/CF_ewasr_300.json/.png
