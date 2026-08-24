@@ -2281,6 +2281,28 @@ sequential estimator.
 > correction: 9 bad fixes, 9 vetoes, restored by adding the gate
 > the failure itself named.
 
+> **E5ae — the crest-deficit term, calibrated.** The E5ad diagnosis
+> (fixes pulled ~240 m toward the terrain by a ~10-13 m effective
+> crest deficit common to both 30 m DSM families) is now a solver
+> term: `--crest-dh` raises the synthesized silhouette by dh/r(az)
+> per azimuth — range-dependent, so the elevation-offset beta cannot
+> absorb it (the uniform +10 m store test showed why it must not be
+> uniform). Sweep over three wide/clean frames, dh in {0,6,9,12,15}:
+> dh = 9 m improves or holds EVERY frame (north beach 154 -> 150,
+> terrace 283 -> 197, Akyaka 280 -> 237; median 280 -> 197 m, -30%)
+> while dh >= 12 breaks the terrace frame (across-sight blows up as
+> the heading trade re-balances). A holdout frame outside the
+> calibration set (175647 portrait) confirms: 291 -> 223 m.
+>
+> Honesty on the residual: the term removes only PART of the
+> along-bias (+240 -> ~+150 m at dh=9) — the deficit is not a clean
+> dh/r everywhere (crest sharpness varies), and the shape-dominated
+> cost translates the offset into position only partially. The
+> calibrated value is documented, not defaulted: --crest-dh 9 is
+> the recommended field setting for this coast; per-region
+> re-calibration remains the path to the across-only (~150 m)
+> error floor.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the

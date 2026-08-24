@@ -1,2 +1,16 @@
 NB dh=0 dlat=-135 dlon=-75 tot=154 along=+153 across=+23 margin=2.64 rms=1.8 ok=True
 NB dh=6 dlat=-135 dlon=-90 tot=162 along=+158 across=+37 margin=2.90 rms=1.6 ok=True
+NB dh=9 dlat=-120 dlon=-90 tot=150 along=+144 across=+42 margin=3.04 rms=1.6 ok=True
+NB dh=12 dlat=-90 dlon=-90 tot=127 along=+116 across=+53 margin=3.15 rms=1.5 ok=True
+NB dh=15 dlat=-90 dlon=-90 tot=127 along=+116 across=+53 margin=3.30 rms=1.5 ok=True
+TW dh=0 dlat=+240 dlon=-150 tot=283 along=+243 across=+146 margin=0.98 rms=4.5 ok=True
+TW dh=6 dlat=+210 dlon=-120 tot=242 along=+202 across=+132 margin=1.92 rms=3.9 ok=True
+TW dh=9 dlat=+195 dlon=-30 tot=197 along=+115 across=+160 margin=2.50 rms=3.7 ok=True
+TW dh=12 dlat=+330 dlon=+30 tot=331 along=+123 across=+308 margin=2.94 rms=3.5 ok=True
+TW dh=15 dlat=+330 dlon=+75 tot=338 along=+83 across=+328 margin=3.03 rms=3.4 ok=True
+AK dh=0 dlat=-270 dlon=+75 tot=280 along=+237 across=-149 margin=5.12 rms=1.9 ok=True
+AK dh=6 dlat=-270 dlon=+75 tot=280 along=+237 across=-149 margin=4.38 rms=2.0 ok=True
+AK dh=9 dlat=-225 dlon=+75 tot=237 along=+194 across=-136 margin=3.79 rms=2.0 ok=True
+AK dh=12 dlat=-210 dlon=+75 tot=223 along=+180 across=-132 margin=3.62 rms=2.1 ok=True
+AK dh=15 dlat=-225 dlon=+75 tot=237 along=+194 across=-136 margin=3.12 rms=2.2 ok=True
+BATCH-DONE
