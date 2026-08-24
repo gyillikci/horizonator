@@ -426,6 +426,20 @@ def main():
     ap.add_argument('--max-dem-split', type=float, default=None,
                     help='reject the fix when the two DEM families '
                          'place it further apart than this many meters')
+    ap.add_argument('--crest-dh', type=float, default=0.0,
+                    help='crest-deficit correction, meters: raise the '
+                         'SYNTHESIZED silhouette by dh/r(az) per '
+                         'azimuth. E5ad measured the dominant field '
+                         'residual as a fix pulled ~240 m TOWARD the '
+                         'terrain because photographed silhouettes '
+                         '(treetops on grid-clipped crests) run an '
+                         'effective 10-13 m above every 30 m DSM, in '
+                         'BOTH families (E5ad/TDX A-B). A range-'
+                         'dependent term cancels exactly that physics '
+                         'and, unlike a uniform DEM shift (measured '
+                         'to fail: beta absorbs it), cannot be '
+                         'absorbed by the elevation offset. Calibrate '
+                         'once on frames with GPS truth; 0 disables')
     ap.add_argument('--max-peak-dh', type=float, default=None,
                     help='reject the fix when the matched skyline '
                          'crests stand further (median, meters) from '
@@ -710,6 +724,10 @@ def main():
         pl = photos if plist is None else plist
         us = usum if wsum is None else wsum
         el, r = cm.skyline(lat_c + dn / mlat, lon_c + de / mlon, z, AZ)
+        if args.crest_dh:
+            el = el + np.where(np.isfinite(r) & (r > 0),
+                               args.crest_dh / np.maximum(r, args.dmin),
+                               0.0)
         ws = None
         if args.dmin_soft:
             ws = np.clip((r - 300.0) / (args.dmin_soft - 300.0), 0.0, 1.0)
@@ -890,6 +908,10 @@ def main():
     lat_e = lat_c + dn0 / mlat
     lon_e = lon_c + de0 / mlon
     el_syn, r_syn = cm.skyline(lat_e, lon_e, z, AZ)
+    if args.crest_dh:
+        el_syn = el_syn + np.where(
+            np.isfinite(r_syn) & (r_syn > 0),
+            args.crest_dh / np.maximum(r_syn, args.dmin), 0.0)
     ws_fix = None
     if args.dmin_soft:
         ws_fix = np.clip((r_syn - 300.0) / (args.dmin_soft - 300.0),
