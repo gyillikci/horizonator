@@ -82,6 +82,7 @@ def basin_margin(cc, g, min_sep):
 
 
 EXTRACTOR = 'seam'      # set from --extractor
+_EWASR = None
 
 
 def extract_boundary(img, horizon_rows=None, tol_px=4):
@@ -113,6 +114,25 @@ def extract_boundary(img, horizon_rows=None, tol_px=4):
             os.path.abspath(__file__)), 'out', 'e4m_svm.npz'))['w']
         rows = seam_extract(img, w)
         conf = np.ones(img.shape[1])
+    elif EXTRACTOR == 'ewasr':
+        # E5z (clean control frame): the trained maritime segmenter
+        # traced the truest ridge of all ten front-ends, so it is now
+        # a first-class extractor. Boundary = first non-sky row per
+        # column; columns whose TOP row is already non-sky (awnings,
+        # branches hanging into the frame) carry no sky/terrain
+        # boundary and are zero-weighted rather than guessed.
+        global _EWASR
+        if _EWASR is None:
+            from ewasr_bridge import EWasr
+            scratch = ('/tmp/claude-0/-home-user/'
+                       '792503f9-74c5-5111-83ca-eeeda63e838d/scratchpad')
+            _EWASR = EWasr(os.path.join(scratch, 'eWaSR'),
+                           os.path.join(scratch, 'ewasr_resnet18.pth'))
+        cls = _EWASR.predict(img)
+        sky = cls == 2
+        rows = np.argmax(~sky, axis=0).astype(float)
+        conf = np.where(sky[0] & ~sky.all(0), 1.0, 0.0)
+        rows[conf == 0] = img.shape[0] - 1
     else:
         rows, conf = extract.skyline_seam(img)
     if horizon_rows is not None:
@@ -358,7 +378,7 @@ def main():
                          'boundary falls below it (they are water, not '
                          'terrain)')
     ap.add_argument('--extractor', default='seam',
-                    choices=['seam', 'learned'],
+                    choices=['seam', 'learned', 'ewasr'],
                     help='image-side boundary finder: the mountain seam '
                          'detector, or E4m\'s learned patch template '
                          'with a DP seam')
