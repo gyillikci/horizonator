@@ -2303,6 +2303,43 @@ sequential estimator.
 > re-calibration remains the path to the across-only (~150 m)
 > error floor.
 
+> **E5af — extraction guards: extractor disagreement + terrain
+> plausibility.** Blind trial t3's extraction visual showed the
+> failure shape in deep haze: eWaSR's sky/land call collapses in
+> RECTANGULAR dropouts — the boundary plunges near-vertically to a
+> low island or the sea line, runs flat, and jumps back up to the
+> ridge. No mountain does that; a silhouette has no vertical walls,
+> and a U-notch or n-bump whose exit returns to its entry level is a
+> segmentation artifact or an occluder, never terrain. Two guards now
+> run inside `extract_boundary`, in the solver's own working frame
+> (load_image's 1600 px scale):
+>
+> 1. *Extractor-disagreement pre-check* (eWaSR only): the seam
+>    detector is computed in parallel; if the two disagree by more
+>    than 1.5% of frame height on over 20% of mutually confident
+>    columns, the segmenter is judged unreliable for the frame and
+>    the seam takes over. Scale caveat, measured: on t3 at FULL
+>    resolution the seam locks onto the sea-glitter edge (median 230
+>    px below the ridge, 100% disagreement) — at the solver's 1600 px
+>    scale both track the ridge and the check stays quiet. The guard
+>    is therefore correct only inside the solver pipeline, which is
+>    the only place it runs.
+> 2. *Terrain-plausibility filter* (every extractor): walls are
+>    columns where |d rows| > 2% of frame height; an opposite-sign
+>    wall within 20% of frame width returning to the entry level
+>    (±1.2% H) closes a notch/bump, and its INTERIOR columns are
+>    zero-weighted. Dropped, never bridged: dropping loses coverage,
+>    bridging invents data.
+>
+> Measured: t3 (hazy terrace) — 142/1600 columns zeroed, rms 12.9 ->
+> 10.4 mrad, basin margin 0.02 -> 0.08, verdict still (correctly)
+> refused. Regressions bit-identical, no pre-check trigger: t2 north
+> beach dlat +16 / dlon +19 m (peak-witness veto unchanged), Akyaka
+> clean dlat -225 / dlon +75 m, fix_ok, margin 3.79. The guards
+> clean the extraction without touching any frame that was already
+> healthy. Visual: `experiments/out/guard/t3_guard_viz.png`
+> (`e5af_guard_viz.py`).
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the

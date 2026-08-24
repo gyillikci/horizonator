@@ -85,6 +85,37 @@ EXTRACTOR = 'seam'      # set from --extractor
 _EWASR = None
 
 
+
+def terrain_plausible(rows, conf, H, jump_frac=0.02,
+                      max_notch_frac=0.20, level_tol_frac=0.012):
+    """No mountain wall is vertical (field rule, blind trial t3): a
+    run of columns entered through a near-vertical jump and exited
+    through an opposite near-vertical jump back to the entry level is
+    a U-notch or an n-bump — a segmentation dropout or an occluder,
+    never terrain. Its interior columns are zero-weighted rather than
+    bridged: dropping loses coverage, bridging invents data."""
+    rows = np.asarray(rows, float)
+    conf = np.asarray(conf, float).copy()
+    W = rows.size
+    jump = np.diff(rows)
+    thr = jump_frac * H
+    walls = np.where(np.abs(jump) > thr)[0]
+    used = np.zeros(W, bool)
+    for k, a in enumerate(walls):
+        if used[a]:
+            continue
+        for b in walls[k + 1:]:
+            if b - a > max_notch_frac * W:
+                break
+            if np.sign(jump[b]) == -np.sign(jump[a]) \
+                    and abs(rows[min(b + 1, W - 1)] - rows[a]) \
+                    < level_tol_frac * H:
+                conf[a + 1:b + 1] = 0.0
+                used[a:b + 1] = True
+                break
+    return conf
+
+
 def extract_boundary(img, horizon_rows=None, tol_px=4):
     """The image-side boundary, from whichever front end is selected.
 
@@ -152,6 +183,25 @@ def extract_boundary(img, horizon_rows=None, tol_px=4):
                     conf[x] = 1.0
     else:
         rows, conf = extract.skyline_seam(img)
+    Hh = img.shape[0]
+    if EXTRACTOR == 'ewasr':
+        # extractor-disagreement pre-check (blind trial t3): in deep
+        # haze the segmenter's sky/land call collapses in rectangular
+        # dropouts while the seam's continuity assumption holds; when
+        # the two disagree by more than 1.5% of the frame height on
+        # over 20% of the columns, the segmenter is the unreliable
+        # one — fall back to the seam
+        rows_s, conf_s = extract.skyline_seam(img)
+        both = (conf > 0) & (conf_s > 0)
+        if both.sum() > 50:
+            d = np.abs(np.asarray(rows) - rows_s)[both]
+            frac = float((d > 0.015 * Hh).mean())
+            if frac > 0.20:
+                print(f'extractor pre-check: eWaSR disagrees with the '
+                      f'seam on {frac*100:.0f}% of columns — falling '
+                      f'back to the seam', flush=True)
+                rows, conf = rows_s, conf_s
+    conf = terrain_plausible(rows, conf, Hh)
     if horizon_rows is not None:
         # a column whose boundary still sits below the horizon carries
         # no terrain: drop it rather than feed the waterline in
