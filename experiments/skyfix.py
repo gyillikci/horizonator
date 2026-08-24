@@ -980,6 +980,9 @@ def main():
                   dem_split_m=dem_split,
                   peak_dh_m=peak_dh_med, peak_dh_mad_m=peak_dh_mad,
                   n_peaks=len(dh_all), search_trace=trace,
+                  # the trace lists IMPROVEMENTS of the running best,
+                  # not work done: the scan is exhaustive
+                  search_evals=int(cc.size + 50),
                   cost=c0, rms_mrad=rms_mrad,
                   n_photos=N, z_m=z,
                   photos=[{k: v for k, v in d.items()
