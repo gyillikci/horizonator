@@ -17,167 +17,161 @@
 /root/.local/lib/python3.11/site-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
   warnings.warn(msg)
 photo 0: PF_20260824_195733_clean.jpg  fov 73.7, heading 196.5, pitch +0.38, roll -1.07, weight 1.00, auto-level (1330 sea cols)
-z 3.0 m, box 6000 m at (37.05578,28.31933)
-peak witness: 8 crests, median height residual -5 m (spread 8 m)
+z 3.0 m, box 6000 m at (37.06234,28.33691)
+peak witness: 9 crests, median height residual -4 m (spread 7 m)
 {
  "status": "ok",
  "reasons": [],
- "lat": 37.04943878267827,
- "lon": 28.323720909549966,
+ "lat": 37.04939176887477,
+ "lon": 28.323893180402685,
  "fix_ok": true,
- "basin_margin": 5.219043266470733,
+ "basin_margin": 5.669640538386674,
  "relief_mrad": 17.62907676913418,
- "dn_m": -705.0,
- "de_m": 390.0,
- "sigma_n_m": 119.6300663699478,
- "sigma_e_m": 129.88215851439722,
- "sigma_major_m": 136.57543910909885,
- "sigma_minor_m": 111.92800057266257,
- "major_bearing_deg": 122.65721913060153,
- "anisotropy": 1.2202079766486618,
+ "dn_m": -1440.0,
+ "de_m": -1155.0,
+ "sigma_n_m": 124.85183198035207,
+ "sigma_e_m": 152.14060073170552,
+ "sigma_major_m": 158.45792224225056,
+ "sigma_minor_m": 116.72972722714283,
+ "major_bearing_deg": 114.41658726575035,
+ "anisotropy": 1.3574770198332546,
  "jackknife": null,
  "subject_km": null,
  "dem_split_m": null,
- "peak_dh_m": -5.086425600337788,
- "peak_dh_mad_m": 8.10017650423705,
- "n_peaks": 8,
+ "peak_dh_m": -4.372706503482476,
+ "peak_dh_mad_m": 7.338163517309955,
+ "n_peaks": 9,
  "search_trace": [
   {
    "dn": -3000.0,
    "de": -3000.0,
-   "cost": 0.0001340642395070298,
+   "cost": 0.00012464362669109837,
    "stage": "coarse"
   },
   {
    "dn": -3000.0,
-   "de": 1500.0,
-   "cost": 0.0001287836033756199,
+   "de": -1500.0,
+   "cost": 0.00012169910986388584,
    "stage": "coarse"
   },
   {
    "dn": -3000.0,
-   "de": 1800.0,
-   "cost": 9.558830919301972e-05,
+   "de": -1200.0,
+   "cost": 0.00010854815692339595,
    "stage": "coarse"
   },
   {
    "dn": -3000.0,
-   "de": 2100.0,
-   "cost": 6.571463795696764e-05,
+   "de": -900.0,
+   "cost": 9.608436515504644e-05,
    "stage": "coarse"
   },
   {
    "dn": -3000.0,
-   "de": 2400.0,
-   "cost": 5.0620732482682174e-05,
+   "de": -600.0,
+   "cost": 8.16498705601563e-05,
    "stage": "coarse"
   },
   {
-   "dn": -2400.0,
-   "de": 2400.0,
-   "cost": 5.047109873411576e-05,
+   "dn": -3000.0,
+   "de": -300.0,
+   "cost": 6.59739987987184e-05,
    "stage": "coarse"
   },
   {
-   "dn": -2400.0,
-   "de": 2700.0,
-   "cost": 4.8072655937172325e-05,
+   "dn": -3000.0,
+   "de": 0.0,
+   "cost": 5.6406140669707045e-05,
    "stage": "coarse"
   },
   {
-   "dn": -2400.0,
-   "de": 3000.0,
-   "cost": 4.7863784260326385e-05,
+   "dn": -3000.0,
+   "de": 300.0,
+   "cost": 5.4712127079358484e-05,
    "stage": "coarse"
   },
   {
-   "dn": -2100.0,
-   "de": 1500.0,
-   "cost": 4.6198514304791884e-05,
-   "stage": "coarse"
-  },
-  {
-   "dn": -2100.0,
-   "de": 3000.0,
-   "cost": 4.4974800745909155e-05,
-   "stage": "coarse"
-  },
-  {
-   "dn": -1800.0,
-   "de": 600.0,
-   "cost": 4.23173756374624e-05,
-   "stage": "coarse"
-  },
-  {
-   "dn": -1800.0,
+   "dn": -3000.0,
    "de": 900.0,
-   "cost": 4.0858822801901856e-05,
+   "cost": 5.0340361084728194e-05,
    "stage": "coarse"
   },
   {
-   "dn": -1800.0,
+   "dn": -3000.0,
    "de": 1200.0,
-   "cost": 3.7524758576451554e-05,
+   "cost": 4.649388227001525e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 2400.0,
+   "cost": 3.6492593880294546e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 2700.0,
+   "cost": 3.1531816168223954e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 3000.0,
+   "cost": 2.9858372470756747e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": 2700.0,
+   "cost": 2.1221648368488387e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": 3000.0,
+   "cost": 1.6030346982867752e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": -900.0,
+   "cost": 1.2711515645965728e-05,
    "stage": "coarse"
   },
   {
    "dn": -1800.0,
-   "de": 1500.0,
-   "cost": 3.0765517238029996e-05,
+   "de": -1200.0,
+   "cost": 7.3914280332558256e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": -900.0,
+   "cost": 6.061161308236189e-06,
    "stage": "coarse"
   },
   {
    "dn": -1500.0,
-   "de": 600.0,
-   "cost": 2.0300929398326652e-05,
+   "de": -1200.0,
+   "cost": 2.254760260911621e-06,
    "stage": "coarse"
   },
   {
-   "dn": -1200.0,
-   "de": 300.0,
-   "cost": 1.3569030190399639e-05,
-   "stage": "coarse"
-  },
-  {
-   "dn": -1200.0,
-   "de": 600.0,
-   "cost": 8.100444561155082e-06,
-   "stage": "coarse"
-  },
-  {
-   "dn": -900.0,
-   "de": 300.0,
-   "cost": 4.676286641885544e-06,
-   "stage": "coarse"
-  },
-  {
-   "dn": -900.0,
-   "de": 600.0,
-   "cost": 4.133004279990182e-06,
-   "stage": "coarse"
-  },
-  {
-   "dn": -600.0,
-   "de": 300.0,
-   "cost": 2.3213939190565653e-06,
-   "stage": "coarse"
-  },
-  {
-   "dn": -720.0,
-   "de": 420.0,
-   "cost": 1.8467536631887403e-06,
+   "dn": -1440.0,
+   "de": -1140.0,
+   "cost": 1.8330349012831048e-06,
    "stage": "refine_60m"
   },
   {
-   "dn": -705.0,
-   "de": 390.0,
-   "cost": 1.8097748588964926e-06,
+   "dn": -1440.0,
+   "de": -1155.0,
+   "cost": 1.806843273972429e-06,
    "stage": "refine_15m"
   }
  ],
  "search_evals": 491,
- "cost": 1.8097748588964926e-06,
- "rms_mrad": 1.902511423827196,
+ "cost": 1.806843273972429e-06,
+ "rms_mrad": 1.9009698966435156,
  "n_photos": 1,
  "z_m": 3.0,
  "photos": [
@@ -188,14 +182,14 @@ peak witness: 8 crests, median height residual -5 m (spread 8 m)
    "pitch_deg": 0.3774843149160218,
    "roll_deg": -1.0658724094228225,
    "weight": 1.0,
-   "rms_mrad": 1.902511423827196,
-   "heading_offset_deg": -0.8,
+   "rms_mrad": 1.9009698966435156,
+   "heading_offset_deg": -0.6000000000000001,
    "el_offset_mrad": -1.2499999999999993,
    "attitude_source": "waterline"
   }
  ],
- "heading_offset_deg": -0.8,
+ "heading_offset_deg": -0.6000000000000001,
  "el_offset_mrad": -1.2499999999999993,
  "fov_deg": 73.7
 }
-wrote out/blind/trial_1.json/.png
+wrote out/blind/trial_6.json/.png

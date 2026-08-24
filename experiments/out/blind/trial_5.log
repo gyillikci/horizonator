@@ -17,167 +17,197 @@
 /root/.local/lib/python3.11/site-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
   warnings.warn(msg)
 photo 0: PF_20260824_195733_clean.jpg  fov 73.7, heading 196.5, pitch +0.38, roll -1.07, weight 1.00, auto-level (1330 sea cols)
-z 3.0 m, box 6000 m at (37.05578,28.31933)
-peak witness: 8 crests, median height residual -5 m (spread 8 m)
+z 3.0 m, box 6000 m at (37.04152,28.30910)
+peak witness: 8 crests, median height residual -5 m (spread 9 m)
 {
  "status": "ok",
  "reasons": [],
- "lat": 37.04943878267827,
- "lon": 28.323720909549966,
+ "lat": 37.04948099621238,
+ "lon": 28.32380228137724,
  "fix_ok": true,
- "basin_margin": 5.219043266470733,
+ "basin_margin": 4.700685923708159,
  "relief_mrad": 17.62907676913418,
- "dn_m": -705.0,
- "de_m": 390.0,
- "sigma_n_m": 119.6300663699478,
- "sigma_e_m": 129.88215851439722,
- "sigma_major_m": 136.57543910909885,
- "sigma_minor_m": 111.92800057266257,
- "major_bearing_deg": 122.65721913060153,
- "anisotropy": 1.2202079766486618,
+ "dn_m": 885.0,
+ "de_m": 1305.0,
+ "sigma_n_m": 102.2183746700986,
+ "sigma_e_m": 134.63828768110403,
+ "sigma_major_m": 139.23084045467098,
+ "sigma_minor_m": 95.86885675850286,
+ "major_bearing_deg": 110.56387285108505,
+ "anisotropy": 1.4523052132080654,
  "jackknife": null,
  "subject_km": null,
  "dem_split_m": null,
- "peak_dh_m": -5.086425600337788,
- "peak_dh_mad_m": 8.10017650423705,
+ "peak_dh_m": -5.031775661105934,
+ "peak_dh_mad_m": 8.87471125499447,
  "n_peaks": 8,
  "search_trace": [
   {
    "dn": -3000.0,
    "de": -3000.0,
-   "cost": 0.0001340642395070298,
+   "cost": 0.00041554679628046033,
    "stage": "coarse"
   },
   {
    "dn": -3000.0,
-   "de": 1500.0,
-   "cost": 0.0001287836033756199,
+   "de": 0.0,
+   "cost": 0.0004116211205105307,
    "stage": "coarse"
   },
   {
    "dn": -3000.0,
-   "de": 1800.0,
-   "cost": 9.558830919301972e-05,
+   "de": 300.0,
+   "cost": 0.00036194835106352386,
    "stage": "coarse"
   },
   {
    "dn": -3000.0,
-   "de": 2100.0,
-   "cost": 6.571463795696764e-05,
-   "stage": "coarse"
-  },
-  {
-   "dn": -3000.0,
-   "de": 2400.0,
-   "cost": 5.0620732482682174e-05,
-   "stage": "coarse"
-  },
-  {
-   "dn": -2400.0,
-   "de": 2400.0,
-   "cost": 5.047109873411576e-05,
-   "stage": "coarse"
-  },
-  {
-   "dn": -2400.0,
-   "de": 2700.0,
-   "cost": 4.8072655937172325e-05,
-   "stage": "coarse"
-  },
-  {
-   "dn": -2400.0,
-   "de": 3000.0,
-   "cost": 4.7863784260326385e-05,
-   "stage": "coarse"
-  },
-  {
-   "dn": -2100.0,
-   "de": 1500.0,
-   "cost": 4.6198514304791884e-05,
-   "stage": "coarse"
-  },
-  {
-   "dn": -2100.0,
-   "de": 3000.0,
-   "cost": 4.4974800745909155e-05,
-   "stage": "coarse"
-  },
-  {
-   "dn": -1800.0,
    "de": 600.0,
-   "cost": 4.23173756374624e-05,
+   "cost": 0.0002980947931109339,
    "stage": "coarse"
   },
   {
-   "dn": -1800.0,
+   "dn": -3000.0,
    "de": 900.0,
-   "cost": 4.0858822801901856e-05,
+   "cost": 0.0002347073271247863,
    "stage": "coarse"
   },
   {
-   "dn": -1800.0,
+   "dn": -3000.0,
    "de": 1200.0,
-   "cost": 3.7524758576451554e-05,
+   "cost": 0.0001952831816863715,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": -3000.0,
+   "cost": 0.000168549412895484,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": -3000.0,
+   "cost": 0.0001442872921036822,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": 3000.0,
+   "cost": 0.00013439157982745543,
    "stage": "coarse"
   },
   {
    "dn": -1800.0,
-   "de": 1500.0,
-   "cost": 3.0765517238029996e-05,
+   "de": -3000.0,
+   "cost": 0.00011463285658042433,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 3000.0,
+   "cost": 9.082648630589769e-05,
    "stage": "coarse"
   },
   {
    "dn": -1500.0,
-   "de": 600.0,
-   "cost": 2.0300929398326652e-05,
+   "de": 3000.0,
+   "cost": 6.994083467020171e-05,
    "stage": "coarse"
   },
   {
    "dn": -1200.0,
-   "de": 300.0,
-   "cost": 1.3569030190399639e-05,
-   "stage": "coarse"
-  },
-  {
-   "dn": -1200.0,
-   "de": 600.0,
-   "cost": 8.100444561155082e-06,
-   "stage": "coarse"
-  },
-  {
-   "dn": -900.0,
-   "de": 300.0,
-   "cost": 4.676286641885544e-06,
-   "stage": "coarse"
-  },
-  {
-   "dn": -900.0,
-   "de": 600.0,
-   "cost": 4.133004279990182e-06,
+   "de": 3000.0,
+   "cost": 5.959708272303404e-05,
    "stage": "coarse"
   },
   {
    "dn": -600.0,
-   "de": 300.0,
-   "cost": 2.3213939190565653e-06,
+   "de": 2400.0,
+   "cost": 5.14015167389534e-05,
    "stage": "coarse"
   },
   {
-   "dn": -720.0,
-   "de": 420.0,
-   "cost": 1.8467536631887403e-06,
+   "dn": -300.0,
+   "de": 1500.0,
+   "cost": 5.0748666449390346e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 1800.0,
+   "cost": 4.747701465714162e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 2100.0,
+   "cost": 4.162123192792496e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 2400.0,
+   "cost": 3.3907425801780214e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": 1500.0,
+   "cost": 2.5647245644805275e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": 2400.0,
+   "cost": 2.3676925691535444e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 300.0,
+   "de": 1200.0,
+   "cost": 1.838872783979079e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 300.0,
+   "de": 1500.0,
+   "cost": 1.0903754401013097e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 600.0,
+   "de": 1200.0,
+   "cost": 6.443463070608087e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": 600.0,
+   "de": 1500.0,
+   "cost": 4.828859700102184e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": 900.0,
+   "de": 1200.0,
+   "cost": 2.46815798778598e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": 900.0,
+   "de": 1320.0,
+   "cost": 1.87396267968583e-06,
    "stage": "refine_60m"
   },
   {
-   "dn": -705.0,
-   "de": 390.0,
-   "cost": 1.8097748588964926e-06,
+   "dn": 885.0,
+   "de": 1305.0,
+   "cost": 1.788632530845248e-06,
    "stage": "refine_15m"
   }
  ],
  "search_evals": 491,
- "cost": 1.8097748588964926e-06,
- "rms_mrad": 1.902511423827196,
+ "cost": 1.788632530845248e-06,
+ "rms_mrad": 1.8913659248517978,
  "n_photos": 1,
  "z_m": 3.0,
  "photos": [
@@ -188,7 +218,7 @@ peak witness: 8 crests, median height residual -5 m (spread 8 m)
    "pitch_deg": 0.3774843149160218,
    "roll_deg": -1.0658724094228225,
    "weight": 1.0,
-   "rms_mrad": 1.902511423827196,
+   "rms_mrad": 1.8913659248517978,
    "heading_offset_deg": -0.8,
    "el_offset_mrad": -1.2499999999999993,
    "attitude_source": "waterline"
@@ -198,4 +228,4 @@ peak witness: 8 crests, median height residual -5 m (spread 8 m)
  "el_offset_mrad": -1.2499999999999993,
  "fov_deg": 73.7
 }
-wrote out/blind/trial_1.json/.png
+wrote out/blind/trial_5.json/.png
