@@ -2381,6 +2381,34 @@ sequential estimator.
 > chain declines such a frame, no fix is possible, so prefer
 > uncropped frames or crops that keep the sea horizon.
 
+> **E5ah — the repaired chain's first live acceptance, and what
+> separates two frames from one spot.** A second Gulf of Gokova frame
+> taken 30 SECONDS after the E5ag one, from the same rock (pill
+> 37.04859, 28.29302, 16 m), heading 172.6 instead of 177.0, same
+> 4032x1855 off-centre crop — and this one the instrument ACCEPTS:
+> dlat -284 m / dlon -182 m (337 m; along-sight +258, across +217),
+> basin margin 1.16, rms 3.8 mrad, sigma 465 x 189 m, all four gates
+> clear. The level chain anchored it at pitch +3.40 deg, roll -9.06
+> deg — the frame is visibly canted, and the repaired refinement
+> measured that cant instead of declining the frame. The peak witness
+> passed at +28 m median (37 m spread) against the 30 m limit: two
+> metres of margin, and the sign is OPPOSITE the E5ag frame's -68 m,
+> which is what an honest witness looks like when position error
+> changes rather than a systematic DEM bias.
+>
+> The instructive part is the pair. Same viewpoint, half a minute
+> apart, both anchored by the same repaired chain, one refused and
+> one accepted — and the discriminator is not haze, extraction, or
+> attitude but SCENE RELIEF. The 177-deg frame looks straight down
+> the gulf at a long ridge spanning 9.5 mrad; the 172.6-deg frame
+> catches the same coast sweeping diagonally from 30 to 100 mrad
+> (relief 15.6). Shape is what pins position, and a few degrees of
+> heading decide whether the scene has any. Field protocol gains a
+> line: when a bearing gives you a flat distant ridge, TURN until the
+> coast cuts diagonally across the frame — it costs nothing and is
+> the difference between a refusal and a 337 m fix. Outputs in
+> `experiments/out/ak3/`.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
