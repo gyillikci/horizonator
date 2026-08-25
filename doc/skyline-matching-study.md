@@ -2584,6 +2584,63 @@ sequential estimator.
 > scenes are not merely harder; they are unconstrained. Overlay:
 > `experiments/out/bd1/BD1_final_overlay.png`.
 
+> **E5an — the Theodolite set: a measured attitude bias, and why
+> correcting it made the instrument worse.** The theodolite folder is
+> a different kind of material from the PeakFinder frames: the app
+> writes attitude INTO the EXIF (pitch, roll, heading, plus the
+> compass and GPS accuracies iOS reported), so the levelling chain
+> that cost so much work on the Gokova frames is simply not needed.
+> 83 sightings, 12 with a sea horizon detected, median eye height
+> 2.5 m, spread from Bodrum to the Marmara. All 12 pass the
+> near-field pre-screen with room to spare — subject at 5-25 km, 0%
+> of azimuths inside 3 km, the opposite of the Bodrum frame (E5am).
+>
+> Two independent attitude measurements exist per sea-horizon frame:
+> the app's, and the one fitted to the horizon itself. They disagree
+> systematically — the app's pitch runs **0.70 deg (12.3 mrad) low**,
+> median over 12 frames with a MAD of only 0.24 deg, and the offset
+> does not vary with zoom (1x: -0.65, 8x: -0.89), so it is not a
+> per-lens tilt. The solver confirmed it independently before being
+> asked to: run from the raw app attitude, `el_offset_mrad` pinned at
+> **+10.1 mrad — the band edge — in 7 of 8 frames**, the same clamping
+> signature E5aj found in the Akyaka waterline.
+>
+> So correcting the bias should help. Measured over 8 frames, it does
+> not:
+>
+> | arm | accepted | median error (accepted only) | worst | clamped |
+> |---|---|---|---|---|
+> | raw app attitude | 4/8 | **401 m** | 792 m | 7/8 |
+> | app + 0.70 deg | 8/8 | 781 m | 1139 m | 1/8 |
+>
+> The correction does exactly what it was meant to — the offset leaves
+> the band edge in 7 of 8 frames — and the fits get better in the cost
+> sense. But the positions get worse, and the reason is the part worth
+> keeping: under the raw attitude the gates REFUSED the four bad fixes
+> (3034, 1320, 883, 413 m), because a fit forced against its band edge
+> shows up in margin and rms. De-biasing removes that symptom, the
+> gates pass everything, and the instrument now offers eight fixes
+> with a median of 781 m instead of four with a median of 401 m. A
+> more accurate model made a less trustworthy instrument.
+>
+> The bias correction is therefore NOT shipped. It is a real,
+> well-measured property of the app's attitude and it is recorded
+> here; what is not established is that acting on it helps, and on
+> this sample it demonstrably does not. What the raw-attitude arm
+> offers (4 fixes, 397/399/404/792 m) is the honest current state of
+> this material.
+>
+> Two caveats stated rather than resolved: the sample is 8 frames and
+> one of them (KWHC9160, 3034 m raw vs 867 m corrected) drives much of
+> the mean; and the 400-1100 m band is worse than the PeakFinder
+> wide-frame regime (150-340 m) for three reasons not yet separated —
+> most of these frames are zoomed narrow-FOV (10-20 deg), `--crest-dh
+> 9` was calibrated on a different coast, and the compass accuracy of
+> 10-15 deg lets the solver spend 4.6-12 deg of heading freedom.
+> Overlay of the best frame: `experiments/out/theo1/HATY3309_overlay.png`
+> — where the E5af extractor pre-check also fired for real, falling
+> back to the seam on a hazy 41%-disagreement frame.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the

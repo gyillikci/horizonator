@@ -1,0 +1,198 @@
+/root/.local/lib/python3.11/site-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/root/.local/lib/python3.11/site-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+photo 0: KWHC9160.JPG  fov 10.3, heading 244.35, pitch +0.20, roll -0.00, weight 1.00
+z 2.5 m, box 6000 m at (40.90622,29.13945)
+{
+ "status": "ok",
+ "reasons": [],
+ "lat": 40.900014680919156,
+ "lon": 29.13320291285417,
+ "fix_ok": true,
+ "basin_margin": 0.9143181196115653,
+ "relief_mrad": 6.495531621889034,
+ "dn_m": -690.0,
+ "de_m": -525.0,
+ "sigma_n_m": 97.05426636034001,
+ "sigma_e_m": 66.21547688480014,
+ "sigma_major_m": 98.23461250093598,
+ "sigma_minor_m": 64.4513840395711,
+ "major_bearing_deg": 11.817455691759307,
+ "anisotropy": 1.5241660666374994,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": null,
+ "peak_dh_mad_m": null,
+ "n_peaks": 0,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.0003011652041138466,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2700.0,
+   "cost": 0.00022662921910935677,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2400.0,
+   "cost": 0.00016814013843576272,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2100.0,
+   "cost": 0.0001380931205976405,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1800.0,
+   "cost": 1.3549019953824929e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -600.0,
+   "cost": 9.202209115383254e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -300.0,
+   "cost": 8.546137052103603e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 0.0,
+   "cost": 7.683264786981267e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 300.0,
+   "cost": 5.7926098319951545e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": 3000.0,
+   "cost": 4.4638666261570615e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": 300.0,
+   "cost": 3.6909641618779596e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": 600.0,
+   "cost": 3.2030234204209617e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": 900.0,
+   "cost": 2.6786689916948014e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 600.0,
+   "cost": 2.623680688144295e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 900.0,
+   "cost": 2.454930727575174e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 1200.0,
+   "cost": 1.9868792958682197e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": -1200.0,
+   "cost": 1.1743190071106296e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": -1200.0,
+   "cost": 1.1119001886830678e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": -900.0,
+   "cost": 6.806668673345943e-07,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": -600.0,
+   "cost": 6.800504723258174e-07,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": -300.0,
+   "cost": 2.797080552830707e-07,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": -600.0,
+   "cost": 2.413886333040639e-07,
+   "stage": "coarse"
+  },
+  {
+   "dn": -720.0,
+   "de": -540.0,
+   "cost": 2.4136076263642503e-07,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -690.0,
+   "de": -525.0,
+   "cost": 2.2612727316975327e-07,
+   "stage": "refine_15m"
+  }
+ ],
+ "search_evals": 491,
+ "cost": 2.2612727316975327e-07,
+ "rms_mrad": 0.6724987333367302,
+ "n_photos": 1,
+ "z_m": 2.5,
+ "photos": [
+  {
+   "file": "KWHC9160.JPG",
+   "fov_deg": 10.286,
+   "heading_deg": 244.35,
+   "pitch_deg": 0.2,
+   "roll_deg": -0.0,
+   "weight": 1.0,
+   "rms_mrad": 0.6724987333367302,
+   "heading_offset_deg": 6.2,
+   "el_offset_mrad": 6.073745796940264,
+   "attitude_source": "prior"
+  }
+ ],
+ "heading_offset_deg": 6.2,
+ "el_offset_mrad": 6.073745796940264,
+ "fov_deg": 10.286
+}
+wrote out/theo1/KWHC9160_cor.json/.png
