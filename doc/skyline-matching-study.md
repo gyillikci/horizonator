@@ -2534,6 +2534,56 @@ sequential estimator.
 > useful reminder of how little it takes to move these fixes.
 > Curve: `experiments/out/e5al/dh_curve.png` (`e5al_dhcurve.py`).
 
+> **E5am — the DEM overlay, and a near-field frame it diagnosed in one
+> picture.** `demoverlay.py` projects the model the other way: instead
+> of comparing observation and synthesis in elevation-vs-azimuth
+> space, it runs the DEM horizon back through the camera model at the
+> declared position and attitude and draws it ON the photograph,
+> coloured by range to the crest, optionally beside the extracted
+> boundary. Range colour is what makes it diagnostic — a near layer
+> swings hard with a small position error while a far coast barely
+> moves, so a mismatch large on warm colours and small on cool ones is
+> a position error, and one uniform across colours is attitude or
+> focal length.
+>
+> Building it produced two instructive self-inflicted wrongs, both now
+> guarded in the tool. First version used `visible_layers(n_layers=1)`,
+> which returns the NEAREST crest rather than the sky boundary; second
+> used `d_min=150` where the solve had used skyfix's default 1000, so
+> the marcher called the shoreline 150 m away the skyline — a 15 m
+> bank at 150 m sits 5 degrees up, and the overlay duly painted the
+> DEM 5 degrees above the ridge. The lesson is now in the tool's help:
+> an overlay MUST be drawn with the same marcher and the same d_min as
+> the solve, or it draws a different DEM than the fix was measured
+> against.
+>
+> The frame itself (Bodrum peninsula, heading 149, hills forming the
+> silhouette at a median 0.71 km — 100% of azimuths inside 1 km) is
+> squarely in E4x's near-field failure regime, and the instrument
+> refused it three times: default d_min 1234 m out, `--dmin-soft`
+> 1234 m, and even with the measured pitch handed to it, 2213 m with a
+> degenerate covariance. Measured against truth in angle space, the
+> diagnosis splits cleanly in two:
+>
+> - Shape correlation between DEM and observation is **+0.957** — the
+>   30 m DEM describes this 700 m hillside's PROFILE better than the
+>   regime's reputation suggests.
+> - But the DEM sits a constant **+30.6 mrad** above the observation
+>   (unmodelled camera pitch: the level chain found neither sea
+>   horizon nor waterline in this bay and fell back to `prior`, whose
+>   band is +-10 mrad — three times too small to reach), and after
+>   removing that constant a **13.5 mrad** residual remains, above the
+>   12 mrad `--max-rms` threshold.
+>
+> Handing the solver the measured pitch settles which one is fatal:
+> it is not the attitude. With pitch correct the fit is good (rms 4.9)
+> and the position is still 2213 m out with no measurable cost
+> curvature — a 700 m hillside swings violently with position, but the
+> DEM cannot track that swing to better than 13 mrad, so the cost
+> surface is shaped by DEM error rather than by geometry. Near-field
+> scenes are not merely harder; they are unconstrained. Overlay:
+> `experiments/out/bd1/BD1_final_overlay.png`.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
