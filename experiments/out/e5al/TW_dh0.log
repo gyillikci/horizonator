@@ -1,0 +1,237 @@
+/root/.local/lib/python3.11/site-packages/timm/models/layers/__init__.py:49: FutureWarning: Importing from timm.models.layers is deprecated, please import via timm.layers
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.layers", FutureWarning)
+/root/.local/lib/python3.11/site-packages/timm/models/registry.py:4: FutureWarning: Importing from timm.models.registry is deprecated, please import via timm.models
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.models", FutureWarning)
+/tmp/claude-0/-home-user/792503f9-74c5-5111-83ca-eeeda63e838d/scratchpad/MobileSAM/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_5m_224 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_5m_224. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+/tmp/claude-0/-home-user/792503f9-74c5-5111-83ca-eeeda63e838d/scratchpad/MobileSAM/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_11m_224 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_11m_224. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+/tmp/claude-0/-home-user/792503f9-74c5-5111-83ca-eeeda63e838d/scratchpad/MobileSAM/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_21m_224 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_21m_224. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+/tmp/claude-0/-home-user/792503f9-74c5-5111-83ca-eeeda63e838d/scratchpad/MobileSAM/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_21m_384 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_21m_384. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+/tmp/claude-0/-home-user/792503f9-74c5-5111-83ca-eeeda63e838d/scratchpad/MobileSAM/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_21m_512 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_21m_512. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
+  return register_model(fn_wrapper)
+/root/.local/lib/python3.11/site-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/root/.local/lib/python3.11/site-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+photo 0: PF_20260824_122139_wide.jpg  fov 73.7, heading 297.0, pitch +3.47, roll -0.57, weight 1.00, auto-level (568 sea cols)
+z 4.0 m, box 6000 m at (36.64095,28.09548)
+peak witness: 7 crests, median height residual -2 m (spread 10 m)
+{
+ "status": "ok",
+ "reasons": [],
+ "lat": 36.64256877889065,
+ "lon": 28.092958195470835,
+ "fix_ok": true,
+ "basin_margin": 0.9617477250919434,
+ "relief_mrad": 15.572210480694535,
+ "dn_m": 180.0,
+ "de_m": -225.0,
+ "sigma_n_m": 252.48407422242832,
+ "sigma_e_m": 239.241515160254,
+ "sigma_major_m": 256.83952047911254,
+ "sigma_minor_m": 234.55952556268159,
+ "major_bearing_deg": 153.2479371288521,
+ "anisotropy": 1.0949865278887472,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -1.6954386528058814,
+ "peak_dh_mad_m": 9.765934373415929,
+ "n_peaks": 7,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 6.719052613754267e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2700.0,
+   "cost": 6.679240943199098e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2400.0,
+   "cost": 6.120084113200646e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": -900.0,
+   "cost": 5.8637021479532184e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": -600.0,
+   "cost": 5.661986568569816e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": -2400.0,
+   "cost": 5.5420160878733615e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": -2700.0,
+   "cost": 5.161995846796677e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": -2400.0,
+   "cost": 4.967420808341967e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": -2400.0,
+   "cost": 4.396221655445544e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": -600.0,
+   "cost": 4.12951756760078e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": -300.0,
+   "cost": 4.1002133217473665e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 0.0,
+   "cost": 3.947803595851361e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": -900.0,
+   "cost": 3.704772418164241e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": -600.0,
+   "cost": 3.697926836642069e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": 0.0,
+   "cost": 3.5403911247920545e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": 300.0,
+   "cost": 3.177304888397954e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": -300.0,
+   "cost": 3.0261049162167803e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": 0.0,
+   "cost": 2.8711378191274426e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": 600.0,
+   "cost": 2.8486270734373337e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": -900.0,
+   "cost": 2.4285502054045766e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": -600.0,
+   "cost": 2.0893687383818974e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": -300.0,
+   "cost": 1.7418156648433823e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 0.0,
+   "cost": 1.6591100066274085e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": -600.0,
+   "cost": 1.4722382565791753e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": -300.0,
+   "cost": 1.1505312670456333e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 300.0,
+   "de": -300.0,
+   "cost": 1.104552974129644e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 180.0,
+   "de": -240.0,
+   "cost": 9.974609071195439e-06,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": 180.0,
+   "de": -225.0,
+   "cost": 9.852878374403059e-06,
+   "stage": "refine_15m"
+  }
+ ],
+ "search_evals": 491,
+ "cost": 9.852878374403059e-06,
+ "rms_mrad": 4.439116663121856,
+ "n_photos": 1,
+ "z_m": 4.0,
+ "photos": [
+  {
+   "file": "PF_20260824_122139_wide.jpg",
+   "fov_deg": 73.74,
+   "heading_deg": 297.0,
+   "pitch_deg": 3.473606405623997,
+   "roll_deg": -0.5726557149551342,
+   "weight": 1.0,
+   "rms_mrad": 4.439116663121856,
+   "heading_offset_deg": -0.4,
+   "el_offset_mrad": -2.0,
+   "attitude_source": "radon"
+  }
+ ],
+ "heading_offset_deg": -0.4,
+ "el_offset_mrad": -2.0,
+ "fov_deg": 73.74
+}
+wrote out/e5al/TW_dh0.json/.png

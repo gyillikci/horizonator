@@ -2499,6 +2499,41 @@ sequential estimator.
 > code: the sweep that motivated it was run against the regressed
 > terrace frame and cannot settle anything.
 
+> **E5al — the crest-deficit sweep, re-run clean: dh = 9 stands.**
+> The E5aj finding (a clamped elevation band leaking into the
+> along-sight direction) suggested `--crest-dh 9` might be absorbing
+> band clamping rather than real crest deficit, and so be too large.
+> Re-swept on repaired code over E5ae's three frames, dh in
+> {0,3,6,9,12,15}, the hypothesis is REFUTED and the original
+> calibration is reproduced independently:
+>
+> | dh | north beach | terrace | Akyaka clean | mean | mean along |
+> |---|---|---|---|---|---|
+> | 0 | 154 | 288 | 299 | 247 | +228 |
+> | 3 | 154 | 242 | 256 | 217 | +186 |
+> | 6 | 162 | 242 | 280 | 228 | +199 |
+> | **9** | **150** | **209** | **256** | **205** | **+168** |
+> | 12 | 127 | 331 | 237 | 232 | +144 |
+> | 15 | 127 | 338 | 233 | 233 | +132 |
+>
+> dh = 9 minimises both mean (205 m) and median (209 m), and E5ae's
+> reason for stopping there is reproduced exactly: beyond dh = 9 the
+> terrace frame's ACROSS-sight error blows up (+140 -> +308 -> +328 m)
+> as the heading trade re-balances, even as its along-sight error
+> keeps falling. The along column falls monotonically with dh across
+> the whole grid (+228 -> +132), which is the crest-deficit mechanism
+> behaving exactly as modelled — the term is doing real work, not
+> compensating for the band.
+>
+> Two honest caveats. The per-frame numbers differ slightly from E5ae
+> (terrace 197 -> 209, Akyaka 237 -> 256) because the extraction
+> guards and level repair moved them; the curve SHAPE and the optimum
+> are what reproduce, not the digits. And Akyaka clean reads 256 m
+> here against 237 m in the 12-frame battery, from nothing but
+> `--fov 73.74` vs `73.70` — a 0.04 deg FOV difference worth 19 m, a
+> useful reminder of how little it takes to move these fixes.
+> Curve: `experiments/out/e5al/dh_curve.png` (`e5al_dhcurve.py`).
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
