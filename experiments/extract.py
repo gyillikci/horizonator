@@ -334,6 +334,11 @@ def sea_horizon_attitude_radon(rgb, f_px, dip_rad, max_step=0.20,
         # passes lets weak water-texture lines CRAWL into acceptance
         # (three portrait frames anchored at pitch +34 deg), so they
         # keep the measured single-pass behavior.
+        # It is a RESCUE, not a routine: a pass that already satisfies
+        # the acceptance gates is accepted as it stands. Re-refining a
+        # healthy fit moves it — the terrace frame lost 160 m ACROSS
+        # sight (197 -> 356 m) to a 0.20 deg pitch shift while its rms
+        # IMPROVED 3.7 -> 3.4, so no gate could see the damage.
         for rp in range(3 if ext else 1):
             pred = (r0 + m * u if rp == 0
                     else (H - 1) / 2.0 - (a * Hu + b * u))
@@ -383,6 +388,13 @@ def sea_horizon_attitude_radon(rgb, f_px, dip_rad, max_step=0.20,
                 if np.nansum((res < -3.0) & ok) > below_lim:
                     dead = True
                     break
+            # gates satisfied already? then this pass IS the answer
+            res = np.where(ok, v - (a * Hu + b * u), np.nan)
+            if (float(inl.mean()) >= frac_min
+                    and float((u[inl].max() - u[inl].min())
+                              / max(u[-1] - u[0], 1.0)) >= min_span_frac
+                    and float(np.sqrt(np.nanmean(res[inl] ** 2))) <= tol_px):
+                break
         if dead:
             continue
         res = np.where(ok, v - (a * Hu + b * u), np.nan)

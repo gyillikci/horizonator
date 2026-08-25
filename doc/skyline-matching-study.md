@@ -2464,6 +2464,41 @@ sequential estimator.
 > shot out of the gulf with open horizon: the geometric rule must call
 > it `horizon`, and +-5 must not beat +-2 on it.
 
+> **E5ak — a silent 160 m regression, and re-refinement demoted to a
+> rescue.** Re-calibrating `--crest-dh` against the corrected line
+> class (the E5aj follow-up) turned up something worse than the tuning
+> question: the terrace frame, one of E5ae's three calibration frames,
+> had regressed from 197 m to 356 m on the SHIPPED path. Cause: the
+> E5ag re-refinement, which re-centres the search window on the fitted
+> line and re-solves. On a seed that is already healthy this MOVES the
+> answer — pitch shifted 0.20 deg and the miss went almost entirely
+> ACROSS sight (+160 -> +348 m).
+>
+> Two things made it invisible. The rms IMPROVED, 3.7 -> 3.4 mrad, and
+> the basin margin held at ~2.5, so no gate could see the damage —
+> another instance of the E5t lesson that a better fit is not a better
+> position. And the 9-frame regression battery did not contain the
+> terrace frame at all: the hole was in the test set, not the gates.
+>
+> Fix: re-refinement is a RESCUE, not a routine. A pass whose fit
+> already satisfies the acceptance gates (frac, span, rms) is accepted
+> as it stands; only a pass that FAILS them earns another, and only
+> for external seeds. That is exactly the failure re-refinement was
+> introduced for — AK2's seed died on the span gate at 0.27 — so the
+> rescue still fires where it was needed and never touches a healthy
+> fit.
+>
+> 12-frame battery after the fix (the terrace frame now permanently
+> included): terrace 356 -> 209 m (across +348 -> +140), Akyaka clean
+> back to its E5ae value 237 m, north beach unchanged at 150 m, both
+> Gokova frames still rescued and unchanged (337 m accepted, 576 m
+> refused), blind t2/t3 and all five portraits bit-identical. No frame
+> loses.
+>
+> The dh question that started this is therefore re-opened on clean
+> code: the sweep that motivated it was run against the regressed
+> terrace frame and cannot settle anything.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
