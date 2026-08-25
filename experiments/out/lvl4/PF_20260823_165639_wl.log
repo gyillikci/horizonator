@@ -12,163 +12,161 @@
   return register_model(fn_wrapper)
 /tmp/claude-0/-home-user/792503f9-74c5-5111-83ca-eeeda63e838d/scratchpad/MobileSAM/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_21m_512 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_21m_512. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
   return register_model(fn_wrapper)
-/root/.local/lib/python3.11/site-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
-  warnings.warn(
-/root/.local/lib/python3.11/site-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
-  warnings.warn(msg)
-photo 0: PF_new_akyaka2.jpg  fov 73.7, heading 177.0, pitch +10.83, roll +0.62, weight 1.00, auto-level (798 sea cols)
-z 17.0 m, box 6000 m at (37.04860,28.29300)
-peak witness: 5 crests, median height residual +29 m (spread 77 m)
-INCONCLUSIVE: ambiguous landscape: basin margin 0.06 < 0.15
+photo 0: PF_20260823_165639.jpg  fov 38.1, heading 324.7, pitch +0.00, roll +0.00, weight 1.00
+z 4.0 m, box 6000 m at (36.64116,28.09566)
+peak witness: 1 crests, median height residual -7 m (spread 0 m)
+INCONCLUSIVE: minimum on the search-box boundary: the true position may lie outside the box
+INCONCLUSIVE: residual 12.1 mrad > 12.0: the DEM cannot explain this observation
 {
  "status": "inconclusive",
  "reasons": [
-  "ambiguous landscape: basin margin 0.06 < 0.15"
+  "minimum on the search-box boundary: the true position may lie outside the box",
+  "residual 12.1 mrad > 12.0: the DEM cannot explain this observation"
  ],
- "lat": 37.04455305277337,
- "lon": 28.288943544163192,
+ "lat": 36.66341820974649,
+ "lon": 28.1294522728114,
  "fix_ok": false,
- "basin_margin": 0.05831087410828136,
- "relief_mrad": 7.574869731058828,
- "dn_m": -450.0,
- "de_m": -360.0,
- "sigma_n_m": 640.7497024190867,
- "sigma_e_m": 475.6933379631227,
- "sigma_major_m": 673.9074162779684,
- "sigma_minor_m": 427.4261658090187,
- "major_bearing_deg": 156.37644915892815,
- "anisotropy": 1.5766639251072003,
+ "basin_margin": 0.4662531883449487,
+ "relief_mrad": 44.16263233435594,
+ "dn_m": 2475.0,
+ "de_m": 3015.0,
+ "sigma_n_m": 162.70679484421885,
+ "sigma_e_m": 204.75793998527118,
+ "sigma_major_m": 229.5413596279924,
+ "sigma_minor_m": 125.33985517632969,
+ "major_bearing_deg": 57.3499496782699,
+ "anisotropy": 1.831351722124385,
  "jackknife": null,
  "subject_km": null,
  "dem_split_m": null,
- "peak_dh_m": 29.307562888550375,
- "peak_dh_mad_m": 77.1291811408061,
- "n_peaks": 5,
+ "peak_dh_m": -6.737277789838542,
+ "peak_dh_mad_m": 0.0,
+ "n_peaks": 1,
  "search_trace": [
   {
    "dn": -3000.0,
    "de": -3000.0,
-   "cost": 5.866646228321824e-05,
+   "cost": 0.001404555624354778,
    "stage": "coarse"
   },
   {
-   "dn": -2700.0,
-   "de": -3000.0,
-   "cost": 5.40652902352938e-05,
-   "stage": "coarse"
-  },
-  {
-   "dn": -2400.0,
-   "de": -3000.0,
-   "cost": 5.252568067848245e-05,
-   "stage": "coarse"
-  },
-  {
-   "dn": -2100.0,
+   "dn": -3000.0,
    "de": -2700.0,
-   "cost": 4.987338553978133e-05,
+   "cost": 0.0014044852096193675,
    "stage": "coarse"
   },
   {
-   "dn": -2100.0,
+   "dn": -3000.0,
    "de": -2400.0,
-   "cost": 4.872692704273241e-05,
+   "cost": 0.0014037072234533857,
    "stage": "coarse"
   },
   {
-   "dn": -1800.0,
-   "de": -2400.0,
-   "cost": 4.8136701336462356e-05,
+   "dn": -3000.0,
+   "de": -900.0,
+   "cost": 0.0012658234554576188,
    "stage": "coarse"
   },
   {
-   "dn": -1800.0,
-   "de": -2100.0,
-   "cost": 4.720688112601462e-05,
+   "dn": -3000.0,
+   "de": -600.0,
+   "cost": 0.0010646868648709713,
    "stage": "coarse"
   },
   {
-   "dn": -1800.0,
-   "de": -1800.0,
-   "cost": 4.637873252417161e-05,
-   "stage": "coarse"
-  },
-  {
-   "dn": -1500.0,
-   "de": -2100.0,
-   "cost": 4.5173683633111704e-05,
-   "stage": "coarse"
-  },
-  {
-   "dn": -1500.0,
-   "de": -1800.0,
-   "cost": 4.208774457711306e-05,
-   "stage": "coarse"
-  },
-  {
-   "dn": -1200.0,
-   "de": -1500.0,
-   "cost": 4.1502680573017975e-05,
-   "stage": "coarse"
-  },
-  {
-   "dn": -1200.0,
-   "de": -1200.0,
-   "cost": 3.8299950431439355e-05,
-   "stage": "coarse"
-  },
-  {
-   "dn": -900.0,
-   "de": -1200.0,
-   "cost": 3.428653811451988e-05,
-   "stage": "coarse"
-  },
-  {
-   "dn": -900.0,
+   "dn": -3000.0,
    "de": -300.0,
-   "cost": 3.1286763589000276e-05,
+   "cost": 0.0006927485525997963,
    "stage": "coarse"
   },
   {
-   "dn": -600.0,
-   "de": -300.0,
-   "cost": 2.668041871043625e-05,
+   "dn": -3000.0,
+   "de": 0.0,
+   "cost": 0.0006686256130893013,
    "stage": "coarse"
   },
   {
-   "dn": -480.0,
-   "de": -360.0,
-   "cost": 2.5836548194688314e-05,
+   "dn": -3000.0,
+   "de": 1200.0,
+   "cost": 0.0006154798958781291,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1500.0,
+   "cost": 0.0005106362742983232,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1800.0,
+   "cost": 0.0005064039398274747,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 2400.0,
+   "cost": 0.0004118763441411623,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 2700.0,
+   "cost": 0.0002521966980529375,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 2400.0,
+   "cost": 0.00021941555057599984,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": 2700.0,
+   "cost": 0.00013690098574472054,
+   "stage": "coarse"
+  },
+  {
+   "dn": 2400.0,
+   "de": 3000.0,
+   "cost": 9.3367903192251e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 2460.0,
+   "de": 3000.0,
+   "cost": 7.406208909721078e-05,
    "stage": "refine_60m"
   },
   {
-   "dn": -450.0,
-   "de": -360.0,
-   "cost": 2.5734419808088487e-05,
+   "dn": 2475.0,
+   "de": 3015.0,
+   "cost": 7.372261377282584e-05,
    "stage": "refine_15m"
   }
  ],
  "search_evals": 491,
- "cost": 2.5734419808088487e-05,
- "rms_mrad": 7.1741786718883,
+ "cost": 7.372261377282584e-05,
+ "rms_mrad": 12.142702645854904,
  "n_photos": 1,
- "z_m": 17.0,
+ "z_m": 4.0,
  "photos": [
   {
-   "file": "PF_new_akyaka2.jpg",
-   "fov_deg": 73.74,
-   "heading_deg": 177.0,
-   "pitch_deg": 10.827476194348241,
-   "roll_deg": 0.6234268284944515,
+   "file": "PF_20260823_165639.jpg",
+   "fov_deg": 38.07,
+   "heading_deg": 324.7,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
    "weight": 1.0,
-   "rms_mrad": 7.1741786718883,
-   "heading_offset_deg": -6.0,
-   "el_offset_mrad": -2.0,
-   "attitude_source": "radon"
+   "rms_mrad": 12.142702645854904,
+   "heading_offset_deg": 4.2,
+   "el_offset_mrad": -10.12290966156711,
+   "attitude_source": "prior"
   }
  ],
- "heading_offset_deg": -6.0,
- "el_offset_mrad": -2.0,
- "fov_deg": 73.74
+ "heading_offset_deg": 4.2,
+ "el_offset_mrad": -10.12290966156711,
+ "fov_deg": 38.07
 }
-wrote out/lvl4/AK2.json/.png
+wrote out/lvl4/PF_20260823_165639_wl.json/.png

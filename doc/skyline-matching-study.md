@@ -2340,6 +2340,47 @@ sequential estimator.
 > healthy. Visual: `experiments/out/guard/t3_guard_viz.png`
 > (`e5af_guard_viz.py`).
 
+> **E5ag — the off-centre crop and the repaired level chain.** A new
+> Akyaka frame (4032x1855, heading 177, looking S across the Gulf of
+> Gokova) failed spectacularly at first: rms 28.7 mrad, four refusal
+> reasons. Diagnosis: the frame is a VERTICALLY OFF-CENTRE screen
+> crop — f_px survives cropping but the principal point does not, and
+> the ridge sat ~100 mrad below the crop centre, far beyond the
+> +-10 mrad attitude prior. The auto-level chain is exactly the tool
+> for this (it anchored t2's off-centre crop to 26 m), but here it
+> declined the frame: the SAM waterline seed was correct, yet its
+> slope error of a few mrad walked the +-4 px refinement window off
+> the true line away from the pivot, leaving a 27%-wide inlier band
+> that died on the span gate.
+>
+> The repair took three measured iterations, each caught by the
+> 9-frame regression battery (e5t waterline five, t2, t3, Akyaka
+> clean, plus the new frame):
+> 1. Re-refine around the fitted line (span 0.27 -> 0.99, pitch
+>    stable) — but the below-line veto then counted scattered haze
+>    noise in the recentred window and still refused.
+> 2. Count only contiguous runs in the veto — WRONG: the battery
+>    showed the veto does double duty, catching poisoned LINES (a fit
+>    locked above the real edge shows that edge below it: t2 332,
+>    175647 164 vs limit 128), and the relaxation let both through.
+>    Reverted; the veto keeps its scattered counting but runs on the
+>    PASS-0 residuals, where its semantics were measured.
+> 3. The battery then caught native radon candidates CRAWLING under
+>    re-refinement (three portrait frames anchored at pitch +34 deg on
+>    water texture). Re-refinement is now EXTERNAL-SEED ONLY — it
+>    exists to fix the seed-slope failure and nothing else.
+>
+> Final battery: every baseline behavior preserved bit-for-bit (t2
+> 25 m, the five e5t frames, t3), Akyaka clean slightly better
+> (margin 3.79 -> 7.47, 240 m), and the new frame anchors at pitch
+> +10.83 deg — dlat -450 m / dlon -360 m (576 m), refused only on
+> basin margin 0.06: a long smooth ridge across a gulf is genuinely
+> low-relief (9.5 mrad), and that refusal is the instrument being
+> honest, not broken. Lesson for the field protocol: an off-centre
+> crop is survivable ONLY through the level anchor — when the level
+> chain declines such a frame, no fix is possible, so prefer
+> uncropped frames or crops that keep the sea horizon.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
