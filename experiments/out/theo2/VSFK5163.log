@@ -1,0 +1,161 @@
+/root/.local/lib/python3.11/site-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/root/.local/lib/python3.11/site-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+extractor pre-check: eWaSR disagrees with the seam on 78% of columns — falling back to the seam
+photo 0: VSFK5163.JPG  fov 104.2, heading 14.37, pitch +5.80, roll +0.00, weight 1.00
+z 18.3 m, box 6000 m at (37.47685,27.41421)
+peak witness: 14 crests, median height residual -20 m (spread 48 m)
+INCONCLUSIVE: ambiguous landscape: basin margin 0.04 < 0.15
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.04 < 0.15"
+ ],
+ "lat": 37.47307284925514,
+ "lon": 27.408090618306552,
+ "fix_ok": false,
+ "basin_margin": 0.036927342828948814,
+ "relief_mrad": 19.62452491626789,
+ "dn_m": -420.0,
+ "de_m": -540.0,
+ "sigma_n_m": 322.0763552759303,
+ "sigma_e_m": 517.5811162757443,
+ "sigma_major_m": 540.6553982010038,
+ "sigma_minor_m": 281.62942131316265,
+ "major_bearing_deg": 109.79092343630698,
+ "anisotropy": 1.9197404720006606,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -19.756382717664135,
+ "peak_dh_mad_m": 48.1980962905597,
+ "n_peaks": 14,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.000257796303976888,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -3000.0,
+   "cost": 0.00018627869946827666,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": -3000.0,
+   "cost": 0.00018015046016853974,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 2400.0,
+   "cost": 0.00015897014342450454,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 2700.0,
+   "cost": 0.00012527719745031014,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 3000.0,
+   "cost": 0.00011389353807336339,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": 2700.0,
+   "cost": 0.00010811239834585356,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": 3000.0,
+   "cost": 9.582750650532979e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 0.0,
+   "cost": 7.24160641118512e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 300.0,
+   "cost": 5.800465234037377e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 3000.0,
+   "cost": 5.48234587088101e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": 0.0,
+   "cost": 3.0322681335046723e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": 300.0,
+   "cost": 2.1242983353964176e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": 600.0,
+   "cost": 1.831150171876056e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": -600.0,
+   "cost": 1.765938746373787e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -420.0,
+   "de": -540.0,
+   "cost": 1.7502355463547065e-05,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -420.0,
+   "de": -540.0,
+   "cost": 1.7502355463547065e-05,
+   "stage": "refine_15m"
+  }
+ ],
+ "search_evals": 491,
+ "cost": 1.7502355463547065e-05,
+ "rms_mrad": 5.916477915710844,
+ "n_photos": 1,
+ "z_m": 18.3,
+ "photos": [
+  {
+   "file": "VSFK5163.JPG",
+   "fov_deg": 104.25,
+   "heading_deg": 14.37,
+   "pitch_deg": 5.8,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 5.916477915710844,
+   "heading_offset_deg": 9.600000000000001,
+   "el_offset_mrad": -4.049163864626846,
+   "attitude_source": "prior"
+  }
+ ],
+ "heading_offset_deg": 9.600000000000001,
+ "el_offset_mrad": -4.049163864626846,
+ "fov_deg": 104.25
+}
+wrote out/theo2/VSFK5163.json/.png

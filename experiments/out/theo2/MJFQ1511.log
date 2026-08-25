@@ -1,0 +1,209 @@
+/root/.local/lib/python3.11/site-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/root/.local/lib/python3.11/site-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+extractor pre-check: eWaSR disagrees with the seam on 37% of columns — falling back to the seam
+photo 0: MJFQ1511.JPG  fov 73.7, heading 165.39, pitch +5.20, roll +1.20, weight 1.00
+z 167.2 m, box 6000 m at (39.11494,27.69958)
+peak witness: 1 crests, median height residual +11 m (spread 0 m)
+INCONCLUSIVE: minimum on the search-box boundary: the true position may lie outside the box
+{
+ "status": "inconclusive",
+ "reasons": [
+  "minimum on the search-box boundary: the true position may lie outside the box"
+ ],
+ "lat": 39.13018350122032,
+ "lon": 27.663763935045594,
+ "fix_ok": false,
+ "basin_margin": 0.45112926959161437,
+ "relief_mrad": 37.08073007224545,
+ "dn_m": 1695.0,
+ "de_m": -3090.0,
+ "sigma_n_m": 166.99773511330238,
+ "sigma_e_m": 208.09657630475434,
+ "sigma_major_m": 209.6382538098615,
+ "sigma_minor_m": 165.0582659011212,
+ "major_bearing_deg": 78.67623320539697,
+ "anisotropy": 1.2700863702000005,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": 10.50469748381006,
+ "peak_dh_mad_m": 0.0,
+ "n_peaks": 1,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.00042223062939532156,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2700.0,
+   "cost": 0.0004194800469232656,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2400.0,
+   "cost": 0.0004069691679638067,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -300.0,
+   "cost": 0.0003069153977787357,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 0.0,
+   "cost": 0.0001320311065463831,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 300.0,
+   "cost": 0.00011163509366057474,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 600.0,
+   "cost": 0.00010095219309603213,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1500.0,
+   "cost": 8.039857273803224e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": -300.0,
+   "cost": 7.827968927984816e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 900.0,
+   "cost": 7.734940816474093e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": -1500.0,
+   "cost": 7.723085510533064e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": -600.0,
+   "cost": 7.35848801964759e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": -1800.0,
+   "cost": 5.755140519653949e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": -1500.0,
+   "cost": 5.530482597812542e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": -3000.0,
+   "cost": 5.428599920184903e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": -2100.0,
+   "cost": 4.5319372732866765e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": -1800.0,
+   "cost": 4.033194515074971e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": -2100.0,
+   "cost": 3.5589221447739975e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": -1800.0,
+   "cost": 3.23175056796997e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": -1800.0,
+   "cost": 2.9821330146614932e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 1200.0,
+   "de": -3000.0,
+   "cost": 2.6624661322971365e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 1500.0,
+   "de": -3000.0,
+   "cost": 2.055066271606164e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 1800.0,
+   "de": -3000.0,
+   "cost": 2.0550429773225808e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 1680.0,
+   "de": -3120.0,
+   "cost": 1.6942654102607363e-05,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": 1695.0,
+   "de": -3090.0,
+   "cost": 1.6586630138761683e-05,
+   "stage": "refine_15m"
+  }
+ ],
+ "search_evals": 491,
+ "cost": 1.6586630138761683e-05,
+ "rms_mrad": 5.759623275659908,
+ "n_photos": 1,
+ "z_m": 167.2,
+ "photos": [
+  {
+   "file": "MJFQ1511.JPG",
+   "fov_deg": 73.74,
+   "heading_deg": 165.39,
+   "pitch_deg": 5.2,
+   "roll_deg": 1.2,
+   "weight": 1.0,
+   "rms_mrad": 5.759623275659908,
+   "heading_offset_deg": -6.4,
+   "el_offset_mrad": -8.09832772925369,
+   "attitude_source": "prior"
+  }
+ ],
+ "heading_offset_deg": -6.4,
+ "el_offset_mrad": -8.09832772925369,
+ "fov_deg": 73.74
+}
+wrote out/theo2/MJFQ1511.json/.png

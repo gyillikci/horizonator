@@ -1,12 +1,3 @@
-/root/.local/lib/python3.11/site-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
-  warnings.warn(
-/root/.local/lib/python3.11/site-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
-  warnings.warn(msg)
-extractor pre-check: eWaSR disagrees with the seam on 38% of columns — falling back to the seam
-photo 0: GAQB1096.JPG  fov 104.2, heading 212.13, pitch +3.10, roll -0.70, weight 1.00
-z 2.5 m, box 6000 m at (40.90622,29.13945)
-peak witness: 6 crests, median height residual +17 m (spread 28 m)
-INCONCLUSIVE: ambiguous landscape: basin margin 0.03 < 0.15
 {
  "status": "inconclusive",
  "reasons": [
@@ -188,4 +179,3 @@ INCONCLUSIVE: ambiguous landscape: basin margin 0.03 < 0.15
  "el_offset_mrad": -1.734723475976807e-15,
  "fov_deg": 104.25
 }
-wrote out/theo2/GAQB1096.json/.png

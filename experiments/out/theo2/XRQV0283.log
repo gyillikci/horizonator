@@ -1,0 +1,179 @@
+/root/.local/lib/python3.11/site-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/root/.local/lib/python3.11/site-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+extractor pre-check: eWaSR disagrees with the seam on 45% of columns — falling back to the seam
+photo 0: XRQV0283.JPG  fov 73.7, heading 352.38, pitch -2.40, roll -0.90, weight 1.00
+z 14.0 m, box 6000 m at (37.47679,27.41421)
+peak witness: 8 crests, median height residual -17 m (spread 61 m)
+INCONCLUSIVE: ambiguous landscape: basin margin 0.02 < 0.15
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.02 < 0.15"
+ ],
+ "lat": 37.477059796481775,
+ "lon": 27.426108788184077,
+ "fix_ok": false,
+ "basin_margin": 0.017788390325281518,
+ "relief_mrad": 14.043627273086122,
+ "dn_m": 30.0,
+ "de_m": 1050.0,
+ "sigma_n_m": 741.3950736410561,
+ "sigma_e_m": 246.98942670546032,
+ "sigma_major_m": 743.5512279596146,
+ "sigma_minor_m": 240.4204723464046,
+ "major_bearing_deg": 4.6127023112343295,
+ "anisotropy": 3.092711784079207,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -16.540508112602968,
+ "peak_dh_mad_m": 61.12909293611264,
+ "n_peaks": 8,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.00024929351296173585,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -3000.0,
+   "cost": 0.0001779072472955829,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": -3000.0,
+   "cost": 0.00016942953202700458,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": 3000.0,
+   "cost": 0.00013037404511349068,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 2700.0,
+   "cost": 0.00010326652971582941,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 3000.0,
+   "cost": 7.592147902037688e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": 3000.0,
+   "cost": 7.208976770084751e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 300.0,
+   "cost": 6.913245381265189e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 600.0,
+   "cost": 4.947156858520213e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 1500.0,
+   "cost": 4.090719541080143e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": 300.0,
+   "cost": 3.852036927484829e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": 600.0,
+   "cost": 3.1269973734121175e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": 900.0,
+   "cost": 2.545425627448024e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": 1200.0,
+   "cost": 2.5050763756790717e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": 900.0,
+   "cost": 2.3759102606154836e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": 1200.0,
+   "cost": 2.3138917269993025e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 1200.0,
+   "cost": 2.1260119388754308e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": 1200.0,
+   "cost": 1.9886482607944722e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 60.0,
+   "de": 1080.0,
+   "cost": 1.91816607239602e-05,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": 30.0,
+   "de": 1050.0,
+   "cost": 1.904357030039866e-05,
+   "stage": "refine_15m"
+  }
+ ],
+ "search_evals": 491,
+ "cost": 1.904357030039866e-05,
+ "rms_mrad": 6.171477991599526,
+ "n_photos": 1,
+ "z_m": 14.0,
+ "photos": [
+  {
+   "file": "XRQV0283.JPG",
+   "fov_deg": 73.74,
+   "heading_deg": 352.38,
+   "pitch_deg": -2.4,
+   "roll_deg": -0.9,
+   "weight": 1.0,
+   "rms_mrad": 6.171477991599526,
+   "heading_offset_deg": 12.0,
+   "el_offset_mrad": -10.12290966156711,
+   "attitude_source": "prior"
+  }
+ ],
+ "heading_offset_deg": 12.0,
+ "el_offset_mrad": -10.12290966156711,
+ "fov_deg": 73.74
+}
+wrote out/theo2/XRQV0283.json/.png
