@@ -1,0 +1,101 @@
+{
+ "status": "ok",
+ "reasons": [],
+ "lat": 38.81181572611729,
+ "lon": 26.975949058050862,
+ "fix_ok": true,
+ "basin_margin": 0.654378350407875,
+ "relief_mrad": 3.7341976662518457,
+ "dn_m": 630.0,
+ "de_m": 285.0,
+ "sigma_n_m": 382.7789891069017,
+ "sigma_e_m": 129.9529823665372,
+ "sigma_major_m": 399.0025794638056,
+ "sigma_minor_m": 64.84191321119862,
+ "major_bearing_deg": 16.622031205332604,
+ "anisotropy": 6.153467097187615,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": null,
+ "peak_dh_mad_m": null,
+ "n_peaks": 0,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 2.55374928022378e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": -2400.0,
+   "cost": 2.5299461823098744e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 3000.0,
+   "cost": 1.7526729363212068e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": -300.0,
+   "cost": 1.4618109904171243e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": -300.0,
+   "cost": 1.3879869681024747e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": 0.0,
+   "cost": 1.1468855852736534e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": 600.0,
+   "de": 300.0,
+   "cost": 8.836013781591892e-07,
+   "stage": "coarse"
+  },
+  {
+   "dn": 660.0,
+   "de": 300.0,
+   "cost": 8.159630500050189e-07,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": 630.0,
+   "de": 285.0,
+   "cost": 8.076416930821108e-07,
+   "stage": "refine_15m"
+  }
+ ],
+ "search_evals": 491,
+ "cost": 8.076416930821108e-07,
+ "rms_mrad": 1.2709379946182353,
+ "n_photos": 1,
+ "z_m": 1.3,
+ "photos": [
+  {
+   "file": "PQBC6867.JPG",
+   "fov_deg": 20.408,
+   "heading_deg": 22.49,
+   "pitch_deg": -0.7,
+   "roll_deg": -1.3,
+   "weight": 1.0,
+   "rms_mrad": 1.2709379946182353,
+   "heading_offset_deg": -3.0,
+   "el_offset_mrad": 6.073745796940264,
+   "attitude_source": "prior"
+  }
+ ],
+ "heading_offset_deg": -3.0,
+ "el_offset_mrad": 6.073745796940264,
+ "fov_deg": 20.408
+}

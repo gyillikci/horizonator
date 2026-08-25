@@ -1,0 +1,187 @@
+/root/.local/lib/python3.11/site-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/root/.local/lib/python3.11/site-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+photo 0: LHCG7767.JPG  fov 41.1, heading 228.75, pitch -0.10, roll -0.40, weight 1.00
+z 2.5 m, box 6000 m at (40.90622,29.13945)
+peak witness: 3 crests, median height residual +3 m (spread 2 m)
+{
+ "status": "ok",
+ "reasons": [],
+ "lat": 40.90271264573691,
+ "lon": 29.141770346654166,
+ "fix_ok": true,
+ "basin_margin": 2.3871750237108826,
+ "relief_mrad": 9.784409315061888,
+ "dn_m": -390.0,
+ "de_m": 195.0,
+ "sigma_n_m": 160.25261604823382,
+ "sigma_e_m": 166.77841602382253,
+ "sigma_major_m": 170.61692192603687,
+ "sigma_minor_m": 156.15955607711783,
+ "major_bearing_deg": 58.42749456118547,
+ "anisotropy": 1.0925807309658297,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": 3.318636972491521,
+ "peak_dh_mad_m": 1.6574516209653627,
+ "n_peaks": 3,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.0003077684308370583,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2700.0,
+   "cost": 0.0002173592049610582,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2400.0,
+   "cost": 5.664786374555054e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2100.0,
+   "cost": 4.269203678567686e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1800.0,
+   "cost": 3.5251457539812005e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1500.0,
+   "cost": 3.0435647373134424e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": 3000.0,
+   "cost": 2.7500789972306182e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": 2700.0,
+   "cost": 2.6546668467683645e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": 3000.0,
+   "cost": 2.3514054569503066e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": 2700.0,
+   "cost": 2.3092713264154613e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": 3000.0,
+   "cost": 2.047728086104358e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": -600.0,
+   "cost": 1.7811994492979435e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": -300.0,
+   "cost": 1.3093325559799327e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": -300.0,
+   "cost": 1.181038303671675e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 0.0,
+   "cost": 7.373207523832163e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": 0.0,
+   "cost": 5.413659071322206e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": 300.0,
+   "cost": 3.861207634678541e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": 0.0,
+   "cost": 3.483452939096668e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": 300.0,
+   "cost": 2.391108666971183e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 300.0,
+   "cost": 2.0763163384999134e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -360.0,
+   "de": 180.0,
+   "cost": 1.8702896422034396e-06,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -390.0,
+   "de": 195.0,
+   "cost": 1.846511475816648e-06,
+   "stage": "refine_15m"
+  }
+ ],
+ "search_evals": 491,
+ "cost": 1.846511475816648e-06,
+ "rms_mrad": 1.9217239530258492,
+ "n_photos": 1,
+ "z_m": 2.5,
+ "photos": [
+  {
+   "file": "LHCG7767.JPG",
+   "fov_deg": 41.112,
+   "heading_deg": 228.75,
+   "pitch_deg": -0.1,
+   "roll_deg": -0.4,
+   "weight": 1.0,
+   "rms_mrad": 1.9217239530258492,
+   "heading_offset_deg": 5.0,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior"
+  }
+ ],
+ "heading_offset_deg": 5.0,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 41.112
+}
+wrote out/theo3/LHCG7767_dh4.json/.png

@@ -2641,6 +2641,58 @@ sequential estimator.
 > — where the E5af extractor pre-check also fired for real, falling
 > back to the seam on a hazy 41%-disagreement frame.
 
+> **E5ao — the crest deficit is REGIONAL: this coast wants dh ~ 12,
+> not 9.** Two explanations were offered in E5an for why the
+> Theodolite material lands at 400-1100 m where the PeakFinder wide
+> frames reach 150-340 m. Both were tested and both are refuted.
+>
+> *Narrow field of view* — no. Screening the 18 wide-FOV frames for
+> near-field subject keeps 13 (the 5 dropped are all shot from 1-2 m
+> eye height at a shore 39-83% inside 3 km, the Bodrum regime again).
+> Solved, they give 3 acceptances at 258/397/399 m — median 397 m
+> against the narrow set's 401 m. Identical medians. The wide set buys
+> a tighter spread (worst 399 vs 792 m) and pays in coverage (3/13
+> accepted vs 4/8), but it does not explain the band.
+>
+> *Compass freedom* — no. Across 19 solves the rank correlation
+> between |heading offset| and error is only +0.20, and splitting at
+> 5 deg gives 792 vs 1028 m median, small against the spread. The one
+> strong predictor is the gate already in use: basin margin at -0.51
+> rank, accepted median 399 m against 1028 m for refused.
+>
+> The third explanation is the one that holds. Swept over the five
+> accepted frames, dh in {0,4,8,12,16}:
+>
+> | dh | mean error | mean along-sight | accepted |
+> |---|---|---|---|
+> | 0 | 525 | +398 | 5/5 |
+> | 4 | 358 | +227 | 5/5 |
+> | 8 | 413 | +29 | 5/5 |
+> | **12** | **304** | +59 | 4/5 |
+> | 16 | 377 | -63 | 4/5 |
+>
+> The along-sight bias falls from +398 m to zero between dh = 8 and
+> 12 — the crest-deficit mechanism doing exactly what it does on the
+> Marmaris coast — but the optimum sits at 12 rather than 9, worth
+> 304 m against 413 m at dh = 8. Four of the five frames improve
+> monotonically to dh = 12-16; the fifth (PQBC6867, the 1.3 m eye
+> height narrow frame) oscillates between +690 and -592 m along-sight
+> across the grid and drives most of the mean's noise. Excluding it is
+> post-hoc and is reported as such: without it the means run
+> 484/417/366/327/323, still favouring dh >= 12.
+>
+> This is the first direct evidence for a claim that has been standing
+> unmeasured since E5ae — that the crest deficit is a property of the
+> terrain, not a universal constant. Marmaris/Akyaka reproduces 9
+> (E5al, on repaired code); this mixed set reproduces ~12. Caveat
+> stated rather than hidden: these five frames are NOT one coast —
+> Gulluk (2), Marmara (1), Karaburun (1), Bodrum (1) — so what is
+> measured is a per-DATASET value, weaker evidence than a true
+> single-region calibration would be. Nothing is re-defaulted;
+> `--crest-dh` stays the operator's parameter, now with two measured
+> reference points instead of one. Curve:
+> `experiments/out/theo3/dh_curve.png` (`e5ao_theodh.py`).
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the

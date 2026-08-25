@@ -5,172 +5,184 @@
 extractor pre-check: eWaSR disagrees with the seam on 41% of columns — falling back to the seam
 photo 0: HATY3309.JPG  fov 73.7, heading 40.53, pitch +1.30, roll -0.00, weight 1.00
 z 14.2 m, box 6000 m at (37.47686,27.41421)
-peak witness: 4 crests, median height residual -10 m (spread 15 m)
+peak witness: 3 crests, median height residual -4 m (spread 19 m)
 {
  "status": "ok",
  "reasons": [],
- "lat": 37.47955796481776,
+ "lat": 37.47901837185421,
  "lon": 27.417779639798837,
  "fix_ok": true,
- "basin_margin": 2.9524921732928515,
+ "basin_margin": 2.935062775581021,
  "relief_mrad": 19.5716756868762,
- "dn_m": 300.0,
+ "dn_m": 240.0,
  "de_m": 315.0,
- "sigma_n_m": 229.41103317906357,
- "sigma_e_m": 209.25412660658225,
- "sigma_major_m": 229.63669810879583,
- "sigma_minor_m": 209.0064557085707,
- "major_bearing_deg": 173.8580279355265,
- "anisotropy": 1.0987062448874354,
+ "sigma_n_m": 267.2931384307273,
+ "sigma_e_m": 223.35417280574964,
+ "sigma_major_m": 270.42732782964504,
+ "sigma_minor_m": 219.54901212441456,
+ "major_bearing_deg": 164.9294534396652,
+ "anisotropy": 1.2317401258740286,
  "jackknife": null,
  "subject_km": null,
  "dem_split_m": null,
- "peak_dh_m": -9.921817633262156,
- "peak_dh_mad_m": 14.766814980180808,
- "n_peaks": 4,
+ "peak_dh_m": -4.366169225902652,
+ "peak_dh_mad_m": 18.576797620101026,
+ "n_peaks": 3,
  "search_trace": [
   {
    "dn": -3000.0,
    "de": -3000.0,
-   "cost": 0.00035782068920143156,
+   "cost": 0.00036982068920143153,
    "stage": "coarse"
   },
   {
    "dn": -3000.0,
    "de": -2700.0,
-   "cost": 0.0003311365592029645,
+   "cost": 0.0003431365592029645,
    "stage": "coarse"
   },
   {
    "dn": -3000.0,
    "de": -2400.0,
-   "cost": 0.0003103286167570989,
+   "cost": 0.0003221299053441941,
    "stage": "coarse"
   },
   {
    "dn": -3000.0,
    "de": -2100.0,
-   "cost": 0.00030096410112443177,
+   "cost": 0.0003116913202549614,
    "stage": "coarse"
   },
   {
    "dn": -2700.0,
    "de": -3000.0,
-   "cost": 0.0002295109629186783,
+   "cost": 0.00024151096291867832,
    "stage": "coarse"
   },
   {
    "dn": -2400.0,
    "de": -3000.0,
-   "cost": 0.0002212345281667359,
+   "cost": 0.00023334862046312606,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": -3000.0,
+   "cost": 0.00023116901824306457,
    "stage": "coarse"
   },
   {
    "dn": -2100.0,
    "de": 2700.0,
-   "cost": 0.0002173629787855811,
+   "cost": 0.00022936297878558106,
    "stage": "coarse"
   },
   {
    "dn": -1800.0,
    "de": 2100.0,
-   "cost": 0.00017700920585287815,
+   "cost": 0.0001879300117712157,
    "stage": "coarse"
   },
   {
    "dn": -1800.0,
    "de": 2400.0,
-   "cost": 0.00010647157044737116,
+   "cost": 0.00011769737400951529,
    "stage": "coarse"
   },
   {
    "dn": -1800.0,
    "de": 2700.0,
-   "cost": 8.856807372019641e-05,
+   "cost": 9.90130258596108e-05,
    "stage": "coarse"
   },
   {
    "dn": -1500.0,
    "de": 2400.0,
-   "cost": 6.592523090239789e-05,
+   "cost": 7.142970938614822e-05,
    "stage": "coarse"
   },
   {
    "dn": -1500.0,
    "de": 2700.0,
-   "cost": 3.857728694919039e-05,
+   "cost": 4.186221211421249e-05,
    "stage": "coarse"
   },
   {
    "dn": -1200.0,
    "de": 0.0,
-   "cost": 3.368922015857222e-05,
+   "cost": 3.514377098041268e-05,
    "stage": "coarse"
   },
   {
    "dn": -1200.0,
    "de": 2400.0,
-   "cost": 2.4745072474061774e-05,
+   "cost": 2.7177182914981685e-05,
    "stage": "coarse"
   },
   {
    "dn": -900.0,
    "de": -300.0,
-   "cost": 1.9571881790092953e-05,
+   "cost": 1.975769779450779e-05,
    "stage": "coarse"
   },
   {
    "dn": -900.0,
    "de": 0.0,
-   "cost": 1.7821522040912063e-05,
+   "cost": 1.8157073685964986e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": -300.0,
+   "cost": 1.8097096390206855e-05,
    "stage": "coarse"
   },
   {
    "dn": -600.0,
    "de": 0.0,
-   "cost": 1.1939579512294067e-05,
+   "cost": 1.1677574390833442e-05,
    "stage": "coarse"
   },
   {
    "dn": -600.0,
    "de": 300.0,
-   "cost": 8.430357085217465e-06,
+   "cost": 8.285251638916437e-06,
    "stage": "coarse"
   },
   {
    "dn": -300.0,
    "de": 300.0,
-   "cost": 6.630472756666422e-06,
+   "cost": 6.359122130483131e-06,
    "stage": "coarse"
   },
   {
    "dn": 0.0,
    "de": 300.0,
-   "cost": 5.39800520099874e-06,
+   "cost": 5.2056940977661e-06,
    "stage": "coarse"
   },
   {
    "dn": 300.0,
    "de": 300.0,
-   "cost": 4.480065051566358e-06,
+   "cost": 4.6141763731543145e-06,
    "stage": "coarse"
   },
   {
-   "dn": 300.0,
+   "dn": 240.0,
    "de": 300.0,
-   "cost": 4.480065051566358e-06,
+   "cost": 4.599581158101903e-06,
    "stage": "refine_60m"
   },
   {
-   "dn": 300.0,
+   "dn": 240.0,
    "de": 315.0,
-   "cost": 4.410214874281347e-06,
+   "cost": 4.51613149277491e-06,
    "stage": "refine_15m"
   }
  ],
  "search_evals": 491,
- "cost": 4.410214874281347e-06,
- "rms_mrad": 2.969920832036217,
+ "cost": 4.51613149277491e-06,
+ "rms_mrad": 3.00537235389391,
  "n_photos": 1,
  "z_m": 14.2,
  "photos": [
@@ -181,14 +193,14 @@ peak witness: 4 crests, median height residual -10 m (spread 15 m)
    "pitch_deg": 1.3,
    "roll_deg": -0.0,
    "weight": 1.0,
-   "rms_mrad": 2.969920832036217,
-   "heading_offset_deg": 5.2,
+   "rms_mrad": 3.00537235389391,
+   "heading_offset_deg": 5.0,
    "el_offset_mrad": 10.122909661567109,
    "attitude_source": "prior"
   }
  ],
- "heading_offset_deg": 5.2,
+ "heading_offset_deg": 5.0,
  "el_offset_mrad": 10.122909661567109,
  "fov_deg": 73.74
 }
-wrote out/theo3/HATY3309_dh4.json/.png
+wrote out/theo3/HATY3309_dh8.json/.png

@@ -1,0 +1,109 @@
+/root/.local/lib/python3.11/site-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/root/.local/lib/python3.11/site-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+extractor pre-check: eWaSR disagrees with the seam on 26% of columns — falling back to the seam
+photo 0: PQBC6867.JPG  fov 20.4, heading 22.49, pitch -0.70, roll -1.30, weight 1.00
+z 1.3 m, box 6000 m at (38.80615,26.97266)
+{
+ "status": "ok",
+ "reasons": [],
+ "lat": 38.80156345980982,
+ "lon": 26.96902472531221,
+ "fix_ok": true,
+ "basin_margin": 1.1424313533460158,
+ "relief_mrad": 3.7341976662518457,
+ "dn_m": -510.0,
+ "de_m": -315.0,
+ "sigma_n_m": 161.0035903493303,
+ "sigma_e_m": 99.11951802525878,
+ "sigma_major_m": 166.33551028508037,
+ "sigma_minor_m": 89.8851098744196,
+ "major_bearing_deg": 17.36751108812888,
+ "anisotropy": 1.8505346493704158,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": null,
+ "peak_dh_mad_m": null,
+ "n_peaks": 0,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 3.92261174762055e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -2700.0,
+   "cost": 2.966915464042019e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": -2400.0,
+   "cost": 2.797003123305828e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": -1200.0,
+   "cost": 2.1480835488346593e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": -900.0,
+   "cost": 1.9426306476365615e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": -600.0,
+   "cost": 1.3465828009037668e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": -300.0,
+   "cost": 8.004850584124804e-07,
+   "stage": "coarse"
+  },
+  {
+   "dn": -480.0,
+   "de": -300.0,
+   "cost": 7.934704882796112e-07,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -510.0,
+   "de": -315.0,
+   "cost": 7.539294942530321e-07,
+   "stage": "refine_15m"
+  }
+ ],
+ "search_evals": 491,
+ "cost": 7.539294942530321e-07,
+ "rms_mrad": 1.2279490984996342,
+ "n_photos": 1,
+ "z_m": 1.3,
+ "photos": [
+  {
+   "file": "PQBC6867.JPG",
+   "fov_deg": 20.408,
+   "heading_deg": 22.49,
+   "pitch_deg": -0.7,
+   "roll_deg": -1.3,
+   "weight": 1.0,
+   "rms_mrad": 1.2279490984996342,
+   "heading_offset_deg": -1.8,
+   "el_offset_mrad": 2.02458193231342,
+   "attitude_source": "prior"
+  }
+ ],
+ "heading_offset_deg": -1.8,
+ "el_offset_mrad": 2.02458193231342,
+ "fov_deg": 20.408
+}
+wrote out/theo3/PQBC6867_dh8.json/.png

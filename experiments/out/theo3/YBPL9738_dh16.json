@@ -1,0 +1,175 @@
+{
+ "status": "inconclusive",
+ "reasons": [
+  "covariance degenerate: the cost surface has no measurable curvature at the fix (sigma cannot be computed) \u2014 the landscape does not pin a position here"
+ ],
+ "lat": 37.025646119350235,
+ "lon": 27.361263086376518,
+ "fix_ok": false,
+ "basin_margin": 0.5609730760284815,
+ "relief_mrad": 16.317516519623,
+ "dn_m": -165.0,
+ "de_m": -45.0,
+ "sigma_n_m": 0.0,
+ "sigma_e_m": 0.0,
+ "sigma_major_m": 582.3327628241558,
+ "sigma_minor_m": 0.0,
+ "major_bearing_deg": 133.16170333369212,
+ "anisotropy": Infinity,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -6.851136105115908,
+ "peak_dh_mad_m": 19.813055387740786,
+ "n_peaks": 15,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 7.788226948208369e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2700.0,
+   "cost": 4.3875708567081944e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2400.0,
+   "cost": 3.114438196353413e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2100.0,
+   "cost": 2.1361620335395486e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1800.0,
+   "cost": 1.7275057804455883e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1500.0,
+   "cost": 1.7256950780254043e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": -1200.0,
+   "cost": 1.603184748146685e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": -900.0,
+   "cost": 1.4853478303840372e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": -600.0,
+   "cost": 1.4406796888127035e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": -1500.0,
+   "cost": 1.322000468550844e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": -1500.0,
+   "cost": 1.2378174264734852e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": -1200.0,
+   "cost": 1.075724787418781e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": -1200.0,
+   "cost": 1.0310061582643603e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": -900.0,
+   "cost": 9.039497117591221e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": -900.0,
+   "cost": 7.582414670037329e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": -600.0,
+   "cost": 7.138979181508699e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": -300.0,
+   "cost": 6.845337163889787e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": -300.0,
+   "cost": 5.966340207878505e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 0.0,
+   "cost": 5.671183441983847e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -180.0,
+   "de": -60.0,
+   "cost": 5.425644517787755e-06,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -165.0,
+   "de": -45.0,
+   "cost": 5.415324936771253e-06,
+   "stage": "refine_15m"
+  }
+ ],
+ "search_evals": 491,
+ "cost": 5.415324936771253e-06,
+ "rms_mrad": 3.2909952709693315,
+ "n_photos": 1,
+ "z_m": 61.2,
+ "photos": [
+  {
+   "file": "YBPL9738.JPG",
+   "fov_deg": 104.25,
+   "heading_deg": 208.99,
+   "pitch_deg": 1.8,
+   "roll_deg": -0.6,
+   "weight": 1.0,
+   "rms_mrad": 3.2909952709693315,
+   "heading_offset_deg": 1.8,
+   "el_offset_mrad": -1.734723475976807e-15,
+   "attitude_source": "prior"
+  }
+ ],
+ "heading_offset_deg": 1.8,
+ "el_offset_mrad": -1.734723475976807e-15,
+ "fov_deg": 104.25
+}
