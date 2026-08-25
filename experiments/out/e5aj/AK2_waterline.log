@@ -18,139 +18,145 @@
   warnings.warn(msg)
 photo 0: PF_new_akyaka2.jpg  fov 73.7, heading 177.0, pitch +10.83, roll +0.62, weight 1.00, auto-level (798 sea cols)
 z 17.0 m, box 6000 m at (37.04860,28.29300)
-peak witness: 5 crests, median height residual +29 m (spread 77 m)
-INCONCLUSIVE: ambiguous landscape: basin margin 0.06 < 0.15
+peak witness: 4 crests, median height residual +2 m (spread 28 m)
+INCONCLUSIVE: ambiguous landscape: basin margin 0.03 < 0.15
 {
  "status": "inconclusive",
  "reasons": [
-  "ambiguous landscape: basin margin 0.06 < 0.15"
+  "ambiguous landscape: basin margin 0.03 < 0.15"
  ],
- "lat": 37.04455305277337,
- "lon": 28.288943544163192,
+ "lat": 37.04549734045958,
+ "lon": 28.288436487183592,
  "fix_ok": false,
- "basin_margin": 0.05831087410828136,
+ "basin_margin": 0.029490482401778637,
  "relief_mrad": 7.574869731058828,
- "dn_m": -450.0,
- "de_m": -360.0,
- "sigma_n_m": 640.7497024190867,
- "sigma_e_m": 475.6933379631227,
- "sigma_major_m": 673.9074162779684,
- "sigma_minor_m": 427.4261658090187,
- "major_bearing_deg": 156.37644915892815,
- "anisotropy": 1.5766639251072003,
+ "dn_m": -345.0,
+ "de_m": -405.0,
+ "sigma_n_m": 502.578933146895,
+ "sigma_e_m": 320.50729892879974,
+ "sigma_major_m": 506.157552315893,
+ "sigma_minor_m": 314.82541978577615,
+ "major_bearing_deg": 171.28061540419708,
+ "anisotropy": 1.6077404189925621,
  "jackknife": null,
  "subject_km": null,
  "dem_split_m": null,
- "peak_dh_m": 29.307562888550375,
- "peak_dh_mad_m": 77.1291811408061,
- "n_peaks": 5,
+ "peak_dh_m": 1.9352827121879246,
+ "peak_dh_mad_m": 28.31770721452231,
+ "n_peaks": 4,
  "search_trace": [
   {
    "dn": -3000.0,
    "de": -3000.0,
-   "cost": 5.866646228321824e-05,
+   "cost": 5.8239020740677116e-05,
    "stage": "coarse"
   },
   {
    "dn": -2700.0,
    "de": -3000.0,
-   "cost": 5.40652902352938e-05,
+   "cost": 5.2189516840103434e-05,
    "stage": "coarse"
   },
   {
    "dn": -2400.0,
    "de": -3000.0,
-   "cost": 5.252568067848245e-05,
+   "cost": 4.9468017197913905e-05,
    "stage": "coarse"
   },
   {
    "dn": -2100.0,
    "de": -2700.0,
-   "cost": 4.987338553978133e-05,
+   "cost": 4.864406297091142e-05,
    "stage": "coarse"
   },
   {
-   "dn": -2100.0,
-   "de": -2400.0,
-   "cost": 4.872692704273241e-05,
+   "dn": -1800.0,
+   "de": -2700.0,
+   "cost": 4.718258726676368e-05,
    "stage": "coarse"
   },
   {
    "dn": -1800.0,
    "de": -2400.0,
-   "cost": 4.8136701336462356e-05,
-   "stage": "coarse"
-  },
-  {
-   "dn": -1800.0,
-   "de": -2100.0,
-   "cost": 4.720688112601462e-05,
+   "cost": 4.634384757762346e-05,
    "stage": "coarse"
   },
   {
    "dn": -1800.0,
    "de": -1800.0,
-   "cost": 4.637873252417161e-05,
+   "cost": 4.4704998285528065e-05,
    "stage": "coarse"
   },
   {
    "dn": -1500.0,
    "de": -2100.0,
-   "cost": 4.5173683633111704e-05,
+   "cost": 4.319768439915341e-05,
    "stage": "coarse"
   },
   {
    "dn": -1500.0,
    "de": -1800.0,
-   "cost": 4.208774457711306e-05,
+   "cost": 4.210225796537059e-05,
    "stage": "coarse"
   },
   {
    "dn": -1200.0,
    "de": -1500.0,
-   "cost": 4.1502680573017975e-05,
+   "cost": 4.149702292580034e-05,
    "stage": "coarse"
   },
   {
    "dn": -1200.0,
    "de": -1200.0,
-   "cost": 3.8299950431439355e-05,
+   "cost": 3.789403325408927e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": -1500.0,
+   "cost": 3.765473723333854e-05,
    "stage": "coarse"
   },
   {
    "dn": -900.0,
    "de": -1200.0,
-   "cost": 3.428653811451988e-05,
+   "cost": 3.417906361744469e-05,
    "stage": "coarse"
   },
   {
    "dn": -900.0,
    "de": -300.0,
-   "cost": 3.1286763589000276e-05,
+   "cost": 2.9939457199441547e-05,
    "stage": "coarse"
   },
   {
    "dn": -600.0,
    "de": -300.0,
-   "cost": 2.668041871043625e-05,
+   "cost": 2.6682386996467444e-05,
    "stage": "coarse"
   },
   {
-   "dn": -480.0,
-   "de": -360.0,
-   "cost": 2.5836548194688314e-05,
+   "dn": -300.0,
+   "de": -300.0,
+   "cost": 2.499905489495235e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -360.0,
+   "de": -420.0,
+   "cost": 2.4307600546938953e-05,
    "stage": "refine_60m"
   },
   {
-   "dn": -450.0,
-   "de": -360.0,
-   "cost": 2.5734419808088487e-05,
+   "dn": -345.0,
+   "de": -405.0,
+   "cost": 2.418992247639298e-05,
    "stage": "refine_15m"
   }
  ],
  "search_evals": 491,
- "cost": 2.5734419808088487e-05,
- "rms_mrad": 7.1741786718883,
+ "cost": 2.418992247639298e-05,
+ "rms_mrad": 6.955562159364688,
  "n_photos": 1,
  "z_m": 17.0,
  "photos": [
@@ -161,14 +167,14 @@ INCONCLUSIVE: ambiguous landscape: basin margin 0.06 < 0.15
    "pitch_deg": 10.827476194348241,
    "roll_deg": 0.6234268284944515,
    "weight": 1.0,
-   "rms_mrad": 7.1741786718883,
+   "rms_mrad": 6.955562159364688,
    "heading_offset_deg": -6.0,
-   "el_offset_mrad": -2.0,
+   "el_offset_mrad": -5.0,
    "attitude_source": "radon"
   }
  ],
  "heading_offset_deg": -6.0,
- "el_offset_mrad": -2.0,
+ "el_offset_mrad": -5.0,
  "fov_deg": 73.74
 }
-wrote out/e5aj/AK2_horizon.json/.png
+wrote out/e5aj/AK2_waterline.json/.png
