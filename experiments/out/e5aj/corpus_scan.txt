@@ -15,3 +15,20 @@ frame                  source      contrast  land-above   medgap
   return register_model(fn_wrapper)
 PF_20260823_151556     DECLINED  
 PF_20260823_151613     DECLINED  
+PF_20260823_153457     DECLINED  
+PF_20260823_153715     DECLINED  
+PF_20260823_165639     DECLINED  
+PF_20260823_175124     DECLINED  
+PF_20260823_175647     DECLINED  
+PF_20260823_175658_wide radon         -0.170        1.00      98px
+PF_20260823_175709     DECLINED  
+PF_20260823_180728     radon         -0.182        1.00     163px
+PF_20260823_180737     DECLINED  
+PF_20260824_115038     DECLINED  
+PF_20260824_122139     DECLINED  
+PF_20260824_122139_wide radon         -0.094        1.00      35px
+PF_20260824_195733     DECLINED  
+PF_20260824_195733_clean waterline     -0.324        1.00      75px
+PF_new_akyaka2         radon         -0.018        1.00      97px
+PF_new_akyaka3         radon         -0.005        1.00      85px
+SCAN-DONE

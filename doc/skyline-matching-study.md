@@ -2409,6 +2409,61 @@ sequential estimator.
 > the difference between a refusal and a 337 m fix. Outputs in
 > `experiments/out/ak3/`.
 
+> **E5aj — the levelled line is a waterline, and the photometric
+> classifier does not know it.** Asked whether the AK3 frame's
+> waterline was found, the answer turned out to be yes AND no: the
+> level chain locked precisely onto the far shore's water's edge, then
+> labelled it `radon` — a true sea horizon — and handed it the tight
+> +-2 mrad elevation band. The label decides the band, and the band
+> was wrong. Measured from the DEM along the sight line, the opposite
+> coast is 2.75 km out, so its waterline sits 6.03 mrad below level
+> against a 2.09 mrad horizon dip at 16 m eye height: a 3.9 mrad
+> discrepancy the tight band cannot represent. The evidence was in the
+> solve all along — `el_offset_mrad` came out at exactly -2.00, the
+> band edge.
+>
+> Why the gate missed it: the shipped discriminator is photometric (a
+> large brightness step across the line means land behind it, E4q).
+> In haze a forested coast and the water beneath it are the same
+> brightness — measured step -0.005 against a 0.20 threshold.
+>
+> Cost of the mistake, forced both ways with the new `--level-class`
+> study flag:
+>
+> | frame | +-2 mrad (horizon) | +-5 mrad (waterline) |
+> |---|---|---|
+> | AK3 | 337 m, offset clamped -2.00 | **223 m**, clamped -5.00 |
+> | AK2 | 576 m, refused | 532 m, refused (relief) |
+> | t2 | 25 m, clamped -2.00, VETOED | 35 m, offset -2.50 interior, **accepted** |
+> | AKc | 225 m (margin 4.59) | 240 m (margin 7.47), shipped |
+>
+> The t2 row is the important one: blind trial t2's false peak-height
+> veto — the instrument refusing a 26 m fix — traces back to this
+> mislabelling. With the correct band the offset leaves the edge, the
+> height channel is no longer distorted, and the frame is accepted.
+>
+> A geometric discriminator needs no photometry: a true sea horizon
+> has SKY immediately above it, a waterline has LAND. Scanned over the
+> whole corpus, every frame the level chain accepts (6 of 18; the rest
+> decline) reads land-above on 100% of columns, with median gaps of
+> 35-163 px — unambiguous, and correct: these are all bay and gulf
+> scenes whose far shore hides the horizon. Which is exactly why the
+> classifier is NOT changed here. The corpus contains no NEGATIVE
+> CONTROL — not one accepted frame with a genuine open-sea horizon —
+> so "land above => waterline" is, on this data, indistinguishable
+> from "always waterline", and the case it would endanger is the
+> instrument's headline case: a boat offshore with real horizon in
+> view. E5o's retraction is the precedent for not making a causal
+> claim without the control.
+>
+> Standing until a control frame exists: the default classifier is
+> untouched, `--level-class` is documented as the operator's override,
+> and the field rule is simply what the photographer can already see —
+> **if the far shore hides the sea horizon, pass
+> `--level-class waterline`.** The settling test is one accepted frame
+> shot out of the gulf with open horizon: the geometric rule must call
+> it `horizon`, and +-5 must not beat +-2 on it.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
