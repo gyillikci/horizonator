@@ -313,46 +313,71 @@ def sea_horizon_attitude_radon(rgb, f_px, dip_rad, max_step=0.20,
         edge_thr = 1.5 if ext else 2.0
         frac_min = min(min_frac, 0.15) if ext else min_frac
         below_lim = (0.08 if ext else 0.02) * W
-        # ---- column-wise refinement around the candidate line
-        pred = r0 + m * u
-        rows_ref = np.full(W, np.nan)
-        for x in range(W):
-            lo = int(round(pred[x])) - search_px
-            hi = lo + 2 * search_px + 1
-            if lo < 1 or hi >= H - 1:
-                continue
-            seg = gn[lo:hi, x]
-            k = int(np.argmax(seg))
-            if seg[k] > edge_thr:              # a real edge, not noise
-                rows_ref[x] = lo + k
-        ok = np.isfinite(rows_ref)
-        if ok.sum() < max(16, frac_min * W):
-            continue
-        v = (H - 1) / 2.0 - rows_ref
-
-        # ---- fit the physical model, IRLS on the inliers. The start
-        # MUST come from the candidate line itself: v = a*hypot(u,f) +
-        # b*u with a = (center_row - r0)/f and b = -slope. Starting
-        # from level instead leaves every point tens of pixels outside
-        # the tolerance, so the fit never gets going.
+        # ---- column-wise refinement around the candidate line, then
+        # RE-REFINEMENT around the fitted model. A seed whose slope is
+        # off by a few milliradians leaves the search window (a few px)
+        # only where the seed happens to cross the true line, so the
+        # first pass finds a narrow inlier band; re-centring the search
+        # on the fitted line recovers the full width (AK2, 2026-08-25:
+        # span 0.27 -> 0.99 with identical pitch, +10.87 -> +10.83).
+        # The fit MUST start from the candidate line itself: v =
+        # a*hypot(u,f) + b*u with a = (center_row - r0)/f, b = -slope.
+        # Starting from level instead leaves every point tens of
+        # pixels outside the tolerance, so the fit never gets going.
         a = ((H - 1) / 2.0 - r0) / f_px
         b = -m
-        inl = ok
-        for it in range(5):
-            tol = tol_px * (4.0 if it == 0 else 2.0 if it == 1 else 1.0)
-            res = np.where(ok, v - (a * Hu + b * u), np.nan)
-            inl = ok & (np.abs(res) <= tol)
-            if inl.sum() < 16:
+        dead = False
+        for rp in range(3):
+            pred = (r0 + m * u if rp == 0
+                    else (H - 1) / 2.0 - (a * Hu + b * u))
+            rows_ref = np.full(W, np.nan)
+            for x in range(W):
+                lo = int(round(pred[x])) - search_px
+                hi = lo + 2 * search_px + 1
+                if lo < 1 or hi >= H - 1:
+                    continue
+                seg = gn[lo:hi, x]
+                k = int(np.argmax(seg))
+                if seg[k] > edge_thr:          # a real edge, not noise
+                    rows_ref[x] = lo + k
+            ok = np.isfinite(rows_ref)
+            if ok.sum() < max(16, frac_min * W):
+                dead = True
                 break
-            A = np.stack([Hu[inl], u[inl]], axis=1)
-            sol, *_ = np.linalg.lstsq(A, v[inl], rcond=None)
-            a, b = float(sol[0]), float(sol[1])
-        if inl.sum() < 16:
+            v = (H - 1) / 2.0 - rows_ref
+            inl = ok
+            for it in range(5):
+                tol = tol_px * (4.0 if it == 0 else
+                                2.0 if it == 1 else 1.0)
+                res = np.where(ok, v - (a * Hu + b * u), np.nan)
+                inl = ok & (np.abs(res) <= tol)
+                if inl.sum() < 16:
+                    break
+                A = np.stack([Hu[inl], u[inl]], axis=1)
+                sol, *_ = np.linalg.lstsq(A, v[inl], rcond=None)
+                a, b = float(sol[0]), float(sol[1])
+            if inl.sum() < 16:
+                dead = True
+                break
+        if dead:
             continue
         res = np.where(ok, v - (a * Hu + b * u), np.nan)
         # nothing may sit BELOW a sea horizon (terrain only rises);
-        # below a waterline, boats do (external candidates: 8%)
-        if np.nansum((res < -3.0) & ok) > below_lim:
+        # below a waterline, boats do (external candidates: 8%). An
+        # OBJECT below the line is a contiguous run of columns; the
+        # re-refinement pass centres the search window on the line
+        # itself, so in haze scattered single-column noise edges land
+        # 3-5 px below it (AK2: 241 scattered vs limit 128, no run
+        # over 20 columns) — only runs of >= 4 columns count as
+        # objects, isolated noise does not
+        below = (res < -3.0) & ok
+        if below.any():
+            xs = np.where(below)[0]
+            runs = np.split(xs, np.where(np.diff(xs) > 1)[0] + 1)
+            n_below = sum(len(r) for r in runs if len(r) >= 4)
+        else:
+            n_below = 0
+        if n_below > below_lim:
             continue
         rms = float(np.sqrt(np.nanmean(res[inl] ** 2)))
         frac = float(inl.mean())
