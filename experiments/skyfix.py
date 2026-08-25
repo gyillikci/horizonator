@@ -430,6 +430,14 @@ def main():
                          'used by --auto-level, and widens its offset '
                          'window by 0.15 mrad/degC of |dT| since large '
                          'gradients also mean unstable dip')
+    ap.add_argument('--level-class', default='auto',
+                    choices=['auto', 'horizon', 'waterline'],
+                    help='STUDY FLAG: override the levelled line\'s class, '
+                         'which sets the elevation-offset band (horizon '
+                         '+-2 mrad, waterline +-5). The shipped classifier '
+                         'is photometric and AK3 (E5aj) showed it can call '
+                         'a hazy shoreline a horizon; this forces the call '
+                         'so the cost of that mistake can be measured.')
     ap.add_argument('--level-detector', default='radon',
                     choices=['radon', 'seam', 'sam'],
                     help='front end for --auto-level: radon (default) '
@@ -677,8 +685,10 @@ def main():
                 # beyond ~800 m. Still an anchor, not freedom: E5t
                 # measured the unanchored wide-pitch alternative to
                 # LOSE (rms better, position 680 -> 3230 m).
-                half = 0.005 if level.get('source') == 'waterline' \
-                    else 0.002
+                cls = level.get('source')
+                if args.level_class != 'auto':
+                    cls = args.level_class
+                half = 0.005 if cls == 'waterline' else 0.002
                 if args.dt_air_sea is not None:
                     half += 0.00015 * abs(args.dt_air_sea)
                 betas = np.arange(-half, half * 1.001, half / 4)
