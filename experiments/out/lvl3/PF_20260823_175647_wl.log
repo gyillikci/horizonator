@@ -12,208 +12,132 @@
   return register_model(fn_wrapper)
 /tmp/claude-0/-home-user/792503f9-74c5-5111-83ca-eeeda63e838d/scratchpad/MobileSAM/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_21m_512 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_21m_512. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
   return register_model(fn_wrapper)
-photo 0: PF_20260823_175709.jpg  fov 38.1, heading 191.4, pitch +33.94, roll -0.03, weight 1.00, auto-level (678 sea cols)
-z 4.0 m, box 6000 m at (36.64934,28.09263)
-INCONCLUSIVE: minimum on the search-box boundary: the true position may lie outside the box
-INCONCLUSIVE: residual 39.4 mrad > 12.0: the DEM cannot explain this observation
+photo 0: PF_20260823_175647.jpg  fov 38.1, heading 198.6, pitch +0.00, roll +0.00, weight 1.00
+z 4.0 m, box 6000 m at (36.64935,28.09263)
+peak witness: 2 crests, median height residual +29 m (spread 27 m)
 {
- "status": "inconclusive",
- "reasons": [
-  "minimum on the search-box boundary: the true position may lie outside the box",
-  "residual 39.4 mrad > 12.0: the DEM cannot explain this observation"
- ],
- "lat": 36.660941248716355,
- "lon": 28.127939109418598,
- "fix_ok": false,
- "basin_margin": 0.2511021572877888,
- "relief_mrad": 40.20184087494123,
- "dn_m": 1290.0,
- "de_m": 3150.0,
- "sigma_n_m": 457.0950904508549,
- "sigma_e_m": 1102.959201536364,
- "sigma_major_m": 1108.3277807888885,
- "sigma_minor_m": 443.9194209533825,
- "major_bearing_deg": 83.84095171627233,
- "anisotropy": 2.496686850078762,
+ "status": "ok",
+ "reasons": [],
+ "lat": 36.64719162814579,
+ "lon": 28.090780474980765,
+ "fix_ok": true,
+ "basin_margin": 1.9854352075391684,
+ "relief_mrad": 51.92512284401224,
+ "dn_m": -240.0,
+ "de_m": -165.0,
+ "sigma_n_m": 160.1001486980508,
+ "sigma_e_m": 167.9103763845435,
+ "sigma_major_m": 194.8852355286363,
+ "sigma_minor_m": 125.87969289637225,
+ "major_bearing_deg": 48.3231325139565,
+ "anisotropy": 1.5481864552137998,
  "jackknife": null,
  "subject_km": null,
  "dem_split_m": null,
- "peak_dh_m": null,
- "peak_dh_mad_m": null,
- "n_peaks": 0,
+ "peak_dh_m": 29.279394606961638,
+ "peak_dh_mad_m": 27.08728056488686,
+ "n_peaks": 2,
  "search_trace": [
   {
    "dn": -3000.0,
    "de": -3000.0,
-   "cost": 0.0020914096459816347,
+   "cost": 0.00015458639775867567,
    "stage": "coarse"
   },
   {
    "dn": -3000.0,
    "de": -2400.0,
-   "cost": 0.002060653227136986,
+   "cost": 0.00013101694552154641,
    "stage": "coarse"
   },
   {
    "dn": -3000.0,
    "de": -2100.0,
-   "cost": 0.0020238705675703936,
+   "cost": 0.00010309750905242487,
    "stage": "coarse"
   },
   {
    "dn": -3000.0,
    "de": -1800.0,
-   "cost": 0.0019714271333955927,
+   "cost": 9.812100140428601e-05,
    "stage": "coarse"
   },
   {
    "dn": -3000.0,
    "de": -1500.0,
-   "cost": 0.001937389284223116,
-   "stage": "coarse"
-  },
-  {
-   "dn": -3000.0,
-   "de": -1200.0,
-   "cost": 0.0018523317973954633,
-   "stage": "coarse"
-  },
-  {
-   "dn": -3000.0,
-   "de": -900.0,
-   "cost": 0.0018234437943337742,
-   "stage": "coarse"
-  },
-  {
-   "dn": -3000.0,
-   "de": -600.0,
-   "cost": 0.0018055634848739813,
-   "stage": "coarse"
-  },
-  {
-   "dn": -3000.0,
-   "de": -300.0,
-   "cost": 0.00171940746786996,
-   "stage": "coarse"
-  },
-  {
-   "dn": -3000.0,
-   "de": 0.0,
-   "cost": 0.001613000699039889,
-   "stage": "coarse"
-  },
-  {
-   "dn": -3000.0,
-   "de": 300.0,
-   "cost": 0.0015081919786266776,
-   "stage": "coarse"
-  },
-  {
-   "dn": -3000.0,
-   "de": 600.0,
-   "cost": 0.001460208059268689,
-   "stage": "coarse"
-  },
-  {
-   "dn": -3000.0,
-   "de": 900.0,
-   "cost": 0.0012981954969976442,
-   "stage": "coarse"
-  },
-  {
-   "dn": -3000.0,
-   "de": 1200.0,
-   "cost": 0.0011572205325326157,
-   "stage": "coarse"
-  },
-  {
-   "dn": -3000.0,
-   "de": 1500.0,
-   "cost": 0.001071825622976123,
+   "cost": 8.114533081567798e-05,
    "stage": "coarse"
   },
   {
    "dn": -2700.0,
-   "de": 1800.0,
-   "cost": 0.0010392446160462782,
+   "de": -1500.0,
+   "cost": 5.386953170167642e-05,
    "stage": "coarse"
   },
   {
-   "dn": 600.0,
-   "de": 2100.0,
-   "cost": 0.0010344878017966006,
+   "dn": -2100.0,
+   "de": -900.0,
+   "cost": 3.4555253691432706e-05,
    "stage": "coarse"
   },
   {
-   "dn": 600.0,
-   "de": 2400.0,
-   "cost": 0.0010279234651500565,
+   "dn": -900.0,
+   "de": -600.0,
+   "cost": 2.5156136223233503e-05,
    "stage": "coarse"
   },
   {
-   "dn": 900.0,
-   "de": 2100.0,
-   "cost": 0.0010168040912066174,
+   "dn": -600.0,
+   "de": -600.0,
+   "cost": 2.466963519034919e-05,
    "stage": "coarse"
   },
   {
-   "dn": 900.0,
-   "de": 2400.0,
-   "cost": 0.0009517178964178053,
+   "dn": -600.0,
+   "de": -300.0,
+   "cost": 1.6146504381180147e-05,
    "stage": "coarse"
   },
   {
-   "dn": 900.0,
-   "de": 2700.0,
-   "cost": 0.000911431053369631,
+   "dn": -300.0,
+   "de": -300.0,
+   "cost": 8.509187256169447e-06,
    "stage": "coarse"
   },
   {
-   "dn": 1200.0,
-   "de": 2700.0,
-   "cost": 0.0008686938002336227,
-   "stage": "coarse"
-  },
-  {
-   "dn": 1200.0,
-   "de": 3000.0,
-   "cost": 0.0008306632755707275,
-   "stage": "coarse"
-  },
-  {
-   "dn": 1320.0,
-   "de": 3120.0,
-   "cost": 0.0007825365016164851,
+   "dn": -240.0,
+   "de": -180.0,
+   "cost": 7.405511708214808e-06,
    "stage": "refine_60m"
   },
   {
-   "dn": 1290.0,
-   "de": 3150.0,
-   "cost": 0.0007764574136405449,
+   "dn": -240.0,
+   "de": -165.0,
+   "cost": 7.286569251401858e-06,
    "stage": "refine_15m"
   }
  ],
  "search_evals": 491,
- "cost": 0.0007764574136405449,
- "rms_mrad": 39.407040326331156,
+ "cost": 7.286569251401858e-06,
+ "rms_mrad": 3.817478029118664,
  "n_photos": 1,
  "z_m": 4.0,
  "photos": [
   {
-   "file": "PF_20260823_175709.jpg",
+   "file": "PF_20260823_175647.jpg",
    "fov_deg": 38.07,
-   "heading_deg": 191.4,
-   "pitch_deg": 33.93830854845319,
-   "roll_deg": -0.03209899948016546,
+   "heading_deg": 198.6,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
    "weight": 1.0,
-   "rms_mrad": 39.407040326331156,
-   "heading_offset_deg": 3.8000000000000003,
-   "el_offset_mrad": -2.0,
-   "attitude_source": "radon"
+   "rms_mrad": 3.817478029118664,
+   "heading_offset_deg": -3.8000000000000003,
+   "el_offset_mrad": 2.02458193231342,
+   "attitude_source": "prior"
   }
  ],
- "heading_offset_deg": 3.8000000000000003,
- "el_offset_mrad": -2.0,
+ "heading_offset_deg": -3.8000000000000003,
+ "el_offset_mrad": 2.02458193231342,
  "fov_deg": 38.07
 }
-wrote out/lvl3/PF_20260823_175709_wl.json/.png
+wrote out/lvl3/PF_20260823_175647_wl.json/.png

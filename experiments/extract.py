@@ -327,7 +327,14 @@ def sea_horizon_attitude_radon(rgb, f_px, dip_rad, max_step=0.20,
         a = ((H - 1) / 2.0 - r0) / f_px
         b = -m
         dead = False
-        for rp in range(3):
+        # re-refinement exists to fix ONE failure: an externally
+        # proposed seed whose slope is off by a few mrad walks out of
+        # the search window away from its pivot (AK2). Native radon
+        # candidates already state their own slope; giving them extra
+        # passes lets weak water-texture lines CRAWL into acceptance
+        # (three portrait frames anchored at pitch +34 deg), so they
+        # keep the measured single-pass behavior.
+        for rp in range(3 if ext else 1):
             pred = (r0 + m * u if rp == 0
                     else (H - 1) / 2.0 - (a * Hu + b * u))
             rows_ref = np.full(W, np.nan)
