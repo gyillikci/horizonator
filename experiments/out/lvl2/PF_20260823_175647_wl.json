@@ -1,0 +1,151 @@
+{
+ "status": "inconclusive",
+ "reasons": [
+  "peak heights disagree: matched crests stand a median -54 m (spread 74 m) from the model at this fix (limits 30/90 m) \u2014 position error or DEM bias is leaking into the height channel"
+ ],
+ "lat": 36.643279579160044,
+ "lon": 28.090948613618878,
+ "fix_ok": false,
+ "basin_margin": 1.0242116503673382,
+ "relief_mrad": 60.98432466054374,
+ "dn_m": -675.0,
+ "de_m": -150.0,
+ "sigma_n_m": 183.1873816464368,
+ "sigma_e_m": 563.0328520154088,
+ "sigma_major_m": 574.5299857715191,
+ "sigma_minor_m": 143.10452366176452,
+ "major_bearing_deg": 78.1393980339191,
+ "anisotropy": 4.01475768249963,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -54.07948521472383,
+ "peak_dh_mad_m": 73.71194478649016,
+ "n_peaks": 2,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.00019057976026755054,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2400.0,
+   "cost": 0.0001853250066804466,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2100.0,
+   "cost": 0.00014545275062309183,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1800.0,
+   "cost": 0.00014220183295444107,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1500.0,
+   "cost": 0.0001109853866795387,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1200.0,
+   "cost": 0.00010908672235300963,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -900.0,
+   "cost": 9.780502037529649e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -1500.0,
+   "cost": 9.36222588193567e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -1200.0,
+   "cost": 9.112410045403295e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": -900.0,
+   "cost": 8.76413814064505e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": -600.0,
+   "cost": 5.197654494589015e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": -900.0,
+   "cost": 4.550674728684746e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": -600.0,
+   "cost": 2.9525035693544982e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": -300.0,
+   "cost": 1.5385495438902065e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": 0.0,
+   "cost": 1.4194931722199995e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -660.0,
+   "de": -120.0,
+   "cost": 1.2071959360202713e-05,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -675.0,
+   "de": -150.0,
+   "cost": 1.1031952099238386e-05,
+   "stage": "refine_15m"
+  }
+ ],
+ "search_evals": 491,
+ "cost": 1.1031952099238386e-05,
+ "rms_mrad": 4.697223030523117,
+ "n_photos": 1,
+ "z_m": 4.0,
+ "photos": [
+  {
+   "file": "PF_20260823_175647.jpg",
+   "fov_deg": 38.07,
+   "heading_deg": 198.6,
+   "pitch_deg": 1.34096274504431,
+   "roll_deg": -2.8166457625346406,
+   "weight": 1.0,
+   "rms_mrad": 4.697223030523117,
+   "heading_offset_deg": 0.4,
+   "el_offset_mrad": -2.0,
+   "attitude_source": "radon"
+  }
+ ],
+ "heading_offset_deg": 0.4,
+ "el_offset_mrad": -2.0,
+ "fov_deg": 38.07
+}

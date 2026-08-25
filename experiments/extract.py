@@ -359,26 +359,26 @@ def sea_horizon_attitude_radon(rgb, f_px, dip_rad, max_step=0.20,
             if inl.sum() < 16:
                 dead = True
                 break
+            if rp == 0:
+                # nothing may sit BELOW a sea horizon (terrain only
+                # rises); below a waterline, boats do (external
+                # candidates: 8%). This veto also catches a WRONG LINE
+                # — a fit that locked onto structure above the real
+                # edge shows the real edge below it (t2's poisoned
+                # external seed: 332 vs limit 128; 175647: 164) — so
+                # it must run on the PASS-0 residuals, in the seed's
+                # own window, where those counts were measured. After
+                # re-refinement the window is centred on the line and
+                # scattered haze noise lands 3-5 px below it (AK2:
+                # 241 from a GOOD line), which would fail a vetted
+                # anchor for noise.
+                res = np.where(ok, v - (a * Hu + b * u), np.nan)
+                if np.nansum((res < -3.0) & ok) > below_lim:
+                    dead = True
+                    break
         if dead:
             continue
         res = np.where(ok, v - (a * Hu + b * u), np.nan)
-        # nothing may sit BELOW a sea horizon (terrain only rises);
-        # below a waterline, boats do (external candidates: 8%). An
-        # OBJECT below the line is a contiguous run of columns; the
-        # re-refinement pass centres the search window on the line
-        # itself, so in haze scattered single-column noise edges land
-        # 3-5 px below it (AK2: 241 scattered vs limit 128, no run
-        # over 20 columns) — only runs of >= 4 columns count as
-        # objects, isolated noise does not
-        below = (res < -3.0) & ok
-        if below.any():
-            xs = np.where(below)[0]
-            runs = np.split(xs, np.where(np.diff(xs) > 1)[0] + 1)
-            n_below = sum(len(r) for r in runs if len(r) >= 4)
-        else:
-            n_below = 0
-        if n_below > below_lim:
-            continue
         rms = float(np.sqrt(np.nanmean(res[inl] ** 2)))
         frac = float(inl.mean())
         span = float((u[inl].max() - u[inl].min())

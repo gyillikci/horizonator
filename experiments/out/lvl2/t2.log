@@ -12,132 +12,99 @@
   return register_model(fn_wrapper)
 /tmp/claude-0/-home-user/792503f9-74c5-5111-83ca-eeeda63e838d/scratchpad/MobileSAM/mobile_sam/modeling/tiny_vit_sam.py:656: UserWarning: Overwriting tiny_vit_21m_512 in registry with mobile_sam.modeling.tiny_vit_sam.tiny_vit_21m_512. This is because the name being registered conflicts with an existing name. Please check if this is not expected.
   return register_model(fn_wrapper)
-photo 0: PF_20260823_175709.jpg  fov 38.1, heading 191.4, pitch +0.00, roll +0.00, weight 1.00
-z 4.0 m, box 6000 m at (36.64934,28.09263)
-peak witness: 1 crests, median height residual +0 m (spread 0 m)
+/root/.local/lib/python3.11/site-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/root/.local/lib/python3.11/site-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+photo 0: redacted.jpg  fov 73.7, heading 200.6, pitch -2.79, roll +1.46, weight 1.00, auto-level (545 sea cols)
+z 3.0 m, box 20000 m at (36.64500,28.08500)
+peak witness: 11 crests, median height residual -47 m (spread 44 m)
+INCONCLUSIVE: minimum on the search-box boundary: the true position may lie outside the box
+INCONCLUSIVE: peak heights disagree: matched crests stand a median -47 m (spread 44 m) from the model at this fix (limits 30/90 m) — position error or DEM bias is leaking into the height channel
 {
- "status": "ok",
- "reasons": [],
- "lat": 36.643674273882716,
- "lon": 28.09094861383721,
- "fix_ok": true,
- "basin_margin": 0.6969446274126323,
- "relief_mrad": 40.11056984407876,
- "dn_m": -630.0,
- "de_m": -150.0,
- "sigma_n_m": 247.64631470911073,
- "sigma_e_m": 356.3879048417471,
- "sigma_major_m": 373.7751060341566,
- "sigma_minor_m": 220.52937676338976,
- "major_bearing_deg": 68.07710466457128,
- "anisotropy": 1.6948993894595146,
+ "status": "inconclusive",
+ "reasons": [
+  "minimum on the search-box boundary: the true position may lie outside the box",
+  "peak heights disagree: matched crests stand a median -47 m (spread 44 m) from the model at this fix (limits 30/90 m) \u2014 position error or DEM bias is leaking into the height channel"
+ ],
+ "lat": 36.652644233650314,
+ "lon": 27.981880793123597,
+ "fix_ok": false,
+ "basin_margin": 0.3030500075970485,
+ "relief_mrad": 32.88244150373428,
+ "dn_m": 850.0,
+ "de_m": -9200.0,
+ "sigma_n_m": 1092.6025298632999,
+ "sigma_e_m": 572.1865288536352,
+ "sigma_major_m": 1100.9685372746878,
+ "sigma_minor_m": 555.9190516581432,
+ "major_bearing_deg": 8.195492797904052,
+ "anisotropy": 1.9804475741401957,
  "jackknife": null,
  "subject_km": null,
  "dem_split_m": null,
- "peak_dh_m": 0.13566204283463024,
- "peak_dh_mad_m": 0.0,
- "n_peaks": 1,
+ "peak_dh_m": -47.37471046633356,
+ "peak_dh_mad_m": 43.85730133787328,
+ "n_peaks": 11,
  "search_trace": [
   {
-   "dn": -3000.0,
-   "de": -3000.0,
-   "cost": 0.00029886016646956125,
+   "dn": -10000.0,
+   "de": -10000.0,
+   "cost": 6.611210630934283e-05,
    "stage": "coarse"
   },
   {
-   "dn": -3000.0,
-   "de": -2700.0,
-   "cost": 0.00029430661078427145,
+   "dn": -9000.0,
+   "de": -9000.0,
+   "cost": 6.377711859760054e-05,
    "stage": "coarse"
   },
   {
-   "dn": -3000.0,
-   "de": -2400.0,
-   "cost": 0.0002593449693036586,
+   "dn": -8000.0,
+   "de": -5000.0,
+   "cost": 3.507100112355409e-05,
    "stage": "coarse"
   },
   {
-   "dn": -3000.0,
-   "de": -2100.0,
-   "cost": 0.00022248778993858414,
+   "dn": 1000.0,
+   "de": -9000.0,
+   "cost": 2.6914547345906117e-05,
    "stage": "coarse"
   },
   {
-   "dn": -3000.0,
-   "de": -1800.0,
-   "cost": 0.000176024888289395,
-   "stage": "coarse"
+   "dn": 800.0,
+   "de": -9200.0,
+   "cost": 2.5991426439970967e-05,
+   "stage": "refine_200m"
   },
   {
-   "dn": -3000.0,
-   "de": -1500.0,
-   "cost": 0.00013607535939917694,
-   "stage": "coarse"
-  },
-  {
-   "dn": -3000.0,
-   "de": -1200.0,
-   "cost": 7.031740203597452e-05,
-   "stage": "coarse"
-  },
-  {
-   "dn": -3000.0,
-   "de": -900.0,
-   "cost": 4.7330998590854005e-05,
-   "stage": "coarse"
-  },
-  {
-   "dn": -2400.0,
-   "de": -600.0,
-   "cost": 2.615568863026873e-05,
-   "stage": "coarse"
-  },
-  {
-   "dn": -600.0,
-   "de": -300.0,
-   "cost": 1.9182534257789278e-05,
-   "stage": "coarse"
-  },
-  {
-   "dn": -600.0,
-   "de": 0.0,
-   "cost": 1.5413401361333085e-05,
-   "stage": "coarse"
-  },
-  {
-   "dn": -600.0,
-   "de": -120.0,
-   "cost": 1.3043101728099452e-05,
-   "stage": "refine_60m"
-  },
-  {
-   "dn": -630.0,
-   "de": -150.0,
-   "cost": 1.2595823178672363e-05,
-   "stage": "refine_15m"
+   "dn": 850.0,
+   "de": -9200.0,
+   "cost": 2.5864205741260832e-05,
+   "stage": "refine_50m"
   }
  ],
  "search_evals": 491,
- "cost": 1.2595823178672363e-05,
- "rms_mrad": 5.019128047514302,
+ "cost": 2.5864205741260832e-05,
+ "rms_mrad": 7.1922466227543715,
  "n_photos": 1,
- "z_m": 4.0,
+ "z_m": 3.0,
  "photos": [
   {
-   "file": "PF_20260823_175709.jpg",
-   "fov_deg": 38.07,
-   "heading_deg": 191.4,
-   "pitch_deg": 0.0,
-   "roll_deg": 0.0,
+   "file": "redacted.jpg",
+   "fov_deg": 73.74,
+   "heading_deg": 200.6,
+   "pitch_deg": -2.7928425452867973,
+   "roll_deg": 1.462632571683518,
    "weight": 1.0,
-   "rms_mrad": 5.019128047514302,
-   "heading_offset_deg": -3.8000000000000003,
-   "el_offset_mrad": -1.734723475976807e-15,
-   "attitude_source": "prior"
+   "rms_mrad": 7.1922466227543715,
+   "heading_offset_deg": -6.0,
+   "el_offset_mrad": 2.0,
+   "attitude_source": "radon"
   }
  ],
- "heading_offset_deg": -3.8000000000000003,
- "el_offset_mrad": -1.734723475976807e-15,
- "fov_deg": 38.07
+ "heading_offset_deg": -6.0,
+ "el_offset_mrad": 2.0,
+ "fov_deg": 73.74
 }
-wrote out/lvl2/PF_20260823_175709_wl.json/.png
+wrote out/lvl2/t2.json/.png
