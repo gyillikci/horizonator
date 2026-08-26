@@ -2925,6 +2925,49 @@ sequential estimator.
 > gate would have cost that good fix. The ledger gains its third bad
 > fix, recorded rather than patched over.
 
+> **E5au — eWaSR's waterline is not a waterline (caught by the user,
+> not by me).** Shown the dusk frame's segmentation panel I checked
+> only the ridge and declared the extraction good. The water/land
+> boundary in the same picture is wrong, and it was visible.
+>
+> Measured on that frame: across the far coast (x 400-1100 of 1600)
+> eWaSR's top-of-water fits a STRAIGHT LINE to 1.2 px rms over 700
+> columns. A real shoreline that curves and recedes cannot be that
+> straight — the segmenter is not tracing the shore there, it is
+> drawing a line. And it sits **+51 px below** the strongest intensity
+> edge under the ridge, calling a strip of genuine water land; on the
+> left, over the near headland, it is **-77 px above** it, calling
+> land water. Roughly +-50 to 75 mrad in both directions.
+>
+> A five-frame control says this is not a dusk effect: deviations of
+> +51, +2, -176, -70 and -132 px from 16:33 to 19:40, with the
+> straightness residual as low as 2.7 px on a curving coast. Caveat
+> stated rather than buried: the reference edge is itself crude (the
+> strongest horizontal gradient within 260 px below the ridge), so
+> some of that spread is the reference's fault; the frame verified by
+> eye is the dusk one.
+>
+> What it did NOT do is cause the E5at false accept. That frame's
+> level chain declined (attitude `prior`), so no waterline anchored
+> anything, and `--across-water` was not in the solve. The exposure is
+> elsewhere, and narrower than it looks:
+> - the level anchor does not use this boundary at all — it uses the
+>   SAM water-mask seed plus the radon refinement, which have their
+>   own gates (E5l, E5u);
+> - `--across-water` does lean on these classes, but its test is
+>   deliberately NOT-LAND rather than IS-WATER (E5ap), so land
+>   bleeding 51 px into the water still leaves ample not-land below
+>   the crest and the mask stayed a correct no-op on this frame. A
+>   choice made for a different reason turned out to be the mitigation
+>   for this one.
+>
+> The honest conclusion is a regime limit, not a bug to patch: eWaSR
+> is trustworthy for SKY/not-sky, which is what the extractor asks of
+> it, and unreliable for water/land, which is what a waterline needs.
+> Any future use of its water class for geometry has to be gated on
+> something independent. Diagnostic: `e5au_waterline.py`,
+> `experiments/out/bd4/BD4_waterline.png`.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
