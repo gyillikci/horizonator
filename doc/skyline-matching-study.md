@@ -2693,6 +2693,57 @@ sequential estimator.
 > reference points instead of one. Curve:
 > `experiments/out/theo3/dh_curve.png` (`e5ao_theodh.py`).
 
+> **E5ap — `--across-water`: let the IMAGE say which terrain is across
+> water.** Asked to use only the silhouette of hills standing above
+> the water and keep the near land mass out, the honest form is not a
+> range mask. `--dmin` asks the DEM what is near, which needs the
+> position being solved for; the photograph already knows. A crest
+> seen ACROSS a bay has water somewhere below it in its own column;
+> the near land the observer stands on runs land all the way to the
+> bottom of the frame. eWaSR labels land/water/sky already, so the
+> test costs one segmentation pass and no prior.
+>
+> Two implementation corrections, both caught by looking at the
+> picture rather than the number:
+> 1. The mask first lived inside the eWaSR extractor branch, so the
+>    E5af pre-check falling back to the seam silently bypassed it
+>    (0 columns dropped). It belongs beside `terrain_plausible`, after
+>    the extractor is chosen: the mask is a property of the
+>    photograph, not of whichever front end traced the ridge.
+> 2. Testing for the water CLASS discarded exactly the across-gulf
+>    coast the mask exists to keep — in haze eWaSR calls distant water
+>    sky. The test is NOT-LAND, which is physically the right
+>    statement: below a terrain silhouette there is no sky.
+>
+> On the Akbuk frame (37.03631, 28.18522, 33 m, heading 85.5, full
+> width) the mask keeps 1172 of 1600 columns — the ridge from where it
+> first stands above the bay, across to the far coast — and discards
+> the 422 columns of near mountain whose whole column is land.
+>
+> The frame also produced the session's third off-centre-crop failure
+> and its clearest resolution. Raw, it misses by 3238 m with four
+> refusal reasons and `el_offset` pinned at +10.1 mrad; the level
+> chain declines it (no usable horizon). Measured against truth in
+> angle space the DEM is not the problem at all — shape correlation
+> **+0.995** — but a constant **+68.7 mrad (3.9 deg)** of unmodelled
+> attitude sits between model and observation, seven times what the
+> +-10 mrad prior can reach. Hand the solver that pitch and the frame
+> resolves:
+>
+> | arm | dlat | dlon | total | margin | rms | verdict |
+> |---|---|---|---|---|---|---|
+> | pitch supplied | +75 | +360 | 368 m | 0.53 | 5.2 | accepted |
+> | pitch + `--across-water` | +15 | +345 | **346 m** | 0.25 | 5.0 | accepted |
+>
+> The mask helps, modestly and in the direction it should: the
+> across-sight error collapses from -46 m to +12 m and the
+> constant-removed angular residual falls 10.3 -> 9.3 mrad, bought by
+> discarding a quarter of the columns (margin 0.53 -> 0.25 is the
+> price). One frame is not a calibration, and the mask is not
+> defaulted — but on the frame it was asked for, dropping the near
+> land is worth ~20 m and a cleaner fit. Visual:
+> `experiments/out/akb/AKB_aw_viz.png` (`e5ap_awviz.py`).
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the

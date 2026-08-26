@@ -1,0 +1,230 @@
+/root/.local/lib/python3.11/site-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/root/.local/lib/python3.11/site-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+extractor pre-check: eWaSR disagrees with the seam on 36% of columns — falling back to the seam
+photo 0: PF_new_akbuk1.jpg  fov 73.7, heading 85.47, pitch +3.94, roll +0.00, weight 1.00
+z 33.0 m, box 6000 m at (37.03631,28.18522)
+peak witness: 3 crests, median height residual +18 m (spread 9 m)
+{
+ "status": "ok",
+ "reasons": [],
+ "lat": 37.03644489824089,
+ "lon": 28.18910680756748,
+ "fix_ok": true,
+ "basin_margin": 0.2530462314169407,
+ "relief_mrad": 42.74808096741722,
+ "dn_m": 15.0,
+ "de_m": 345.0,
+ "sigma_n_m": 289.2597473380783,
+ "sigma_e_m": 412.6392000980238,
+ "sigma_major_m": 412.77163400651625,
+ "sigma_minor_m": 289.0707336400841,
+ "major_bearing_deg": 87.96650892700758,
+ "anisotropy": 1.4279260608943192,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": 18.04426069024784,
+ "peak_dh_mad_m": 9.22004382120476,
+ "n_peaks": 3,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 5.972078163703951e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -3000.0,
+   "cost": 5.490224335956356e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": -3000.0,
+   "cost": 4.89730865682457e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": -3000.0,
+   "cost": 4.326753067514473e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": -3000.0,
+   "cost": 3.780325109750451e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": -3000.0,
+   "cost": 3.145237846343804e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": -3000.0,
+   "cost": 2.869115346443692e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": -2700.0,
+   "cost": 2.8293708353283366e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": -2400.0,
+   "cost": 2.7892237663840448e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": -2100.0,
+   "cost": 2.7440483142231105e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": -2700.0,
+   "cost": 2.6203360747433776e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": -2400.0,
+   "cost": 2.5102895966499805e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": -2100.0,
+   "cost": 2.4397081439857405e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": -1800.0,
+   "cost": 2.3800318696273435e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": -1500.0,
+   "cost": 2.3557030969078774e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": -2100.0,
+   "cost": 2.27276186714604e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": -1800.0,
+   "cost": 2.1620461435499043e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": -1500.0,
+   "cost": 2.045786448763493e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": -1200.0,
+   "cost": 1.995338082469277e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": -900.0,
+   "cost": 1.973980545266957e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": -1200.0,
+   "cost": 1.8915314008366073e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": -900.0,
+   "cost": 1.7833378743530713e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": -600.0,
+   "cost": 1.6793379219123178e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": -300.0,
+   "cost": 1.5499036194797012e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": -300.0,
+   "cost": 1.547110905181372e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": 0.0,
+   "cost": 1.4081547549038165e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": 300.0,
+   "cost": 1.2642374430777931e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": 360.0,
+   "cost": 1.2527087079432055e-05,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": 15.0,
+   "de": 345.0,
+   "cost": 1.2524022755273798e-05,
+   "stage": "refine_15m"
+  }
+ ],
+ "search_evals": 491,
+ "cost": 1.2524022755273798e-05,
+ "rms_mrad": 5.004802244899152,
+ "n_photos": 1,
+ "z_m": 33.0,
+ "photos": [
+  {
+   "file": "PF_new_akbuk1.jpg",
+   "fov_deg": 73.74,
+   "heading_deg": 85.47,
+   "pitch_deg": 3.94,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 5.004802244899152,
+   "heading_offset_deg": 0.0,
+   "el_offset_mrad": 4.049163864626842,
+   "attitude_source": "prior"
+  }
+ ],
+ "heading_offset_deg": 0.0,
+ "el_offset_mrad": 4.049163864626842,
+ "fov_deg": 73.74
+}
+wrote out/akb/AKB_paw.json/.png

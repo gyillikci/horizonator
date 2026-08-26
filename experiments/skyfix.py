@@ -83,6 +83,8 @@ def basin_margin(cc, g, min_sep):
 
 EXTRACTOR = 'seam'      # set from --extractor
 _EWASR = None
+ACROSS_WATER = False
+ACROSS_WATER_MIN_PX = 8
 
 
 
@@ -113,6 +115,38 @@ def terrain_plausible(rows, conf, H, jump_frac=0.02,
                 conf[a + 1:b + 1] = 0.0
                 used[a:b + 1] = True
                 break
+    return conf
+
+
+def across_water(img, rows, conf):
+    """Zero-weight every column that is LAND all the way down.
+
+    Uses the eWaSR water class beneath each column's boundary; a
+    column needs at least ACROSS_WATER_MIN_PX water pixels below its
+    crest to count as seen across water."""
+    global _EWASR
+    if _EWASR is None:
+        from ewasr_bridge import EWasr
+        scratch = ('/tmp/claude-0/-home-user/'
+                   '792503f9-74c5-5111-83ca-eeeda63e838d/scratchpad')
+        _EWASR = EWasr(os.path.join(scratch, 'eWaSR'),
+                       os.path.join(scratch, 'ewasr_resnet18.pth'))
+    # NOT-LAND, not "water": below a terrain silhouette there is no
+    # sky, so a sky label under the crest is haze-washed water that
+    # the segmenter mis-called. Measured on the Akbuk frame: eWaSR
+    # labels the near bay water (class 1) but calls the hazy far
+    # water sky (class 2), so testing for class 1 discarded exactly
+    # the across-gulf coast this mask exists to keep.
+    water = _EWASR.predict(img) != 0
+    H, W = water.shape
+    conf = np.asarray(conf, float).copy()
+    rows = np.asarray(rows, float)
+    for x in range(W):
+        if conf[x] <= 0:
+            continue
+        r0 = int(rows[x]) + 1
+        if r0 >= H or int(water[r0:, x].sum()) < ACROSS_WATER_MIN_PX:
+            conf[x] = 0.0
     return conf
 
 
@@ -201,6 +235,20 @@ def extract_boundary(img, horizon_rows=None, tol_px=4):
                       f'seam on {frac*100:.0f}% of columns — falling '
                       f'back to the seam', flush=True)
                 rows, conf = rows_s, conf_s
+    if ACROSS_WATER:
+        # "only the hills that stand above the water": a crest seen
+        # ACROSS the bay has water somewhere below it in its own
+        # column; the near land the observer stands on runs land all
+        # the way to the bottom of the frame. eWaSR already labels the
+        # three, so the test is nearly free — and unlike --dmin it asks
+        # the IMAGE what is across water rather than the DEM, so it
+        # needs no prior on the position being solved for.
+        # It lives HERE, not inside the eWaSR branch, because the
+        # boundary may come from the seam (the E5af pre-check can fall
+        # back to it) while the water evidence still comes from the
+        # segmenter: the mask is a property of the photograph, not of
+        # whichever front end traced the ridge.
+        conf = across_water(img, rows, conf)
     conf = terrain_plausible(rows, conf, Hh)
     if horizon_rows is not None:
         # a column whose boundary still sits below the horizon carries
@@ -430,6 +478,15 @@ def main():
                          'used by --auto-level, and widens its offset '
                          'window by 0.15 mrad/degC of |dT| since large '
                          'gradients also mean unstable dip')
+    ap.add_argument('--across-water', action='store_true',
+                    help='use ONLY the silhouette of terrain seen across '
+                         'water: a column is kept when the segmenter finds '
+                         'water below its sky/terrain boundary, dropped '
+                         'when the column is land all the way down (the '
+                         'near shore the observer stands on). Requires '
+                         '--extractor ewasr. Unlike --dmin this asks the '
+                         'IMAGE what is across water, not the DEM, so it '
+                         'needs no prior on the position being solved for.')
     ap.add_argument('--level-class', default='auto',
                     choices=['auto', 'horizon', 'waterline'],
                     help='STUDY FLAG: override the levelled line\'s class, '
@@ -600,8 +657,9 @@ def main():
     ap.add_argument('--out',
                     help='write PREFIX.json and PREFIX.png diagnostics')
     args = ap.parse_args()
-    global EXTRACTOR
+    global EXTRACTOR, ACROSS_WATER
     EXTRACTOR = args.extractor
+    ACROSS_WATER = args.across_water
     N = len(args.images)
 
     exs = [extract.read_exif(p) for p in args.images]
