@@ -16,199 +16,151 @@
   warnings.warn(
 /root/.local/lib/python3.11/site-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
   warnings.warn(msg)
-photo 0: PF_20260824_195733_clean.jpg  fov 73.7, heading 196.5, pitch +0.38, roll -1.07, weight 1.00, auto-level (1330 sea cols)
-z 3.0 m, box 6000 m at (37.05190,28.32292)
-peak witness: 8 crests, median height residual -5 m (spread 9 m)
+photo 0: PF_new_akyaka2.jpg  fov 73.7, heading 177.0, pitch +10.83, roll +0.54, weight 1.00, auto-level (772 sea cols)
+z 17.0 m, box 6000 m at (37.04860,28.29299)
+peak witness: 10 crests, median height residual -5 m (spread 27 m)
 {
  "status": "ok",
  "reasons": [],
- "lat": 37.04947183166402,
- "lon": 28.323765131712246,
+ "lat": 37.04603693342313,
+ "lon": 28.288426487183592,
  "fix_ok": true,
- "basin_margin": 5.117719308865244,
- "relief_mrad": 17.62907676913418,
- "dn_m": -270.0,
- "de_m": 75.0,
- "sigma_n_m": 99.75130933907256,
- "sigma_e_m": 125.85718054541735,
- "sigma_major_m": 129.71930442829105,
- "sigma_minor_m": 94.67447210489992,
- "major_bearing_deg": 110.74979920532282,
- "anisotropy": 1.3701613702642168,
+ "basin_margin": 0.4395123381096995,
+ "relief_mrad": 7.754066362679375,
+ "dn_m": -285.0,
+ "de_m": -405.0,
+ "sigma_n_m": 386.904862420227,
+ "sigma_e_m": 372.3449761415551,
+ "sigma_major_m": 394.3557660404679,
+ "sigma_minor_m": 364.44434913015976,
+ "major_bearing_deg": 149.5736106172105,
+ "anisotropy": 1.0820740312799457,
  "jackknife": null,
  "subject_km": null,
  "dem_split_m": null,
- "peak_dh_m": -5.241467434926166,
- "peak_dh_mad_m": 8.690929451000958,
- "n_peaks": 8,
+ "peak_dh_m": -5.216644206956845,
+ "peak_dh_mad_m": 27.26836702084005,
+ "n_peaks": 10,
  "search_trace": [
   {
    "dn": -3000.0,
    "de": -3000.0,
-   "cost": 0.00030402560946496545,
-   "stage": "coarse"
-  },
-  {
-   "dn": -3000.0,
-   "de": 900.0,
-   "cost": 0.0002627045674273155,
-   "stage": "coarse"
-  },
-  {
-   "dn": -3000.0,
-   "de": 1200.0,
-   "cost": 0.00020509318401585062,
-   "stage": "coarse"
-  },
-  {
-   "dn": -3000.0,
-   "de": 1500.0,
-   "cost": 0.00012193334129668772,
-   "stage": "coarse"
-  },
-  {
-   "dn": -3000.0,
-   "de": 1800.0,
-   "cost": 9.452336888244331e-05,
-   "stage": "coarse"
-  },
-  {
-   "dn": -3000.0,
-   "de": 2100.0,
-   "cost": 7.751979924855308e-05,
-   "stage": "coarse"
-  },
-  {
-   "dn": -3000.0,
-   "de": 2400.0,
-   "cost": 7.002189341393632e-05,
-   "stage": "coarse"
-  },
-  {
-   "dn": -3000.0,
-   "de": 2700.0,
-   "cost": 6.18306423108162e-05,
+   "cost": 6.389298244483851e-05,
    "stage": "coarse"
   },
   {
    "dn": -2700.0,
-   "de": 2100.0,
-   "cost": 5.410347597850986e-05,
+   "de": -3000.0,
+   "cost": 5.5707836579589105e-05,
    "stage": "coarse"
   },
   {
-   "dn": -2700.0,
-   "de": 2400.0,
-   "cost": 4.991660581996325e-05,
-   "stage": "coarse"
-  },
-  {
-   "dn": -2100.0,
-   "de": 2400.0,
-   "cost": 4.9879610224118436e-05,
+   "dn": -2400.0,
+   "de": -3000.0,
+   "cost": 5.111431471140071e-05,
    "stage": "coarse"
   },
   {
    "dn": -1800.0,
-   "de": 2400.0,
-   "cost": 4.6632912389460116e-05,
+   "de": -2700.0,
+   "cost": 4.8383228259875046e-05,
    "stage": "coarse"
   },
   {
    "dn": -1800.0,
-   "de": 2700.0,
-   "cost": 4.6268188779597137e-05,
+   "de": -2400.0,
+   "cost": 4.815714194378391e-05,
    "stage": "coarse"
   },
   {
    "dn": -1500.0,
-   "de": 900.0,
-   "cost": 4.258441409532485e-05,
-   "stage": "coarse"
-  },
-  {
-   "dn": -1500.0,
-   "de": 1200.0,
-   "cost": 3.6702732641623105e-05,
+   "de": -2100.0,
+   "cost": 4.375084401346642e-05,
    "stage": "coarse"
   },
   {
    "dn": -1200.0,
-   "de": 300.0,
-   "cost": 2.7921960591429492e-05,
+   "de": -1800.0,
+   "cost": 4.311415541677891e-05,
    "stage": "coarse"
   },
   {
    "dn": -1200.0,
-   "de": 1200.0,
-   "cost": 2.5660109139140188e-05,
+   "de": -1500.0,
+   "cost": 4.242204933525286e-05,
    "stage": "coarse"
   },
   {
    "dn": -900.0,
-   "de": 0.0,
-   "cost": 2.009680824673643e-05,
+   "de": -1500.0,
+   "cost": 3.832158873608277e-05,
    "stage": "coarse"
   },
   {
    "dn": -900.0,
-   "de": 300.0,
-   "cost": 1.2086668274490884e-05,
+   "de": -1200.0,
+   "cost": 3.483110257350546e-05,
    "stage": "coarse"
   },
   {
    "dn": -600.0,
-   "de": 0.0,
-   "cost": 7.017930129253653e-06,
+   "de": -1200.0,
+   "cost": 3.326772839996518e-05,
    "stage": "coarse"
   },
   {
    "dn": -600.0,
-   "de": 300.0,
-   "cost": 5.479141659800814e-06,
+   "de": -600.0,
+   "cost": 3.1622019282220694e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": -300.0,
+   "cost": 2.7643517281189738e-05,
    "stage": "coarse"
   },
   {
    "dn": -300.0,
-   "de": 0.0,
-   "cost": 2.3443279159238642e-06,
+   "de": -300.0,
+   "cost": 2.5907009422000978e-05,
    "stage": "coarse"
   },
   {
-   "dn": -240.0,
-   "de": 60.0,
-   "cost": 1.9082801393448916e-06,
+   "dn": -300.0,
+   "de": -420.0,
+   "cost": 2.530212878317234e-05,
    "stage": "refine_60m"
   },
   {
-   "dn": -270.0,
-   "de": 75.0,
-   "cost": 1.7877023486012487e-06,
+   "dn": -285.0,
+   "de": -405.0,
+   "cost": 2.526274610660338e-05,
    "stage": "refine_15m"
   }
  ],
  "heading_window_deg": 6.0,
  "search_evals": 491,
- "cost": 1.7877023486012487e-06,
- "rms_mrad": 1.8908740564094948,
+ "cost": 2.526274610660338e-05,
+ "rms_mrad": 7.108128601341338,
  "n_photos": 1,
- "z_m": 3.0,
+ "z_m": 17.0,
  "photos": [
   {
-   "file": "PF_20260824_195733_clean.jpg",
-   "fov_deg": 73.7,
-   "heading_deg": 196.5,
-   "pitch_deg": 0.3774843149160218,
-   "roll_deg": -1.0658724094228225,
+   "file": "PF_new_akyaka2.jpg",
+   "fov_deg": 73.74,
+   "heading_deg": 177.0,
+   "pitch_deg": 10.833814428727338,
+   "roll_deg": 0.5402225463342673,
    "weight": 1.0,
-   "rms_mrad": 1.8908740564094948,
-   "heading_offset_deg": -0.8,
-   "el_offset_mrad": -1.2499999999999993,
-   "attitude_source": "waterline"
+   "rms_mrad": 7.108128601341338,
+   "heading_offset_deg": -6.0,
+   "el_offset_mrad": -2.0,
+   "attitude_source": "radon"
   }
  ],
- "heading_offset_deg": -0.8,
- "el_offset_mrad": -1.2499999999999993,
- "fov_deg": 73.7
+ "heading_offset_deg": -6.0,
+ "el_offset_mrad": -2.0,
+ "fov_deg": 73.74
 }
-wrote out/canopy/base_dh0.json/.png
+wrote out/canopy/AK2_can_dh9.json/.png

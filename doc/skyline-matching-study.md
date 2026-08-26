@@ -2968,6 +2968,66 @@ sequential estimator.
 > something independent. Diagnostic: `e5au_waterline.py`,
 > `experiments/out/bd4/BD4_waterline.png`.
 
+> **E5aw — the crest deficit is about HALF canopy: a per-pixel raster
+> buys 105 m where a constant bought nothing.** E5p rejected a constant
+> canopy offset, and rightly: a constant is exactly what the
+> elevation-offset beta absorbs, so it adds noise and nothing else. A
+> per-pixel canopy raster is a different object — it changes the
+> silhouette's SHAPE, which is what the cost reads. Tested properly
+> for the first time.
+>
+> Meta/WRI's 1 m global canopy height was added onto the 1-arcsec DEM
+> posts, taking the **max** over each post's footprint rather than the
+> mean, because a ridge silhouette is set by the tallest trees on it.
+> On the Akyaka sight lines the raster adds height to 13-19% of posts,
+> median 11 m where it adds, p95 23 m — squarely on top of the 9-12 m
+> crest deficit measured independently in E5ae/E5al/E5ao.
+>
+> Akyaka clean, swept over dh with both DEMs:
+>
+> | dh | bare DEM | + canopy |
+> |---|---|---|
+> | **0** | 280 m (along +237) | **175 m** (along +118) |
+> | 3 | 256 | 153 |
+> | 6 | 280 | 128 |
+> | **9** | 237 | **124 m** |
+> | 12 | **223 m** | 128 |
+>
+> With NO crest term at all, the canopy raster alone takes the frame
+> from 280 to 175 m and halves the along-sight bias. Best-to-best,
+> 223 -> 124 m, a 44% cut and the largest single improvement of the
+> campaign.
+>
+> But the optimum dh did NOT fall to zero — it sits at 9, so canopy
+> explains roughly half the deficit and 30 m cell clipping explains
+> the rest. That is the answer the test was built to give, and it
+> names the next data step: a higher-resolution DSM (Copernicus
+> EEA-10, 10 m, TanDEM-X-derived, and Turkey is inside EEA-39
+> coverage) should take the other half.
+>
+> Confirmed on two more frames, all six comparisons improving and the
+> along-sight bias falling consistently:
+>
+> | frame | dh=0 bare -> canopy | along-sight |
+> |---|---|---|
+> | Akyaka clean | 280 -> 175 m | +237 -> +118 (-50%) |
+> | Gokova AK3 | 390 -> 287 m | +337 -> +166 (-51%) |
+> | Gokova AK2 | 620 -> 541 m | +507 -> +354 (-30%) |
+>
+> Two of the three land within a point of exactly halving the bias,
+> which is what the crest-deficit model predicts if half the deficit
+> is canopy. Two frames also flipped from refused to accepted.
+>
+> Honest caveats: one Meta tile, one coastal region, three frames; 5%
+> of the Akyaka sight-line footprint falls outside the tile and gets
+> canopy 0, which biases the test AGAINST canopy rather than for it;
+> and rms rose slightly with canopy (1.9 -> 2.5 mrad) while position
+> improved sharply — the E5t pattern again, this time working in our
+> favour. Nothing is re-defaulted: the canopy DEM is a data choice
+> like `--dem2`, built per region by `e5av_canopy_dem.py`, and dh
+> still wants re-calibrating on it (the Akyaka optimum shifts 12 ->
+> 9). Curve: `experiments/out/canopy/canopy_test.png`.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
