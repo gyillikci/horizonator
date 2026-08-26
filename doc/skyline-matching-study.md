@@ -2876,6 +2876,55 @@ sequential estimator.
 > clamps, which is E5an's 0.70 deg app bias showing through from the
 > other side.
 
+> **E5at — a 2653 m FALSE ACCEPT, and how a clamped nuisance
+> parameter manufactures confidence.** The Bitez dusk frame (37.01986,
+> 27.34774, heading 206.8, a different phone at 4096x3071, 19:40) is
+> the first bad fix the instrument has OFFERED in this campaign. It
+> passed every cost-side gate: basin margin 0.40, rms 4.8 mrad, sigma
+> 83 x 77 m — and it is 2653 m out (dlat +1859, dlon +1892). Confident,
+> tidy, and wrong.
+>
+> The capture-versus-final attitude reading (E5as) named the mechanism
+> immediately: capture heading 206.8, final 212.8, offset **+6.0 deg —
+> exactly the `--heading-window` edge**. The azimuth prior was the
+> binding constraint, the same clamping signature beta shows on the
+> elevation axis. Widening it settles what that cost:
+>
+> | window | final heading | offset | error | margin | rms | verdict |
+> |---|---|---|---|---|---|---|
+> | +-6 (default) | 212.8 | +6.0 (edge) | 2653 m | 0.40 | 4.8 | **ACCEPTED** |
+> | +-15 | 218.4 | +11.6 | 2666 m | 0.05 | 4.4 | refused |
+> | +-30 | 228.0 | +21.2 | 2669 m | 3.7 | 0.12 | refused |
+>
+> All three land within 16 m of each other, so the wrong position is a
+> genuine strong alias, not a window artifact — widening does not find
+> the truth. But the margin COLLAPSES from 0.40 to 0.05, and the gates
+> then refuse correctly. That is the lesson worth keeping: basin
+> margin compares the best basin against the second best, and when a
+> nuisance parameter is clamped BOTH are evaluated under the same
+> artificial constraint, so the surface can look sharper than it is. A
+> clamped nuisance parameter manufactures confidence.
+>
+> Two supporting weaknesses on this frame: the peak-height witness had
+> only **one** matched crest, so it passed with no power at all; and
+> the DEM never described the scene from the true position anyway —
+> shape correlation at truth is **+0.339** against 0.90-0.995 on the
+> other frames of this run, and a 2D sweep over field of view and
+> heading found no combination that fixes it (best +0.76 on a
+> scattered, unconvincing surface — fitting noise, not finding a
+> parameter). The likely cause of the heading error is visible in the
+> photograph: a steel motor yacht anchored some 50 m away, exactly the
+> thing that pulls a phone compass.
+>
+> `attitude_report.py` now flags heading clamping alongside beta
+> clamping, and `skyfix` records `heading_window_deg` in its JSON so
+> the flag is accurate rather than assumed. Scanning this run, 2 of 13
+> solves sit on the heading edge; one is this false accept, the other
+> (XKYU3498, clamped at +-12) is a perfectly good 399 m fix. So
+> clamping is a WITNESS, not grounds for a veto — turning it into a
+> gate would have cost that good fix. The ledger gains its third bad
+> fix, recorded rather than patched over.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the

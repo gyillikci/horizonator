@@ -1122,6 +1122,7 @@ def main():
                   n_peaks=len(dh_all), search_trace=trace,
                   # the trace lists IMPROVEMENTS of the running best,
                   # not work done: the scan is exhaustive
+                  heading_window_deg=float(args.heading_window),
                   search_evals=int(cc.size + 50),
                   cost=c0, rms_mrad=rms_mrad,
                   n_photos=N, z_m=z,
