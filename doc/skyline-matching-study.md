@@ -2790,6 +2790,52 @@ sequential estimator.
 > discard. A mask that stays silent when it has nothing to say is
 > working.
 
+> **E5ar — masts are an eWaSR property, and the session's best fix
+> (42 m) was hiding behind 3.18 degrees of pitch.** A frame full of
+> moored sailboats, shot from the same rock as E5aq sixteen seconds
+> later on a different bearing, asked the obvious question: what do
+> the masts do to the silhouette?
+>
+> Nothing — because they never enter it. eWaSR classifies mast and
+> rigging as sky, so the extracted boundary passes cleanly UNDER every
+> mast and the spike filter in `observation()` finds one column in
+> 1600 to remove. That is not luck, it is the front end: run the seam
+> detector on the same frame and it CLIMBS the masts — 101 columns
+> sit more than 20 px above the eWaSR line, the worst by 102 px —
+> while its own spike filter catches only 31 of them, because a mast
+> plus rigging is wide enough that the k=9 median window partly
+> follows it and the "far outside the local trend" test under-fires.
+> Practical consequence: on a mast-rich frame the E5af pre-check
+> falling back to the seam would be actively harmful. It did not fire
+> here, but the interaction is now known and worth watching.
+>
+> The frame itself gave the cleanest demonstration yet of the E5aq
+> finding. Solved as shipped it misses by **3871 m** with four refusal
+> reasons and `el_offset` pinned at +10.1 mrad; the level chain
+> declines it. Measured against truth, the DEM residual after removing
+> a constant is only **4.4 mrad** — the model explains this scene well
+> — and the constant is **+55.5 mrad (+3.18 deg)** of hand-held tilt,
+> a close sibling of the +4.07 deg measured on the previous frame from
+> the same spot. Hand the solver that pitch:
+>
+> | arm | dlat | dlon | total | margin | rms | sigma_maj | verdict |
+> |---|---|---|---|---|---|---|---|
+> | shipped (prior +-10 mrad) | -3148 | -2253 | 3871 m | 0.02 | 14.0 | 3876 | refused |
+> | true pitch supplied | **+30** | **+30** | **42 m** | 1.07 | 2.7 | 135 | accepted |
+>
+> Forty-two metres — the best fix of the entire field campaign, from
+> the frame that looked hardest. One correction to my own reading
+> along the way: I flagged the 8.3 mrad relief as a second, separate
+> problem; the result refutes that, the margin came out 1.07 and
+> relief was never the obstacle here. The whole 3871 m was attitude.
+>
+> Two field consequences, both cheap: hold the phone level (put the
+> horizon on the frame's centre line) and the instrument has nothing
+> left to guess; and moored yachts in the foreground are not a reason
+> to avoid a bearing, provided the eWaSR front end is the one
+> extracting. Visuals: `experiments/out/bd3_masts.png`,
+> `experiments/out/bd3/BD3_overlay.png` (`e5ar_masts.py`).
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
