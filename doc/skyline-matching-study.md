@@ -2744,6 +2744,52 @@ sequential estimator.
 > land is worth ~20 m and a cleaner fit. Visual:
 > `experiments/out/akb/AKB_aw_viz.png` (`e5ap_awviz.py`).
 
+> **E5aq — unmodelled pitch is not a cropping artifact, and widening
+> the prior trades accuracy for confidence.** The Bitez frame
+> (37.01999, 27.34782, sea level, heading 192, 2026-08-26) is the
+> first of this run's difficult frames that is NOT a crop: full
+> 4032x3024, principal point intact, open sea horizon in view. It
+> still carries **+71.1 mrad (+4.07 deg)** of unmodelled attitude —
+> the phone was simply held tilted up, and the horizon sits at 55% of
+> frame height instead of 50%. Three off-centre crops had made
+> cropping look like the cause; this frame refutes that. The cause is
+> hand-held pitch, and the +-10 mrad prior is far too tight for it
+> whenever the level chain declines.
+>
+> Which it did, on a frame that should have been its best case: SAM
+> proposed no waterline at all and the radon detector rejected every
+> native candidate. The far coast occupies the horizon across the
+> whole width here, so there is no open sky-meets-water segment for
+> the detector to lock onto — the horizon is visible to the eye but
+> is a land waterline everywhere, and the chain that handles that
+> (the external SAM seed) produced nothing.
+>
+> Widening the pitch prior blindly was measured against handing the
+> solver the true value:
+>
+> | arm | dlat | dlon | total | margin | rms | verdict |
+> |---|---|---|---|---|---|---|
+> | prior +-10 mrad (shipped) | -1259 | +2102 | 2451 m | 0.02 | 18.1 | refused |
+> | blind `--pitch-sigma 2` (+-70) | -255 | -210 | **330 m** | 0.07 | 5.3 | refused |
+> | blind `--pitch-sigma 4` (+-140) | +1184 | -270 | 1215 m | 0.11 | 4.9 | refused |
+> | true pitch supplied | -690 | -616 | 924 m | 0.19 | 3.7 | **accepted** |
+>
+> The uncomfortable row is the second: the closest position of the
+> four, 330 m, is one the instrument REFUSES, while the fix it does
+> offer is 924 m. That is E5t's finding in its sharpest form — pitch
+> freedom buys a better minimum and destroys the basin margin that
+> makes a minimum trustworthy — and it is stated here as a real
+> limitation, not smoothed over. It is also not a reason to widen the
+> prior: at +-140 mrad the extra freedom lands 1215 m out with the
+> offset in the interior, so the good 330 m at +-70 is not something
+> a wider band reliably finds.
+>
+> `--across-water` was a no-op on this frame (1600 of 1600 columns
+> kept, results bit-identical), which is the correct behaviour: there
+> is no near land in the field of view, so there is nothing for it to
+> discard. A mask that stays silent when it has nothing to say is
+> working.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
