@@ -2836,6 +2836,46 @@ sequential estimator.
 > extracting. Visuals: `experiments/out/bd3_masts.png`,
 > `experiments/out/bd3/BD3_overlay.png` (`e5ar_masts.py`).
 
+> **E5as — reporting convention: capture attitude and final attitude,
+> always.** Every frame now carries two attitudes in its report, and
+> `attitude_report.py` prints them side by side:
+>
+> - **CAPTURE** — what the photograph arrived with. EXIF heading
+>   always; pitch and roll only where the app wrote them. Theodolite
+>   does, as `vert_angle_deg` / `horiz_angle_deg` in ImageDescription
+>   and again as XML in the MakerNote, along with the compass accuracy
+>   iOS reported. The stock camera writes heading and nothing else.
+> - **FINAL** — what the fit settled on: the levelled or supplied
+>   pitch and roll, and the heading after the solver's azimuth trade.
+> - **EFFECTIVE pitch** — final pitch plus beta, the elevation offset,
+>   which acts as a pitch correction and belongs folded in rather than
+>   reported separately.
+>
+> The pair is the fastest diagnostic the instrument has, because the
+> session's dominant failure mode reads straight off it. A large
+> capture-to-final pitch change means the attitude was never known; an
+> effective pitch whose beta sits exactly on the band edge (+-2, +-5
+> or +-10 mrad, set by the anchor) means the fit was CLAMPED and
+> wanted to go further. The report flags that explicitly. Retro-
+> applied to this run:
+>
+> | frame | capture pitch | final pitch | beta | effective | verdict |
+> |---|---|---|---|---|---|
+> | BD3 masts, shipped | — | +0.00 | **+10.1 (edge)** | +0.58 | refused, 3871 m |
+> | BD3 masts, pitch given | — | +3.18 | +2.0 | +3.30 | accepted, **42 m** |
+> | BD2 Bitez, blind +-70 | — | +0.00 | +69.8 | +4.00 | refused, 330 m |
+> | AKB Akbuk | — | +3.94 | +4.0 | +4.17 | accepted, 346 m |
+> | AK3 Gokova | — | +3.40 | **-2.0 (edge)** | +3.29 | accepted, 337 m |
+> | HATY3309 theodolite | +1.30 | +1.30 | **+10.1 (edge)** | +1.88 | accepted, 397 m |
+>
+> Three of the six sit on a band edge, and in each case the measured
+> true pitch lies beyond it — the clamping is not a coincidence of
+> tuning, it is the instrument telling us the attitude prior is the
+> binding constraint on this material. The one frame where capture
+> pitch exists and matches final exactly (HATY3309, Theodolite) still
+> clamps, which is E5an's 0.70 deg app bias showing through from the
+> other side.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
