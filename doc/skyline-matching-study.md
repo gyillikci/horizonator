@@ -3098,6 +3098,29 @@ sequential estimator.
 > lesson once more — a better fit is not a better position — landing
 > this time on the neutral side.
 >
+> Quantified per vessel (E5az, 201-column trend, zoomed visual in
+> `experiments/out/bd8/BD8_mastzoom.png`): the right gulet rides
+> **+31 px = +29.1 mrad** above the terrain trend across 77 columns —
+> the boundary passes over all three mast tops. The centre sloop adds
+> a smaller hump, +8 px = +7.5 mrad, below the detector's threshold
+> but visibly there. The left marina, +6 px = +5.6 mrad.
+>
+> Masking them in sequence gives a clean dose-response in the FIT and
+> none at all in the position:
+>
+> | masked | columns | residual rms | shape corr | position | margin |
+> |---|---|---|---|---|---|
+> | none | 1600 | 7.35 mrad | +0.9020 | 315 m | 3.00 |
+> | gulet | 1496 | 4.16 | +0.9790 | 324 m | 4.91 |
+> | + centre sloop | 1384 | 4.25 | +0.9780 | 330 m | 4.74 |
+> | + left marina | 1244 | **3.00** | **+0.9866** | 318 m | 4.28 |
+>
+> Residual more than halves and the correlation climbs to 0.987, while
+> the position wanders over a 15 m range around 320 m and every arm is
+> accepted. Removing 22% of the columns costs nothing and gains
+> nothing positionally. That is as clean a demonstration as this
+> campaign has produced that the Huber cost is doing its job.
+>
 > Consequence for the code: no automatic wide-bump guard. The
 > wide-window detector works and would be easy to ship, but on the
 > only frame that motivates it the payoff in position is zero while
