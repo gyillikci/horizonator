@@ -3195,6 +3195,48 @@ sequential estimator.
 > accepted before it earns that. Recorded as the next candidate gate,
 > not as a change.
 
+> **E5bb - the left-edge extraction fault on BD9, and why fixing it
+> makes the instrument more confident about the same wrong answer.**
+> The operator spotted what the gates did not: in the left ~5% of
+> `PF_new_bodrum9.jpg` the eWaSR boundary leaves the ridge and settles
+> on the shipyard crane/building line below it. Measured against the
+> seam extractor over the same columns, eWaSR sits **+12 to +22 px
+> (up to 19 mrad) too low across cols 40-70**, with a flat plateau at
+> row ~458 where the real ridge runs at ~436. `experiments/out/bd9/
+> BD9_left.png` shows both traces zoomed.
+>
+> The terrain-plausibility guard let it through, correctly by its own
+> rule: the largest per-column step in that region is 13 px against a
+> 20 px threshold (2% of a 1007 px frame). The boundary walks down onto
+> the cranes over several columns rather than dropping off a wall, so
+> there is no vertical edge to detect. Near-field man-made structure
+> that rises to *within* the ridge's own height range is invisible to a
+> jump detector - it is only detectable against a model of where the
+> terrain should be, which is exactly what the solver is trying to find.
+>
+> Re-solving three ways:
+>
+> | extraction | dlat | dlon | total | margin | rms | sigma | beta | hdg |
+> |---|---|---|---|---|---|---|---|---|
+> | shipped eWaSR | -255 | +705 | **750 m** | 0.18 | 6.66 | 278 | +6.1 | +1.8 |
+> | `--mask-cols 0.0:0.06` | -300 | +675 | **739 m** | 0.33 | 6.05 | 401 | +8.1 | **-5.0** |
+> | `--extractor seam` | -195 | +615 | **645 m** | 0.29 | 6.21 | 212 | -0.0 | +1.6 |
+>
+> Removing the fault does what E5t predicts and what E5az already
+> demonstrated: the fit improves (rms 6.66 -> 6.05, margin 0.18 -> 0.33)
+> and the position does not (750 -> 739 / 645 m). The frame stays wrong
+> by roughly the same amount because its problem is not the left edge -
+> it is the +0.097 shape correlation of E5ba, a DEM that does not
+> describe a 3.4 km median subject.
+>
+> The dangerous part is the margin. A cleaner extraction raises the
+> basin margin from just-over-threshold 0.18 to a comfortable 0.33, so
+> the repair makes a false accept look *more* trustworthy. And in the
+> masked run the heading offset lands at -5.0 of a +-6 window, close to
+> the E5at clamp signature. Fixing extraction faults is right, but it
+> buys fit quality, not positional truth, and on an unconstrained scene
+> it inflates exactly the number an operator would read as confidence.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
