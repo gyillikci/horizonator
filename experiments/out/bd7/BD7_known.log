@@ -1,0 +1,173 @@
+/root/.local/lib/python3.11/site-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/root/.local/lib/python3.11/site-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+photo 0: PF_new_bodrum7.jpg  fov 73.7, heading 312.66, pitch +2.92, roll +0.00, weight 1.00
+z 3.0 m, box 6000 m at (37.02700,27.44082)
+peak witness: 10 crests, median height residual -40 m (spread 37 m)
+INCONCLUSIVE: peak heights disagree: matched crests stand a median -40 m (spread 37 m) from the model at this fix (limits 30/90 m) — position error or DEM bias is leaking into the height channel
+{
+ "status": "inconclusive",
+ "reasons": [
+  "peak heights disagree: matched crests stand a median -40 m (spread 37 m) from the model at this fix (limits 30/90 m) \u2014 position error or DEM bias is leaking into the height channel"
+ ],
+ "lat": 37.01904100378762,
+ "lon": 27.442509709186428,
+ "fix_ok": false,
+ "basin_margin": 0.26912310589745136,
+ "relief_mrad": 11.68189213449344,
+ "dn_m": -885.0,
+ "de_m": 150.0,
+ "sigma_n_m": 490.9737296264809,
+ "sigma_e_m": 498.7736783673388,
+ "sigma_major_m": 586.7759706421016,
+ "sigma_minor_m": 381.476533606514,
+ "major_bearing_deg": 133.88713725518426,
+ "anisotropy": 1.538170552968666,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -39.52545136533599,
+ "peak_dh_mad_m": 36.64642844982709,
+ "n_peaks": 10,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 4.49230105755667e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2700.0,
+   "cost": 3.975594033698378e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1200.0,
+   "cost": 3.7028989063484256e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -900.0,
+   "cost": 3.5612706974935703e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -1200.0,
+   "cost": 3.462926641608303e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -900.0,
+   "cost": 3.359965792533157e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": -1200.0,
+   "cost": 3.334633313756339e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": -900.0,
+   "cost": 3.257682482995121e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": -1200.0,
+   "cost": 3.2392208088056806e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": -1800.0,
+   "cost": 3.1847726369188324e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": 0.0,
+   "cost": 2.5163298415797847e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": 300.0,
+   "cost": 2.406468686784839e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 0.0,
+   "cost": 2.386937363259574e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 300.0,
+   "cost": 2.1862190368557827e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 600.0,
+   "cost": 2.1219893869654772e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": 0.0,
+   "cost": 2.0791228105065054e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": 300.0,
+   "cost": 2.0450583809453098e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": 180.0,
+   "cost": 1.997884179430014e-05,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -885.0,
+   "de": 150.0,
+   "cost": 1.9944224867189784e-05,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "search_evals": 491,
+ "cost": 1.9944224867189784e-05,
+ "rms_mrad": 6.315730340536996,
+ "n_photos": 1,
+ "z_m": 3.0,
+ "photos": [
+  {
+   "file": "PF_new_bodrum7.jpg",
+   "fov_deg": 73.74,
+   "heading_deg": 312.66,
+   "pitch_deg": 2.92,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 6.315730340536996,
+   "heading_offset_deg": 6.0,
+   "el_offset_mrad": -6.073745796940267,
+   "attitude_source": "prior"
+  }
+ ],
+ "heading_offset_deg": 6.0,
+ "el_offset_mrad": -6.073745796940267,
+ "fov_deg": 73.74
+}
+wrote out/bd7/BD7_known.json/.png

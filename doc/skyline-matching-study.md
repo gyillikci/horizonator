@@ -3028,6 +3028,46 @@ sequential estimator.
 > still wants re-calibrating on it (the Akyaka optimum shifts 12 ->
 > 9). Curve: `experiments/out/canopy/canopy_test.png`.
 
+> **E5ax — the urban sibling of the canopy deficit.** A Bodrum
+> waterfront frame (37.02700, 27.44082, 3 m, heading 312.7, sunset
+> 2026-09-01) carried four hazards at once: the sun IN frame at the
+> left edge, moored masts, beach umbrellas standing near horizon
+> level, and a town skyline on the right. Three of the four cost
+> nothing. The eWaSR boundary traces the ridge cleanly straight
+> through the glare, passes under every mast, and the umbrellas sit
+> below the silhouette entirely — the spike filter flagged 5 of 1600
+> columns and needed to remove none. Backlit haze and sun flare are
+> not, on this evidence, an extraction problem.
+>
+> The fourth hazard is the one that bites, and it is a MODEL problem,
+> not an image problem. Measured against truth in angle space the
+> residual is **18.5 mrad** with shape correlation **+0.706**, against
+> 0.90-0.995 on this run's other frames. The reason is visible in the
+> photograph: across the right half of the frame the silhouette is
+> made of Bodrum's white buildings standing on the ridge, and the DEM
+> has no buildings. That is the canopy deficit's urban sibling and a
+> larger one — houses are 6-12 m and sit directly on the crest — with
+> 12% of the subject inside 3 km as a second, smaller drag.
+>
+> Supplying the measured pitch separates the two failures cleanly:
+>
+> | arm | dlat | dlon | total | margin | rms | verdict |
+> |---|---|---|---|---|---|---|
+> | blind | -3148 | +1111 | 3339 m | 0.12 | 8.6 | refused |
+> | pitch +2.92 deg supplied | -884 | +150 | 897 m | 0.27 | 6.3 | **still refused** |
+>
+> Attitude is worth 2.4 km here, and the frame is STILL refused —
+> unlike the mast frame (E5ar), where the same correction took 3871 m
+> to 42 m and an acceptance. Two independent obstacles rather than
+> one: hand-held pitch, and a silhouette the DEM cannot describe. The
+> gates read that correctly at both stages.
+>
+> The natural continuation of E5aw: what a canopy raster did for
+> forested crests, a building-height layer would do for urban ones.
+> Not attempted — the Meta canopy tile does not reach this region and
+> building height is separate data — recorded as a measured
+> observation, not a plan.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
