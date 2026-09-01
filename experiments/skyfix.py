@@ -84,6 +84,7 @@ def basin_margin(cc, g, min_sep):
 EXTRACTOR = 'seam'      # set from --extractor
 _EWASR = None
 ACROSS_WATER = False
+MASK_COLS = []
 ACROSS_WATER_MIN_PX = 8
 
 
@@ -249,6 +250,16 @@ def extract_boundary(img, horizon_rows=None, tol_px=4):
         # segmenter: the mask is a property of the photograph, not of
         # whichever front end traced the ridge.
         conf = across_water(img, rows, conf)
+    if MASK_COLS:
+        # operator-declared exclusions, in fractions of frame width: a
+        # moored vessel wide enough to defeat the spike filter (three
+        # masts plus rigging span ~80 columns, far beyond the k=9
+        # median window) is not terrain, and no image-side test yet
+        # separates it from a ridge. Until one is measured, the
+        # navigator who can SEE the boat can say so.
+        W = len(np.asarray(conf))
+        for a, b in MASK_COLS:
+            conf[int(a * W):int(b * W)] = 0.0
     conf = terrain_plausible(rows, conf, Hh)
     if horizon_rows is not None:
         # a column whose boundary still sits below the horizon carries
@@ -478,6 +489,12 @@ def main():
                          'used by --auto-level, and widens its offset '
                          'window by 0.15 mrad/degC of |dT| since large '
                          'gradients also mean unstable dip')
+    ap.add_argument('--mask-cols', default=None,
+                    help='STUDY/FIELD FLAG: exclude column ranges from the '
+                         'observation, as comma-separated FRACTIONS of frame '
+                         'width, e.g. "0.89:0.95,0.00:0.04". For moored '
+                         'vessels and harbour cranes that break the skyline '
+                         'and are too wide for the spike filter to catch.')
     ap.add_argument('--across-water', action='store_true',
                     help='use ONLY the silhouette of terrain seen across '
                          'water: a column is kept when the segmenter finds '
@@ -660,6 +677,9 @@ def main():
     global EXTRACTOR, ACROSS_WATER
     EXTRACTOR = args.extractor
     ACROSS_WATER = args.across_water
+    if args.mask_cols:
+        MASK_COLS[:] = [tuple(float(v) for v in seg.split(':'))
+                        for seg in args.mask_cols.split(',')]
     N = len(args.images)
 
     exs = [extract.read_exif(p) for p in args.images]

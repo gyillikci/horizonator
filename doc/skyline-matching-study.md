@@ -3068,6 +3068,50 @@ sequential estimator.
 > building height is separate data — recorded as a measured
 > observation, not a plan.
 
+> **E5ay — moored vessels break the silhouette, and the robust cost
+> was already ignoring them.** A Bodrum dusk frame (37.01678,
+> 27.44830, 1 m, heading 188.6) with a marina to the left and a
+> three-masted gulet to the right. The gulet IS climbed: a
+> wide-window trend test (201-column median) puts the boundary above
+> the local trend across columns 1430-1506, and the visual confirms
+> it. The spike filter cannot see this — three masts plus rigging span
+> ~80 columns against a k=9 median window, so nothing looks like a
+> spike; its tallest excursion was 2 px. The marina to the left never
+> reaches the skyline and is a non-issue.
+>
+> `--mask-cols` was added so the operator can declare such exclusions
+> as fractions of frame width. Masking the gulet does exactly what it
+> should to the FIT, measured against truth in angle space:
+>
+> | | columns | residual rms | shape corr |
+> |---|---|---|---|
+> | full frame | 1600 | 7.3 mrad | +0.902 |
+> | boats masked | 1496 | **4.2 mrad** | **+0.979** |
+>
+> And to the confidence: basin margin 3.00 -> 4.91, sigma 282 -> 223 m,
+> solver rms 3.3 -> 2.6 mrad.
+>
+> But not to the POSITION: 315 m -> 324 m, nine metres worse. Both
+> arms accepted. The reading is that the Huber cost had already
+> absorbed the 80 corrupted columns out of 1600, so removing them
+> cleans a fit the solver was not being misled by. It is the E5t
+> lesson once more — a better fit is not a better position — landing
+> this time on the neutral side.
+>
+> Consequence for the code: no automatic wide-bump guard. The
+> wide-window detector works and would be easy to ship, but on the
+> only frame that motivates it the payoff in position is zero while
+> the risk (discarding real terrain that happens to rise faster than
+> the local trend) is real. `--mask-cols` stays an operator tool: the
+> navigator who can see the boat can say so. Worth revisiting if a
+> frame ever turns up where a vessel occupies enough of the width to
+> defeat the robust cost.
+>
+> The frame itself is one of the run's cleanest: 315 m accepted blind,
+> no attitude supplied — though beta again sat pinned at +10.1 mrad
+> and the heading offset at +5.8 of a +-6 window, so both nuisance
+> parameters were at their limits even in a good result.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
