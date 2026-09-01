@@ -3135,6 +3135,66 @@ sequential estimator.
 > and the heading offset at +5.8 of a +-6 window, so both nuisance
 > parameters were at their limits even in a good result.
 
+> **E5ba - the second false accept, and the one the clamping witness
+> would have missed.** `PF_new_bodrum9.jpg` (37.01992, 27.44426, 9 m,
+> heading 167.09 from EXIF, 4032x2539 so aspect 1.588 - cropped) is a
+> marina frame with three sets of masts crossing the skyline. Solved
+> blind with the shipped flag set it returns **dlat -255 m, dlon +706 m,
+> total 750 m** (along-track +406, across-track -631) and the gate
+> quartet lets it through: basin margin **0.18** (threshold 0.15),
+> residual rms 6.7 mrad, sigma_major 278 m, relief 21.1 mrad, six peak
+> witnesses with median height residual +12 m. Accepted, with a stated
+> uncertainty 2.7x smaller than the actual error.
+>
+> The masts are not the cause. The zoomed trend detector (E5az method,
+> `experiments/out/bd9/BD9_masts.png`) puts the centre sloop at
+> +1.9 mrad, the right gulet at +0.0 and the left marina at +5.6 -
+> the extraction traces the ridge cleanly past all of them, and E5az
+> already showed the Huber cost absorbs far worse.
+>
+> Nor is it the crop. The off-centre-crop pitch bias that the 1.588
+> aspect predicts came out at only **-11.5 mrad (-0.66 deg)** -
+> I expected several degrees and was wrong.
+>
+> What is actually wrong shows in the shape term. Evaluated **at the
+> true position**, the DEM horizon and the photo horizon have a
+> residual rms of **23.8 mrad** and a shape correlation of **+0.097**.
+> On the healthy frames of this campaign that correlation runs 0.90 to
+> 0.995. The DEM is not describing this scene at all; the solver is
+> then free to find any basin, and it found one 750 m away that fits
+> the noise marginally better than the truth does.
+>
+> Why the near field explains it: the pre-screen ray-cast at the true
+> position gives subject range p10 1.5 / **p50 3.4** / p90 6.1 km with
+> **22% of the horizon inside 3 km** and 11.1 mrad of relief. That is
+> the regime E5am showed to be positionally unconstrained - at 3 km a
+> 1-arcsecond DEM post is 30 m on the ground and the silhouette is
+> built from foreground clutter (buildings, trees, breakwaters) that
+> the DEM does not contain.
+>
+> The uncomfortable part is the contrast with E5at. There the false
+> accept was traceable: the heading offset sat pinned at its window
+> edge, and a clamped nuisance parameter manufactures confidence
+> because both basins are compared under the same artificial
+> constraint. Here **neither parameter is clamped** - beta +6.1 mrad
+> inside a +-10 band, heading offset +1.8 deg inside a +-6 window.
+> The clamping witness stays silent. The four shipped gates all stay
+> silent. The only quantity that flags the frame is one the instrument
+> does not currently compute: the subject range.
+>
+> Attitude, capture vs final: capture carries heading 167.1 only (no
+> pitch/roll in EXIF); final is heading 168.9, pitch +0.00, roll +0.00,
+> source `prior`, with beta +6.1 mrad giving an effective pitch of
+> +0.35 deg.
+>
+> Consequence: a subject-range pre-screen is the natural fifth witness -
+> refuse, or widen sigma, when the median subject range falls below a
+> few km or the near fraction is high. It is not shipped here, because
+> turning it on changes the default accept/refuse behaviour and would
+> have to be regression-tested against every frame this campaign has
+> accepted before it earns that. Recorded as the next candidate gate,
+> not as a change.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
