@@ -1,0 +1,14 @@
+valid cols 800/800; island shore range p10 2.94 p50 3.60 p90 5.79 km
+
+rms change per 100 m move, AFTER removing the mean (i.e. the part
+the free elevation offset beta cannot absorb):
+move        skyline  shoreline    ratio
+north          1.47       3.79      2.6x
+east           3.20       3.26      1.0x
+south          1.49       1.54      1.0x
+west           3.28       1.64      0.5x
+
+mean: skyline 2.36 mrad/100m, shoreline 2.56 mrad/100m -> 1.1x more
+extraction noise floor is ~1 px = 0.80 mrad at this scale.
+=> skyline: 34 m of motion before the signal clears the noise
+   shoreline: 31 m

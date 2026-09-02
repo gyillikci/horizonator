@@ -1,0 +1,8 @@
+elevation-angle sensitivity by SUBJECT RANGE BAND
+(rms mrad per 100 m move, mean removed so beta cannot absorb it)
+band                north     east    south     west  cols
+0.15-0.8 km           nan      nan      nan      nan     0
+0.8-2 km              nan      nan      nan      nan    45
+2-4 km                2.2      4.3      3.5      4.4   475
+4-8 km                0.9      2.7      1.6      3.1   363
+8-40 km               0.6      0.7      0.7      0.8   104

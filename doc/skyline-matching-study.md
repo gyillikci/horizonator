@@ -3484,6 +3484,73 @@ sequential estimator.
 > offset, and says outright when the given heading lies outside the
 > solver's window.
 
+> **E5bg - scene matching built and measured: on BD9 it buys almost
+> nothing, and the measurement says exactly why.** `dem_scene.py`
+> renders the whole frame from a DEM rather than one curve: each
+> azimuth column is marched once, the terrain's elevation-angle profile
+> is turned into a running maximum (which is what occlusion means along
+> a ray), and every pixel's first visible surface is one searchsorted
+> into it. A 1600x1007 depth image takes **1.9 s** in numpy, no GL, no
+> tiles. Every pixel carries a range, so every pixel carries a 3D
+> point - the same output contract as `cesium_render.py`'s depth grid,
+> so a photorealistic render can later supply appearance while this
+> keeps supplying geometry. The BD9 render's silhouette matches the
+> photograph well once the heading is corrected (E5bf).
+>
+> The question the render exists to answer is whether a second curve at
+> a different depth breaks the degeneracies. Measured directly, as the
+> rms change per 100 m observer move **with the mean removed** - i.e.
+> only the part a free elevation offset cannot absorb:
+>
+> | channel | mrad / 100 m |
+> |---|---|
+> | island skyline (its ridge) | 2.36 |
+> | island shoreline (its base) | 2.56 |
+>
+> **A ratio of 1.1.** The second curve adds essentially nothing,
+> because the island's shore sits at 2.9-5.8 km and its ridge at 3-6 -
+> the same depth. Parallax needs depth *diversity*, and this scene has
+> none. A first pass got 171 mrad/100 m for the shoreline and it was an
+> artifact: moving the observer north put their own nearby shore into
+> the channel, so the number measured a discontinuity, not parallax.
+> Restricting both channels to land beyond 2 km removes it.
+>
+> Sensitivity by subject range makes the rule explicit:
+>
+> | band | mrad / 100 m (mean over four moves) | columns |
+> |---|---|---|
+> | 0.15-0.8 km | - | **0** |
+> | 0.8-2 km | - | 45 |
+> | 2-4 km | 3.6 | 475 |
+> | 4-8 km | 2.1 | 363 |
+> | 8-40 km | 0.7 | 104 |
+>
+> Two conclusions follow, and they cut opposite ways.
+>
+> **Against the mesh:** the value of scene matching is entirely about
+> whether the model contains *near* content. Re-rendering the same DEM
+> in 2D instead of 1D adds nothing, and E5bf already showed Copernicus
+> GLO-30 - a genuine DSM - buys only 396 -> 363 m. Both are the same
+> negative result: this frame's residual error is not a
+> missing-content problem in the 3-6 km band.
+>
+> **For the mesh:** the DEM has **zero** content inside 0.8 km along
+> these azimuths, and the photograph plainly does - marina, pier,
+> breakwater, the crane line E5bb found the extractor riding. Terrain
+> at 300 m is roughly an order of magnitude more sensitive to observer
+> position than terrain at 4 km, and it is precisely what a
+> photorealistic mesh carries and a DEM does not. That is the one place
+> on this frame where scene matching could pay, and it is exactly the
+> content `--dmin 1000` and `--across-water` currently throw away by
+> design.
+>
+> Finally the geometric ceiling. Extraction noise is about 1 px =
+> 0.80 mrad at solver scale; against 2.36 mrad per 100 m that is a
+> **~34 m** response scale for this scene. We deliver 330-396 m. So the
+> instrument is roughly an order of magnitude off what the geometry
+> allows, and the gap is model fidelity - which is the argument for
+> better content, not for a better matcher.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the

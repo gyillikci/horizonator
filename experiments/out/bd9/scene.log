@@ -1,0 +1,5 @@
+photo 1600 1007
+render 1.9s; sky 46%, land 5%, sea 50%
+wrote out/bd9/BD9_scene.png, BD9_depth.npz
+depth range 0.15..23.6 km
+depth spread among LAND pixels: p10 3.03 p50 4.32 p90 5.97 km

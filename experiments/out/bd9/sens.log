@@ -1,0 +1,11 @@
+valid columns: skyline 800, shoreline 800 of 800
+
+channel sensitivity to a 100 m observer move (rms over columns, mrad):
+move          skyline  shoreline
+north            1.68     171.81
+east             3.38     126.37
+south            1.49       0.97
+west             3.28       1.10
+
+NOTE: the mean is removed from both, i.e. this is the signal that
+SURVIVES the free elevation offset beta - the shape, not the level.
