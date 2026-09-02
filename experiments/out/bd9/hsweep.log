@@ -1,0 +1,15 @@
+/root/.local/lib/python3.11/site-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/root/.local/lib/python3.11/site-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+top headings by shape correlation (EXIF says 167.09):
+  hdg  180.0  corr +0.944  rms  11.5 mrad  DEM relief 2.96 deg
+  hdg  182.5  corr +0.935  rms  11.7 mrad  DEM relief 2.92 deg
+  hdg  177.5  corr +0.855  rms  13.9 mrad  DEM relief 2.96 deg
+  hdg  185.0  corr +0.850  rms  13.7 mrad  DEM relief 2.92 deg
+  hdg   90.0  corr +0.813  rms  96.0 mrad  DEM relief 18.62 deg
+  hdg   92.5  corr +0.801  rms  96.8 mrad  DEM relief 18.70 deg
+  hdg   95.0  corr +0.793  rms  95.3 mrad  DEM relief 18.61 deg
+  hdg   97.5  corr +0.787  rms  92.6 mrad  DEM relief 18.38 deg
+at EXIF heading:
+  hdg  167.5  corr +0.079  rms  25.6 mrad  relief 2.96

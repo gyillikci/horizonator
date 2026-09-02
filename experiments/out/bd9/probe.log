@@ -1,0 +1,8 @@
+DEM(COP30) at observer: 10.0 m
+DEM(SRTM1) at observer: 13.8 m
+az 130.0: max el  2.92 deg at  1.70 km (h=   96 m) | first land >5m at 0.44 km | max h in 12 km 119 m
+az 144.0: max el  0.78 deg at  6.44 km (h=  100 m) | first land >5m at 1.04 km | max h in 12 km 100 m
+az 155.0: max el  3.48 deg at  5.78 km (h=  362 m) | first land >5m at 4.82 km | max h in 12 km 362 m
+az 167.0: max el  2.86 deg at  5.00 km (h=  261 m) | first land >5m at 4.04 km | max h in 12 km 261 m
+az 180.0: max el  1.74 deg at  3.98 km (h=  131 m) | first land >5m at 3.38 km | max h in 12 km 131 m
+az 195.0: max el  2.47 deg at  3.26 km (h=  150 m) | first land >5m at 2.96 km | max h in 12 km 150 m

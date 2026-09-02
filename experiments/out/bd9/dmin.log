@@ -1,0 +1,10 @@
+/root/.local/lib/python3.11/site-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/root/.local/lib/python3.11/site-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+DEMs_SRTM1_WM  dmin  1000  corr +0.070  rms  25.5 mrad  offset  -14.7  DEM relief 2.80 deg  rng p10 1.52 km
+DEMs_SRTM1_WM  dmin   300  corr +0.070  rms  25.5 mrad  offset  -14.8  DEM relief 2.77 deg  rng p10 1.50 km
+DEMs_SRTM1_WM  dmin   150  corr +0.070  rms  25.5 mrad  offset  -14.8  DEM relief 2.81 deg  rng p10 1.51 km
+DEMs_COP30     dmin  1000  corr +0.059  rms  25.8 mrad  offset  -14.3  DEM relief 2.96 deg  rng p10 1.52 km
+DEMs_COP30     dmin   300  corr +0.059  rms  25.8 mrad  offset  -14.4  DEM relief 2.96 deg  rng p10 1.50 km
+DEMs_COP30     dmin   150  corr +0.059  rms  25.8 mrad  offset  -14.3  DEM relief 2.96 deg  rng p10 1.51 km

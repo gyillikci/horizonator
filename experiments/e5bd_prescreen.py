@@ -88,6 +88,14 @@ def main():
     ap.add_argument('--dmin', type=float, default=1000.0)
     ap.add_argument('--near', type=float, default=3000.0)
     ap.add_argument('--crest-dh', type=float, default=0.0)
+    ap.add_argument('--sweep-heading', type=float, default=0.0,
+                    metavar='DEG',
+                    help='also sweep the heading +-DEG and report the best '
+                         'shape correlation. A phone compass is routinely '
+                         'wrong by more than the solver\'s +-6 deg window '
+                         '(E5bf: BD9 EXIF said 167.1, truth was ~180), and a '
+                         'truth diagnosis run at the wrong azimuth reads as '
+                         '\'the DEM does not describe this scene\'.')
     a = ap.parse_args()
 
     cm = S.CMarcher(os.path.expanduser(a.dem),
@@ -107,6 +115,23 @@ def main():
     print('  relief across the frame: %.1f mrad' % pre['relief_mrad'])
     if pre['p50'] < 5.0 or pre['near_frac'] > 0.15:
         print('  -> near-field regime (E5am/E5ba): weakly constrained')
+
+    if a.photo != '-' and a.sweep_heading:
+        best = []
+        for dh in np.arange(-a.sweep_heading, a.sweep_heading + 1e-9, 1.0):
+            pr = prescreen(cm, a.lat, a.lon, a.z, a.heading + dh, a.fov, a.near)
+            best.append((diagnose(a.photo, pr, a.fov)['corr'], dh))
+        best.sort(reverse=True)
+        c0 = [c for c, dh in best if abs(dh) < 1e-9]
+        print('heading sweep +-%.0f deg' % a.sweep_heading)
+        print('  best corr %+.3f at %+.0f deg (heading %.1f)'
+              % (best[0][0], best[0][1], a.heading + best[0][1]))
+        if c0:
+            print('  corr at the given heading %+.3f' % c0[0])
+        if abs(best[0][1]) > 6.0:
+            print('  -> the given heading is outside the solver\'s +-6 deg '
+                  'window; re-solve with --heading %.1f'
+                  % (a.heading + best[0][1]))
 
     if a.photo != '-':
         d = diagnose(a.photo, pre, a.fov)

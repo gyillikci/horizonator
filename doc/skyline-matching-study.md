@@ -3135,8 +3135,12 @@ sequential estimator.
 > and the heading offset at +5.8 of a +-6 window, so both nuisance
 > parameters were at their limits even in a good result.
 
-> **E5ba - the second false accept, and the one the clamping witness
-> would have missed.** `PF_new_bodrum9.jpg` (37.01992, 27.44426, 9 m,
+> **E5ba - the second false accept.** *[Superseded by E5bf: the
+> shape-correlation argument below was computed at an EXIF heading
+> that is ~13 deg wrong, and is withdrawn. The frame is a CLAMPING
+> false accept - on heading, not beta - and solves to 330-396 m once
+> the heading is corrected. The rest is kept as the record of how the
+> misreading happened.]* `PF_new_bodrum9.jpg` (37.01992, 27.44426, 9 m,
 > heading 167.09 from EXIF, 4032x2539 so aspect 1.588 - cropped) is a
 > marina frame with three sets of masts crossing the skyline. Solved
 > blind with the shipped flag set it returns **dlat -255 m, dlon +706 m,
@@ -3395,6 +3399,90 @@ sequential estimator.
 > remedy. `fetch_osm_landmarks.py` already has the Overpass scaffolding
 > but fetches lights, turbines and masts, not buildings, and Overpass
 > is blocked here too.
+
+> **E5bf - Copernicus GLO-30 tried on the Bodrum island frame, and a
+> retraction: BD9's EXIF heading is wrong by 13 degrees.** The operator
+> asked for a mesh or imagery trial on Kara Ada. Cesium and Bing are
+> both refused by this container's egress (403 to CONNECT on
+> `cesium.com`, `dev.virtualearth.net`, `ecn.*.tiles.virtualearth.net`),
+> but **AWS open data is not**: `copernicus-dem-30m.s3.eu-central-1`
+> and `elevation-tiles-prod.s3` both answer. So the trial ran against
+> **Copernicus DEM GLO-30**, a 30 m global DSM from TanDEM-X - a good
+> substitute for the question actually being asked, because it is a
+> genuine surface model (it carries the canopy E5aw showed explains
+> about half the crest deficit) and it is far better behaved on
+> coastlines and small islands than SRTM, which is exactly this
+> geometry. `experiments/copernicus_to_hgt.py` converts it: the grids
+> align exactly, a GLO-30 tile being 3600x3600 pixel-is-area with its
+> corner half a pixel outside the degree, so pixel centres land on the
+> same integer-arcsecond lattice an SRTM1 .hgt samples.
+>
+> **The retraction comes first, because it invalidates E5ba's central
+> claim.** E5ba reported a shape correlation of +0.097 at BD9's true
+> position and concluded "the DEM does not describe this scene",
+> blaming the near field. Both DEMs then disagreed with the photo in an
+> odd way - strong correlation *within* segments but with alternating
+> signs (-0.87, -0.92, +0.85, -0.76), and a photo relief of 5.6 deg
+> against the DEM's 2.8. Anti-correlation is the signature of an
+> azimuth misregistration, not of missing content. Sweeping the
+> heading:
+>
+> | heading | shape correlation | residual rms |
+> |---|---|---|
+> | 167.1 (EXIF `GPSImgDirection`) | **+0.04** | 24.4 mrad |
+> | 180.0 | +0.944 | 11.5 |
+> | 181.1 (sweep optimum) | **+0.956** | - |
+>
+> **The phone's compass is wrong by about 13-14 degrees**, and the
+> solver's `--heading-window` is +-6, so the truth was never reachable.
+> Everything E5ba said about this frame's DEM was measured at the wrong
+> azimuth and is withdrawn. The DEM describes Kara Ada perfectly well.
+>
+> What actually happened is the campaign's own recurring mechanism, one
+> notch worse than recorded: the heading offset was pinned against a
+> window that could not contain the truth, and comparing two basins
+> under that artificial constraint manufactured a basin margin of 0.18
+> - just over the 0.15 threshold - for a **750 m** answer. E5ba called
+> this the false accept the clamping witness would have missed. It is
+> the opposite: it is a clamping false accept, and the witness was
+> looking at beta (+6.1 of +-10, interior) while the clamp was on
+> heading.
+>
+> Re-solved with the heading corrected to 180:
+>
+> | arm | DEM | beta band | dlat | dlon | total | margin | rms | status |
+> |---|---|---|---|---|---|---|---|---|
+> | as shipped, hdg 167.1 | SRTM1 | +-10 | -255 | +705 | 750 m | 0.18 | 6.66 | **accepted** |
+> | hdg 180 | SRTM1 | +-10 | -240 | +315 | 396 m | 0.04 | 5.92 | refused |
+> | hdg 180 | COP30 | +-10 | -225 | +285 | **363 m** | 0.06 | 5.76 | refused |
+> | hdg 180, wide beta | COP30 | +-20.6 | -210 | +255 | **330 m** | 0.04 | 5.62 | refused |
+>
+> Two results, and they point opposite ways about the instrument.
+> Positionally it is much better: 750 m becomes 330-396 m. Behaviourally
+> it is now honest: every corrected arm is **refused**, margin 0.04-0.06,
+> where the uncorrected one was accepted. The gates were not broken -
+> they were being fed a heading that made a wrong basin look like the
+> only basin.
+>
+> **Copernicus GLO-30 wins, but modestly.** 363 m against SRTM's 396,
+> rms 5.76 against 5.92, consistently across arms. Real, repeatable, and
+> nowhere near the step change a photorealistic mesh was supposed to
+> deliver. That matters for the scene-matching decision of E5be: the
+> "missing content" hypothesis predicted that a surface model carrying
+> canopy would lift this frame substantially. It did not. The frame's
+> residual error is geometric, which argues for a baseline (two
+> stations) over a richer model.
+>
+> Note also that widening beta *helped* here (363 -> 330 m), the
+> opposite of E5bd's Milas frame, where the same widening cost 600 m.
+> Neither direction is a rule.
+>
+> Tool consequence, shipped: `e5bd_prescreen.py --sweep-heading DEG`.
+> A truth diagnosis run at the wrong azimuth reads exactly like a DEM
+> that does not describe the scene, and this campaign published that
+> misreading once. The sweep reports the best correlation and its
+> offset, and says outright when the given heading lies outside the
+> solver's window.
 
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
