@@ -263,6 +263,16 @@ of 3.5. The clamping column adds the second half of the story: the
 its level is *right* — not one of its 25 solves needed to push β to the
 edge — whereas `radon` spends 29 of 38 solves fighting its own band.
 
+**Tested, and it failed.** The controlled experiment called for below
+was run on the Milas apron frame (E5bd in the study doc): same frame,
+same columns, pitch supplied at its truth-measured value and the beta
+band squeezed from +-10 to +-3.8 mrad. The fit became the best of the
+campaign (rms 1.36 mrad, margin 5.78) and the position went from 301 m
+to **902 m wrong**. Tightening the level constraint does not, on its
+own, recover position. The table below therefore records a correlation
+whose mechanism is not established, and the paragraph that follows
+explains why it could never have been more than that.
+
 **This comparison is confounded and must not be read as a controlled
 experiment**: frames that yield a waterline are near-coastal frames with
 favourable geometry, and frames that fall back to `prior` are the hard

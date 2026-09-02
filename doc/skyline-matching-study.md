@@ -3237,6 +3237,101 @@ sequential estimator.
 > buys fit quality, not positional truth, and on an unconstrained scene
 > it inflates exactly the number an operator would read as confidence.
 
+> **E5bd - the Milas apron frame: the beta remedy fails its own
+> controlled test, and FOV turns out to be a second confounded
+> nuisance.** `PF_new_milas1.jpg` (37.24433, 27.67671, 6 m, EXIF
+> heading 334.81 true, uncompressed 4032x3024 so no crop) looks across
+> an airport apron to ridges 6-31 km away. It is the far-field mirror
+> of BD9 and the first genuinely land-locked frame in the campaign: no
+> water, so no waterline level, and the pre-screen (new,
+> `experiments/e5bd_prescreen.py`) reports subject range p10 6.2 /
+> **p50 13.6** / p90 20.9 km with **0% inside 3 km** and 51.3 mrad of
+> relief. On the E5ba criterion this is exactly the frame that should
+> work.
+>
+> **The extraction fault first.** An aircraft wing intrudes at the top
+> left. Both extractors ride it to +15.8 deg, and 96 of 1600 columns
+> (6%) take the truth-position diagnosis from a healthy
+> **corr +0.893, rms 9.9 mrad** to **corr -0.099, rms 57.8 mrad**.
+> E5az showed the Huber cost absorbing ~5% of corrupted columns without
+> positional harm; that held because those corruptions were a few mrad.
+> These are 250 mrad. The lesson is that the tolerated fraction is not
+> a fraction of columns but a fraction of the cost, and a foreground
+> object at 15 deg is outside any robust radius.
+>
+> **Then the controlled beta test that the angle-only review asked
+> for** (`doc/angle-only-navigation-review.md` §7.1 explicitly noted it
+> had not been run). Same frame, same mask, beta band and pitch varied:
+>
+> | arm | beta band | dlat | dlon | total | margin | rms | sigma | beta | status |
+> |---|---|---|---|---|---|---|---|---|---|
+> | raw (wing included) | +-10 | -30 | +315 | 316 m | 0.09 | 7.79 | 1560 | +10.1 | refused |
+> | wing masked | +-10 | -30 | +300 | **301 m** | 0.44 | 3.84 | 731 | +10.1 | refused |
+> | band widened | +-20.6 | +945 | -75 | 948 m | 4.60 | 1.45 | 197 | +20.9 | **accepted** |
+> | pitch +0.83 supplied | +-10 | +900 | -60 | 902 m | 5.63 | 1.38 | 186 | +6.1 | **accepted** |
+> | pitch +0.83, band +-3.8 | +-3.8 | +900 | -60 | 902 m | 5.78 | 1.36 | 183 | +6.0 | **accepted** |
+>
+> The review predicted that tightening the level constraint would
+> recover position, on the strength of the campaign-wide grouping
+> (prior +-10 mrad 847 m, radon +-2 mrad 347 m, waterline +-5 mrad
+> 244 m). **On this frame it does the opposite.** Supplying the
+> truth-measured pitch and then squeezing the band to +-0.22 deg gives
+> the best fit the campaign has produced - rms 1.36 mrad, margin 5.78,
+> sigma 183 m - and a position **902 m wrong**, three times worse than
+> the two refused arms. The prediction is falsified as stated; the
+> confounded grouping it rested on cannot be promoted to a mechanism.
+>
+> The reason is visible in the beta column. Whatever the pitch, the
+> solver wants a **total** elevation offset near 20.6 mrad: the widened
+> arm takes +20.9 outright, the supplied-pitch arms take +14.5 as pitch
+> and then ask for +6.1 more on top. At 13.6 km, 6 mrad is 82 m of
+> crest height - seven times the measured crest deficit, so this is not
+> canopy and not `--crest-dh`. Something systematic separates the DEM
+> horizon from the photographed one here, and every arm that is allowed
+> to reach it walks 900 m north to buy it.
+>
+> **And FOV is a second confounded direction.** Re-solving with the
+> field of view alone varied, everything else fixed:
+>
+> | fov | dlat | dlon | total | margin | rms |
+> |---|---|---|---|---|---|
+> | 69.0 | -420 | +840 | 939 m | 0.14 | 4.14 |
+> | 71.9 | -180 | +480 | 513 m | 0.29 | 3.96 |
+> | 73.7 (EXIF) | -30 | +300 | **301 m** | 0.44 | 3.84 |
+> | 76.0 | +135 | +60 | **148 m** | 0.61 | 3.65 |
+>
+> Position slides **monotonically** with the assumed FOV, 939 m to
+> 148 m, while the residual falls monotonically and the margin rises
+> monotonically. The fit cannot choose among them. This is the scale
+> analogue of the beta degeneracy: for a smooth, near-monotone horizon
+> arc, "how wide the camera sees" and "how far the observer stands from
+> the ridge" produce nearly the same profile, exactly as "how high the
+> camera points" and "how far along the line of sight" do. A single
+> frame of this shape is confounded in at least three nuisance
+> directions at once - level, heading and angular scale.
+>
+> **What the instrument actually did:** it refused. Both arms run with
+> shipped defaults came back `inconclusive`, the raw one on the basin
+> margin (0.09) and both on the peak witness (crests standing -33 and
+> -34 m from the model). The two arms it accepted are the two that are
+> ~900 m wrong. That is the peak witness earning its place: it is the
+> only gate in the quartet that reads a channel - crest height -
+> which beta cannot absorb, and it is the one that fired.
+>
+> Attitude: capture heading 334.81 (EXIF true bearing), no pitch or
+> roll recorded; final on the masked arm heading 332.4 with beta +10.1
+> mrad **pinned at the band edge** for an effective pitch of +0.58 deg.
+>
+> Consequences. (1) The subject-range pre-screen proposed in E5ba is
+> necessary but nowhere near sufficient: this frame passes it
+> comfortably and is still unconstrained. (2) The pre-screen should
+> report a **shape** statistic - the horizon profile's departure from a
+> smooth low-order arc - not just a range distribution. (3) FOV
+> deserves the same treatment as beta: either measured and trusted, or
+> reported as the confounded nuisance it is. (4) `doc/angle-only-
+> navigation-review.md` §7.1 is amended in place: its prediction is
+> recorded as tested and failed here.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the

@@ -1,0 +1,12 @@
+/root/.local/lib/python3.11/site-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/root/.local/lib/python3.11/site-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+extractor pre-check: eWaSR disagrees with the seam on 42% of columns — falling back to the seam
+seam   el -1.05..15.77 deg  relief 293 mrad
+ewasr  el -1.05..15.77 deg  relief 293 mrad
+DEM    el 1.04..3.99 deg  relief 51 mrad
+ewasr kept 1600/1600
+all columns                  n=1600  offset  +14.3 mrad  rms  57.8 mrad  corr -0.099
+wingtip masked (cols 0-96)   n=1504  offset  +14.5 mrad  rms   9.9 mrad  corr +0.893
+DEM subject range: p50 13.6 km, min 5.8, max 31.0

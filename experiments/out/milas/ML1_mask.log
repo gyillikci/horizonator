@@ -1,0 +1,241 @@
+photo 0: PF_new_milas1.jpg  fov 73.7, heading 334.81, pitch +0.00, roll +0.00, weight 1.00
+z 6.0 m, box 6000 m at (37.24433,27.67671)
+peak witness: 5 crests, median height residual -34 m (spread 25 m)
+INCONCLUSIVE: peak heights disagree: matched crests stand a median -34 m (spread 25 m) from the model at this fix (limits 30/90 m) — position error or DEM bias is leaking into the height channel
+{
+ "status": "inconclusive",
+ "reasons": [
+  "peak heights disagree: matched crests stand a median -34 m (spread 25 m) from the model at this fix (limits 30/90 m) \u2014 position error or DEM bias is leaking into the height channel"
+ ],
+ "lat": 37.244060203518224,
+ "lon": 27.68009913949078,
+ "fix_ok": false,
+ "basin_margin": 0.44382620941869405,
+ "relief_mrad": 16.209811549924964,
+ "dn_m": -30.0,
+ "de_m": 300.0,
+ "sigma_n_m": 715.5436198761963,
+ "sigma_e_m": 608.3024709413776,
+ "sigma_major_m": 731.4790501920774,
+ "sigma_minor_m": 589.0441131435,
+ "major_bearing_deg": 159.50429116076262,
+ "anisotropy": 1.2418069103321605,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -34.049813079669626,
+ "peak_dh_mad_m": 24.547163533537194,
+ "n_peaks": 5,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.0004001660059001305,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2700.0,
+   "cost": 0.00039898967203728616,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2100.0,
+   "cost": 0.00034260526817123186,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1800.0,
+   "cost": 0.0002518916167640765,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1500.0,
+   "cost": 0.00018215498263811675,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1200.0,
+   "cost": 0.00013533109823371986,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -900.0,
+   "cost": 7.564540692756236e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -600.0,
+   "cost": 4.507038918102918e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -300.0,
+   "cost": 3.9440890068860346e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 0.0,
+   "cost": 2.644097853417486e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 2100.0,
+   "cost": 2.0666798208222435e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 2400.0,
+   "cost": 1.914206840497979e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": 2100.0,
+   "cost": 1.670792793986954e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": 300.0,
+   "cost": 1.6136789160323094e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": 900.0,
+   "cost": 1.4995602351407667e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": 1500.0,
+   "cost": 1.498911884018096e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": 1800.0,
+   "cost": 1.4810570927803976e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 1200.0,
+   "cost": 1.3588551707187249e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 1500.0,
+   "cost": 1.3069612065796985e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": 900.0,
+   "cost": 1.213199164837197e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": 1200.0,
+   "cost": 1.1438260532991952e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 600.0,
+   "cost": 1.1094331773691703e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 900.0,
+   "cost": 1.0675045376456023e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": 300.0,
+   "cost": 1.029005842134025e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": 600.0,
+   "cost": 1.0031232521850935e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": 0.0,
+   "cost": 9.765764726679452e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": 300.0,
+   "cost": 8.704060462199285e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 300.0,
+   "cost": 7.783056177471161e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": 300.0,
+   "cost": 7.3876039532339484e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": 300.0,
+   "cost": 7.3876039532339484e-06,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -30.0,
+   "de": 300.0,
+   "cost": 7.376384877039073e-06,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "search_evals": 491,
+ "cost": 7.376384877039073e-06,
+ "rms_mrad": 3.8409334482750603,
+ "n_photos": 1,
+ "z_m": 6.0,
+ "photos": [
+  {
+   "file": "PF_new_milas1.jpg",
+   "fov_deg": 73.7,
+   "heading_deg": 334.81,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 3.8409334482750603,
+   "heading_offset_deg": -2.4000000000000004,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior"
+  }
+ ],
+ "heading_offset_deg": -2.4000000000000004,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 73.7
+}
+wrote out/milas/ML1_mask.json/.png
