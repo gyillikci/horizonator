@@ -3332,6 +3332,70 @@ sequential estimator.
 > navigation-review.md` §7.1 is amended in place: its prediction is
 > recorded as tested and failed here.
 
+> **E5be - the Cesium ion scene-matching front end, and why it cannot
+> be exercised from this container.** The campaign's failures all have
+> one root: the model does not contain what the camera sees. The crest
+> deficit (9-12 m, canopy explains about half), E5ax's urban
+> silhouettes, BD9's +0.097 shape correlation against a marina, E5bd's
+> unexplained 6 mrad at 13.6 km - every one is a missing-content
+> problem, not an algorithm problem. A photorealistic mesh contains
+> exactly the missing content, so `experiments/cesium_render.py` was
+> written as the front end for a scene-matching arm.
+>
+> It renders one Cesium ion view at a stated pose and writes two files:
+> the PNG, and a JSON carrying the exact camera plus a sparse depth
+> grid sampled with `scene.pickPositionWorldCoordinates`, converted to
+> lat/lon/height. That depth grid is the point of the exercise. A
+> skyline gives one number per azimuth; a render with per-pixel 3D
+> gives 2D-to-3D correspondences, and PnP over correspondences at
+> *varied depth* separates the three quantities this campaign has
+> watched trade against each other. Elevation offset stops being able
+> to masquerade as a radial move (E5ba, E5bd), and focal length stops
+> being able to masquerade as range - E5bd measured that one directly,
+> position sliding monotonically 939 -> 148 m across fov 69 -> 76 deg
+> while the residual fell and the margin rose.
+>
+> Conventions are pinned to skyfix's so a render drops in beside a
+> photograph: heading true, pitch positive up, `--fov` horizontal.
+> Atmosphere is off by default so the sky boundary stays a hard edge
+> for the existing extractor. The script waits on `tilesLoaded` going
+> quiet for 60 consecutive frames rather than on a fixed delay - a
+> screenshot of a half-streamed tileset would silently be a different
+> scene.
+>
+> **It cannot run here.** This container's egress policy denies
+> `cesium.com`, `api.cesium.com` and `assets.ion.cesium.com`; the proxy
+> answers 403 to CONNECT. The smoke test confirms the plumbing is sound
+> right up to that boundary: chromium launches (against the image's own
+> `/opt/pw-browsers` build, since playwright's pinned build is absent
+> and re-downloading is also blocked), the page loads, our script runs,
+> and the only error is `Cesium is not defined` - the library fetch
+> itself was refused. So the script follows the same pattern as
+> `fetch_osm_landmarks.py`: run it on a networked machine, commit the
+> PNG/JSON pairs, and everything downstream works offline.
+>
+> Two things to settle before the mesh is worth its cost. First, the
+> known weakness of this whole approach is our exact viewpoint: the
+> mesh-localisation literature reports that aerial-derived textured
+> meshes look convincing from above and lose fidelity at ground level,
+> where low viewing angles put artifacts on facades - and we shoot from
+> 2-9 m above the sea, horizontally, at 3-20 km. Second, the search
+> economics invert: 491 ray-casts per solve is cheap, 491 streamed
+> renders is not, so the exhaustive coarse-to-fine search would have to
+> give way to retrieval plus PnP.
+>
+> The cheap probe that decides it needs no Cesium at all: add OSM
+> building footprints and heights to the DEM and re-measure BD9's
+> correlation at the true position. The canopy raster explained about
+> half the crest deficit by the same method (E5aw), and buildings are
+> its urban counterpart. If buildings alone lift +0.097, the problem is
+> missing content and the mesh is worth it; if they do not, the problem
+> is geometric degeneracy and a mesh will not fix it either - which
+> would leave taking a baseline (two stations) as the only real
+> remedy. `fetch_osm_landmarks.py` already has the Overpass scaffolding
+> but fetches lights, turbines and masts, not buildings, and Overpass
+> is blocked here too.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
