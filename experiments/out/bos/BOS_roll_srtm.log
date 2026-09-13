@@ -1,0 +1,107 @@
+hand-digitised boundary: 4032 columns from out/bos/user_skyline.npy
+photo 0: PF_new_bosphorus1.jpg  fov 73.7, heading 48.0, pitch +0.00, roll +1.75, weight 1.00
+z 7.0 m, box 6000 m at (41.12590,29.07076)
+peak witness: 7 crests, median height residual -21 m (spread 21 m)
+{
+ "status": "ok",
+ "reasons": [],
+ "lat": 41.12846306657687,
+ "lon": 29.052493388026292,
+ "fix_ok": true,
+ "basin_margin": 0.2849267454164264,
+ "relief_mrad": 7.081971677678146,
+ "dn_m": 285.0,
+ "de_m": -1530.0,
+ "sigma_n_m": 93.23892143489243,
+ "sigma_e_m": 97.4616215848005,
+ "sigma_major_m": 112.5213495779843,
+ "sigma_minor_m": 74.37210526420472,
+ "major_bearing_deg": 131.7574815314163,
+ "anisotropy": 1.5129509804550443,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -21.47135407340322,
+ "peak_dh_mad_m": 21.290299620171012,
+ "n_peaks": 7,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.00018615258272610668,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2700.0,
+   "cost": 0.00015214653056346017,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2400.0,
+   "cost": 8.847017423252832e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2100.0,
+   "cost": 5.928241230612926e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1800.0,
+   "cost": 3.276417518427374e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1500.0,
+   "cost": 2.2516556164268013e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 300.0,
+   "de": -1500.0,
+   "cost": 1.7254637016168748e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 300.0,
+   "de": -1500.0,
+   "cost": 1.7254637016168748e-05,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": 285.0,
+   "de": -1530.0,
+   "cost": 1.6865664037624727e-05,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "search_evals": 491,
+ "cost": 1.6865664037624727e-05,
+ "rms_mrad": 5.807867773567978,
+ "n_photos": 1,
+ "z_m": 7.0,
+ "photos": [
+  {
+   "file": "PF_new_bosphorus1.jpg",
+   "fov_deg": 73.7,
+   "heading_deg": 48.0,
+   "pitch_deg": 0.0,
+   "roll_deg": 1.75,
+   "weight": 1.0,
+   "rms_mrad": 5.807867773567978,
+   "heading_offset_deg": -6.0,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior"
+  }
+ ],
+ "heading_offset_deg": -6.0,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 73.7
+}
+wrote out/bos/BOS_roll_srtm.json/.png

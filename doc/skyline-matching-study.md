@@ -3551,8 +3551,11 @@ sequential estimator.
 > allows, and the gap is model fidelity - which is the argument for
 > better content, not for a better matcher.
 
-> **E5bh - the Bosphorus frame: clouds defeat both detectors, and a
-> hand-drawn skyline shows the scene was unusable anyway.**
+> **E5bh - the Bosphorus frame: clouds defeat both detectors.**
+> *[Corrected by E5bi: the "unusable scene" conclusion below is
+> WRONG. The residue was uncorrected camera ROLL of +1.75 deg plus
+> a clamped beta band, not model content. With both fixed the frame
+> solves to 54 m. The cloud and hand-digitisation findings stand.]*
 > `PF_new_bosphorus1.jpg` (41.12590, 29.07076, 7 m, EXIF heading 47.10
 > true, uncropped 4032x3024) looks across the strait at the Asian shore,
 > 2.3-6.6 km away, under heavy cumulus.
@@ -3613,6 +3616,66 @@ sequential estimator.
 > error remains. That residue is model content, in a near-field urban
 > scene at 2.3-6.6 km with 28% inside 3 km. It is the E5ba regime with
 > every other excuse stripped away.
+
+> **E5bi - roll: the nuisance nobody was estimating, worth 1.5 km.**
+> E5bh concluded that the Bosphorus frame's 1.9 km residue was model
+> content, because the hand-drawn skyline correlated with the DEM at
+> only +0.19 at the true position. That conclusion was wrong, and the
+> visual the operator asked for is what exposed it: **each half of the
+> frame matched well on its own while the two halves disagreed on the
+> level.**
+>
+> | region | corr | rms | constant offset | range p50 |
+> |---|---|---|---|---|
+> | left third (wooded ridge, masts) | **+0.885** | 7.2 mrad | **+8.5 mrad** | 4.8 km |
+> | right two thirds (urban shore) | **+0.773** | 4.4 mrad | **+31.2 mrad** | 3.2 km |
+> | whole frame | **+0.191** | 12.6 mrad | +25.7 mrad | 3.8 km |
+>
+> Two good halves with offsets 23 mrad apart average to nothing,
+> because a single global beta cannot absorb two different levels. A
+> **linear** offset across the columns is precisely what camera roll
+> produces: a roll phi tilts the boundary by u*tan(phi)/f, so from the
+> left centroid to the right the elevation shifts by phi*(du/f).
+> 23 mrad over 800 px at f = 1067 px predicts phi = 1.76 deg.
+>
+> Measured by sweep: the optimum is **+1.75 deg**, which lifts the
+> whole-frame correlation from **+0.191 to +0.893** and drops the
+> residual from 12.6 to 4.7 mrad. Prediction and measurement agree to
+> 0.01 deg.
+>
+> Re-solving, all with the hand-digitised boundary:
+>
+> | arm | roll | beta band | hdg window | dlat | dlon | total | margin | rms | beta | hdg | status |
+> |---|---|---|---|---|---|---|---|---|---|---|---|
+> | E5bh baseline | 0 | +-10 | +-6 | +855 | -1740 | 1939 m | 0.02 | 7.24 | +10.1* | -2.2 | refused |
+> | roll only | 1.75 | +-10 | +-6 | +300 | -1515 | 1544 m | 0.27 | 6.01 | +10.1* | -6.0* | **accepted, wrong** |
+> | roll + wide beta | 1.75 | +-26 | +-12 | +30 | -105 | **109 m** | 1.39 | 2.51 | +26.2 | +1.6 | accepted |
+> | roll + pitch given | 1.75 | +-10 | +-12 | +30 | -45 | **54 m** | 1.91 | 2.35 | +2.0 | +0.8 | accepted |
+>
+> (* at a band edge.)
+>
+> The middle arm is the campaign's **third clamping false accept** and
+> the cleanest specimen yet: correcting roll alone raised the margin
+> from 0.02 to 0.27, pushing the frame over the 0.15 threshold while
+> both nuisances sat pinned - beta at +10.1 of +-10 and the heading
+> offset at exactly -6.0 of +-6. Releasing them moved the answer
+> **1.49 km**. A partial repair is more dangerous than no repair,
+> because it buys enough fit to clear the gate without buying truth.
+>
+> With everything released the frame is the campaign's second-best
+> result: **54 m**, margin 1.91, rms 2.35 mrad, every nuisance interior.
+> Against the recorded best of 42 m and an accepted median of 368 m.
+>
+> Consequences. (1) **Roll must be co-estimated**, not taken as zero
+> when EXIF omits it. It is the only nuisance that acts differentially
+> across the frame, so unlike beta it cannot be absorbed and unlike
+> heading it is not searched. A hand-held frame from a moving boat
+> carries degrees of it. (2) The **beta band is too narrow**: this
+> frame needed +24.7 mrad against a +-10 prior. (3) The split-half
+> correlation used to find this is a cheap, general diagnostic - two
+> good halves with different offsets means roll, every time - and it
+> belongs in the pre-screen. (4) E5bh's model-content conclusion is
+> retracted; nothing here was missing from the DEM.
 
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
