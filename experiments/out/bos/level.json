@@ -1,0 +1,14 @@
+{
+ "seam ceiling (shipped)": {
+  "pitch_deg": -0.842280473352962,
+  "roll_deg": 1.4072728589203642,
+  "n_inl": 783.0,
+  "frac": 0.489375,
+  "span_frac": 0.9968730456535334,
+  "rms_px": 1.1423006928672486,
+  "contrast": 0.13856210421632836,
+  "score": 999.0,
+  "source": "radon"
+ },
+ "hand ceiling": {}
+}

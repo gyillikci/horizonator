@@ -3677,6 +3677,53 @@ sequential estimator.
 > belongs in the pre-screen. (4) E5bh's model-content conclusion is
 > retracted; nothing here was missing from the DEM.
 
+> **E5bj - the waterline had the answer all along, and the shipped
+> level detector missed it by 45 px.** E5bi recovered pitch +1.45 and
+> roll +1.75 deg for the Bosphorus frame from the skyline solve alone,
+> by noticing that the frame's two halves matched the DEM well but at
+> levels 23 mrad apart. Drawing that attitude back onto the photograph
+> as a horizon line puts it **on the water's edge**, along the whole
+> width. The information was in the image from the start.
+>
+> Measured against the actual bright-to-dark water edge (strongest
+> downward gradient per column in the shoreline band, all 1600
+> columns):
+>
+> | estimate | pitch | roll | offset from the water edge |
+> |---|---|---|---|
+> | shipped level detector (`--level-detector sam`) | -0.84 | +1.41 | **-45.4 px** |
+> | E5bi, from the skyline solve | **+1.45** | **+1.75** | **-2.7 px** |
+>
+> A straight line cannot follow this shore - it curves, which is why
+> both fits carry ~40 px of rms scatter - but the *mean* offset is the
+> level, and E5bi's lands within 3 px while the detector's sits 45 px
+> high. At f = 1067 px that is 42 mrad, i.e. **2.4 deg of pitch error**,
+> matching the -0.84 against +1.45 disagreement directly. Roll the
+> detector got nearly right (+1.41 against +1.75, 0.34 deg apart); it
+> is the *level* it lost.
+>
+> Why it failed is visible in the render (`out/bos/BOS_waterline.png`):
+> the detector locked onto a horizontal feature up in the town - a
+> shore road or a building line - rather than the water edge below it.
+> This is E5au's finding again, that eWaSR and the radon refinement are
+> not trustworthy for water/land *geometry*, but here it is quantified
+> against a known-good answer instead of against intuition.
+>
+> Note also that the shipped path hands the detector the seam boundary
+> as its ceiling, and on this frame the seam is riding clouds (E5bh).
+> Supplying the hand-drawn skyline as the ceiling instead made the
+> detector return **no level at all** - it is not merely misled by a
+> bad ceiling, it depends on one.
+>
+> The consequence is the same conclusion E5bi reached from the other
+> direction, now with a second witness: on a terrain-backed waterline
+> the level channel is the single highest-value measurement in the
+> frame - it fixes roll, which nothing else estimates, and pitch, whose
+> band was three times too narrow here - and it is currently the least
+> reliable part of the pipeline. Fixing the waterline detector is worth
+> more than any change to the matcher: on this frame it is the
+> difference between 1939 m and 54 m.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
