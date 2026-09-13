@@ -31,8 +31,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, 'out', 'e5k')
 PHOTOS = os.path.join(os.path.dirname(os.path.dirname(HERE)),
                       'celestial-navigation', 'theodolite')
-SCRATCH = ('/tmp/claude-0/-home-user/'
-           '792503f9-74c5-5111-83ca-eeeda63e838d/scratchpad')
+from assets import assets_dir
+SCRATCH = assets_dir()
 sys.path.insert(0, os.path.join(SCRATCH, 'MobileSAM'))
 
 

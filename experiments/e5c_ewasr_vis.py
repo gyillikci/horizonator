@@ -25,8 +25,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, 'out', 'e5c')
 PHOTOS = os.path.join(os.path.dirname(os.path.dirname(HERE)),
                       'celestial-navigation', 'theodolite')
-SCRATCH = ('/tmp/claude-0/-home-user/'
-           '792503f9-74c5-5111-83ca-eeeda63e838d/scratchpad')
+from assets import assets_dir
+SCRATCH = assets_dir()
 TINT = {0: (1.0, 0.25, 0.2), 1: (0.05, 0.5, 1.0), 2: (1.0, 0.85, 0.1)}
 NAME = {0: 'obstacle', 1: 'water', 2: 'sky'}
 

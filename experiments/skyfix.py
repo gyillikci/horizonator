@@ -129,10 +129,8 @@ def across_water(img, rows, conf):
     global _EWASR
     if _EWASR is None:
         from ewasr_bridge import EWasr
-        scratch = ('/tmp/claude-0/-home-user/'
-                   '792503f9-74c5-5111-83ca-eeeda63e838d/scratchpad')
-        _EWASR = EWasr(os.path.join(scratch, 'eWaSR'),
-                       os.path.join(scratch, 'ewasr_resnet18.pth'))
+        from assets import need
+        _EWASR = EWasr(need('eWaSR'), need('ewasr_resnet18.pth'))
     # NOT-LAND, not "water": below a terrain silhouette there is no
     # sky, so a sky label under the crest is haze-washed water that
     # the segmenter mis-called. Measured on the Akbuk frame: eWaSR
@@ -208,10 +206,8 @@ def extract_boundary(img, horizon_rows=None, tol_px=4):
         global _EWASR
         if _EWASR is None:
             from ewasr_bridge import EWasr
-            scratch = ('/tmp/claude-0/-home-user/'
-                       '792503f9-74c5-5111-83ca-eeeda63e838d/scratchpad')
-            _EWASR = EWasr(os.path.join(scratch, 'eWaSR'),
-                           os.path.join(scratch, 'ewasr_resnet18.pth'))
+            from assets import need
+            _EWASR = EWasr(need('eWaSR'), need('ewasr_resnet18.pth'))
         cls = _EWASR.predict(img)
         sky = cls == 2
         # boundary = first non-sky row BELOW the first sky run, per

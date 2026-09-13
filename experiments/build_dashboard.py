@@ -285,8 +285,8 @@ Full experiment log: <span class="mono">doc/skyline-matching-study.md
 """
 
 # station screenshots live in the session scratchpad; fall back to empty
-SCRATCH = ('/tmp/claude-0/-home-user/792503f9-74c5-5111-83ca-eeeda63e83'
-           '8d/scratchpad')
+from assets import assets_dir
+SCRATCH = assets_dir()
 
 
 def b64f(path):

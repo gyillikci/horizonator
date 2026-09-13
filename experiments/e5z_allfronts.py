@@ -48,8 +48,8 @@ _pose = ([float(x) for x in sys.argv[2].split(',')]
 PHOTO = os.path.join(os.path.dirname(os.path.dirname(HERE)),
                      'celestial-navigation', 'peakfinder', _id + '.jpg')
 LAT, LON, HEADING, Z = _pose
-SCRATCH = ('/tmp/claude-0/-home-user/'
-           '792503f9-74c5-5111-83ca-eeeda63e838d/scratchpad')
+from assets import assets_dir
+SCRATCH = assets_dir()
 
 
 def main():

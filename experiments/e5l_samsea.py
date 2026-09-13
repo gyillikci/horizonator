@@ -24,8 +24,8 @@ import numpy as np
 from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-SCRATCH = ('/tmp/claude-0/-home-user/'
-           '792503f9-74c5-5111-83ca-eeeda63e838d/scratchpad')
+from assets import assets_dir, need
+SCRATCH = assets_dir()          # kept as a name for the MobileSAM import path
 sys.path.insert(0, os.path.join(SCRATCH, 'MobileSAM'))
 DATA = os.path.join(os.path.dirname(os.path.dirname(HERE)),
                     'celestial-navigation', 'MaSTr1325')
@@ -39,8 +39,8 @@ def predictor():
     global _PRED
     if _PRED is None:
         from mobile_sam import sam_model_registry, SamPredictor
-        sam = sam_model_registry['vit_t'](checkpoint=os.path.join(
-            SCRATCH, 'MobileSAM', 'weights', 'mobile_sam.pt'))
+        sam = sam_model_registry['vit_t'](
+            checkpoint=need('MobileSAM', 'weights', 'mobile_sam.pt'))
         sam.to('cpu').eval()
         _PRED = SamPredictor(sam)
     return _PRED

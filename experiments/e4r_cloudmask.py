@@ -41,8 +41,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, 'out')
 CLD = os.path.join(OUT, 'clouds')
 DIR3 = os.path.expanduser('~/.horizonator/DEMs_SRTM3')
-SCRATCH = ('/tmp/claude-0/-home-user/792503f9-74c5-5111-83ca-'
-           'eeeda63e838d/scratchpad')
+from assets import assets_dir
+SCRATCH = assets_dir()
 EWASR_DIR = os.environ.get('EWASR_DIR', os.path.join(SCRATCH, 'eWaSR'))
 EWASR_W = os.environ.get('EWASR_WEIGHTS',
                          os.path.join(SCRATCH, 'ewasr_resnet18.pth'))
