@@ -1,0 +1,12 @@
+DEMs_COP30: best corr +0.191 at heading 48.0 (rms 12.6 mrad, offset +25.7)
+      48.0 -> +0.191
+      49.0 -> +0.165
+      47.0 -> +0.161
+      46.0 -> +0.088
+      EXIF 47.1 -> +0.161
+DEMs_SRTM1_WM: best corr +0.212 at heading 48.0 (rms 12.8 mrad, offset +25.6)
+      48.0 -> +0.212
+      49.0 -> +0.188
+      47.0 -> +0.182
+      50.0 -> +0.110
+      EXIF 47.1 -> +0.182

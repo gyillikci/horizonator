@@ -1,0 +1,122 @@
+hand-digitised boundary: 4032 columns from out/bos/user_skyline.npy
+photo 0: PF_new_bosphorus1.jpg  fov 73.7, heading 48.0, pitch +0.00, roll +0.00, weight 1.00
+z 7.0 m, box 6000 m at (41.12590,29.07076)
+peak witness: 10 crests, median height residual -4 m (spread 15 m)
+INCONCLUSIVE: ambiguous landscape: basin margin 0.02 < 0.15
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.02 < 0.15"
+ ],
+ "lat": 41.13358919973061,
+ "lon": 29.049986205990685,
+ "fix_ok": false,
+ "basin_margin": 0.024570665017993636,
+ "relief_mrad": 9.672155088645644,
+ "dn_m": 855.0,
+ "de_m": -1740.0,
+ "sigma_n_m": 135.74969656900547,
+ "sigma_e_m": 171.5517386007048,
+ "sigma_major_m": 194.1746742038606,
+ "sigma_minor_m": 100.76792661023741,
+ "major_bearing_deg": 123.23114040169423,
+ "anisotropy": 1.92694918646995,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -4.341361829627991,
+ "peak_dh_mad_m": 14.552257634901588,
+ "n_peaks": 10,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.0001768185432556443,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2700.0,
+   "cost": 0.0001543480744900527,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2400.0,
+   "cost": 8.860399453984085e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2100.0,
+   "cost": 6.600165515926172e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1800.0,
+   "cost": 4.164465335814418e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1500.0,
+   "cost": 3.106412034454764e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": -1500.0,
+   "cost": 2.9581628408879515e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": -1200.0,
+   "cost": 2.872394017464518e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 900.0,
+   "de": -1800.0,
+   "cost": 2.803509914481177e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 840.0,
+   "de": -1740.0,
+   "cost": 2.716760598645159e-05,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": 855.0,
+   "de": -1740.0,
+   "cost": 2.6200151990149412e-05,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "search_evals": 491,
+ "cost": 2.6200151990149412e-05,
+ "rms_mrad": 7.238805424950916,
+ "n_photos": 1,
+ "z_m": 7.0,
+ "photos": [
+  {
+   "file": "PF_new_bosphorus1.jpg",
+   "fov_deg": 73.7,
+   "heading_deg": 48.0,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 7.238805424950916,
+   "heading_offset_deg": -2.2,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior"
+  }
+ ],
+ "heading_offset_deg": -2.2,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 73.7
+}
+wrote out/bos/BOS_hand_cop.json/.png

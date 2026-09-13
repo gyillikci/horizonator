@@ -85,6 +85,7 @@ EXTRACTOR = 'seam'      # set from --extractor
 _EWASR = None
 ACROSS_WATER = False
 MASK_COLS = []
+BOUNDARY_ROWS = None    # set from --boundary-npy: a hand-digitised curve
 ACROSS_WATER_MIN_PX = 8
 
 
@@ -162,7 +163,24 @@ def extract_boundary(img, horizon_rows=None, tol_px=4):
               DIFFERENT LAYERS (86 px apart on OREJ1026, the seam
               detector following the far coast and the template the
               island), while on a clean single-layer scene they agree
-              to 2 px."""
+              to 2 px.
+
+    A curve supplied through --boundary-npy short-circuits all of
+    them. It is the operator's own digitisation, so it is taken as
+    given and only resampled to the working width; E5bh is the case
+    that motivated it, a cloud-filled sky in which both detectors
+    tracked cumulus edges instead of a low urban ridge."""
+    if BOUNDARY_ROWS is not None:
+        # the curve is stored at the ORIGINAL frame width and row
+        # scale; the solver downscales both axes by the same factor,
+        # so one ratio both rescales the rows and resamples the columns
+        src = np.asarray(BOUNDARY_ROWS, float)
+        W = img.shape[1]
+        k = W / src.size
+        rows = np.interp(np.linspace(0, src.size - 1, W),
+                         np.arange(src.size), src) * k
+        return rows, np.ones(W)
+
     # A terrain silhouette seen from sea level lies AT OR ABOVE the sea
     # horizon; anything a detector returns below that line is water,
     # a hull, or a reflection, never a skyline. When the horizon is
@@ -526,6 +544,11 @@ def main():
                          'above the sea horizon, and drop columns whose '
                          'boundary falls below it (they are water, not '
                          'terrain)')
+    ap.add_argument('--boundary-npy', default=None,
+                    help='use a hand-digitised boundary instead of any '
+                         'detector: a .npy holding one row index per '
+                         'column at the ORIGINAL frame width. Bypasses '
+                         '--extractor and the extraction guards.')
     ap.add_argument('--extractor', default='seam',
                     choices=['seam', 'learned', 'ewasr'],
                     help='image-side boundary finder: the mountain seam '
@@ -674,9 +697,13 @@ def main():
     ap.add_argument('--out',
                     help='write PREFIX.json and PREFIX.png diagnostics')
     args = ap.parse_args()
-    global EXTRACTOR, ACROSS_WATER
+    global EXTRACTOR, ACROSS_WATER, BOUNDARY_ROWS
     EXTRACTOR = args.extractor
     ACROSS_WATER = args.across_water
+    if args.boundary_npy:
+        BOUNDARY_ROWS = np.load(os.path.expanduser(args.boundary_npy))
+        print('hand-digitised boundary: %d columns from %s'
+              % (BOUNDARY_ROWS.size, args.boundary_npy), flush=True)
     if args.mask_cols:
         MASK_COLS[:] = [tuple(float(v) for v in seg.split(':'))
                         for seg in args.mask_cols.split(',')]

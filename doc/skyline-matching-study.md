@@ -3551,6 +3551,69 @@ sequential estimator.
 > allows, and the gap is model fidelity - which is the argument for
 > better content, not for a better matcher.
 
+> **E5bh - the Bosphorus frame: clouds defeat both detectors, and a
+> hand-drawn skyline shows the scene was unusable anyway.**
+> `PF_new_bosphorus1.jpg` (41.12590, 29.07076, 7 m, EXIF heading 47.10
+> true, uncropped 4032x3024) looks across the strait at the Asian shore,
+> 2.3-6.6 km away, under heavy cumulus.
+>
+> **Extraction failed completely.** Both front ends tracked cloud
+> edges rather than the low urban ridge: the seam returned elevations
+> spanning **-0.4 to +27.8 deg** where the DEM horizon spans 1.7 to
+> 3.8. The extractor-disagreement pre-check fired correctly - eWaSR and
+> the seam disagreed on **76%** of columns - but its remedy is to fall
+> back to the seam, and the seam is wrong the same way. **The pre-check
+> is a disagreement detector, not a quality detector**; when both
+> front ends fail identically it has no way to say "neither", and it
+> hands the solver a confident cloud trace. An elevation-band gate did
+> not rescue it either: capping the boundary at 12/8/6 deg left
+> correlations of 0.26/0.41/0.53 with the best heading wandering to
+> 79/62/70 deg, which is the signature of no signal at all.
+>
+> **So the operator drew the skyline by hand.** Differencing the
+> annotated frame against the original recovers it exactly - 3993 of
+> 4032 columns, rows 1390-1525, p99 column-to-column jump 1.0 px. It
+> is stored as `experiments/data/bosphorus1_hand_skyline.npy` and
+> `skyfix.py --boundary-npy` now takes such a curve directly, bypassing
+> every detector and guard. Elevation -0.28 to +2.60 deg, relief
+> 50.2 mrad - close to the DEM's 37, where the detectors had claimed
+> 490.
+>
+> With a perfect boundary, two results:
+>
+> **The compass is right here.** The heading sweep peaks at **48.0 deg**
+> against an EXIF 47.10 - a 0.9 deg error, inside the +-6 window. The
+> opposite of BD9 (E5bf), where the same phone was 13 deg out. Phone
+> compass error is not a fixed bias to calibrate away; it is episodic,
+> which is exactly why the sweep has to be run per frame.
+>
+> **The scene is still unusable.** Even hand-drawn, the shape
+> correlation at the true position is only **+0.19** (COP30 +0.191,
+> SRTM1 +0.212), with a residual rms of 12.6 mrad and a constant offset
+> of **+25.7 mrad**. That offset is 2.5x outside the +-10 mrad beta
+> band, so beta sat pinned at +10.1 in every arm and could never reach
+> what the fit wanted.
+>
+> | arm | DEM | crest-dh | dlat | dlon | total | margin | rms | status |
+> |---|---|---|---|---|---|---|---|---|
+> | hand boundary | COP30 | 9 | +855 | -1740 | 1939 m | 0.02 | 7.24 | refused |
+> | hand boundary | SRTM1 | 9 | +840 | -1755 | 1946 m | 0.10 | 6.73 | refused |
+> | hand boundary | COP30 | 25 | +375 | -1575 | 1619 m | 0.02 | 8.29 | refused |
+>
+> Every arm refused on the basin margin, correctly. At 3.7 km a
+> 25.7 mrad offset is 95 m of height the DEM does not have, which is
+> far more than rooftops and trees (10-30 m) can explain and points at
+> the visible ridge being a different, further feature than the one the
+> DEM puts on the horizon. Raising `--crest-dh` to 25 moves the answer
+> 320 m and fixes nothing.
+>
+> The frame's value is what it isolates. Extraction and heading, the
+> two error sources that dominated the recent Bodrum and Milas frames,
+> are both removed here - one by hand, one by the sweep - and 1.9 km of
+> error remains. That residue is model content, in a near-field urban
+> scene at 2.3-6.6 km with 28% inside 3 km. It is the E5ba regime with
+> every other excuse stripped away.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the

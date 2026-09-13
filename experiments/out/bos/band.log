@@ -1,0 +1,4 @@
+cap   90 deg: keep 1600/1600 cols  best corr +0.558 at heading 55.0  rms 152.5 mrad
+cap   12 deg: keep  747/1600 cols  best corr +0.263 at heading 79.0  rms  54.6 mrad
+cap    8 deg: keep  651/1600 cols  best corr +0.409 at heading 62.0  rms  38.3 mrad
+cap    6 deg: keep  490/1600 cols  best corr +0.526 at heading 70.0  rms  24.1 mrad
