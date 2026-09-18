@@ -3802,6 +3802,69 @@ sequential estimator.
 > dash for the placement tool - and none are installed here, so nothing
 > was executed. This block is a source reading.
 
+> **E5bl - GIANT's maplet correlation run on our frames: the sliding is
+> real, and it is the dominant effect.** E5bk found that NASA's Surface
+> Feature Navigation avoids the tangential-sliding problem by
+> correlating a 2D surface patch rather than matching curve points.
+> `experiments/e5bl_maplet_match.py` runs that method on two of our
+> frames, with the one change the domain gap forces: the patches are
+> cut from the sky/not-sky mask rather than from shaded intensity,
+> because a DEM render has no albedo and our scenes are hazy sunset
+> silhouettes (E5be). Shape is what both sides genuinely share.
+>
+> Templates are 81 px square, centred on the DEM boundary at the five
+> highest-curvature columns plus one deliberately flat control, matched
+> by normalised cross correlation over a +-70 px window.
+>
+> | frame | median vertical error | median horizontal error |
+> |---|---|---|
+> | Bogaz, relief ~49 px over 1200 | **1 px** | **27 px** |
+> | Bodrum / Kara Ada | **8 px** | **64 px** |
+>
+> The correlation surfaces (`out/bos/BOS_maplet.png`) are the finding
+> drawn rather than argued: every one is a **horizontal bright band**,
+> tightly confined vertically and running the full width of the search
+> window. Measured as the distance over which the score stays within
+> 10% of its peak, the bands are **23-25 px tall and 16-79 px wide**.
+> The correlation argmax and the true offset sit at nearly the same
+> height and tens of pixels apart along the curve.
+>
+> So the vertical component is a measurement and the horizontal one is
+> not, by roughly a factor of **8 to 26**. That is exactly the
+> decomposition the point-to-line residual keeps and point-to-point PnP
+> would silently fill in from the a priori pose.
+>
+> The uncomfortable part is that **curvature extrema did not rescue it
+> here**. On a body where a crater rim turns through tens of degrees
+> inside one template, a maplet locks in both directions; on a coastal
+> skyline at 3-20 km the crest bends so gently that an 81 px template
+> contains almost no horizontal structure. The Bogaz silhouette spans
+> 49 px of a 1200 px frame; even Kara Ada's ridge is gentle at this
+> scale. The narrowest band we measured, 16 px, is still an order of
+> magnitude worse than the vertical.
+>
+> Consequences. (1) For our geometry the point-to-line residual is not
+> a refinement of the maplet approach but a **replacement** for it -
+> there is no template size at which the horizontal component becomes
+> informative. (2) The genuinely 2D-localised features in our scenes
+> are not terrain at all; they are the point landmarks the resection
+> argument already pointed at - navigation lights, masts, turbines,
+> island end-points - which is another argument for fetching the OSM
+> databases that Overpass blocks here. (3) The anisotropy is
+> measurable per feature at almost no cost, so a real implementation
+> should weight each correspondence by its own correlation-band shape
+> rather than assuming a common sigma.
+>
+> Two implementation notes for anyone rerunning this. A thin-line
+> raster is unusable: normalised cross correlation on a one-pixel curve
+> is degenerate, two near-empty patches score 1.0, and the peak lands
+> wherever the window runs out. And even with filled masks,
+> `TM_CCOEFF_NORMED` divides by the window patch's standard deviation,
+> so every position where the template slides fully into uniform sky or
+> uniform ground returns 1.0; those must be suppressed with a local
+> standard-deviation mask before the peak is taken. Both bugs produce
+> confident, wrong matches that look like successes.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
