@@ -3724,6 +3724,84 @@ sequential estimator.
 > more than any change to the matcher: on this frame it is the
 > difference between 1939 m and 54 m.
 
+> **E5bk - GIANT: NASA's answer to the same problem, and it settles
+> the correspondence argument.** Cloned `gyillikci/giant`, a fork of
+> NASA Goddard's Image Analysis and Navigation Tool (Apache 2.0). Its
+> `examples/feature_catalog_tools/` is landmark navigation against a
+> DEM, and `giant/relative_opnav/estimators/sfn/` is the runtime. Four
+> things transfer directly.
+>
+> **1. It never matches curve points, and that is the whole design.**
+> Surface Feature Navigation renders a small 2D patch - a *maplet*,
+> cut from a global DEM plus an albedo map by `dem_to_landmarks.py* -
+> for each feature at the a priori relative pose, then finds it by
+> **2D normalised cross-correlation**, optionally fitting a quadric to
+> the correlation surface for the subpixel peak. A correlation peak is
+> localised in *both* image directions, so the tangential sliding that
+> makes point-to-point PnP over a silhouette curve invalid never
+> arises. This is the reference implementation of "sample where the
+> feature is 2D-localised", and it is flight-proven rather than argued.
+>
+> **2. Their PnP is regularised, not clamped.** `pnp_solver` in
+> `sfn_class.py` solves for an *update* rather than lost-in-space, and
+> `pnp_residual_function` appends **six zeros** to the residual vector
+> and weights them through a Cholesky transform of a sigma matrix
+> built from `position_sigma` and `attitude_sigma`. That is Tikhonov
+> regularisation with a stated sigma - exactly what the angle-only
+> review proposed in place of our hard nuisance bands, arrived at
+> independently. Their stated reason is ours: solving for an update
+> "force[s] it to stay near the a priori knowledge which helps to
+> prevent outlandish solutions, even when there are very few points
+> available." Our `--heading-window` and beta band do the same job by
+> clamping, which is why three false accepts in this campaign came
+> with a nuisance parameter pinned at an edge and a manufactured
+> margin. A prior would have shown up in the covariance instead.
+>
+> **3. Landmark placement is the a-priori DOP map, done properly.**
+> `determine_dem_landmark_needs.py` walks a trajectory and, per epoch,
+> reuses a feature only when it is in the field of view, at least
+> `feature_spacing_limit` pixels from the others, still visible, and
+> within a GSD ratio; when fewer than `n_features_per_img_min`
+> (default 5) survive, it places new ones on a **five-of-a-die pattern**
+> at the quarter points plus centre, ray-traces each, and walks the
+> failures 3/4 of the way toward the centre until they land on the
+> body. Placement is decided from geometry before any image exists -
+> which is the point E5be reached from the resection literature and
+> this repo still does not implement.
+>
+> **4. The two gates we are missing.**
+>
+> `is_visible` demands three angles simultaneously: **incidence**
+> (sun to surface normal) within 0-70 deg, **exidence** (camera to
+> normal) within 0-65, and **phase** (sun to camera) within 0-120. A
+> landmark-validity model built on illumination and viewing geometry.
+> Our nearest equivalents, `--across-water` and the peak witness, are
+> far cruder. The exidence limit is the direct analogue for a coastal
+> instrument: a ridge seen at a grazing angle is a poor landmark, and
+> we never test for it.
+>
+> `gsd_tolerance` (default **3.0**) reuses a feature only when the
+> camera's ground sample distance sits between 1/3 and 3 times the
+> feature's stored GSD. A scale-consistency gate - and E5bd measured
+> our position sliding monotonically from 939 m to 148 m as the
+> assumed field of view went 69 to 76 deg, which is precisely a scale
+> mismatch going unchecked.
+>
+> **What does not transfer.** The geometry is spacecraft-around-a-body:
+> SPICE kernels, a body-fixed frame, an ellipsoid or KDTree shape, and
+> a maplet defined as a local tangent plane with a surface normal. Our
+> camera sits at 2-9 m above the sea looking horizontally at terrain
+> 3-20 km away, where the exidence gate would reject nearly everything
+> we photograph - the viewing vector is almost perpendicular to the
+> surface normal by construction. The template correlation also
+> assumes a known sun and a roughly Lambertian surface, where our
+> scenes are hazy sunset silhouettes. So the *method* is not portable;
+> the four design decisions above are.
+>
+> Dependencies are heavier than ours - GDAL/osgeo, spiceypy, plotly and
+> dash for the placement tool - and none are installed here, so nothing
+> was executed. This block is a source reading.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
