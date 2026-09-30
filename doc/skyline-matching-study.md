@@ -3865,6 +3865,66 @@ sequential estimator.
 > standard-deviation mask before the peak is taken. Both bugs produce
 > confident, wrong matches that look like successes.
 
+> **E5bn - point-to-point PnP on a silhouette returns its own start.**
+> E5bl measured that a silhouette point is localised perpendicular to
+> the curve and not along it. This measures what that does to a pose.
+> `experiments/e5bn_pnp_sliding.py` runs the operator's proposed
+> pipeline on the Bosphorus frame: truth is the EXIF GPS, camera height
+> fixed at 7 m, a 5-DoF solve (north, east, heading, pitch, roll), and
+> the observation is the hand-drawn skyline *as drawn*, so PnP has to
+> recover the +1.75 deg roll itself. Every iteration re-ray-casts the
+> DEM from the current pose, takes the 3D crest points, samples 100 of
+> them across the frame, and pairs each with the observed curve **in
+> the same column** - the natural skyline pairing, and the one the
+> abstract describes - with a MAD outlier filter. Point-to-point
+> minimises the full 2D reprojection error; point-to-line only its
+> component along the observed curve's normal. Same pairs, same robust
+> loss, same ten iterations, no prior on either. 51 starts: truth
+> displaced 0/250/500 m in eight directions, heading error -2/0/+2 deg.
+>
+> | start offset | point-to-point: within 100 m | moved | point-to-line: within 100 m | moved |
+> |---|---|---|---|---|
+> | 0 m | 3/3 (final 4 m) | 4 m | 3/3 (final 77 m) | 77 m |
+> | 250 m | **0/24** | **4 m** | **19/24** | 280 m |
+> | 500 m | **0/24** | **4 m** | 7/24 | 450 m |
+>
+> **Point-to-point never moves.** Regressing final offset on start
+> offset gives a slope of **1.00**: every solve ends within about 4 m
+> of where it was put. The mechanism is the one E5bl drew: pairing by
+> column makes every horizontal residual zero at the start pose, so any
+> step away from it is penalised by exactly the component that carries
+> no measurement. It does recover attitude - roll median +1.74 deg,
+> against E5bi's +1.75 - so on a silhouette point-to-point PnP is an
+> **attitude estimator that echoes its position prior back**.
+>
+> The trap is how good it looks. Started at the GPS position it reports
+> **4 m**, the best number in this entire campaign, for the sole reason
+> that it was handed the answer. Any evaluation that initialises at
+> truth, or at a good INS, would score this method as excellent. It
+> would also score it as excellent with the INS 500 m out.
+>
+> **Point-to-line measures position, inside a basin.** From truth it
+> moves *away*, to 77 m - the DEM's own optimum on this frame, in the
+> same place the silhouette solver put it (54 m with pitch given, 109 m
+> with a wide beta band, E5bi). From 250 m it forgets where it started
+> and converges to that same answer 19 times in 24. From 500 m the
+> capture falls to 7 in 24 and the rest fall into other basins, some
+> over a kilometre out. Roll comes out at +1.59 deg with an IQR of
+> 0.05 deg when it converges.
+>
+> So the two methods fail in opposite ways, and only one of them fails
+> honestly. Point-to-line is a local refiner with a ~250 m capture
+> radius on this scene, which is exactly why E5bl's conclusion and the
+> earlier sequencing argument both hold: a global terrain match selects
+> the basin, point-to-line PnP refines inside it. Point-to-point cannot
+> refine position at all on a silhouette - it can only launder the
+> prior into something that looks like a measurement.
+>
+> For the abstract specifically: the pipeline works if its matching
+> step uses a point-to-line residual and is seeded inside the capture
+> radius. With point-to-point it will reproduce the INS position to
+> within a few metres and report that as a fix.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
