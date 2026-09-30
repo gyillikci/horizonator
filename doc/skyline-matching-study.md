@@ -3997,6 +3997,9 @@ sequential estimator.
 
 > **E5bo - foundation-model segmenters: SAM 2.1 wins on clouds and
 > loses on gradient skies, and the cheapest fix is post-processing.**
+> *[Corrected by E5bp: SAM 2.1 does NOT lose on gradient skies. The
+> Milas and Bodrum 9 SAM results below were computed on the previous
+> frame's image features. The Bosphorus results stand.]*
 > The operator asked for DINOv3 or SAM 2 against the extraction failures.
 > Access decided the lineup: Hugging Face and Meta's weight host are
 > both blocked here, so DINOv3, DINOv2 and the official SAM 2 downloads
@@ -4065,6 +4068,58 @@ sequential estimator.
 > the column count. Every boundary arrived 2.5x too low and every solve
 > came back near 2.5 km with a 61 mrad residual - uniform enough to look
 > like a finding about the models.
+
+> **E5bp - what SAM 2.1 actually segments, and two bugs that hid it.**
+> The operator asked to see the masks themselves, and the pictures
+> (`out/seg/sam_segmentation*.png`) overturned E5bo's headline.
+>
+> **Bug 1, stale features.** Ultralytics' SAM predictor reuses
+> `self.features` whenever it is set, so after any `set_image()` every
+> later prompted call segments *the previous image*. E5bo's zero-shot
+> probe called `set_image` on each frame, so its SAM 2.1-b prompted
+> masks for Milas and Bodrum 9 were Bosphorus and Milas features under
+> Milas and Bodrum 9 prompts. Bosphorus came first and is unaffected.
+> The fix clears the cache before and after every call.
+>
+> **Bug 2, the top-row rule.** The boundary step kept only the sky
+> component touching row 0. SAM upsamples a 256x256 mask and routinely
+> leaves the first rows outside it - the faint dot pattern along the
+> top of each panel - so correct masks produced no boundary. The rule
+> now accepts the top 2% band.
+>
+> With both fixed:
+>
+> | frame | SAM 2.1-t prompted | SAM 2.1-b prompted | segment-everything |
+> |---|---|---|---|
+> | Bosphorus, clouds | sky correct, conf 0.69, 3.3 px scatter vs hand | correct, conf 0.63 | sky / land / water, 3 masks |
+> | Milas, haze + wing | **sky correct**, conf 0.87, 6.1 px from seam, wing excluded | fails, conf 0.01 | sky one mask, wing separate |
+> | Bodrum 9, sunset | **sky correct**, conf 0.91, 3.4 px from seam | fails, conf 0.04 | sky one mask incl. the gradient |
+>
+> **SAM does not split gradient skies.** Segment-everything keeps the
+> whole Bodrum 9 sunset sky, deep blue through pink, as a single mask,
+> and SAM 2.1-t prompted gets it too. The model that fails with the
+> band prompts is the *larger* one, SAM 2.1-b - it returns near-zero
+> confidence on the two clear-sky frames. SAM 2.1-t prompted is the only
+> extractor in this campaign that is right on all three failure frames:
+> clouds, a foreground wing (excluded with no hand mask), and a sunset
+> gradient.
+>
+> **Through the solver it helps only where extraction was the binding
+> constraint.** Bosphorus (E5bo): SAM 2.1-t 262 m, SAM 2.1-b 106 m,
+> eWaSR + post-processing 95 m, against 3.2 km for the shipped path.
+> Milas: SAM 2.1-t with no mask 441 m refused, against 301 m refused for
+> eWaSR with the wing masked by hand. Bodrum 9 at the corrected heading:
+> SAM 2.1-t 931 m refused with the heading pinned at +6, against 363 m
+> refused for eWaSR. Better boundaries, no better fixes - consistent with
+> E5bd and E5bf, which found those two frames limited by field-of-view
+> and DEM geometry rather than extraction.
+>
+> Recommendation: SAM 2.1-t prompted is the strongest candidate front
+> end found so far on robustness - 5-6 s per frame on CPU, no training,
+> handles clouds, foreground objects and gradients. It should be
+> regression-tested across the accepted frames before replacing eWaSR.
+> Segment-everything gives the cleanest partition of all but costs about
+> four minutes per frame on CPU.
 
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction

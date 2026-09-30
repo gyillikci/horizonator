@@ -69,7 +69,11 @@ def mask_to_boundary(sky):
     lab, n = ndimage.label(sky)
     if n == 0:
         return None, None
-    top = np.unique(lab[0][lab[0] > 0])
+    # "touches the top" means the top band, not row 0: SAM upsamples a
+    # 256x256 mask and routinely leaves the first rows outside it, which
+    # made an otherwise correct sky mask yield no boundary at all
+    band = lab[:max(3, sky.shape[0] // 50)]
+    top = np.unique(band[band > 0])
     keep = np.isin(lab, top)
     H, W = keep.shape
     rows = np.full(W, np.nan)
@@ -86,11 +90,31 @@ def prompts(H, W):
     return pos + neg, [1] * 8 + [0] * 8
 
 
+LAST_SCORE = {}
+
+
+def _fresh(m):
+    """Drop cached image features. Ultralytics' SAM predictor reuses
+    self.features whenever it is set, so after any set_image() every
+    later prompted call silently segments THE PREVIOUS IMAGE. The first
+    version of this script hit exactly that on its second and third
+    frames."""
+    if m.predictor is not None:
+        m.predictor.reset_image()
+
+
 def sam_prompted(img8, name):
     H, W = img8.shape[:2]
     pts, lab = prompts(H, W)
-    r = sam(name)(img8[..., ::-1].copy(), points=[pts], labels=[lab],
-                  verbose=False)
+    m = sam(name)
+    _fresh(m)
+    # conf=0: keep the mask even when SAM is unsure; the score is
+    # recorded, because an unsure "sky" is itself a finding
+    r = m(img8[..., ::-1].copy(), points=[pts], labels=[lab],
+          conf=0.0, verbose=False)
+    b = r[0].boxes
+    LAST_SCORE[name] = float(b.conf[0]) if b is not None and len(b) else float('nan')
+    _fresh(m)
     return r[0].masks.data.cpu().numpy()[0] > 0.5
 
 
@@ -102,6 +126,7 @@ def sam_features_zeroshot(img8, name='sam2.1_b.pt', k=4):
     p = m.predictor
     p.set_image(img8[..., ::-1].copy())
     emb = p.features['image_embed'][0].float().cpu().numpy()     # C,64,64
+    _fresh(m)
     C, G, _ = emb.shape
     H, W = img8.shape[:2]
     # Ultralytics letterboxes to 1024 square, image top-left, padded
@@ -166,6 +191,7 @@ def run_all(path):
         t = time.time()
         rr, cc = mask_to_boundary(sam_prompted(img8, name))
         out[tag] = (rr, cc, time.time() - t)
+        print('   %s SAM confidence %.3f' % (tag, LAST_SCORE[name]))
     t = time.time()
     rr, cc = mask_to_boundary(sam_features_zeroshot(img8))
     out['sam2.1-b features (zero-shot)'] = (rr, cc, time.time() - t)

@@ -1,0 +1,170 @@
+hand-digitised boundary: 1600 columns from out/seg/bodrum9_sam21-t.npy
+photo 0: PF_new_bodrum9.jpg  fov 73.7, heading 180.0, pitch +0.00, roll +0.00, weight 1.00
+z 9.0 m, box 6000 m at (37.01992,27.44426)
+peak witness: 2 crests, median height residual -8 m (spread 20 m)
+INCONCLUSIVE: ambiguous landscape: basin margin 0.13 < 0.15
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.13 < 0.15"
+ ],
+ "lat": 37.02032469472266,
+ "lon": 27.454735220666887,
+ "fix_ok": false,
+ "basin_margin": 0.12824079034942992,
+ "relief_mrad": 19.317955171139083,
+ "dn_m": 45.0,
+ "de_m": 930.0,
+ "sigma_n_m": 153.25568237248723,
+ "sigma_e_m": 121.71643455848633,
+ "sigma_major_m": 153.56310468595845,
+ "sigma_minor_m": 121.3283458236217,
+ "major_bearing_deg": 174.0780875609694,
+ "anisotropy": 1.2656820106094357,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -7.950038000839139,
+ "peak_dh_mad_m": 19.56247377199319,
+ "n_peaks": 2,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.00011154443637903272,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2100.0,
+   "cost": 0.00011129892757806617,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1800.0,
+   "cost": 0.0001096257901337857,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1500.0,
+   "cost": 0.00010571642136534053,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1200.0,
+   "cost": 0.0001010107018861796,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -600.0,
+   "cost": 9.750208097542288e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -600.0,
+   "cost": 8.753761732906443e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -300.0,
+   "cost": 6.752228001937818e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": 0.0,
+   "cost": 6.397820788287613e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": -900.0,
+   "cost": 2.4441851724414557e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 300.0,
+   "cost": 2.4154681711739345e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": 300.0,
+   "cost": 2.377334480439266e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": 600.0,
+   "cost": 2.2624347268563063e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": 1800.0,
+   "cost": 1.950058195209677e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": 300.0,
+   "cost": 1.9232074455367576e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 300.0,
+   "cost": 1.790004203041984e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": 900.0,
+   "cost": 1.7284060387550076e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 60.0,
+   "de": 900.0,
+   "cost": 1.6652085199403074e-05,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": 45.0,
+   "de": 930.0,
+   "cost": 1.555119324874433e-05,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "search_evals": 491,
+ "cost": 1.555119324874433e-05,
+ "rms_mrad": 5.576951362302585,
+ "n_photos": 1,
+ "z_m": 9.0,
+ "photos": [
+  {
+   "file": "PF_new_bodrum9.jpg",
+   "fov_deg": 73.7,
+   "heading_deg": 180.0,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 5.576951362302585,
+   "heading_offset_deg": 6.0,
+   "el_offset_mrad": -10.12290966156711,
+   "attitude_source": "prior"
+  }
+ ],
+ "heading_offset_deg": 6.0,
+ "el_offset_mrad": -10.12290966156711,
+ "fov_deg": 73.7
+}
+wrote out/seg/solve_bd9_t.json/.png
