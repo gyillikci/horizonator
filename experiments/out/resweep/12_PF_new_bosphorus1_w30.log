@@ -1,0 +1,135 @@
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+extractor pre-check: eWaSR disagrees with the seam on 76% of columns — falling back to the seam
+photo 0: PF_new_bosphorus1.jpg  fov 73.7, heading 47.101, pitch +0.00, roll +0.00, weight 1.00
+z 7.0 m, box 6000 m at (41.12590,29.07076)
+INCONCLUSIVE: ambiguous landscape: basin margin 0.02 < 0.15
+INCONCLUSIVE: minimum on the search-box boundary: the true position may lie outside the box
+INCONCLUSIVE: residual 24.2 mrad > 12.0: the DEM cannot explain this observation
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.02 < 0.15",
+  "minimum on the search-box boundary: the true position may lie outside the box",
+  "residual 24.2 mrad > 12.0: the DEM cannot explain this observation"
+ ],
+ "lat": 41.12967715074486,
+ "lon": 29.106398801791844,
+ "fix_ok": false,
+ "basin_margin": 0.01994002504943767,
+ "relief_mrad": 147.96412592149923,
+ "dn_m": 420.0,
+ "de_m": 2985.0,
+ "sigma_n_m": 627.1047154693658,
+ "sigma_e_m": 386.6407725352383,
+ "sigma_major_m": 640.8174435307922,
+ "sigma_minor_m": 363.46171079939114,
+ "major_bearing_deg": 165.53193996022097,
+ "anisotropy": 1.7630947758469244,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": null,
+ "peak_dh_mad_m": null,
+ "n_peaks": 0,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.00041816928708084724,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2700.0,
+   "cost": 0.0004122061411200447,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2100.0,
+   "cost": 0.0003919770614603603,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1800.0,
+   "cost": 0.0003845257901968628,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1500.0,
+   "cost": 0.0003803922158741595,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1200.0,
+   "cost": 0.00036812940977202515,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -900.0,
+   "cost": 0.00034680069599437376,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -600.0,
+   "cost": 0.00032213150227688954,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 2700.0,
+   "cost": 0.00030000100247152254,
+   "stage": "coarse"
+  },
+  {
+   "dn": 300.0,
+   "de": 3000.0,
+   "cost": 0.000294135924763793,
+   "stage": "coarse"
+  },
+  {
+   "dn": 420.0,
+   "de": 3000.0,
+   "cost": 0.0002930983392043925,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": 420.0,
+   "de": 2985.0,
+   "cost": 0.00029272821563530813,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 30.0,
+ "search_evals": 491,
+ "cost": 0.00029272821563530813,
+ "rms_mrad": 24.196206960402208,
+ "n_photos": 1,
+ "z_m": 7.0,
+ "photos": [
+  {
+   "file": "PF_new_bosphorus1.jpg",
+   "fov_deg": 73.7,
+   "heading_deg": 47.101,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 24.196206960402208,
+   "heading_offset_deg": 28.0,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior"
+  }
+ ],
+ "heading_offset_deg": 28.0,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 73.7
+}
+wrote out/resweep/12_PF_new_bosphorus1_w30.json/.png

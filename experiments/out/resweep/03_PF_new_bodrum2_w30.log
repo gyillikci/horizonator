@@ -1,0 +1,167 @@
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+photo 0: PF_new_bodrum2.jpg  fov 73.7, heading 192.018, pitch +0.00, roll +0.00, weight 1.00
+z 2.0 m, box 6000 m at (37.01999,27.34782)
+peak witness: 8 crests, median height residual -51 m (spread 165 m)
+INCONCLUSIVE: ambiguous landscape: basin margin 0.06 < 0.15
+INCONCLUSIVE: minimum on the search-box boundary: the true position may lie outside the box
+INCONCLUSIVE: residual 17.9 mrad > 12.0: the DEM cannot explain this observation
+INCONCLUSIVE: peak heights disagree: matched crests stand a median -51 m (spread 165 m) from the model at this fix (limits 30/90 m) — position error or DEM bias is leaking into the height channel
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.06 < 0.15",
+  "minimum on the search-box boundary: the true position may lie outside the box",
+  "residual 17.9 mrad > 12.0: the DEM cannot explain this observation",
+  "peak heights disagree: matched crests stand a median -51 m (spread 165 m) from the model at this fix (limits 30/90 m) \u2014 position error or DEM bias is leaking into the height channel"
+ ],
+ "lat": 37.00258712692548,
+ "lon": 27.378230958586858,
+ "fix_ok": false,
+ "basin_margin": 0.05842901539040105,
+ "relief_mrad": 18.7792108731727,
+ "dn_m": -1935.0,
+ "de_m": 2700.0,
+ "sigma_n_m": 1104.2699193742853,
+ "sigma_e_m": 550.5362986027044,
+ "sigma_major_m": 1138.36665483558,
+ "sigma_minor_m": 476.0500289596759,
+ "major_bearing_deg": 164.4891523898997,
+ "anisotropy": 2.3912752559290484,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -50.82877402695944,
+ "peak_dh_mad_m": 165.2947761670786,
+ "n_peaks": 8,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.00030959453592592913,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2700.0,
+   "cost": 0.0002948587255792699,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2400.0,
+   "cost": 0.00023310240336444406,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2100.0,
+   "cost": 0.00017544298865359618,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1200.0,
+   "cost": 0.00017511211952160908,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1500.0,
+   "cost": 0.00017414977878857835,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1800.0,
+   "cost": 0.00017322840100048015,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 2100.0,
+   "cost": 0.00017228584092081748,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 2400.0,
+   "cost": 0.0001714057496814102,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 2700.0,
+   "cost": 0.00017044969413453342,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 3000.0,
+   "cost": 0.00016946342522628467,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": 3000.0,
+   "cost": 0.00016922016826972125,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": 3000.0,
+   "cost": 0.00016881713825905666,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": 3000.0,
+   "cost": 0.00016352699517340188,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 2700.0,
+   "cost": 0.00016010844635034704,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1920.0,
+   "de": 2700.0,
+   "cost": 0.0001594274938324255,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -1935.0,
+   "de": 2700.0,
+   "cost": 0.0001593424189194942,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 30.0,
+ "search_evals": 491,
+ "cost": 0.0001593424189194942,
+ "rms_mrad": 17.851746072555155,
+ "n_photos": 1,
+ "z_m": 2.0,
+ "photos": [
+  {
+   "file": "PF_new_bodrum2.jpg",
+   "fov_deg": 73.74,
+   "heading_deg": 192.018,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 17.851746072555155,
+   "heading_offset_deg": 12.4,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior"
+  }
+ ],
+ "heading_offset_deg": 12.4,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 73.74
+}
+wrote out/resweep/03_PF_new_bodrum2_w30.json/.png

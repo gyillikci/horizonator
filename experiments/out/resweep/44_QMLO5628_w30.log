@@ -1,0 +1,228 @@
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+extractor pre-check: eWaSR disagrees with the seam on 34% of columns — falling back to the seam
+photo 0: QMLO5628.JPG  fov 73.7, heading 205.342, pitch +0.00, roll +0.00, weight 1.00
+z 61.4 m, box 6000 m at (37.02713,27.36178)
+peak witness: 11 crests, median height residual -81 m (spread 234 m)
+INCONCLUSIVE: ambiguous landscape: basin margin 0.00 < 0.15
+INCONCLUSIVE: minimum on the search-box boundary: the true position may lie outside the box
+INCONCLUSIVE: residual 27.7 mrad > 12.0: the DEM cannot explain this observation
+INCONCLUSIVE: peak heights disagree: matched crests stand a median -81 m (spread 234 m) from the model at this fix (limits 30/90 m) — position error or DEM bias is leaking into the height channel
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.00 < 0.15",
+  "minimum on the search-box boundary: the true position may lie outside the box",
+  "residual 27.7 mrad > 12.0: the DEM cannot explain this observation",
+  "peak heights disagree: matched crests stand a median -81 m (spread 234 m) from the model at this fix (limits 30/90 m) \u2014 position error or DEM bias is leaking into the height channel"
+ ],
+ "lat": 37.03872924871635,
+ "lon": 27.39726495270939,
+ "fix_ok": false,
+ "basin_margin": 0.004864697980818121,
+ "relief_mrad": 23.76531195242866,
+ "dn_m": 1290.0,
+ "de_m": 3150.0,
+ "sigma_n_m": 2409.6795152261147,
+ "sigma_e_m": 4782.368068880665,
+ "sigma_major_m": 4915.235550648853,
+ "sigma_minor_m": 2125.57267436035,
+ "major_bearing_deg": 75.15965655009784,
+ "anisotropy": 2.312428838561353,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -81.45786991734782,
+ "peak_dh_mad_m": 233.60705383894594,
+ "n_peaks": 11,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.0004617055842440193,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2700.0,
+   "cost": 0.0004469504589496781,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1500.0,
+   "cost": 0.00044418852585127597,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1200.0,
+   "cost": 0.00043768812680867135,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -900.0,
+   "cost": 0.0004323159547324066,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -600.0,
+   "cost": 0.00042678657482003783,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -300.0,
+   "cost": 0.0004211176699601885,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 0.0,
+   "cost": 0.00041642618918199246,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 300.0,
+   "cost": 0.0004118267438713247,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 600.0,
+   "cost": 0.0004081587843665467,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 900.0,
+   "cost": 0.00040513862454536435,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1200.0,
+   "cost": 0.00040244991120117905,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1500.0,
+   "cost": 0.00040001860086414715,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1800.0,
+   "cost": 0.0003970713326113498,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 2100.0,
+   "cost": 0.0003943937351948488,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 2400.0,
+   "cost": 0.00039249518222154566,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 2700.0,
+   "cost": 0.000390360372089252,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 3000.0,
+   "cost": 0.00038839937147306546,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": 3000.0,
+   "cost": 0.00038796417958414755,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": 3000.0,
+   "cost": 0.0003873878064985179,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": 3000.0,
+   "cost": 0.0003864592958198315,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 3000.0,
+   "cost": 0.0003856185778038399,
+   "stage": "coarse"
+  },
+  {
+   "dn": 600.0,
+   "de": 3000.0,
+   "cost": 0.00038464538160203656,
+   "stage": "coarse"
+  },
+  {
+   "dn": 900.0,
+   "de": 3000.0,
+   "cost": 0.00038395848159016136,
+   "stage": "coarse"
+  },
+  {
+   "dn": 1200.0,
+   "de": 3000.0,
+   "cost": 0.00038375174148191736,
+   "stage": "coarse"
+  },
+  {
+   "dn": 1260.0,
+   "de": 3120.0,
+   "cost": 0.00038321276695218526,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": 1290.0,
+   "de": 3150.0,
+   "cost": 0.0003831152742436268,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 30.0,
+ "search_evals": 491,
+ "cost": 0.0003831152742436268,
+ "rms_mrad": 27.680869720571526,
+ "n_photos": 1,
+ "z_m": 61.4,
+ "photos": [
+  {
+   "file": "QMLO5628.JPG",
+   "fov_deg": 73.74,
+   "heading_deg": 205.342,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 27.680869720571526,
+   "heading_offset_deg": 5.4,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior"
+  }
+ ],
+ "heading_offset_deg": 5.4,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 73.74
+}
+wrote out/resweep/44_QMLO5628_w30.json/.png

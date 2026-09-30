@@ -1,0 +1,370 @@
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+extractor pre-check: eWaSR disagrees with the seam on 38% of columns — falling back to the seam
+photo 0: GAQB1096.JPG  fov 104.2, heading 212.131, pitch +0.00, roll +0.00, weight 1.00
+z 2.5 m, box 6000 m at (40.90622,29.13945)
+peak witness: 14 crests, median height residual -19 m (spread 49 m)
+INCONCLUSIVE: ambiguous landscape: basin margin 0.04 < 0.15
+INCONCLUSIVE: minimum on the search-box boundary: the true position may lie outside the box
+INCONCLUSIVE: residual 14.2 mrad > 12.0: the DEM cannot explain this observation
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.04 < 0.15",
+  "minimum on the search-box boundary: the true position may lie outside the box",
+  "residual 14.2 mrad > 12.0: the DEM cannot explain this observation"
+ ],
+ "lat": 40.934550630586436,
+ "lon": 29.1212412026244,
+ "fix_ok": false,
+ "basin_margin": 0.03640556721365219,
+ "relief_mrad": 31.41713560243689,
+ "dn_m": 3150.0,
+ "de_m": -1530.0,
+ "sigma_n_m": 1920.1677803695422,
+ "sigma_e_m": 1309.4726623317727,
+ "sigma_major_m": 2235.9492416391586,
+ "sigma_minor_m": 634.2664637018321,
+ "major_bearing_deg": 147.7030060953822,
+ "anisotropy": 3.5252521922557074,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -19.1098601477271,
+ "peak_dh_mad_m": 48.79314813190015,
+ "n_peaks": 14,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.0002281006262783836,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2700.0,
+   "cost": 0.00019001677214045587,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2400.0,
+   "cost": 0.00016315118878960848,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2100.0,
+   "cost": 0.0001591404011535885,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 300.0,
+   "cost": 0.00014960690689548706,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 600.0,
+   "cost": 0.00014708124385706274,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 900.0,
+   "cost": 0.00014365884983160378,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1200.0,
+   "cost": 0.00013891533103665713,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1500.0,
+   "cost": 0.00013633159494566124,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 2100.0,
+   "cost": 0.00013476523229628173,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 2400.0,
+   "cost": 0.0001292663378041927,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 2700.0,
+   "cost": 0.00012859551599483414,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 3000.0,
+   "cost": 0.0001272408039852623,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": 2700.0,
+   "cost": 0.00012705680134537852,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": 3000.0,
+   "cost": 0.00012514406380544755,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": 1200.0,
+   "cost": 0.0001245701615361403,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": 1500.0,
+   "cost": 0.00012406002421060428,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": 2700.0,
+   "cost": 0.0001238548745694838,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": 3000.0,
+   "cost": 0.00012282525138700333,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 1200.0,
+   "cost": 0.00012273769844092298,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 1500.0,
+   "cost": 0.00012209102912764472,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 2400.0,
+   "cost": 0.00012190285158845873,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 2700.0,
+   "cost": 0.00012127063490015113,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 3000.0,
+   "cost": 0.00012034726900909891,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": 2100.0,
+   "cost": 0.00012009066218318262,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": 2400.0,
+   "cost": 0.00011958309187809892,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": 2700.0,
+   "cost": 0.0001190457489603595,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": 3000.0,
+   "cost": 0.00011844172437374355,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 2400.0,
+   "cost": 0.00011769866864776857,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 2700.0,
+   "cost": 0.00011695630598019631,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 3000.0,
+   "cost": 0.00011681139327923804,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": -900.0,
+   "cost": 0.00011671634220901454,
+   "stage": "coarse"
+  },
+  {
+   "dn": 300.0,
+   "de": -900.0,
+   "cost": 0.00011545987274123782,
+   "stage": "coarse"
+  },
+  {
+   "dn": 300.0,
+   "de": -600.0,
+   "cost": 0.00011489332163661053,
+   "stage": "coarse"
+  },
+  {
+   "dn": 600.0,
+   "de": -900.0,
+   "cost": 0.00011476693283497468,
+   "stage": "coarse"
+  },
+  {
+   "dn": 600.0,
+   "de": -600.0,
+   "cost": 0.00011342198235410939,
+   "stage": "coarse"
+  },
+  {
+   "dn": 600.0,
+   "de": -300.0,
+   "cost": 0.00011023646373519923,
+   "stage": "coarse"
+  },
+  {
+   "dn": 900.0,
+   "de": -600.0,
+   "cost": 0.00011018214056998477,
+   "stage": "coarse"
+  },
+  {
+   "dn": 900.0,
+   "de": -300.0,
+   "cost": 0.0001082458344776491,
+   "stage": "coarse"
+  },
+  {
+   "dn": 1200.0,
+   "de": -300.0,
+   "cost": 0.00010779100000776631,
+   "stage": "coarse"
+  },
+  {
+   "dn": 1500.0,
+   "de": -600.0,
+   "cost": 0.0001076078606225598,
+   "stage": "coarse"
+  },
+  {
+   "dn": 1800.0,
+   "de": -600.0,
+   "cost": 0.00010665768853416801,
+   "stage": "coarse"
+  },
+  {
+   "dn": 2100.0,
+   "de": -900.0,
+   "cost": 0.00010660592523354073,
+   "stage": "coarse"
+  },
+  {
+   "dn": 2700.0,
+   "de": -2100.0,
+   "cost": 0.00010621031132281367,
+   "stage": "coarse"
+  },
+  {
+   "dn": 2700.0,
+   "de": -1800.0,
+   "cost": 0.00010549524735935504,
+   "stage": "coarse"
+  },
+  {
+   "dn": 3000.0,
+   "de": -2400.0,
+   "cost": 0.00010442363415387342,
+   "stage": "coarse"
+  },
+  {
+   "dn": 3000.0,
+   "de": -2100.0,
+   "cost": 0.00010342961818807446,
+   "stage": "coarse"
+  },
+  {
+   "dn": 3000.0,
+   "de": -1800.0,
+   "cost": 0.00010274562846069411,
+   "stage": "coarse"
+  },
+  {
+   "dn": 3000.0,
+   "de": -1500.0,
+   "cost": 0.00010179579476484275,
+   "stage": "coarse"
+  },
+  {
+   "dn": 3120.0,
+   "de": -1500.0,
+   "cost": 0.00010071916532817764,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": 3150.0,
+   "de": -1530.0,
+   "cost": 0.0001003504308182386,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "search_evals": 491,
+ "cost": 0.0001003504308182386,
+ "rms_mrad": 14.16689315398677,
+ "n_photos": 1,
+ "z_m": 2.5,
+ "photos": [
+  {
+   "file": "GAQB1096.JPG",
+   "fov_deg": 104.25,
+   "heading_deg": 212.131,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 14.16689315398677,
+   "heading_offset_deg": 5.4,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior"
+  }
+ ],
+ "heading_offset_deg": 5.4,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 104.25
+}
+wrote out/resweep/41_GAQB1096_w6.json/.png

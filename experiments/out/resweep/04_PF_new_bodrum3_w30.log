@@ -1,0 +1,101 @@
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+photo 0: PF_new_bodrum3.jpg  fov 73.7, heading 109.372, pitch +0.00, roll +0.00, weight 1.00
+z 2.0 m, box 6000 m at (37.01999,27.34782)
+peak witness: 6 crests, median height residual -134 m (spread 51 m)
+INCONCLUSIVE: ambiguous landscape: basin margin 0.02 < 0.15
+INCONCLUSIVE: minimum on the search-box boundary: the true position may lie outside the box
+INCONCLUSIVE: residual 14.0 mrad > 12.0: the DEM cannot explain this observation
+INCONCLUSIVE: peak heights disagree: matched crests stand a median -134 m (spread 51 m) from the model at this fix (limits 30/90 m) — position error or DEM bias is leaking into the height channel
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.02 < 0.15",
+  "minimum on the search-box boundary: the true position may lie outside the box",
+  "residual 14.0 mrad > 12.0: the DEM cannot explain this observation",
+  "peak heights disagree: matched crests stand a median -134 m (spread 51 m) from the model at this fix (limits 30/90 m) \u2014 position error or DEM bias is leaking into the height channel"
+ ],
+ "lat": 36.991660369413566,
+ "lon": 27.32247570117762,
+ "fix_ok": false,
+ "basin_margin": 0.02356973311457244,
+ "relief_mrad": 9.348206198414825,
+ "dn_m": -3150.0,
+ "de_m": -2250.0,
+ "sigma_n_m": 2798.4088237925725,
+ "sigma_e_m": 3875.119683494897,
+ "sigma_major_m": 3891.995220812365,
+ "sigma_minor_m": 2774.890575799959,
+ "major_bearing_deg": 97.62351153155241,
+ "anisotropy": 1.4025761068759843,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -133.61917744441308,
+ "peak_dh_mad_m": 51.12259230174671,
+ "n_peaks": 6,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.00021150572913257668,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2700.0,
+   "cost": 0.0002025342596712855,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2400.0,
+   "cost": 0.00014376969265903684,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2100.0,
+   "cost": 9.933265989781771e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3120.0,
+   "de": -2220.0,
+   "cost": 9.882181088177929e-05,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -3150.0,
+   "de": -2250.0,
+   "cost": 9.868664168967996e-05,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 30.0,
+ "search_evals": 491,
+ "cost": 9.868664168967996e-05,
+ "rms_mrad": 14.048960224136158,
+ "n_photos": 1,
+ "z_m": 2.0,
+ "photos": [
+  {
+   "file": "PF_new_bodrum3.jpg",
+   "fov_deg": 73.74,
+   "heading_deg": 109.372,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 14.048960224136158,
+   "heading_offset_deg": -4.4,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior"
+  }
+ ],
+ "heading_offset_deg": -4.4,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 73.74
+}
+wrote out/resweep/04_PF_new_bodrum3_w30.json/.png

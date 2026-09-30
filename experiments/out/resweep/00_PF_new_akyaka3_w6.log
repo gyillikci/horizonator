@@ -1,0 +1,219 @@
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+photo 0: PF_new_akyaka3.jpg  fov 73.7, heading 172.599, pitch +0.00, roll +0.00, weight 1.00
+z 16.0 m, box 6000 m at (37.04859,28.29302)
+peak witness: 9 crests, median height residual -132 m (spread 272 m)
+INCONCLUSIVE: ambiguous landscape: basin margin 0.01 < 0.15
+INCONCLUSIVE: residual 14.4 mrad > 12.0: the DEM cannot explain this observation
+INCONCLUSIVE: peak heights disagree: matched crests stand a median -132 m (spread 272 m) from the model at this fix (limits 30/90 m) — position error or DEM bias is leaking into the height channel
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.01 < 0.15",
+  "residual 14.4 mrad > 12.0: the DEM cannot explain this observation",
+  "peak heights disagree: matched crests stand a median -132 m (spread 272 m) from the model at this fix (limits 30/90 m) \u2014 position error or DEM bias is leaking into the height channel"
+ ],
+ "lat": 37.05533391204439,
+ "lon": 28.321752224679816,
+ "fix_ok": false,
+ "basin_margin": 0.008235206467398675,
+ "relief_mrad": 49.190970371954485,
+ "dn_m": 750.0,
+ "de_m": 2550.0,
+ "sigma_n_m": 2241.1207743885675,
+ "sigma_e_m": 1744.5736911695685,
+ "sigma_major_m": 2286.5794733654257,
+ "sigma_minor_m": 1684.551572763778,
+ "major_bearing_deg": 17.062502094656253,
+ "anisotropy": 1.3573816975006137,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -131.9436093935055,
+ "peak_dh_mad_m": 272.2978010290467,
+ "n_peaks": 9,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.00020967388319911026,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -3000.0,
+   "cost": 0.00019693336618949156,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": -3000.0,
+   "cost": 0.00018671552082286935,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": -3000.0,
+   "cost": 0.00018032399045950567,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": -3000.0,
+   "cost": 0.0001738821337627759,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": -3000.0,
+   "cost": 0.0001699484575524937,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": -3000.0,
+   "cost": 0.0001668288289069222,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 2700.0,
+   "cost": 0.00016253256699481306,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 3000.0,
+   "cost": 0.0001589009312517549,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": 2400.0,
+   "cost": 0.00015418337069422522,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": 2700.0,
+   "cost": 0.00014379880995199075,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": 3000.0,
+   "cost": 0.00014350171000925612,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": 2400.0,
+   "cost": 0.00013729273130583377,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": 2700.0,
+   "cost": 0.00013018990017264913,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 2400.0,
+   "cost": 0.0001242596230557908,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 2700.0,
+   "cost": 0.00012045008655423374,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 3000.0,
+   "cost": 0.00011983556060309958,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": 2400.0,
+   "cost": 0.00011405729252164198,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": 2700.0,
+   "cost": 0.00011291007806523612,
+   "stage": "coarse"
+  },
+  {
+   "dn": 300.0,
+   "de": 2400.0,
+   "cost": 0.00010762414766199821,
+   "stage": "coarse"
+  },
+  {
+   "dn": 300.0,
+   "de": 2700.0,
+   "cost": 0.00010720104533300568,
+   "stage": "coarse"
+  },
+  {
+   "dn": 600.0,
+   "de": 2400.0,
+   "cost": 0.00010491011356363136,
+   "stage": "coarse"
+  },
+  {
+   "dn": 600.0,
+   "de": 2700.0,
+   "cost": 0.00010490820718782125,
+   "stage": "coarse"
+  },
+  {
+   "dn": 900.0,
+   "de": 2400.0,
+   "cost": 0.00010450718956432075,
+   "stage": "coarse"
+  },
+  {
+   "dn": 780.0,
+   "de": 2520.0,
+   "cost": 0.00010389781460372773,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": 750.0,
+   "de": 2550.0,
+   "cost": 0.00010382801675443948,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "search_evals": 491,
+ "cost": 0.00010382801675443948,
+ "rms_mrad": 14.410275275263793,
+ "n_photos": 1,
+ "z_m": 16.0,
+ "photos": [
+  {
+   "file": "PF_new_akyaka3.jpg",
+   "fov_deg": 73.74,
+   "heading_deg": 172.599,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 14.410275275263793,
+   "heading_offset_deg": -6.0,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior"
+  }
+ ],
+ "heading_offset_deg": -6.0,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 73.74
+}
+wrote out/resweep/00_PF_new_akyaka3_w6.json/.png

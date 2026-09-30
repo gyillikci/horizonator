@@ -1,0 +1,212 @@
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+photo 0: PF_20260824_195733_clean.jpg  fov 73.7, heading 196.515, pitch +0.00, roll +0.00, weight 1.00
+z 3.0 m, box 6000 m at (37.05190,28.32292)
+peak witness: 8 crests, median height residual -6 m (spread 17 m)
+{
+ "status": "ok",
+ "reasons": [],
+ "lat": 37.04960672990491,
+ "lon": 28.31920042046612,
+ "fix_ok": true,
+ "basin_margin": 1.059490670972272,
+ "relief_mrad": 15.930863440390926,
+ "dn_m": -255.0,
+ "de_m": -330.0,
+ "sigma_n_m": 182.42765644726836,
+ "sigma_e_m": 244.83205292835305,
+ "sigma_major_m": 268.6020390651063,
+ "sigma_minor_m": 145.17413195201675,
+ "major_bearing_deg": 119.26441535935427,
+ "anisotropy": 1.850205924798539,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -5.679223533777538,
+ "peak_dh_mad_m": 17.146728971045285,
+ "n_peaks": 8,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.00040070676439825544,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 600.0,
+   "cost": 0.00036212128108188934,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 900.0,
+   "cost": 0.0003046528873420364,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1200.0,
+   "cost": 0.00026851222605132376,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1500.0,
+   "cost": 0.00018957110347090055,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1800.0,
+   "cost": 0.00013422162267805255,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 2100.0,
+   "cost": 8.8522016565431e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 2400.0,
+   "cost": 8.556211762206858e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 2700.0,
+   "cost": 7.496181865058985e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 3000.0,
+   "cost": 6.698290461239225e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": 2100.0,
+   "cost": 6.252298938241872e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": 2400.0,
+   "cost": 5.202987665107738e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": 2100.0,
+   "cost": 4.031387226059604e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": 2400.0,
+   "cost": 3.269762131883788e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": 2100.0,
+   "cost": 3.1882260209776595e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 1800.0,
+   "cost": 2.5693693992802888e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": 1500.0,
+   "cost": 1.9986899662571676e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": 1800.0,
+   "cost": 1.9014442454270414e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 1500.0,
+   "cost": 1.6491125262952143e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 3000.0,
+   "cost": 1.625114119367412e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": 0.0,
+   "cost": 1.2956018673209313e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": -900.0,
+   "cost": 1.2403069051548845e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": -600.0,
+   "cost": 8.277187315586696e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": -300.0,
+   "cost": 4.867930753105706e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -240.0,
+   "de": -300.0,
+   "cost": 4.659139307174854e-06,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -255.0,
+   "de": -330.0,
+   "cost": 4.570145719592263e-06,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 30.0,
+ "search_evals": 491,
+ "cost": 4.570145719592263e-06,
+ "rms_mrad": 3.02329149093906,
+ "n_photos": 1,
+ "z_m": 3.0,
+ "photos": [
+  {
+   "file": "PF_20260824_195733_clean.jpg",
+   "fov_deg": 73.7,
+   "heading_deg": 196.515,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 3.02329149093906,
+   "heading_offset_deg": -6.4,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior"
+  }
+ ],
+ "heading_offset_deg": -6.4,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 73.7
+}
+wrote out/resweep/10_PF_20260824_195733_clean_w30.json/.png

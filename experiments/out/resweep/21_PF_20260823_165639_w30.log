@@ -1,0 +1,143 @@
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+extractor pre-check: eWaSR disagrees with the seam on 74% of columns — falling back to the seam
+photo 0: PF_20260823_165639.jpg  fov 38.1, heading 324.701, pitch +0.00, roll +0.00, weight 1.00
+z 4.0 m, box 6000 m at (36.64116,28.09566)
+INCONCLUSIVE: minimum on the search-box boundary: the true position may lie outside the box
+{
+ "status": "inconclusive",
+ "reasons": [
+  "minimum on the search-box boundary: the true position may lie outside the box"
+ ],
+ "lat": 36.64345427009509,
+ "lon": 28.129285152487633,
+ "fix_ok": false,
+ "basin_margin": 0.710831190056951,
+ "relief_mrad": 44.16133288858816,
+ "dn_m": 255.0,
+ "de_m": 3000.0,
+ "sigma_n_m": 63.23522270287668,
+ "sigma_e_m": 114.3560988819833,
+ "sigma_major_m": 115.90942083503084,
+ "sigma_minor_m": 60.340839432975,
+ "major_bearing_deg": 78.98288644782502,
+ "anisotropy": 1.9209116400142219,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": null,
+ "peak_dh_mad_m": null,
+ "n_peaks": 0,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.0013873291751090215,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2700.0,
+   "cost": 0.0013832521768854683,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -900.0,
+   "cost": 0.001264064441931549,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -600.0,
+   "cost": 0.0011888256164025997,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -300.0,
+   "cost": 0.0005992762586620215,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1500.0,
+   "cost": 0.0004931262446478523,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1800.0,
+   "cost": 0.0004806179107401189,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 2400.0,
+   "cost": 0.00026127052370195666,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 2700.0,
+   "cost": 0.00021092286137946512,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 2100.0,
+   "cost": 0.00015937314332862434,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": 2400.0,
+   "cost": 0.00011187121369705936,
+   "stage": "coarse"
+  },
+  {
+   "dn": 300.0,
+   "de": 3000.0,
+   "cost": 3.802687388949792e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 240.0,
+   "de": 3000.0,
+   "cost": 3.104037694875518e-05,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": 255.0,
+   "de": 3000.0,
+   "cost": 2.7550079605558746e-05,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 30.0,
+ "search_evals": 491,
+ "cost": 2.7550079605558746e-05,
+ "rms_mrad": 7.422948148216953,
+ "n_photos": 1,
+ "z_m": 4.0,
+ "photos": [
+  {
+   "file": "PF_20260823_165639.jpg",
+   "fov_deg": 38.07,
+   "heading_deg": 324.701,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 7.422948148216953,
+   "heading_offset_deg": 30.0,
+   "el_offset_mrad": -10.12290966156711,
+   "attitude_source": "prior"
+  }
+ ],
+ "heading_offset_deg": 30.0,
+ "el_offset_mrad": -10.12290966156711,
+ "fov_deg": 38.07
+}
+wrote out/resweep/21_PF_20260823_165639_w30.json/.png

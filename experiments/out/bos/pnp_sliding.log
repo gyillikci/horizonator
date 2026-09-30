@@ -1,0 +1,55 @@
+start    +0    +0 h 46.0 | p2p ->     3 m roll +1.57 | p2l ->    77 m roll +1.59
+start    +0    +0 h 48.0 | p2p ->     4 m roll +1.67 | p2l ->    77 m roll +1.59
+start    +0    +0 h 50.0 | p2p ->     4 m roll +1.76 | p2l ->    77 m roll +1.59
+start  +250    +0 h 46.0 | p2p ->   252 m roll +1.45 | p2l ->    98 m roll +1.56
+start  +250    +0 h 48.0 | p2p ->   252 m roll +1.43 | p2l ->    74 m roll +1.60
+start  +250    +0 h 50.0 | p2p ->   252 m roll +1.38 | p2l ->    74 m roll +1.60
+start  +177  +177 h 46.0 | p2p ->   254 m roll +1.59 | p2l ->    77 m roll +1.59
+start  +177  +177 h 48.0 | p2p ->   254 m roll +1.56 | p2l ->    77 m roll +1.59
+start  +177  +177 h 50.0 | p2p ->   254 m roll +1.78 | p2l ->    77 m roll +1.59
+start    +0  +250 h 46.0 | p2p ->   253 m roll +1.74 | p2l ->    75 m roll +1.59
+start    +0  +250 h 48.0 | p2p ->   254 m roll +1.98 | p2l ->    77 m roll +1.59
+start    +0  +250 h 50.0 | p2p ->   254 m roll +2.17 | p2l ->   151 m roll +1.52
+start  -177  +177 h 46.0 | p2p ->   250 m roll +1.83 | p2l ->    77 m roll +1.59
+start  -177  +177 h 48.0 | p2p ->   250 m roll +2.07 | p2l ->    98 m roll +1.52
+start  -177  +177 h 50.0 | p2p ->   250 m roll +2.42 | p2l ->   522 m roll +1.59
+start  -250    +0 h 46.0 | p2p ->   248 m roll +1.85 | p2l ->    77 m roll +1.59
+start  -250    +0 h 48.0 | p2p ->   248 m roll +1.90 | p2l ->    94 m roll +1.55
+start  -250    +0 h 50.0 | p2p ->   247 m roll +2.21 | p2l ->   497 m roll +1.58
+start  -177  -177 h 46.0 | p2p ->   247 m roll +1.58 | p2l ->    75 m roll +1.59
+start  -177  -177 h 48.0 | p2p ->   246 m roll +1.83 | p2l ->    74 m roll +1.60
+start  -177  -177 h 50.0 | p2p ->   246 m roll +1.80 | p2l ->    62 m roll +1.59
+start    -0  -250 h 46.0 | p2p ->   247 m roll +1.28 | p2l ->   774 m roll +0.90
+start    -0  -250 h 48.0 | p2p ->   247 m roll +1.37 | p2l ->    74 m roll +1.60
+start    -0  -250 h 50.0 | p2p ->   246 m roll +1.66 | p2l ->    75 m roll +1.59
+start  +177  -177 h 46.0 | p2p ->   249 m roll +1.34 | p2l ->   686 m roll +1.07
+start  +177  -177 h 48.0 | p2p ->   249 m roll +1.40 | p2l ->    75 m roll +1.59
+start  +177  -177 h 50.0 | p2p ->   249 m roll +1.41 | p2l ->    75 m roll +1.59
+start  +500    +0 h 46.0 | p2p ->   502 m roll +1.20 | p2l ->   690 m roll +1.05
+start  +500    +0 h 48.0 | p2p ->   502 m roll +1.11 | p2l ->   679 m roll +1.06
+start  +500    +0 h 50.0 | p2p ->   502 m roll +1.31 | p2l ->   601 m roll +1.16
+start  +354  +354 h 46.0 | p2p ->   504 m roll +1.62 | p2l ->    75 m roll +1.59
+start  +354  +354 h 48.0 | p2p ->   504 m roll +1.59 | p2l ->    75 m roll +1.59
+start  +354  +354 h 50.0 | p2p ->   504 m roll +1.83 | p2l ->    75 m roll +1.59
+start    +0  +500 h 46.0 | p2p ->   503 m roll +2.12 | p2l ->    78 m roll +1.60
+start    +0  +500 h 48.0 | p2p ->   504 m roll +2.33 | p2l ->   124 m roll +1.65
+start    +0  +500 h 50.0 | p2p ->   503 m roll +2.51 | p2l ->   276 m roll +1.81
+start  -354  +354 h 46.0 | p2p ->   500 m roll +2.47 | p2l ->   332 m roll +1.57
+start  -354  +354 h 48.0 | p2p ->   499 m roll +2.77 | p2l ->   740 m roll +2.58
+start  -354  +354 h 50.0 | p2p ->   500 m roll +2.93 | p2l ->   700 m roll +2.50
+start  -500    +0 h 46.0 | p2p ->   497 m roll +2.21 | p2l ->   137 m roll +1.50
+start  -500    +0 h 48.0 | p2p ->   497 m roll +2.41 | p2l ->   618 m roll +1.94
+start  -500    +0 h 50.0 | p2p ->   496 m roll +2.63 | p2l ->   682 m roll +2.47
+start  -354  -354 h 46.0 | p2p ->   497 m roll +1.77 | p2l ->    75 m roll +1.59
+start  -354  -354 h 48.0 | p2p ->   496 m roll +2.05 | p2l ->    77 m roll +1.59
+start  -354  -354 h 50.0 | p2p ->   496 m roll +2.09 | p2l ->   419 m roll +1.31
+start    -0  -500 h 46.0 | p2p ->   498 m roll +1.05 | p2l ->   809 m roll +0.92
+start    -0  -500 h 48.0 | p2p ->   498 m roll +1.10 | p2l ->   817 m roll +0.93
+start    -0  -500 h 50.0 | p2p ->   497 m roll +1.41 | p2l ->    77 m roll +1.59
+start  +354  -354 h 46.0 | p2p ->   499 m roll +1.15 | p2l ->  2418 m roll +2.96
+start  +354  -354 h 48.0 | p2p ->   499 m roll +1.18 | p2l ->   998 m roll +0.81
+start  +354  -354 h 50.0 | p2p ->   499 m roll +1.28 | p2l ->   740 m roll +0.95
+
+p2p  talk-back slope 1.00 | final error median  254 m, p90  503 m | from 500 m starts: median  499 m | roll median +1.74
+p2l  talk-back slope 0.63 | final error median   78 m, p90  740 m | from 500 m starts: median  510 m | roll median +1.59
+wrote out/bos/BOS_pnp_sliding.png

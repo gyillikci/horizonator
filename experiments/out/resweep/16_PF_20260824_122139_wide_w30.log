@@ -1,0 +1,81 @@
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+photo 0: PF_20260824_122139_wide.jpg  fov 73.7, heading 297.024, pitch +0.00, roll +0.00, weight 1.00
+z 4.0 m, box 6000 m at (36.64095,28.09548)
+peak witness: 16 crests, median height residual -89 m (spread 141 m)
+INCONCLUSIVE: ambiguous landscape: basin margin 0.03 < 0.15
+INCONCLUSIVE: minimum on the search-box boundary: the true position may lie outside the box
+INCONCLUSIVE: peak heights disagree: matched crests stand a median -89 m (spread 141 m) from the model at this fix (limits 30/90 m) — position error or DEM bias is leaking into the height channel
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.03 < 0.15",
+  "minimum on the search-box boundary: the true position may lie outside the box",
+  "peak heights disagree: matched crests stand a median -89 m (spread 141 m) from the model at this fix (limits 30/90 m) \u2014 position error or DEM bias is leaking into the height channel"
+ ],
+ "lat": 36.61262136941356,
+ "lon": 28.063370022328638,
+ "fix_ok": false,
+ "basin_margin": 0.02540264399527267,
+ "relief_mrad": 18.478664540544465,
+ "dn_m": -3150.0,
+ "de_m": -2865.0,
+ "sigma_n_m": 1761.3874361555881,
+ "sigma_e_m": 1491.3873098060933,
+ "sigma_major_m": 1789.5997305909195,
+ "sigma_minor_m": 1457.4136723546685,
+ "major_bearing_deg": 17.743854233513616,
+ "anisotropy": 1.2279284629596998,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -88.75347156761576,
+ "peak_dh_mad_m": 140.94942231928982,
+ "n_peaks": 16,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 7.189807069721355e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3120.0,
+   "de": -2880.0,
+   "cost": 7.153630039253409e-05,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -3150.0,
+   "de": -2865.0,
+   "cost": 7.14643693610077e-05,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 30.0,
+ "search_evals": 491,
+ "cost": 7.14643693610077e-05,
+ "rms_mrad": 11.955280788087556,
+ "n_photos": 1,
+ "z_m": 4.0,
+ "photos": [
+  {
+   "file": "PF_20260824_122139_wide.jpg",
+   "fov_deg": 73.7,
+   "heading_deg": 297.024,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 11.955280788087556,
+   "heading_offset_deg": 7.6000000000000005,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior"
+  }
+ ],
+ "heading_offset_deg": 7.6000000000000005,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 73.7
+}
+wrote out/resweep/16_PF_20260824_122139_wide_w30.json/.png

@@ -1,0 +1,266 @@
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+photo 0: strait2.jpg  fov 71.6, heading 25.0, pitch +0.00, roll +0.00, weight 1.00
+z 5.0 m, box 6000 m at (36.96220,27.23840)
+peak witness: 12 crests, median height residual -14 m (spread 7 m)
+{
+ "status": "ok",
+ "reasons": [],
+ "lat": 36.960851017591125,
+ "lon": 27.236708729972115,
+ "fix_ok": true,
+ "basin_margin": 2.8798095112242765,
+ "relief_mrad": 22.165688913192298,
+ "dn_m": -150.0,
+ "de_m": -150.0,
+ "sigma_n_m": 159.51865370283713,
+ "sigma_e_m": 155.23716651689256,
+ "sigma_major_m": 165.64741937143054,
+ "sigma_minor_m": 148.67989508653991,
+ "major_bearing_deg": 37.681973753501126,
+ "anisotropy": 1.1141211747224773,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -14.349909960285492,
+ "peak_dh_mad_m": 7.050067109154801,
+ "n_peaks": 12,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 4.1985590872145014e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2700.0,
+   "cost": 4.078348428819268e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2400.0,
+   "cost": 3.969360486725191e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2100.0,
+   "cost": 3.8943157310442535e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1800.0,
+   "cost": 3.827280482699101e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1500.0,
+   "cost": 3.686312578325422e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1200.0,
+   "cost": 3.516957115636657e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -900.0,
+   "cost": 3.4200082460801674e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -1200.0,
+   "cost": 3.3181405627386646e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -900.0,
+   "cost": 3.1659178677545215e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -600.0,
+   "cost": 3.127909638144558e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": -900.0,
+   "cost": 2.938140314638689e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": -600.0,
+   "cost": 2.851802455767474e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": -900.0,
+   "cost": 2.7634611027719917e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": -600.0,
+   "cost": 2.626728309713071e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": -300.0,
+   "cost": 2.592956693004767e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": -900.0,
+   "cost": 2.565802274019332e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": -600.0,
+   "cost": 2.3719979255113546e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": -300.0,
+   "cost": 2.2495048782943485e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": -900.0,
+   "cost": 2.2142769358327106e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": -600.0,
+   "cost": 2.114359827534632e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": -300.0,
+   "cost": 1.932408962586423e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": -900.0,
+   "cost": 1.8039653951646033e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": -600.0,
+   "cost": 1.7167322658595907e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": -300.0,
+   "cost": 1.5923340292150815e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": -900.0,
+   "cost": 1.4576659138385688e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": -600.0,
+   "cost": 1.2233320835657496e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": -900.0,
+   "cost": 1.1880998108217932e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": -600.0,
+   "cost": 8.466632565987043e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": -300.0,
+   "cost": 7.600848070562897e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": -600.0,
+   "cost": 7.299329418503141e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": -300.0,
+   "cost": 4.06339305867038e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": 0.0,
+   "cost": 3.5572245855405863e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -120.0,
+   "de": -120.0,
+   "cost": 2.088386833993324e-06,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -150.0,
+   "de": -150.0,
+   "cost": 1.9471944435372654e-06,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "search_evals": 491,
+ "cost": 1.9471944435372654e-06,
+ "rms_mrad": 1.9734206057185404,
+ "n_photos": 1,
+ "z_m": 5.0,
+ "photos": [
+  {
+   "file": "strait2.jpg",
+   "fov_deg": 71.583,
+   "heading_deg": 25.0,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 1.9734206057185404,
+   "heading_offset_deg": 0.2,
+   "el_offset_mrad": -8.09832772925369,
+   "attitude_source": "prior"
+  }
+ ],
+ "heading_offset_deg": 0.2,
+ "el_offset_mrad": -8.09832772925369,
+ "fov_deg": 71.583
+}
+wrote out/resweep/27_strait2_w6.json/.png

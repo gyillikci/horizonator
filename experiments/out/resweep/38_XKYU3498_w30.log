@@ -1,0 +1,225 @@
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+extractor pre-check: eWaSR disagrees with the seam on 26% of columns — falling back to the seam
+photo 0: XKYU3498.JPG  fov 73.7, heading 355.31, pitch +0.00, roll +0.00, weight 1.00
+z 14.2 m, box 6000 m at (37.47686,27.41421)
+peak witness: 6 crests, median height residual +7 m (spread 6 m)
+{
+ "status": "ok",
+ "reasons": [],
+ "lat": 37.48225392963551,
+ "lon": 27.41012641176765,
+ "fix_ok": true,
+ "basin_margin": 0.4062779779880287,
+ "relief_mrad": 13.809165673549382,
+ "dn_m": 600.0,
+ "de_m": -360.0,
+ "sigma_n_m": 434.01285927307913,
+ "sigma_e_m": 403.4403011370473,
+ "sigma_major_m": 435.62047821736473,
+ "sigma_minor_m": 401.7039177723059,
+ "major_bearing_deg": 167.18086025653528,
+ "anisotropy": 1.0844317392599678,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": 6.784856168870711,
+ "peak_dh_mad_m": 5.968879048159598,
+ "n_peaks": 6,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.0002908810447133137,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -3000.0,
+   "cost": 0.00025294105669829056,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": -3000.0,
+   "cost": 0.00023985620145525058,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": -3000.0,
+   "cost": 0.00023421906005567728,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": -2700.0,
+   "cost": 0.00023185524404996098,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": 2700.0,
+   "cost": 0.00020692789766802255,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": 3000.0,
+   "cost": 0.00016144339024879185,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 2400.0,
+   "cost": 0.00011785209796009255,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 2700.0,
+   "cost": 9.05373714127114e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 3000.0,
+   "cost": 8.215613199518937e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": 2700.0,
+   "cost": 4.806393492863238e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 300.0,
+   "cost": 3.984229709440697e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 600.0,
+   "cost": 3.8211714034240836e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 900.0,
+   "cost": 3.064035178778043e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 2700.0,
+   "cost": 2.665686687431732e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": 300.0,
+   "cost": 1.9832135276714983e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": -300.0,
+   "cost": 1.8203494908026377e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": 0.0,
+   "cost": 1.794927925595814e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": -600.0,
+   "cost": 1.6040198943619783e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": -300.0,
+   "cost": 1.5987576236722446e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": -600.0,
+   "cost": 1.4499319167238975e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": -300.0,
+   "cost": 1.3765699885509155e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 300.0,
+   "de": -600.0,
+   "cost": 1.2890301184139217e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 300.0,
+   "de": -300.0,
+   "cost": 1.1573962397666335e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 600.0,
+   "de": -600.0,
+   "cost": 1.0883261339141798e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 600.0,
+   "de": -300.0,
+   "cost": 1.0337665755154145e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 600.0,
+   "de": -360.0,
+   "cost": 1.0283856542979325e-05,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": 600.0,
+   "de": -360.0,
+   "cost": 1.0283856542979325e-05,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 30.0,
+ "search_evals": 491,
+ "cost": 1.0283856542979325e-05,
+ "rms_mrad": 4.535164063841423,
+ "n_photos": 1,
+ "z_m": 14.2,
+ "photos": [
+  {
+   "file": "XKYU3498.JPG",
+   "fov_deg": 73.74,
+   "heading_deg": 355.31,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 4.535164063841423,
+   "heading_offset_deg": 20.400000000000002,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior"
+  }
+ ],
+ "heading_offset_deg": 20.400000000000002,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 73.74
+}
+wrote out/resweep/38_XKYU3498_w30.json/.png
