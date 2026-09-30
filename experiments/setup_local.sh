@@ -48,8 +48,12 @@ if [ "$DO_ASSETS" = 1 ]; then
     git clone --depth 1 https://github.com/tersekmatija/eWaSR "$ASSETS/eWaSR"
     # two patches the clone needs against current dependencies, both
     # documented at the top of ewasr_bridge.py
-    sed -i 's/from timm\.models\.layers import to_2tuple/from timm.layers import to_2tuple/' \
-      "$ASSETS/eWaSR/wasr/metaformer.py" || true
+    # the clone imports from timm.models.layers.helpers, which timm 1.x
+    # removed; match any submodule so this survives both spellings
+    sed -i -E 's/from timm\.models\.layers(\.[a-z_]+)? import to_2tuple/from timm.layers import to_2tuple/' \
+      "$ASSETS/eWaSR/wasr/metaformer.py"
+    grep -q "from timm.layers import to_2tuple" "$ASSETS/eWaSR/wasr/metaformer.py" \
+      || { echo "eWaSR timm patch did not apply; inspect wasr/metaformer.py" >&2; exit 1; }
     sed -i 's/pretrained=True/pretrained=False/g' "$ASSETS/eWaSR/wasr/models.py" || true
   fi
   [ -f "$ASSETS/ewasr_resnet18.pth" ] || curl -L -o "$ASSETS/ewasr_resnet18.pth" \
@@ -78,9 +82,14 @@ say "smoke test"
 cd "$HERE"
 python3 - <<'PY'
 import os, numpy as np, skyline as S
-d = os.path.expanduser('~/.horizonator/DEMs_SRTM1_WM')
-if not os.path.isdir(d):
-    raise SystemExit('no DEM store at %s — run with --dems' % d)
+# any store will do; COP30 is what --dems builds, SRTM1_WM is the
+# campaign's historical store and is NOT produced by this script
+cands = [os.path.expanduser('~/.horizonator/' + n)
+         for n in ('DEMs_COP30', 'DEMs_SRTM1_WM', 'DEMs_SRTM1')]
+d = next((c for c in cands if os.path.isdir(c) and os.listdir(c)), None)
+if d is None:
+    raise SystemExit('no DEM store under ~/.horizonator — run with --dems')
+print('DEM store:', d)
 cm = S.CMarcher(d, (36.4, 37.6), (27.0, 28.6), d_min=300.)
 el, r = cm.skyline(37.01992, 27.44426, 9.0, np.arange(160., 200., 1.0))
 print('ray-marcher ok: %d azimuths, elevation %.2f..%.2f deg, range p50 %.1f km'

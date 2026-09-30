@@ -59,7 +59,7 @@ stores are plain SRTM1-shaped `.hgt` directories under `~/.horizonator`:
 
 | store | what it is | size |
 |---|---|---|
-| `DEMs_SRTM1_WM` | the working store most results use | 322 MB |
+| `DEMs_SRTM1_WM` | the working store most results used; **not** reproduced by the setup script | 322 MB |
 | `DEMs_COP30` | Copernicus GLO-30 DSM, built by `copernicus_to_hgt.py` | 198 MB |
 | `DEMs_SRTM3` | 3-arcsecond, the horizonator default | 462 MB |
 | `WorldCover` | ESA land cover, for the canopy raster | 238 MB |

@@ -16,7 +16,8 @@ Setup (one-time; ~750 MB of wheels + 240 MB weights):
     curl -LO https://github.com/tersekmatija/eWaSR/releases/download/\
 0.1.0/ewasr_resnet18.pth
     # two small patches to the clone:
-    #  - wasr/metaformer.py: from timm.layers import to_2tuple
+    #  - wasr/metaformer.py: from timm.models.layers.helpers import
+    #    to_2tuple -> from timm.layers import to_2tuple
     #    (timm >= 1.0 moved it)
     #  - wasr/models.py: pretrained=True -> False everywhere (the
     #    ImageNet backbone download is dead weight; the checkpoint

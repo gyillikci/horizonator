@@ -56,13 +56,17 @@ def diagnose(photo, pre, fov):
     rows, conf = skyfix.extract_boundary(img)
     rows, conf = np.asarray(rows, float), np.asarray(conf, float)
     f_px = (W / 2) / np.tan(np.radians(fov) / 2)
-    el_obs = np.arctan2((H / 2) - rows, f_px)        # +up, radians
-
-    # resample the DEM profile onto the photo's columns: column 0 is the
-    # LEFT edge, i.e. heading - fov/2, matching prescreen's az grid
-    x = np.arange(W)
-    az_col = np.linspace(0.0, len(pre['az']) - 1.0, W)
-    el_syn = np.interp(az_col, np.arange(len(pre['az'])), pre['el'])
+    # EXACT per-column bearing, as skyfix.observation does it. An earlier
+    # version mapped columns to azimuth linearly and took el = atan(v/f);
+    # for a 74 deg lens that is ~2 deg off at mid-frame and compresses
+    # elevations by up to 1.25x at the edges.
+    u = np.arange(W) - (W - 1) / 2
+    v = (H - 1) / 2 - rows
+    az_rel = np.degrees(np.arctan2(u, f_px))
+    el_obs = np.arctan2(v, np.hypot(u, f_px))
+    az0 = pre['az'][len(pre['az']) // 2]
+    rel_grid = ((pre['az'] - az0 + 180) % 360) - 180
+    el_syn = np.interp(az_rel, rel_grid, pre['el'])
     good = (conf > 0) & np.isfinite(el_syn)
     if good.sum() < 50:
         raise SystemExit('too few usable columns')
@@ -71,8 +75,11 @@ def diagnose(photo, pre, fov):
     res = d - beta
     a, b = el_syn[good], el_obs[good]
     corr = float(np.corrcoef(a - a.mean(), b - b.mean())[0, 1])
+    a_ = np.abs(res)
+    hub = np.where(a_ <= 3e-3, 0.5 * a_ * a_, 3e-3 * (a_ - 1.5e-3))
     return {'beta_mrad': beta * 1e3,
             'rms_mrad': float(np.sqrt(np.mean(res ** 2)) * 1e3),
+            'huber_mrad': float(np.sqrt(2 * hub.mean()) * 1e3),
             'corr': corr, 'n_cols': int(good.sum()), 'W': W}
 
 
@@ -120,14 +127,18 @@ def main():
         best = []
         for dh in np.arange(-a.sweep_heading, a.sweep_heading + 1e-9, 1.0):
             pr = prescreen(cm, a.lat, a.lon, a.z, a.heading + dh, a.fov, a.near)
-            best.append((diagnose(a.photo, pr, a.fov)['corr'], dh))
-        best.sort(reverse=True)
-        c0 = [c for c, dh in best if abs(dh) < 1e-9]
+            dg = diagnose(a.photo, pr, a.fov)
+            # choose by fixed-scale robust residual, not correlation:
+            # Pearson is scale-invariant and rewards matching trends
+            best.append((dg['huber_mrad'], dh, dg['corr']))
+        best.sort()
+        c0 = [b for b in best if abs(b[1]) < 1e-9]
         print('heading sweep +-%.0f deg' % a.sweep_heading)
-        print('  best corr %+.3f at %+.0f deg (heading %.1f)'
-              % (best[0][0], best[0][1], a.heading + best[0][1]))
+        print('  best robust rms %.1f mrad at %+.0f deg (heading %.1f), corr %+.3f'
+              % (best[0][0], best[0][1], a.heading + best[0][1], best[0][2]))
         if c0:
-            print('  corr at the given heading %+.3f' % c0[0])
+            print('  at the given heading: rms %.1f mrad, corr %+.3f'
+                  % (c0[0][0], c0[0][2]))
         if abs(best[0][1]) > 6.0:
             print('  -> the given heading is outside the solver\'s +-6 deg '
                   'window; re-solve with --heading %.1f'
