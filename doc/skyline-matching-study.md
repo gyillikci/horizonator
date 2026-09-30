@@ -3552,6 +3552,9 @@ sequential estimator.
 > better content, not for a better matcher.
 
 > **E5bh - the Bosphorus frame: clouds defeat both detectors.**
+> *[Corrected by E5bo: eWaSR itself did not ride the clouds - its raw
+> boundary is ~10 px from the hand-drawn line. The extractor pre-check
+> saw it disagree with the seam and substituted the seam, which did.]*
 > *[Corrected by E5bi: the "unusable scene" conclusion below is
 > WRONG. The residue was uncorrected camera ROLL of +1.75 deg plus
 > a clamped beta band, not model content. With both fixed the frame
@@ -3991,6 +3994,77 @@ sequential estimator.
 > +-6 arm gave 1.6-3.2 km on frames known to solve far better, so it
 > was aborted rather than reported - a broken baseline makes any A/B
 > meaningless.
+
+> **E5bo - foundation-model segmenters: SAM 2.1 wins on clouds and
+> loses on gradient skies, and the cheapest fix is post-processing.**
+> The operator asked for DINOv3 or SAM 2 against the extraction failures.
+> Access decided the lineup: Hugging Face and Meta's weight host are
+> both blocked here, so DINOv3, DINOv2 and the official SAM 2 downloads
+> are unreachable, and so are MaSTr1325's hosts, so no head can be
+> trained. SAM 2.1 is reachable through Ultralytics' GitHub releases.
+> `experiments/e5bo_segmenters.py` compares, with identical
+> post-processing on every mask (fill holes; keep the sky component
+> touching the top edge; boundary below its lowest pixel):
+>
+> - SAM 2.1-t and -b, prompted with eight sky points across the top
+>   band and eight negatives across the bottom;
+> - SAM 2.1-b features, zero-shot - the DINO recipe on a different
+>   backbone: k-means prototypes from the frozen 64x64 embedding's top
+>   and bottom bands, nearest-prototype per cell, upsampled;
+> - the seam and eWaSR, eWaSR both as shipped and with the new
+>   post-processing, so model and post-processing can be told apart.
+>
+> **Against the hand-drawn Bosphorus skyline**, after removing the
+> constant offset that pitch absorbs:
+>
+> | boundary | scatter median | p90 | worst column |
+> |---|---|---|---|
+> | seam | 137 px | 295 | 318 |
+> | eWaSR, shipped | 3.4 | 21.3 | 115 |
+> | eWaSR + post-processing | 3.2 | 11.8 | 32 |
+> | SAM 2.1-t | 3.3 | 12.4 | 28 |
+> | **SAM 2.1-b** | 3.8 | **8.8** | **22** |
+> | SAM 2.1-b features, zero-shot | 13.7 | 44.5 | 55 |
+>
+> **And through the solver**, same configuration as the 54 m hand-drawn
+> solve, only the boundary changed: hand 54 m; eWaSR + post-processing
+> **95 m** accepted; SAM 2.1-b **106 m** accepted; SAM 2.1-t 262 m;
+> eWaSR as shipped 637 m refused; seam 3154 m refused; and the
+> zero-shot features a **2675 m false accept**, beta and heading both
+> pinned. Automated extraction reaches within 50 m of the hand-drawn
+> answer on the cloud frame.
+>
+> **But SAM 2.1 does not generalise.** On Milas and Bodrum 9 the
+> prompted masks stop halfway down the sky: where the sky shades from
+> deep blue to pale haze or sunset near the horizon, SAM treats the two
+> as different objects and returns only the upper one. The Bosphorus
+> win came from a grey cloud deck near the horizon. The three
+> extractors fail in complementary places - the seam on clouds, eWaSR
+> on haze (it labels the hazy Milas mountains and the left Bodrum ridge
+> as sky), SAM 2.1 on gradient skies - so no single one should be
+> trusted alone.
+>
+> **What is actionable.** (1) The post-processing alone took eWaSR from
+> 637 m refused to 95 m accepted on this frame, with no new model. It
+> fixes cloud holes, not haze, and is a candidate default once it has
+> been regression-tested across the accepted frames. (2) The extractor
+> pre-check is wrong in exactly this case: when eWaSR and the seam
+> disagree it always falls back to the seam, which on a cloud frame
+> discards the right answer for a 3.2 km wrong one. The seam's cloud
+> excursions are 200-300 px vertical jumps, so an arbiter that prefers
+> the smoother, lower-jump boundary would have chosen correctly here -
+> also a candidate, also untested elsewhere. (3) SAM 2.1 needs better
+> prompts than fixed bands; seeding its points from another extractor's
+> boundary is the obvious next try. (4) DINOv3 could not be tested; the
+> DINO recipe on SAM 2.1's features is too coarse at 25 px per cell and
+> produced a false accept.
+>
+> One bug worth recording, because it produced plausible-looking
+> nonsense: the first solve pass saved boundaries with 1600 columns but
+> full-resolution rows, while `--boundary-npy` infers the row scale from
+> the column count. Every boundary arrived 2.5x too low and every solve
+> came back near 2.5 km with a 61 mrad residual - uniform enough to look
+> like a finding about the models.
 
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction

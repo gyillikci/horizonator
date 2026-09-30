@@ -1,0 +1,96 @@
+{
+ "status": "ok",
+ "reasons": [],
+ "lat": 41.107284042757485,
+ "lon": 29.05052345928403,
+ "fix_ok": true,
+ "basin_margin": 0.16811258069096183,
+ "relief_mrad": 18.205769204181838,
+ "dn_m": -2070.0,
+ "de_m": -1695.0,
+ "sigma_n_m": 210.90216409129107,
+ "sigma_e_m": 199.09479737259207,
+ "sigma_major_m": 214.7882130595417,
+ "sigma_minor_m": 194.89608690251396,
+ "major_bearing_deg": 26.7784970687525,
+ "anisotropy": 1.1020652927063521,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": 14.569866046607318,
+ "peak_dh_mad_m": 28.787457680217017,
+ "n_peaks": 5,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.0001394267594902338,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2700.0,
+   "cost": 0.00011918567572066871,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2400.0,
+   "cost": 4.1843581234071546e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -1800.0,
+   "cost": 3.6238374144962625e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": -2100.0,
+   "cost": 3.549346055039774e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": -1800.0,
+   "cost": 2.8298209726150647e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": -1680.0,
+   "cost": 2.730791975567338e-05,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -2070.0,
+   "de": -1695.0,
+   "cost": 2.7025040862381573e-05,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 12.0,
+ "search_evals": 491,
+ "cost": 2.7025040862381573e-05,
+ "rms_mrad": 7.351876068376231,
+ "n_photos": 1,
+ "z_m": 7.0,
+ "photos": [
+  {
+   "file": "PF_new_bosphorus1.jpg",
+   "fov_deg": 73.7,
+   "heading_deg": 48.0,
+   "pitch_deg": 1.45,
+   "roll_deg": 1.75,
+   "weight": 1.0,
+   "rms_mrad": 7.351876068376231,
+   "heading_offset_deg": -12.0,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior"
+  }
+ ],
+ "heading_offset_deg": -12.0,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 73.7
+}
