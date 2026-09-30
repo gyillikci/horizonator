@@ -1,0 +1,130 @@
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.01 < 0.15",
+  "minimum on the search-box boundary: the true position may lie outside the box",
+  "residual 25.2 mrad > 12.0: the DEM cannot explain this observation"
+ ],
+ "lat": 41.153958834104664,
+ "lon": 29.06700022694659,
+ "fix_ok": false,
+ "basin_margin": 0.006730148028864875,
+ "relief_mrad": 147.96412592149923,
+ "dn_m": 3120.0,
+ "de_m": -315.0,
+ "sigma_n_m": 479.35690959035884,
+ "sigma_e_m": 500.33003104841464,
+ "sigma_major_m": 528.4571204649677,
+ "sigma_minor_m": 448.15874260221864,
+ "major_bearing_deg": 127.40528362528428,
+ "anisotropy": 1.1791739627715376,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": null,
+ "peak_dh_mad_m": null,
+ "n_peaks": 0,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.0004229595323916883,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1800.0,
+   "cost": 0.00041601103963808826,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1500.0,
+   "cost": 0.00038490957080562673,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1200.0,
+   "cost": 0.00037157903302110845,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -900.0,
+   "cost": 0.00034848720341335476,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -600.0,
+   "cost": 0.0003359016849484036,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -300.0,
+   "cost": 0.00033052838072965014,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 1800.0,
+   "cost": 0.000328593143906301,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 1800.0,
+   "cost": 0.00032655478709528294,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": 2400.0,
+   "cost": 0.0003230883205550615,
+   "stage": "coarse"
+  },
+  {
+   "dn": 3000.0,
+   "de": -300.0,
+   "cost": 0.0003209284247498248,
+   "stage": "coarse"
+  },
+  {
+   "dn": 3120.0,
+   "de": -300.0,
+   "cost": 0.0003192935836332282,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": 3120.0,
+   "de": -315.0,
+   "cost": 0.0003183841223655969,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "search_evals": 491,
+ "cost": 0.0003183841223655969,
+ "rms_mrad": 25.23426727153364,
+ "n_photos": 1,
+ "z_m": 7.0,
+ "photos": [
+  {
+   "file": "PF_new_bosphorus1.jpg",
+   "fov_deg": 73.7,
+   "heading_deg": 47.101,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 25.23426727153364,
+   "heading_offset_deg": 1.4000000000000001,
+   "el_offset_mrad": -10.12290966156711,
+   "attitude_source": "prior"
+  }
+ ],
+ "heading_offset_deg": 1.4000000000000001,
+ "el_offset_mrad": -10.12290966156711,
+ "fov_deg": 73.7
+}

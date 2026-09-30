@@ -3925,6 +3925,73 @@ sequential estimator.
 > radius. With point-to-point it will reproduce the INS position to
 > within a few metres and report that as a fix.
 
+> **E5bm - the heading window was not quietly wrecking frames; the
+> uniform-run false-accept rate is the real problem.** E5bf found a
+> phone compass 13 deg wrong and E5bh one 0.9 deg wrong, so compass
+> error is episodic, and I predicted that the solver's +-6 deg
+> `--heading-window` had silently ruined frames nobody re-examined -
+> "the cheapest large win available". **The prediction is refuted.**
+>
+> Method: every frame in the campaign with a resolvable photo (50),
+> truth from EXIF GPS (49; the blind-test frame has none and is
+> excluded, because its recorded centre was deliberately offset), each
+> solved twice by `skyfix.py` with identical flags - eWaSR extractor,
+> Copernicus GLO-30, `--crest-dh 9 --max-peak-dh 30`, prior attitude,
+> EXIF compass - differing only in `--heading-window 6` versus `30`.
+> Five frames are synthetic renders from the early experiments and are
+> reported separately. The configuration was validated first on the
+> one frame with a known answer: Bodrum 9 reproduced the E5bf false
+> accept at +-6 (664 m, accepted at margin 0.16) and the corrected
+> refusal at +-30 (363 m, margin 0.06, heading found at 183.7).
+>
+> | 44 field frames | +-6 deg | +-30 deg |
+> |---|---|---|
+> | accepted | 13 | 11 |
+> | accepted and within 300 m | 3 | 3 |
+> | accepted and within 500 m | 7 | 5 |
+> | **false accepts, >= 500 m** | **6** | **6** |
+> | median error, all frames | 2831 m | 1865 m |
+>
+> Every frame that works sits exactly on the diagonal of
+> `out/resweep/ab_window.png`: the window never mattered to it. What
+> widening does is trade, not win - five false accepts become honest
+> refusals (the Bodrum 9 pattern, including Bodrum 4 and three
+> Theodolite frames), and five frames get worse, four of them new false
+> accepts, because a wider window hands the optimiser more wrong
+> headings to settle on. Five more pin at the +-30 edge, which only
+> moves the clamp. The three "rescued" frames halve their error and are
+> still refused at about a kilometre.
+>
+> Under +-30 the heading optimum leaves the +-6 window on **35 of 49**
+> frames, which looks alarming and is not evidence of 35 bad compasses:
+> nearly all of them fail by kilometres in both arms, and on a frame
+> whose extraction or model does not constrain heading, the heading
+> optimum is noise. The window damaged the frames we already knew
+> about, and widening it turned those into refusals rather than fixes.
+> Recommendation: leave the default at +-6. Neither arm is better.
+>
+> **The finding that matters is the baseline.** Run uniformly, with no
+> per-frame operator decisions - no waterline level, no `--across-water`,
+> no `--mask-cols`, no hand-chosen DEM - the instrument accepts 13 of 44
+> field frames and **6 of those 13 are wrong by 500 m or more**. Only 3
+> are within 300 m. The campaign's headline, a 368 m median over
+> accepted solves, came from frame-by-frame tuned runs and from the
+> successful subset; the out-of-the-box instrument is much weaker, and
+> its false-accept rate - not its heading window - is what an operator
+> would actually meet. The five synthetic frames, where the model is
+> exact, are 3 of 3 right in both arms, which places the loss squarely
+> in model fidelity and extraction rather than in the search.
+>
+> Two diagnostic tools were fixed on the way (committed separately):
+> the heading sweeps scored by Pearson correlation with a free roll,
+> which rewards matching overall trend and put optima on the sweep
+> edge; and `e5bd_prescreen.py` mapped columns to azimuth linearly, ~2
+> deg off at mid-frame. And a first attempt at this A/B ran the seam
+> extractor, because torch was missing after a container reset; its
+> +-6 arm gave 1.6-3.2 km on frames known to solve far better, so it
+> was aborted rather than reported - a broken baseline makes any A/B
+> meaningless.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the

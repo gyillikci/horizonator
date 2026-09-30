@@ -1,0 +1,77 @@
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.03 < 0.15",
+  "minimum on the search-box boundary: the true position may lie outside the box",
+  "covariance degenerate: the cost surface has no measurable curvature at the fix (sigma cannot be computed) \u2014 the landscape does not pin a position here",
+  "peak heights disagree: matched crests stand a median -75 m (spread 133 m) from the model at this fix (limits 30/90 m) \u2014 position error or DEM bias is leaking into the height channel"
+ ],
+ "lat": 36.615319334231316,
+ "lon": 28.065555586253915,
+ "fix_ok": false,
+ "basin_margin": 0.02510175564395523,
+ "relief_mrad": 18.478664540544465,
+ "dn_m": -2850.0,
+ "de_m": -2670.0,
+ "sigma_n_m": 0.0,
+ "sigma_e_m": 0.0,
+ "sigma_major_m": 296.62782957786834,
+ "sigma_minor_m": 0.0,
+ "major_bearing_deg": 123.95808796517238,
+ "anisotropy": Infinity,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -75.40638284071028,
+ "peak_dh_mad_m": 133.09360240890223,
+ "n_peaks": 16,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 7.202163764133278e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -2700.0,
+   "cost": 7.19191742528712e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2820.0,
+   "de": -2700.0,
+   "cost": 7.1756083171189e-05,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -2850.0,
+   "de": -2670.0,
+   "cost": 7.168191339360886e-05,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "search_evals": 491,
+ "cost": 7.168191339360886e-05,
+ "rms_mrad": 11.97346344159524,
+ "n_photos": 1,
+ "z_m": 4.0,
+ "photos": [
+  {
+   "file": "PF_20260824_122139_wide.jpg",
+   "fov_deg": 73.7,
+   "heading_deg": 297.024,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 11.97346344159524,
+   "heading_offset_deg": 6.0,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior"
+  }
+ ],
+ "heading_offset_deg": 6.0,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 73.7
+}
