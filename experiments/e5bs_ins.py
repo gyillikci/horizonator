@@ -485,7 +485,11 @@ def report():
                 lw=1.2, label='INS + skyline')
         ax.scatter(*np.array([s['one'] for s in st]).T, s=10,
                    color='#D68910', label='one-shot')
-        ax.set_aspect('equal', adjustable='datalim')
+        # free INS leaves for tens of km; frame the true track instead
+        lo, hi = T.min(0) - 1500, T.max(0) + 1500
+        ax.set_xlim(lo[0], hi[0])
+        ax.set_ylim(lo[1], hi[1])
+        ax.set_aspect('equal', adjustable='box')
         ax.set_xlabel('east (m)')
         ax.set_ylabel('north (m)')
         ax.grid(alpha=.3)

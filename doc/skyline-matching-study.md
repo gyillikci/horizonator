@@ -4409,6 +4409,61 @@ sequential estimator.
 > the real model error at a 1-3 km subject (canopy, buildings), which
 > the field-like level only stands in for.
 
+> **E5bs - the same question with a real IMU: skyline photos hold a
+> MEMS INS to 40-80 m where it would otherwise drift 12-480 km.** E5br
+> fused skyline fixes with dead-reckoning legs. `experiments/e5bs_ins.py`
+> replaces the legs with a 100 Hz IMU stream from gnss-ins-sim (Aceinna,
+> open source; its built-in MEMS models 'mid' - IMU381 class, gyro bias
+> instability 3.5 deg/h - and 'low', 10 deg/h), preintegrated into
+> GTSAM's CombinedImuFactor with bias states. Each photograph adds a
+> robust position factor and a robust **yaw** factor (INS yaw + the
+> solve's heading offset): the skyline is the only heading reference in
+> the system. The camera sits on a gimbal levelled with the INS
+> *estimate*, so INS attitude error enters the photo as tilt. Drone:
+> 300 m, 20 m/s, a photo every 30 s, barometer (3 m noise, 5 m bias).
+> Vessel: 3 m/s, a photo every 2 min, a speed log (+3 %) and a
+> no-sideslip constraint every 20 s, sea surface. Skylines as in E5br:
+> truth from SRTM1, matched against GLO-30, nominal or field-like
+> noise. AirSim was considered and is not runnable here (Unreal + GPU;
+> archived by Microsoft) - its IMU log could replace gnss-ins-sim's.
+>
+> | median error | free INS | one-shot | INS + skyline, online | smoothed |
+> |---|---|---|---|---|
+> | drone, mid IMU, nominal | 2359 m (final 12.7 km) | 176 m | **82 m** | 55 m |
+> | drone, mid IMU, field-like | 1303 m (final 11.7 km) | 543 m | **270 m** | 160 m |
+> | drone, low IMU, nominal | 7057 m (final 51 km) | 712 m | 252 m, **lost in the last 5 min** | 75 m, final 1.5 km |
+> | vessel, mid IMU + log, nominal | 33 km (final 480 km) | 117 m | **46 m** | 41 m |
+>
+> **The IMU makes the field-like case work where dead reckoning did
+> not.** E5br's drone at field-like noise was 475 m online; here 270 m,
+> smoothed 160 m, final 170 m. The difference is the prediction: a
+> tactical-grade-ish MEMS INS between 30-s photos is good to tens of
+> metres, so the next map is centred close to the truth and a wrong
+> basin is far less likely to win - the yaw factor also keeps the INS
+> heading within 0.1-0.2 deg (median error before each photo), which
+> keeps the camera's own azimuth honest.
+>
+> **The vessel needs its log, and the log needs a scale state.** A MEMS
+> INS with a photo every 2 min is unusable alone (838 m off after 6 min,
+> 480 km after an hour). With the log and no-sideslip it predicts to
+> ~40 m between photos - but the first run fused a log reading 3 % high
+> without a scale state and ended *worse* than the fixes alone (161 m vs
+> 107 m), because it trusted the biased log. With the scale estimated
+> (1.0303 found, 1.03 true): **46 m online against 117 m one-shot**.
+>
+> **A consumer-grade IMU loses lock at this photo rate.** With 10 deg/h
+> gyros the yaw-axis bias was mis-estimated (-28.8 deg/h), the
+> prediction between photos grew to 1-2 km, the maps were centred on
+> the wrong ground and two consecutive wrong fixes carried the estimate
+> away (1.5 km at the end). Photos every 30 s are too sparse for that
+> grade; more frequent photos or an airspeed sensor would be the fix.
+>
+> One realisation per scenario; truth-trajectory kinematics without
+> wind or wave motion; the same caveat as E5br on model error. The
+> study's single-photo result stands: the per-photo likelihood is the
+> limit, and what a good INS buys is a prediction tight enough that the
+> limit is rarely reached.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the

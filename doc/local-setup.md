@@ -115,6 +115,14 @@ the study doc are that policy rather than a real limit:
   to whatever is under `PLAYWRIGHT_BROWSERS_PATH`. On your machine
   `playwright install chromium` just works and the default is fine.
 
+## Optional: the IMU simulator for E5bs
+
+`experiments/e5bs_ins.py` takes its IMU stream from
+[gnss-ins-sim](https://github.com/Aceinna/gnss-ins-sim) (MIT). Clone it
+to `<parent>/ext/gnss-ins-sim`, beside the repositories, or set
+`$GNSS_INS_SIM` to wherever it lives. It is pure Python and needs
+nothing beyond numpy and matplotlib.
+
 ## Sanity check
 
 The last step of the setup script ray-casts the Bodrum viewpoint and
