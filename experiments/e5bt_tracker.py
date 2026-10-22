@@ -47,7 +47,13 @@ from scipy import ndimage
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-OUT = os.path.join(HERE, 'out', 'tracker')
+# E5BT_MAP=perfect (E5bu): the solver matches against the TRUE DEM, the
+# near-field mask drops from 300 m to 100 m, and every hill's tracked
+# point is mapped to ~1 m - the limiting case of a very fine, current
+# surface model. Default 'cop30' is E5bt.
+MAP = os.environ.get('E5BT_MAP', 'cop30')
+OUT = os.path.join(HERE, 'out', 'tracker' if MAP == 'cop30'
+                   else 'tracker_' + MAP)
 # git clone https://github.com/Aceinna/gnss-ins-sim  next to the
 # repository checkouts (<parent>/ext/gnss-ins-sim), or set $GNSS_INS_SIM
 SIMDIR = os.environ.get('GNSS_INS_SIM', os.path.join(
@@ -97,6 +103,8 @@ R_EARTH = 6371000.0
 # (skyline photos?, tracker): 'gimbal' = one 10 deg tracker, identity
 # known (oracle); 'wide' = body-fixed 90 deg camera, two overlapping
 # trackers, identity INFERRED from the map
+if MAP == 'perfect':
+    TRK.update(prior_h=2.0, prior_v=1.0)
 VARIANTS = {'A': (True, None), 'B': (True, 'gimbal'), 'C': (False, 'gimbal'),
             'D': (True, 'wide'), 'E': (False, 'wide')}
 WIDE = dict(half_fov=45.0, start_rel=38.0, n=2, jitter=0.3e-3, calib=0.5e-3,
@@ -205,10 +213,11 @@ def simulate(name, seed=20261023):
     tr = gen_imu(plat, grade, base, work)
     mlat, mlon = S.meters_per_degree(LAT0)
     dem = lambda d: os.path.expanduser('~/.horizonator/' + d)
+    d_near = 100.0 if MAP == 'perfect' else 300.0
     cm_true = S.CMarcher(dem('DEMs_SRTM1'), (36.4, 37.4), (26.6, 27.9),
-                         d_min=300.0)
-    cm = S.CMarcher(dem('DEMs_COP30'), (36.4, 37.4), (26.6, 27.9),
-                    d_min=300.0)
+                         d_min=d_near)
+    cm = S.CMarcher(dem('DEMs_SRTM1' if MAP == 'perfect' else 'DEMs_COP30'),
+                    (36.4, 37.4), (26.6, 27.9), d_min=d_near)
     AZ = F.AZ
     st0 = np.array(pc['start'])
     enu = lambda ned: st0 + np.array([ned[1], ned[0]])   # east, north
@@ -365,6 +374,7 @@ def simulate(name, seed=20261023):
     LMS = []
     lat_s, lon_s = to_ll(st0)
     rng_l = np.random.default_rng(seed)                # same for all runs
+    rng_m = np.random.default_rng(seed + 7)            # perfect-map survey
     for (la, lo, hm, ht, lat_t, lon_t) in peaks():
         off = rng_l.normal(0, TRK['aim_h'], 2)
         dv = abs(rng_l.normal(0, TRK['aim_v']))
@@ -373,6 +383,8 @@ def simulate(name, seed=20261023):
         tp = np.array([(lat_t - lat_s) * mlat + off[0],
                        (lon_t - lon_s) * mlon + off[1],
                        tr['alt0'] - (ht - dv)])
+        if MAP == 'perfect':
+            mp = tp + rng_m.normal(0, 1, 3) * np.array([1.0, 1.0, 0.5])
         LMS.append(dict(map=mp, true=tp))
     L = lambda j: gtsam.symbol('l', j)
     sig_b = math.hypot(TRK['jitter'], TRK['encoder'])
