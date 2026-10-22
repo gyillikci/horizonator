@@ -4533,6 +4533,50 @@ sequential estimator.
 > tracker slides along a ridge, which the aim-point offset only partly
 > represents.
 
+> **E5bu - what a perfect map would buy: the trackers, a lot; the
+> skyline alone, little.** The operator asked what a 50 cm elevation
+> model would change. No 50 cm data is available here, so this runs the
+> limiting case on E5bt's identical IMU, noise and routes
+> (`E5BT_MAP=perfect`): skylines matched against the TRUE DEM (no map
+> error), the near-field mask cut from 300 m to 100 m, and every hill's
+> tracked point mapped to ~1 m (priors 2 m / 1 m). Variants A (skyline),
+> D (skyline + wide two-tracker) and E (wide two-tracker only).
+>
+> | median, online / smoothed | A 30 m | A perfect | D 30 m | D perfect | E 30 m | E perfect |
+> |---|---|---|---|---|---|---|
+> | drone, mid IMU | 118 / 181 | 191 / 165 | 62 / 53 | 63 / **23** | 138 / 117 | 96 / **29** |
+> | drone, low IMU | 334 / 232 | 471 / 168 | 49 / 45 | **33 / 27** | 458 / 435 | **81 / 34** |
+> | drone, field-like skyline | 1829 / 1246 | 809 / 614 | 63 / 47 | 70 / **21** | 56 / 71 | 64 / **21** (final 1.3 km) |
+> | vessel | 60 / 39 | 43 / **11** | 18 / 11 | **13 / 10** | 29 / 50 | **14 / 12** |
+>
+> **The landmarks are where the map matters.** With hills known to a
+> metre instead of 50-60 m, every bearing becomes strong information:
+> tracker-only on the low-grade drone drops from 458 to 81 m online
+> (435 to 34 m smoothed), and every smoothed track with trackers lands
+> at 10-34 m. Identification stays clean (0 wrong in 8 runs) and the
+> hills settle at 1.0-1.4 m.
+>
+> **The skyline alone barely moves**, and online it is not even
+> consistently better (drone mid-IMU median 118 -> 191 m, final 406 ->
+> 111 m; the low-grade drone still loses lock). Its limit was never the
+> DEM: here the 30 m model's skyline error is only ~0.5 mrad against
+> 1-3 mrad of extraction noise, and a single photo's cost surface stays
+> multimodal however exact the model is. A perfect map does not make a
+> snapshot unambiguous.
+>
+> What the simulation cannot show, and a real 50 cm surface model
+> would: the near field. Here the "truth" world is itself 30 m terrain,
+> so cutting the mask to 100 m adds little; a real 50 cm DSM would put
+> buildings, trees and small relief within 1-3 km into the model -
+> where the field campaign's worst failures were (E4x, E5aw) - and add
+> the most position-sensitive skyline there is. It would also add the
+> errors this run has none of: a model that is stale by a season or a
+> construction project, and metre-level absolute error in satellite
+> stereo products. Read the skyline columns as a lower bound on the
+> gain, the tracker columns as close to the real one. Single
+> realisation per cell; E's field-like run diverged in its last minutes
+> (final 1.3 km) after 19 deferred identifications.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
