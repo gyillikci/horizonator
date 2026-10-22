@@ -302,21 +302,35 @@ def simulate(name, seed=20261023):
     free_state = gtsam.NavState(x0, v0)
     steps = []
     t_start = time.time()
+    KS = gtsam.symbol('s', 0)        # speed-log scale factor, a state
+
     def log_factor(kx, kv, meas, sig):
-        """speed log + no-sideslip: body-frame velocity R^T v"""
+        """speed log + no-sideslip: the log reads s * forward body
+        velocity; sideways and vertical body velocity are ~0"""
         def err(this, v, H):
             p = v.atPose3(this.keys()[0])
             vn = v.atVector(this.keys()[1])
+            sc = v.atVector(this.keys()[2])[0]
             R = p.rotation().matrix()
             vb = R.T @ vn
+            D = np.diag([sc, 1.0, 1.0])
             if H is not None:
                 sk = np.array([[0, -vb[2], vb[1]], [vb[2], 0, -vb[0]],
                                [-vb[1], vb[0], 0]])
-                H[0] = np.hstack([sk, np.zeros((3, 3))])
-                H[1] = R.T
-            return vb - meas
+                H[0] = np.hstack([D @ sk, np.zeros((3, 3))])
+                H[1] = D @ R.T
+                H[2] = np.array([[vb[0]], [0.0], [0.0]])
+            return D @ vb - meas
         return gtsam.CustomFactor(gtsam.noiseModel.Diagonal.Sigmas(sig),
-                                  [kx, kv], err)
+                                  [kx, kv, KS], err)
+
+    if pc.get('log'):
+        fg, vals = gtsam.NonlinearFactorGraph(), gtsam.Values()
+        fg.add(gtsam.PriorFactorVector(KS, np.array([1.0]),
+                                       gtsam.noiseModel.Isotropic.Sigma(1, 0.05)))
+        vals.insert(KS, np.array([1.0]))
+        isam.update(fg, vals)
+        est = isam.calculateEstimate()
 
     n_kf = int(os.environ.get('E5BS_N', pc['n'] // pc['photo_every'])
                ) * pc['photo_every']
@@ -352,8 +366,7 @@ def simulate(name, seed=20261023):
             meas = np.array([lg['scale'] * vb_true[0] + rng.normal(0, lg['sd']),
                              0.0, 0.0])
             fg.add(log_factor(X(k + 1), V(k + 1), meas,
-                              [lg['sd'] + 0.03 * abs(meas[0]), lg['side_sd'],
-                               lg['vert_sd']]))
+                              [lg['sd'], lg['side_sd'], lg['vert_sd']]))
         photo = (k + 1) % pc['photo_every'] == 0
         if not photo:
             isam.update(fg, vals)
@@ -413,7 +426,9 @@ def simulate(name, seed=20261023):
     res = dict(name=name, platform=pc, noise=nz, grade=gr, steps=steps,
                smooth=smooth,
                gyro_bias_dph=(np.asarray(bias.gyroscope()) / D2R * 3600).tolist(),
-               acc_bias=np.asarray(bias.accelerometer()).tolist())
+               acc_bias=np.asarray(bias.accelerometer()).tolist(),
+               log_scale=(float(est.atVector(gtsam.symbol('s', 0))[0])
+                          if pc.get('log') else None))
     json.dump(res, open(os.path.join(OUT, name + '.json'), 'w'))
     return name
 
