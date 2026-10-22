@@ -1,0 +1,754 @@
+{
+ "about": "The 44 field frames of the E5bm uniform run, rebuilt 2026-10-22 from out/resweep/*_w6 (the original list lived in a session scratchpad and was lost). lat/lon is the box centre each solve used, which for these frames is the EXIF GPS position, i.e. the truth. path is relative to the celestial-navigation checkout. e5bm_w6 is the stored result of that run, for reproduction checks.",
+ "flags": "--extractor ewasr --dem ~/.horizonator/DEMs_COP30 --crest-dh 9 --max-peak-dh 30 --heading-window 6",
+ "frames": [
+  {
+   "tag": "00_PF_new_akyaka3",
+   "file": "PF_new_akyaka3.jpg",
+   "path": "peakfinder/PF_new_akyaka3.jpg",
+   "lat": 37.04859,
+   "lon": 28.29302,
+   "z": 16.0,
+   "fov": 73.74,
+   "heading": 172.599,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "inconclusive",
+    "dn_m": 750.0,
+    "de_m": 2550.0,
+    "margin": 0.008235206467398675
+   }
+  },
+  {
+   "tag": "01_PF_new_akbuk1",
+   "file": "PF_new_akbuk1.jpg",
+   "path": "peakfinder/PF_new_akbuk1.jpg",
+   "lat": 37.03631,
+   "lon": 28.18522,
+   "z": 33.0,
+   "fov": 73.74,
+   "heading": 85.469,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "inconclusive",
+    "dn_m": -1560.0,
+    "de_m": -2835.0,
+    "margin": 0.031922569388099786
+   }
+  },
+  {
+   "tag": "02_PF_new_bodrum1",
+   "file": "PF_new_bodrum1.jpg",
+   "path": "peakfinder/PF_new_bodrum1.jpg",
+   "lat": 37.00145,
+   "lon": 27.73302,
+   "z": 2.0,
+   "fov": 73.74,
+   "heading": 148.953,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "inconclusive",
+    "dn_m": 960.0,
+    "de_m": 1290.0,
+    "margin": 0.008504112070926946
+   }
+  },
+  {
+   "tag": "03_PF_new_bodrum2",
+   "file": "PF_new_bodrum2.jpg",
+   "path": "peakfinder/PF_new_bodrum2.jpg",
+   "lat": 37.01999,
+   "lon": 27.34782,
+   "z": 2.0,
+   "fov": 73.74,
+   "heading": 192.018,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "inconclusive",
+    "dn_m": -1935.0,
+    "de_m": 2700.0,
+    "margin": 0.01778098566700416
+   }
+  },
+  {
+   "tag": "04_PF_new_bodrum3",
+   "file": "PF_new_bodrum3.jpg",
+   "path": "peakfinder/PF_new_bodrum3.jpg",
+   "lat": 37.01999,
+   "lon": 27.34782,
+   "z": 2.0,
+   "fov": 73.74,
+   "heading": 109.372,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "inconclusive",
+    "dn_m": -3150.0,
+    "de_m": -2250.0,
+    "margin": 0.02356973311457244
+   }
+  },
+  {
+   "tag": "05_PF_new_bodrum4",
+   "file": "PF_new_bodrum4.jpg",
+   "path": "peakfinder/PF_new_bodrum4.jpg",
+   "lat": 37.01986,
+   "lon": 27.34774,
+   "z": 2.0,
+   "fov": 73.74,
+   "heading": 206.76,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "ok",
+    "dn_m": 1875.0,
+    "de_m": 1875.0,
+    "margin": 0.3682139751361764
+   }
+  },
+  {
+   "tag": "06_PF_new_bodrum6",
+   "file": "PF_new_bodrum6.jpg",
+   "path": "peakfinder/PF_new_bodrum6.jpg",
+   "lat": 37.01988,
+   "lon": 27.34774,
+   "z": 2.0,
+   "fov": 73.74,
+   "heading": 114.661,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "ok",
+    "dn_m": -90.0,
+    "de_m": 120.0,
+    "margin": 0.7510636499477463
+   }
+  },
+  {
+   "tag": "07_PF_new_bodrum7",
+   "file": "PF_new_bodrum7.jpg",
+   "path": "peakfinder/PF_new_bodrum7.jpg",
+   "lat": 37.027,
+   "lon": 27.44082,
+   "z": 3.0,
+   "fov": 73.74,
+   "heading": 312.663,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "inconclusive",
+    "dn_m": -3150.0,
+    "de_m": 1110.0,
+    "margin": 0.1248213949212201
+   }
+  },
+  {
+   "tag": "08_PF_new_bodrum8",
+   "file": "PF_new_bodrum8.jpg",
+   "path": "peakfinder/PF_new_bodrum8.jpg",
+   "lat": 37.01678,
+   "lon": 27.4483,
+   "z": 1.0,
+   "fov": 73.74,
+   "heading": 188.611,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "ok",
+    "dn_m": -75.0,
+    "de_m": 270.0,
+    "margin": 3.069400338029371
+   }
+  },
+  {
+   "tag": "09_PF_new_bodrum9",
+   "file": "PF_new_bodrum9.jpg",
+   "path": "peakfinder/PF_new_bodrum9.jpg",
+   "lat": 37.01992,
+   "lon": 27.44426,
+   "z": 9.0,
+   "fov": 73.7,
+   "heading": 167.093,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "ok",
+    "dn_m": -210.0,
+    "de_m": 630.0,
+    "margin": 0.16210869038243042
+   }
+  },
+  {
+   "tag": "10_PF_20260824_195733_clean",
+   "file": "PF_20260824_195733_clean.jpg",
+   "path": "peakfinder/PF_20260824_195733_clean.jpg",
+   "lat": 37.0519,
+   "lon": 28.32292,
+   "z": 3.0,
+   "fov": 73.7,
+   "heading": 196.515,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "ok",
+    "dn_m": -270.0,
+    "de_m": -300.0,
+    "margin": 2.7344535922812296
+   }
+  },
+  {
+   "tag": "12_PF_new_bosphorus1",
+   "file": "PF_new_bosphorus1.jpg",
+   "path": "peakfinder/PF_new_bosphorus1.jpg",
+   "lat": 41.1259,
+   "lon": 29.07076,
+   "z": 7.0,
+   "fov": 73.7,
+   "heading": 47.101,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "inconclusive",
+    "dn_m": 3120.0,
+    "de_m": -315.0,
+    "margin": 0.006730148028864875
+   }
+  },
+  {
+   "tag": "13_PF_new_akyaka2",
+   "file": "PF_new_akyaka2.jpg",
+   "path": "peakfinder/PF_new_akyaka2.jpg",
+   "lat": 37.0486,
+   "lon": 28.29299,
+   "z": 17.0,
+   "fov": 73.74,
+   "heading": 177.004,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "inconclusive",
+    "dn_m": 255.0,
+    "de_m": -3000.0,
+    "margin": 0.0434892962111747
+   }
+  },
+  {
+   "tag": "14_PF_20260823_175647",
+   "file": "PF_20260823_175647.jpg",
+   "path": "peakfinder/PF_20260823_175647.jpg",
+   "lat": 36.64935,
+   "lon": 28.09263,
+   "z": 4.0,
+   "fov": 38.07,
+   "heading": 198.622,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "ok",
+    "dn_m": -150.0,
+    "de_m": -165.0,
+    "margin": 2.1843728741641826
+   }
+  },
+  {
+   "tag": "15_PF_20260823_175658_wide",
+   "file": "PF_20260823_175658_wide.jpg",
+   "path": "peakfinder/PF_20260823_175658_wide.jpg",
+   "lat": 36.64935,
+   "lon": 28.09263,
+   "z": 4.0,
+   "fov": 73.7,
+   "heading": 200.551,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "ok",
+    "dn_m": 480.0,
+    "de_m": -150.0,
+    "margin": 0.5858075002536114
+   }
+  },
+  {
+   "tag": "16_PF_20260824_122139_wide",
+   "file": "PF_20260824_122139_wide.jpg",
+   "path": "peakfinder/PF_20260824_122139_wide.jpg",
+   "lat": 36.64095,
+   "lon": 28.09548,
+   "z": 4.0,
+   "fov": 73.7,
+   "heading": 297.024,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "inconclusive",
+    "dn_m": -2850.0,
+    "de_m": -2670.0,
+    "margin": 0.02510175564395523
+   }
+  },
+  {
+   "tag": "17_PF_20260824_122139",
+   "file": "PF_20260824_122139.jpg",
+   "path": "peakfinder/PF_20260824_122139.jpg",
+   "lat": 36.64095,
+   "lon": 28.09548,
+   "z": 4.0,
+   "fov": 38.07,
+   "heading": 297.024,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "inconclusive",
+    "dn_m": -2610.0,
+    "de_m": -2535.0,
+    "margin": 0.23230293356370993
+   }
+  },
+  {
+   "tag": "18_PF_20260823_151556",
+   "file": "PF_20260823_151556.jpg",
+   "path": "peakfinder/PF_20260823_151556.jpg",
+   "lat": 36.64087,
+   "lon": 28.0955,
+   "z": 6.0,
+   "fov": 38.07,
+   "heading": 232.066,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "inconclusive",
+    "dn_m": 1470.0,
+    "de_m": 2895.0,
+    "margin": 0.4460870274885044
+   }
+  },
+  {
+   "tag": "19_PF_20260823_151613",
+   "file": "PF_20260823_151613.jpg",
+   "path": "peakfinder/PF_20260823_151613.jpg",
+   "lat": 36.64087,
+   "lon": 28.0955,
+   "z": 6.0,
+   "fov": 38.07,
+   "heading": 218.62,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "inconclusive",
+    "dn_m": -3000.0,
+    "de_m": 150.0,
+    "margin": 1.124402656369853
+   }
+  },
+  {
+   "tag": "20_PF_20260823_153457",
+   "file": "PF_20260823_153457.jpg",
+   "path": "peakfinder/PF_20260823_153457.jpg",
+   "lat": 36.64085,
+   "lon": 28.09551,
+   "z": 4.0,
+   "fov": 38.07,
+   "heading": 266.788,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "inconclusive",
+    "dn_m": 30.0,
+    "de_m": 1485.0,
+    "margin": 0.02338351061258756
+   }
+  },
+  {
+   "tag": "21_PF_20260823_165639",
+   "file": "PF_20260823_165639.jpg",
+   "path": "peakfinder/PF_20260823_165639.jpg",
+   "lat": 36.64116,
+   "lon": 28.09566,
+   "z": 4.0,
+   "fov": 38.07,
+   "heading": 324.701,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "inconclusive",
+    "dn_m": 2505.0,
+    "de_m": 3045.0,
+    "margin": 0.41286180845458176
+   }
+  },
+  {
+   "tag": "22_PF_20260823_175124",
+   "file": "PF_20260823_175124.jpg",
+   "path": "peakfinder/PF_20260823_175124.jpg",
+   "lat": 36.64742,
+   "lon": 28.09426,
+   "z": 4.0,
+   "fov": 38.07,
+   "heading": 189.877,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "inconclusive",
+    "dn_m": 2745.0,
+    "de_m": 2250.0,
+    "margin": 0.16278936665734364
+   }
+  },
+  {
+   "tag": "23_PF_20260823_175709",
+   "file": "PF_20260823_175709.jpg",
+   "path": "peakfinder/PF_20260823_175709.jpg",
+   "lat": 36.64934,
+   "lon": 28.09263,
+   "z": 4.0,
+   "fov": 38.07,
+   "heading": 191.448,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "inconclusive",
+    "dn_m": -585.0,
+    "de_m": -150.0,
+    "margin": 0.1036215893274706
+   }
+  },
+  {
+   "tag": "24_PF_20260824_195733",
+   "file": "PF_20260824_195733.jpg",
+   "path": "peakfinder/PF_20260824_195733.jpg",
+   "lat": 37.0519,
+   "lon": 28.32292,
+   "z": 3.0,
+   "fov": 73.7,
+   "heading": 196.515,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "inconclusive",
+    "dn_m": -1230.0,
+    "de_m": -165.0,
+    "margin": 0.10755663531995122
+   }
+  },
+  {
+   "tag": "25_PF_new_milas1",
+   "file": "PF_new_milas1.jpg",
+   "path": "peakfinder/PF_new_milas1.jpg",
+   "lat": 37.24433,
+   "lon": 27.67671,
+   "z": 6.0,
+   "fov": 69.0,
+   "heading": 334.813,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "inconclusive",
+    "dn_m": -345.0,
+    "de_m": 810.0,
+    "margin": 0.041091882306189216
+   }
+  },
+  {
+   "tag": "31_EWAC7374",
+   "file": "EWAC7374.JPG",
+   "path": "theodolite/EWAC7374.JPG",
+   "lat": 38.80561,
+   "lon": 26.97368,
+   "z": 4.1,
+   "fov": 20.408,
+   "heading": 347.645,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "ok",
+    "dn_m": -1560.0,
+    "de_m": -510.0,
+    "margin": 0.3438716413106219
+   }
+  },
+  {
+   "tag": "32_HATY3309",
+   "file": "HATY3309.JPG",
+   "path": "theodolite/HATY3309.JPG",
+   "lat": 37.47686,
+   "lon": 27.41421,
+   "z": 14.2,
+   "fov": 73.74,
+   "heading": 40.525,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "inconclusive",
+    "dn_m": 3150.0,
+    "de_m": -3150.0,
+    "margin": 0.027872688119686653
+   }
+  },
+  {
+   "tag": "33_KWHC9160",
+   "file": "KWHC9160.JPG",
+   "path": "theodolite/KWHC9160.JPG",
+   "lat": 40.90622,
+   "lon": 29.13945,
+   "z": 2.5,
+   "fov": 10.286,
+   "heading": 244.345,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "ok",
+    "dn_m": -270.0,
+    "de_m": -315.0,
+    "margin": 1.4239092735023762
+   }
+  },
+  {
+   "tag": "34_LHCG7767",
+   "file": "LHCG7767.JPG",
+   "path": "theodolite/LHCG7767.JPG",
+   "lat": 40.90622,
+   "lon": 29.13945,
+   "z": 2.5,
+   "fov": 41.112,
+   "heading": 228.749,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "ok",
+    "dn_m": -435.0,
+    "de_m": 150.0,
+    "margin": 3.13811766092288
+   }
+  },
+  {
+   "tag": "35_MYQR7719",
+   "file": "MYQR7719.JPG",
+   "path": "theodolite/MYQR7719.JPG",
+   "lat": 40.90622,
+   "lon": 29.13945,
+   "z": 2.5,
+   "fov": 20.408,
+   "heading": 243.805,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "ok",
+    "dn_m": -360.0,
+    "de_m": 150.0,
+    "margin": 0.9431983161320303
+   }
+  },
+  {
+   "tag": "36_PQBC6867",
+   "file": "PQBC6867.JPG",
+   "path": "theodolite/PQBC6867.JPG",
+   "lat": 38.80615,
+   "lon": 26.97266,
+   "z": 1.3,
+   "fov": 20.408,
+   "heading": 22.495,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "ok",
+    "dn_m": 480.0,
+    "de_m": 255.0,
+    "margin": 0.2933104070427059
+   }
+  },
+  {
+   "tag": "37_QNJZ1625",
+   "file": "QNJZ1625.JPG",
+   "path": "theodolite/QNJZ1625.JPG",
+   "lat": 40.90622,
+   "lon": 29.13945,
+   "z": 2.5,
+   "fov": 41.112,
+   "heading": 195.912,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "ok",
+    "dn_m": -645.0,
+    "de_m": 180.0,
+    "margin": 1.0848002479017873
+   }
+  },
+  {
+   "tag": "38_XKYU3498",
+   "file": "XKYU3498.JPG",
+   "path": "theodolite/XKYU3498.JPG",
+   "lat": 37.47686,
+   "lon": 27.41421,
+   "z": 14.2,
+   "fov": 73.74,
+   "heading": 355.31,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "inconclusive",
+    "dn_m": -240.0,
+    "de_m": 945.0,
+    "margin": 0.1446955276816475
+   }
+  },
+  {
+   "tag": "39_EURK8793",
+   "file": "EURK8793.JPG",
+   "path": "theodolite/EURK8793.JPG",
+   "lat": 39.11653,
+   "lon": 27.69941,
+   "z": 164.2,
+   "fov": 104.25,
+   "heading": 164.35,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "inconclusive",
+    "dn_m": 3150.0,
+    "de_m": 2655.0,
+    "margin": 0.03753451549756885
+   }
+  },
+  {
+   "tag": "40_FYMC7458",
+   "file": "FYMC7458.JPG",
+   "path": "theodolite/FYMC7458.JPG",
+   "lat": 37.47685,
+   "lon": 27.41421,
+   "z": 18.5,
+   "fov": 73.74,
+   "heading": 80.105,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "inconclusive",
+    "dn_m": 1440.0,
+    "de_m": -3150.0,
+    "margin": 0.10955048191255143
+   }
+  },
+  {
+   "tag": "41_GAQB1096",
+   "file": "GAQB1096.JPG",
+   "path": "theodolite/GAQB1096.JPG",
+   "lat": 40.90622,
+   "lon": 29.13945,
+   "z": 2.5,
+   "fov": 104.25,
+   "heading": 212.131,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "inconclusive",
+    "dn_m": 3150.0,
+    "de_m": -1530.0,
+    "margin": 0.03640556721365219
+   }
+  },
+  {
+   "tag": "42_MJFQ1511",
+   "file": "MJFQ1511.JPG",
+   "path": "theodolite/MJFQ1511.JPG",
+   "lat": 39.11494,
+   "lon": 27.69958,
+   "z": 167.2,
+   "fov": 73.74,
+   "heading": 165.389,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "inconclusive",
+    "dn_m": 3150.0,
+    "de_m": 2130.0,
+    "margin": 0.01697493949270577
+   }
+  },
+  {
+   "tag": "43_NCVO7252",
+   "file": "NCVO7252.JPG",
+   "path": "theodolite/NCVO7252.JPG",
+   "lat": 38.80568,
+   "lon": 26.97152,
+   "z": 1.1,
+   "fov": 73.74,
+   "heading": 299.638,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "inconclusive",
+    "dn_m": 2745.0,
+    "de_m": -3150.0,
+    "margin": 0.061378894708582155
+   }
+  },
+  {
+   "tag": "44_QMLO5628",
+   "file": "QMLO5628.JPG",
+   "path": "theodolite/QMLO5628.JPG",
+   "lat": 37.02713,
+   "lon": 27.36178,
+   "z": 61.4,
+   "fov": 73.74,
+   "heading": 205.342,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "inconclusive",
+    "dn_m": -2580.0,
+    "de_m": 3150.0,
+    "margin": 0.006729673133345888
+   }
+  },
+  {
+   "tag": "45_UYKQ7227",
+   "file": "UYKQ7227.JPG",
+   "path": "theodolite/UYKQ7227.JPG",
+   "lat": 38.80568,
+   "lon": 26.97153,
+   "z": 1.6,
+   "fov": 73.74,
+   "heading": 319.597,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "inconclusive",
+    "dn_m": 2985.0,
+    "de_m": 420.0,
+    "margin": 0.022917263338696505
+   }
+  },
+  {
+   "tag": "46_UYXQ4404",
+   "file": "UYXQ4404.JPG",
+   "path": "theodolite/UYXQ4404.JPG",
+   "lat": 37.47685,
+   "lon": 27.4142,
+   "z": 18.8,
+   "fov": 104.25,
+   "heading": 36.455,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "inconclusive",
+    "dn_m": 330.0,
+    "de_m": -2055.0,
+    "margin": 0.0008992756387569444
+   }
+  },
+  {
+   "tag": "47_VSFK5163",
+   "file": "VSFK5163.JPG",
+   "path": "theodolite/VSFK5163.JPG",
+   "lat": 37.47685,
+   "lon": 27.41421,
+   "z": 18.3,
+   "fov": 104.25,
+   "heading": 14.366,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "inconclusive",
+    "dn_m": -75.0,
+    "de_m": -1695.0,
+    "margin": 0.006371493676750174
+   }
+  },
+  {
+   "tag": "48_XRQV0283",
+   "file": "XRQV0283.JPG",
+   "path": "theodolite/XRQV0283.JPG",
+   "lat": 37.47679,
+   "lon": 27.41421,
+   "z": 14.0,
+   "fov": 73.74,
+   "heading": 352.385,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "inconclusive",
+    "dn_m": 3120.0,
+    "de_m": 780.0,
+    "margin": 0.26716151350425027
+   }
+  },
+  {
+   "tag": "49_YBPL9738",
+   "file": "YBPL9738.JPG",
+   "path": "theodolite/YBPL9738.JPG",
+   "lat": 37.02713,
+   "lon": 27.36177,
+   "z": 61.2,
+   "fov": 104.25,
+   "heading": 208.985,
+   "box": 6000.0,
+   "e5bm_w6": {
+    "status": "inconclusive",
+    "dn_m": 1170.0,
+    "de_m": 3045.0,
+    "margin": 0.1411170025343967
+   }
+  }
+ ]
+}

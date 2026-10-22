@@ -85,6 +85,7 @@ EXTRACTOR = 'seam'      # set from --extractor
 _EWASR = None
 ACROSS_WATER = False
 MASK_COLS = []
+COST = 'huber'          # set from --cost
 BOUNDARY_ROWS = None    # set from --boundary-npy: a hand-digitised curve
 ACROSS_WATER_MIN_PX = 8
 
@@ -419,6 +420,35 @@ def photo_cost_curve(el_obs, w, el_syn, shifts, betas=BETAS):
     return out
 
 
+def ncc_photo_cost(el_obs, w, el_syn, shifts, w_syn=None):
+    """The literature's matcher, for baselines: 1 - the best weighted
+    Pearson correlation between the observed and synthetic profiles over
+    the heading shifts (Cozman & Krotkov 2000, Chiodini et al. 2017,
+    Grelsson et al. 2020 all correlate the 1D horizon function). Pearson
+    removes the mean and the scale, so there is no elevation offset to
+    estimate - and no absolute-elevation information left either."""
+    best = (np.inf, 0, 0.0)
+    for s in shifts:
+        eo = np.roll(el_obs, s)
+        ww = np.roll(w, s)
+        if w_syn is not None:
+            ww = ww * w_syn
+        m = (ww > 0) & np.isfinite(el_syn)
+        if m.sum() < 20:
+            continue
+        a, b, wm = eo[m], el_syn[m], ww[m]
+        W0 = wm.sum()
+        da = a - (wm * a).sum() / W0
+        db = b - (wm * b).sum() / W0
+        den = np.sqrt((wm * da * da).sum() * (wm * db * db).sum())
+        if den <= 0:
+            continue
+        c = 1.0 - float((wm * da * db).sum() / den)
+        if c < best[0]:
+            best = (c, s, 0.0)
+    return best
+
+
 def fast_photo_cost(el_obs, w, el_syn, shifts, betas=BETAS, topk=12,
                     w_syn=None):
     """photo_cost with the heading-shift search FFT-accelerated.
@@ -438,6 +468,8 @@ def fast_photo_cost(el_obs, w, el_syn, shifts, betas=BETAS, topk=12,
     photo_cost, ~10-100x faster on wide shift ranges. Falls back to the
     exhaustive search when the shift set is already tiny."""
     lags = np.asarray(list(shifts), dtype=int)
+    if COST == 'ncc':
+        return ncc_photo_cost(el_obs, w, el_syn, lags, w_syn)
     if lags.size <= 3 * topk:
         return photo_cost(el_obs, w, el_syn, lags, betas, w_syn)
     n = el_obs.size
@@ -820,14 +852,22 @@ def main():
                          'flooring the per-photo weights')
     ap.add_argument('--out',
                     help='write PREFIX.json and PREFIX.png diagnostics')
+    ap.add_argument('--cost', default='huber', choices=['huber', 'ncc'],
+                    help='profile misfit: huber (this instrument: robust, '
+                         'absolute elevations with a bounded offset) or '
+                         'ncc (the literature baseline: 1 - Pearson '
+                         'correlation, offset- and scale-free). With ncc '
+                         'the rms and peak-height checks still use the '
+                         'huber residual at the fix; the margin uses ncc')
     ap.add_argument('--view-json', metavar='PATH',
                     help='write what the solver saw at every search step '
                          '(pose, photo skyline, DEM skyline, cost map) for '
                          'the PeakFinder debug viewer, pf_debug/serve.py. '
                          'First photo only')
     args = ap.parse_args()
-    global EXTRACTOR, ACROSS_WATER, BOUNDARY_ROWS
+    global EXTRACTOR, ACROSS_WATER, BOUNDARY_ROWS, COST
     EXTRACTOR = args.extractor
+    COST = args.cost
     ACROSS_WATER = args.across_water
     if args.boundary_npy:
         BOUNDARY_ROWS = np.load(os.path.expanduser(args.boundary_npy))
@@ -1215,6 +1255,13 @@ def main():
         cb, sb, bb = fast_photo_cost(p['el_obs'], p['w'], el_syn,
                                      p['shifts'], p['betas'],
                                      w_syn=ws_fix)
+        ncc_r = None
+        if COST == 'ncc':
+            # keep the correlation's heading, then report the residual
+            # in the instrument's own units so rms gates mean the same
+            ncc_r = 1.0 - cb
+            cb, _, bb = photo_cost(p['el_obs'], p['w'], el_syn, [sb],
+                                   p['betas'], ws_fix)
         pj.append(dict(file=os.path.basename(p['path']), fov_deg=p['fov'],
                        heading_deg=p['heading'], pitch_deg=p['pitch'],
                        roll_deg=p['roll'], weight=p['weight'],
@@ -1224,7 +1271,7 @@ def main():
                        attitude_source=(
                            (p['level'].get('source') or 'sea-horizon')
                            if p['level'] else 'prior'),
-                       best_shift=sb, best_beta=bb))
+                       ncc=ncc_r, best_shift=sb, best_beta=bb))
     dip_fix = S.horizon_dip_rad(z)
     dh_all = []
     for p, d in zip(photos, pj):
@@ -1239,7 +1286,8 @@ def main():
               f'residual {peak_dh_med:+.0f} m '
               f'(spread {peak_dh_mad:.0f} m)', flush=True)
 
-    rms_mrad = float(np.sqrt(2 * c0) * 1e3)
+    rms_mrad = float(np.sqrt(2 * c0) * 1e3) if COST == 'huber' else \
+        float(np.sqrt(np.mean([d['rms_mrad'] ** 2 for d in pj])))
     if rms_mrad > args.max_rms:
         reasons.append(f'residual {rms_mrad:.1f} mrad > {args.max_rms:.1f}: '
                        'the DEM cannot explain this observation')
