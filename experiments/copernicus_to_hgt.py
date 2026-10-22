@@ -56,10 +56,19 @@ def fetch(lat, lon, cache):
         return path
     os.makedirs(cache, exist_ok=True)
     url = '%s/%s/%s.tif' % (BUCKET, t, t)
-    r = subprocess.run(['curl', '-sS', '-f', '-m', '600', '-o', path, url])
-    if r.returncode != 0:
+    r = subprocess.run(['curl', '-sS', '-m', '600', '-o', path,
+                        '-w', '%{http_code}', url],
+                       capture_output=True, text=True)
+    code = r.stdout.strip()
+    if r.returncode != 0 or code != '200':
         if os.path.exists(path):
             os.remove(path)
+        # 404 is the normal answer for an all-sea cell; anything else is
+        # a real failure (network, proxy) and must not pass as "ocean"
+        if code != '404':
+            print('WARNING: %s: curl exit %d, HTTP %s %s'
+                  % (t, r.returncode, code or '-', r.stderr.strip()),
+                  file=sys.stderr)
         return None
     return path
 
