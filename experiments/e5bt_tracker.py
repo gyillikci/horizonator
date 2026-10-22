@@ -94,7 +94,13 @@ TRK = dict(jitter=0.4e-3, encoder=0.5e-3, max_rel=100.0, ahead=60.0,
            acq=5.0, aim_h=30.0, aim_v=10.0, prior_h=40.0, prior_v=15.0)
 K_REFR = 0.13
 R_EARTH = 6371000.0
-VARIANTS = {'A': (True, False), 'B': (True, True), 'C': (False, True)}
+# (skyline photos?, tracker): 'gimbal' = one 10 deg tracker, identity
+# known (oracle); 'wide' = body-fixed 90 deg camera, two overlapping
+# trackers, identity INFERRED from the map
+VARIANTS = {'A': (True, None), 'B': (True, 'gimbal'), 'C': (False, 'gimbal'),
+            'D': (True, 'wide'), 'E': (False, 'wide')}
+WIDE = dict(half_fov=45.0, start_rel=38.0, n=2, jitter=0.3e-3, calib=0.5e-3,
+            gate_p=0.999, ratio=9.0)
 
 
 def peaks():
@@ -185,7 +191,7 @@ def simulate(name, seed=20261023):
     import skyline as S
     import skyfix as F
     plat, grade, lvl, variant = name.split('_')
-    use_sky, use_trk = VARIANTS[variant]
+    use_sky, trk_mode = VARIANTS[variant]
     scen = '_'.join((plat, grade, lvl))
     pc, nz, gr = PLAT[plat], NOISE[lvl], GRADE[grade]
     # separate streams, seeded by the SCENARIO, so A, B and C see the same
@@ -384,7 +390,7 @@ def simulate(name, seed=20261023):
     def wrap(a):
         return (a + math.pi) % (2 * math.pi) - math.pi
 
-    def bearing_factor(kx, kl, meas):
+    def bearing_factor(kx, kl, meas, sigma=None):
         def err(this, v, H):
             p = v.atPose3(this.keys()[0])
             lm = v.atPoint3(this.keys()[1])
@@ -409,7 +415,8 @@ def simulate(name, seed=20261023):
                 H[0], H[1] = Jp, Jl
             return e
         return gtsam.CustomFactor(
-            robust(gtsam.noiseModel.Isotropic.Sigma(2, sig_b)), [kx, kl], err)
+            robust(gtsam.noiseModel.Isotropic.Sigma(2, sigma or sig_b)),
+            [kx, kl], err)
 
     def visible(j, i):
         """truth: in range, not hidden by nearer terrain"""
@@ -426,6 +433,9 @@ def simulate(name, seed=20261023):
         return ok, rh, az
 
     active, used, handovers, acq_fail, track_kf = None, [], 0, 0, 0
+    tracks, n_ident, n_misid, n_ambig = [], 0, 0, 0
+    sig_w = math.hypot(WIDE['jitter'], WIDE['calib'])
+    from scipy.stats import chi2 as CHI2
     steps = []
     t_start = time.time()
     KS = gtsam.symbol('s', 0)        # speed-log scale factor, a state
@@ -494,7 +504,7 @@ def simulate(name, seed=20261023):
             fg.add(log_factor(X(k + 1), V(k + 1), meas,
                               [lg['sd'], lg['side_sd'], lg['vert_sd']]))
         # ---- the hill tracker
-        if use_trk:
+        if trk_mode == 'gimbal':
             yaw_t = ypr[i1][0]
             if active is not None:
                 ok, rh, az = visible(active, i1)
@@ -538,6 +548,150 @@ def simulate(name, seed=20261023):
                               LMS[j]['true']) + rng_t.normal(0, sig_b, 2)
                 fg.add(bearing_factor(X(k + 1), L(j), m))
                 track_kf += 1
+        elif trk_mode == 'wide':
+            Rt = gtsam.Rot3.Ypr(*ypr[i1]).matrix()
+            # release what left the frame, was occluded or came too close
+            keep = []
+            for tk in tracks:
+                ok, rh, _ = visible(tk['j'], i1)
+                baz = body_azel(Rt, ned[i1], LMS[tk['j']]['true'])[0]
+                if ok and abs(math.degrees(baz)) <= WIDE['half_fov']:
+                    keep.append(tk)
+                elif tk['id'] is not None:
+                    handovers += 1
+            tracks = keep
+            # start new trackers while the old ones are still held
+            while len(tracks) < WIDE['n']:
+                best = None
+                for j in range(len(LMS)):
+                    if any(tk['j'] == j for tk in tracks):
+                        continue
+                    ok, rh, _ = visible(j, i1)
+                    if not ok or rh < TRK['start_range']:
+                        continue
+                    baz = abs(math.degrees(body_azel(
+                        Rt, ned[i1], LMS[j]['true'])[0]))
+                    if baz <= WIDE['start_rel'] and (best is None
+                                                     or baz < best[0]):
+                        best = (baz, j)
+                if best is None:
+                    break
+                # the first hill is designated by the operator at the known
+                # start; every later one has to be identified
+                tracks.append(dict(j=best[1], born=k + 1,
+                                   id=best[1] if k == 0 and not tracks
+                                   else None))
+            for tk in tracks:
+                tk['m'] = body_azel(Rt, ned[i1], LMS[tk['j']]['true']) \
+                    + rng_t.normal(0, sig_w, 2)
+            # ---- identification: which mapped hill is this feature?
+            pp = pred.pose()
+            Rpp, ppos = pp.rotation().matrix(), np.asarray(pp.translation())
+            unknown = [tk for tk in tracks if tk['id'] is None]
+            if unknown:
+                try:
+                    Cm = isam.marginalCovariance(X(k))
+                    pos_sd = max(10.0, math.sqrt(max(np.linalg.eigvalsh(
+                        Cm[3:5, 3:5]).max(), 0)))
+                    yaw_sd = max(math.radians(0.05), math.sqrt(Cm[2, 2]))
+                    tilt_sd = max(math.radians(0.05),
+                                  math.sqrt(max(Cm[0, 0], Cm[1, 1])))
+                except RuntimeError:
+                    pos_sd, yaw_sd, tilt_sd = 200.0, math.radians(1), \
+                        math.radians(0.5)
+                # the predicted bearings drift by the INS growth since X(k)
+                pos_sd += 0.5 * 9.8 * 2e-4 * pc['dt'] ** 2 + 1.0 * pc['dt']
+
+                def pred_of(c):
+                    lm = (np.asarray(est.atPoint3(L(c))) if est.exists(L(c))
+                          else LMS[c]['map'])
+                    return body_azel(Rpp, ppos, lm), \
+                        max(math.hypot(*(lm - ppos)[:2]), 1.0)
+            def abs_chi(tk, c):
+                pa, rc = pred_of(c)
+                if abs(math.degrees(pa[0])) > WIDE['half_fov'] + 5 \
+                        or not 1000 <= rc <= 30000:
+                    return None
+                r = tk['m'] - pa
+                r[0] = wrap(r[0])
+                s_az = math.sqrt(sig_w ** 2 + (pos_sd / rc) ** 2
+                                 + (TRK['prior_h'] / rc) ** 2 + yaw_sd ** 2)
+                s_el = math.sqrt(sig_w ** 2 + (pos_sd / rc) ** 2
+                                 + (TRK['prior_v'] / rc) ** 2 + tilt_sd ** 2)
+                return (r[0] / s_az) ** 2 + (r[1] / s_el) ** 2
+
+            def sep_chi(ta, ca, tb, cb):
+                """the angle between two features in one image does not
+                depend on the INS attitude - only on position and map"""
+                pa, ra = pred_of(ca)
+                pb, rb = pred_of(cb)
+                e = (ta['m'] - tb['m']) - (pa - pb)
+                e[0] = wrap(e[0])
+                g = pos_sd * abs(1 / ra - 1 / rb)
+                sa = math.sqrt(2 * sig_w ** 2 + g ** 2 + (TRK['prior_h'] / ra)
+                               ** 2 + (TRK['prior_h'] / rb) ** 2)
+                se = math.sqrt(2 * sig_w ** 2 + g ** 2 + (TRK['prior_v'] / ra)
+                               ** 2 + (TRK['prior_v'] / rb) ** 2)
+                return (e[0] / sa) ** 2 + (e[1] / se) ** 2
+
+            if unknown:
+                known = [o for o in tracks if o['id'] is not None]
+                taken = {o['id'] for o in known}
+                cands = {}
+                for tk in unknown:
+                    sc = []
+                    for c in range(len(LMS)):
+                        if c in taken:
+                            continue
+                        x = abs_chi(tk, c)
+                        if x is not None:
+                            sc.append((x, c))
+                    cands[id(tk)] = sorted(sc)[:8]
+                # every joint assignment of the unknown features (one or
+                # two) to distinct hills, scored with all separations
+                combos = [[]]
+                for tk in unknown:
+                    combos = [cb + [(tk, c, x)] for cb in combos
+                              for x, c in cands[id(tk)]
+                              if all(c != q[1] for q in cb)]
+                scored = []
+                for cb in combos:
+                    if not cb:
+                        continue
+                    chi = sum(q[2] for q in cb)
+                    dof = 2 * len(cb)
+                    for q in cb:
+                        for o in known:
+                            chi += sep_chi(q[0], q[1], o, o['id'])
+                            dof += 2
+                    for a_, b_ in zip(cb, cb[1:]):
+                        chi += sep_chi(a_[0], a_[1], b_[0], b_[1])
+                        dof += 2
+                    scored.append((chi, dof, cb))
+                scored.sort(key=lambda z: z[0])
+                if scored and scored[0][0] <= CHI2.ppf(WIDE['gate_p'],
+                                                       scored[0][1]) \
+                        and (len(scored) == 1 or scored[1][0] - scored[0][0]
+                             >= WIDE['ratio']):
+                    for tk, c, _ in scored[0][2]:
+                        tk['id'] = c
+                        n_ident += 1
+                        n_misid += c != tk['j']
+                else:
+                    n_ambig += len(unknown)
+            for tk in tracks:
+                if tk['id'] is None:
+                    continue
+                c = tk['id']
+                if not est.exists(L(c)) and c not in used:
+                    vals.insert(L(c), LMS[c]['map'])
+                    fg.add(gtsam.PriorFactorPoint3(
+                        L(c), LMS[c]['map'], gtsam.noiseModel.Diagonal.Sigmas(
+                            [TRK['prior_h'], TRK['prior_h'], TRK['prior_v']])))
+                    used.append(c)
+                fg.add(bearing_factor(X(k + 1), L(c), tk['m'], sig_w))
+                track_kf += 1
+            active = [tk['id'] for tk in tracks]
 
         photo = (k + 1) % pc['photo_every'] == 0
         if not photo:
@@ -608,6 +762,8 @@ def simulate(name, seed=20261023):
                           if pc.get('log') else None),
                variant=variant, scenario=scen,
                tracker=dict(hills=len(used), handovers=handovers,
+                            identified=n_ident, misidentified=n_misid,
+                            ambiguous_attempts=n_ambig,
                             acq_fail=acq_fail, tracked_keyframes=track_kf,
                             keyframes=steps[-1]['k'],
                             hill_err_map=[float(np.linalg.norm(
@@ -616,6 +772,8 @@ def simulate(name, seed=20261023):
                             hill_err_est=[float(np.linalg.norm(
                                 (np.asarray(est.atPoint3(L(j)))
                                  - LMS[j]['true'])[:2])) for j in used]))
+    # tracked-keyframe fraction counts tracker-keyframes; with two
+    # trackers it can exceed 1
     json.dump(res, open(os.path.join(OUT, name + '.json'), 'w'))
     return name
 
@@ -628,11 +786,14 @@ def report():
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
-    col = {'A': '#2E86C1', 'B': '#1E7F5C', 'C': '#C0392B'}
+    col = {'A': '#2E86C1', 'B': '#1E7F5C', 'C': '#C0392B', 'D': '#7D3C98',
+           'E': '#D68910'}
     lab = {'A': 'A: INS + skyline', 'B': 'B: INS + skyline + hill tracker',
+           'D': 'D: INS + skyline + wide cam, 2 trackers, id inferred',
+           'E': 'E: INS + wide cam, 2 trackers, id inferred',
            'C': 'C: INS + hill tracker only'}
     scens = [sc for sc in SCENS if any(os.path.exists(os.path.join(
-        OUT, '%s_%s.json' % (sc, v))) for v in 'ABC')]
+        OUT, '%s_%s.json' % (sc, v))) for v in 'ABCDE')]
     fig, axs = plt.subplots(2, len(scens), figsize=(5.2 * len(scens), 9.4),
                             squeeze=False)
     hills = peaks()
@@ -641,7 +802,7 @@ def report():
         ax, axm = axs[0, c], axs[1, c]
         summary[sc] = {}
         free_drawn = False
-        for v in 'ABC':
+        for v in 'ABCDE':
             f = os.path.join(OUT, '%s_%s.json' % (sc, v))
             if not os.path.exists(f):
                 continue
@@ -668,7 +829,10 @@ def report():
                 hill_err_map=float(np.median(tk['hill_err_map']))
                 if tk['hill_err_map'] else None,
                 hill_err_est=float(np.median(tk['hill_err_est']))
-                if tk['hill_err_est'] else None)
+                if tk['hill_err_est'] else None,
+                identified=tk.get('identified'),
+                misidentified=tk.get('misidentified'),
+                ambiguous=tk.get('ambiguous_attempts'))
             if not free_drawn:
                 ax.plot(t, fr, color='#8A8F98', lw=1.4, label='free INS')
                 axm.plot(*T.T, color='#1A2732', lw=2.2, label='truth')
@@ -676,8 +840,6 @@ def report():
             ax.plot(t, on, color=col[v], lw=1.8, label=lab[v])
             axm.plot(*np.array([s['online'] for s in st]).T, color=col[v],
                      lw=1.1)
-            if v in 'BC' and r['tracker']['hills']:
-                st0 = np.array(r['platform']['start'])
         ax.set_yscale('log')
         ax.set_ylim(3, 3e4)
         ax.set_xlabel('time (min)')
@@ -714,7 +876,11 @@ def report():
                       v, x['online_median'], x['online_2nd_half'],
                       x['online_final'], x['online_max'], x['smooth_median'],
                       x['yaw_err_median']))
-            if v in 'BC':
+            if v in 'DE':
+                print('     identification: %d hills identified, %d WRONG, '
+                      '%d attempts deferred as ambiguous' % (
+                          x['identified'], x['misidentified'], x['ambiguous']))
+            if v in 'BCDE':
                 print('     tracker: %d hills, %d handovers, %d failed '
                       'acquisitions, tracking %.0f %% of the time; hill '
                       'position error map %s m -> estimated %s m' % (
@@ -734,13 +900,13 @@ if __name__ == '__main__':
     ap.add_argument('--only', nargs='*')
     ap.add_argument('--jobs', type=int, default=4)
     a = ap.parse_args()
-    names = a.only or ['%s_%s' % (sc, v) for sc in SCENS for v in 'ABC']
+    names = a.only or ['%s_%s' % (sc, v) for sc in SCENS for v in 'ABCDE']
     if a.cmd == 'run':
         os.makedirs(OUT, exist_ok=True)
         os.environ.setdefault('OMP_NUM_THREADS', '1')
         peaks()                          # build the hill cache once
         # the slow skyline runs first, so the quick C runs fill the gaps
-        names.sort(key=lambda n: n.endswith('_C'))
+        names.sort(key=lambda n: n[-1] in 'CE')
         with ProcessPoolExecutor(a.jobs) as ex:
             for nm in ex.map(simulate, names):
                 print('done', nm, flush=True)
