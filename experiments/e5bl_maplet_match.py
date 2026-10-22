@@ -25,13 +25,14 @@ import os
 import numpy as np
 import cv2
 import matplotlib
+from assets import celnav
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 import extract
 import skyline as S
 
-P = '/home/user/celestial-navigation/peakfinder/'
+P = celnav('peakfinder') + os.sep
 
 # two frames, chosen for their relief: the Bosphorus shore is nearly
 # flat (the whole silhouette spans ~49 px of a 1200 px frame), the

@@ -20,8 +20,9 @@ import numpy as np
 import extract
 import skyline as S
 from e5l_samsea import sam_sea_line
+from assets import celnav
 
-P = '/home/user/celestial-navigation/peakfinder'
+P = celnav('peakfinder')
 FRAMES = [
     ('AK3   ', f'{P}/PF_new_akyaka3.jpg', 73.74, 16.0),
     ('AK2   ', f'{P}/PF_new_akyaka2.jpg', 73.74, 17.0),

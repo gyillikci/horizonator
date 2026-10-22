@@ -38,6 +38,7 @@ import glob
 import gzip
 import time
 import urllib.request
+from assets import celnav
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import numpy as np
@@ -45,7 +46,7 @@ from PIL import Image
 import skyline as S
 import extract
 
-CH1 = os.path.expanduser('/home/user/celestial-navigation/CH1')
+CH1 = celnav('CH1')
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'out')
 DIR1 = os.path.expanduser('~/.horizonator/DEMs_SRTM1')
 DIR3 = os.path.expanduser('~/.horizonator/DEMs_SRTM3')

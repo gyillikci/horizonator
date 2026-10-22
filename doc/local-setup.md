@@ -12,6 +12,20 @@ to describe in a requirements file; the other two have to be fetched.
 That script is idempotent and prints what it skips. Read on for what it
 is doing and where it can bite.
 
+**Recommended platform.** Linux (Ubuntu 22.04/24.04) or WSL2 on
+Windows, Python 3.11 in a virtual environment:
+
+    python3.11 -m venv ~/.venvs/horizonator && . ~/.venvs/horizonator/bin/activate
+    sudo apt install build-essential git curl      # cc for the marcher
+
+macOS works too, with two caveats: Apple clang has no OpenMP, so the
+ray-marcher builds single-threaded (same answers, a few times slower;
+`brew install gcc libomp` and `CC=gcc-14` restore it), and
+`rasterio`/`gtsam` wheels occasionally lag new macOS/Python releases.
+Native Windows is not supported: the marcher is compiled with `cc` and
+loaded through ctypes. No GPU is needed; on Linux without one the
+script installs the CPU torch wheel and skips ~2 GB of CUDA.
+
 ## What the container actually is
 
 | | |
@@ -35,14 +49,18 @@ Package versions the results were produced on:
 | rasterio | 1.4.4 |
 
 `scikit-image` and `scikit-learn` are **not** installed and nothing in
-the pipeline needs them. Torch is only there for the two segmentation
-models; the solver itself is numpy.
+the pipeline needs them. Torch is only there for the segmentation
+models (eWaSR, MobileSAM, SAM 2.1 through `ultralytics`); the solver
+itself is numpy. `gtsam` is only needed by the fusion experiments
+(`e5_fusion.py`, `skynav.py`); the script installs it but does not
+stop if no wheel exists for your Python.
 
 ## The two things that are not in git
 
-**Pretrained weights, ~600 MB.** `eWaSR` (the maritime water/sky/obstacle
-segmenter, Apache 2.0, MaSTr1325 weights) and `MobileSAM` (Apache 2.0,
-used by the sea-line detector). The eWaSR clone needs two small patches
+**Pretrained weights, ~800 MB.** `eWaSR` (the maritime water/sky/obstacle
+segmenter, Apache 2.0, MaSTr1325 weights), `MobileSAM` (Apache 2.0,
+used by the sea-line detector) and SAM 2.1 tiny/base (Apache 2.0,
+Ultralytics release files, E5bo/E5bp) under `<assets>/sam2/`. The eWaSR clone needs two small patches
 against current dependencies — `timm` moved `to_2tuple`, and the
 ImageNet backbone download is dead weight because the checkpoint
 overwrites it — both applied by the setup script and documented at the
@@ -115,7 +133,10 @@ degrees wrong on one frame and 0.9 degrees on another (E5bf, E5bh).
 
 The two repositories must be **siblings** — `e5l_samsea.py` reaches
 `../../celestial-navigation/MaSTr1325`, and the field photographs live
-in `celestial-navigation/peakfinder/`.
+in `celestial-navigation/peakfinder/`. Scripts find them through
+`assets.celnav()`; set **`$CELNAV_DIR`** if your checkout lives
+elsewhere. Every path that used to be hard-coded to this container
+(`/home/user/...`, the session scratchpad) now goes through `assets.py`.
 
     parent/
       horizonator/            solver, experiments, study doc

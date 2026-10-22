@@ -153,12 +153,16 @@ class CMarcher:
            os.path.getmtime(so) < os.path.getmtime(src):
             # -march=native on x86; ARM gcc wants -mcpu=native; last resort
             # plain -O3
-            for arch in ('-march=native', '-mcpu=native', None):
-                cmd = ['cc', '-O3', '-fopenmp', '-shared', '-fPIC',
-                       src, '-o', so]
+            # Apple clang has no -fopenmp: the last two tries drop it and
+            # the marcher runs single-threaded (same results, slower)
+            for arch, omp in (('-march=native', 1), ('-mcpu=native', 1),
+                              (None, 1), (None, 0)):
+                cmd = ['cc', '-O3', '-shared', '-fPIC', src, '-o', so]
+                if omp:
+                    cmd.insert(2, '-fopenmp')
                 if arch:
                     cmd.insert(2, arch)
-                if subprocess.run(cmd).returncode == 0:
+                if subprocess.run(cmd, stderr=subprocess.DEVNULL).returncode == 0:
                     break
             else:
                 raise RuntimeError('could not compile fastmarch.c')

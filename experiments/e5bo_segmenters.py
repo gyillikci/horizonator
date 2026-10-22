@@ -46,13 +46,14 @@ import numpy as np
 import cv2
 from scipy import ndimage
 import matplotlib
+from assets import assets_dir, celnav
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 import extract
 
-SAMDIR = os.path.expanduser('~/.horizonator/assets/sam2')
-P = '/home/user/celestial-navigation/peakfinder/'
+SAMDIR = os.path.join(assets_dir(), 'sam2')
+P = celnav('peakfinder') + os.sep
 _MODELS = {}
 
 

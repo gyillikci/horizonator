@@ -16,6 +16,11 @@ Expected layout:
     <assets>/eWaSR/                 the patched clone
     <assets>/ewasr_resnet18.pth     MaSTr1325 weights
     <assets>/MobileSAM/             the clone, with weights/mobile_sam.pt
+    <assets>/sam2/                  sam2.1_t.pt, sam2.1_b.pt (Ultralytics)
+
+The field photographs and CH1 sequences live in the celestial-navigation
+repository, which is expected as a SIBLING of this one; celnav() finds
+it, or $CELNAV_DIR overrides.
 """
 
 import os
@@ -45,3 +50,12 @@ def need(*parts):
             'Run experiments/setup_local.sh, or point $HORIZONATOR_ASSETS '
             'at a directory that has it.' % p)
     return p
+
+
+def celnav(*parts):
+    """Path inside the celestial-navigation checkout (photos, CH1)."""
+    root = os.environ.get('CELNAV_DIR')
+    if not root:
+        here = os.path.dirname(os.path.abspath(__file__))
+        root = os.path.join(here, '..', '..', 'celestial-navigation')
+    return os.path.join(os.path.normpath(os.path.expanduser(root)), *parts)

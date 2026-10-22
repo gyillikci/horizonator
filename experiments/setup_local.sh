@@ -25,19 +25,39 @@ done
 say(){ printf '\n=== %s\n' "$*"; }
 
 say "python packages"
+python3 -c 'import sys; sys.exit(sys.version_info < (3, 10))' \
+  || { echo "need Python >= 3.10 (the campaign ran on 3.11)" >&2; exit 1; }
 # Versions this campaign actually ran on. numpy 2.x and OpenCV 5 are both
 # recent enough that older pins fail in ways that are not obvious.
 python3 -m pip install --upgrade \
   'numpy>=2.2' 'scipy>=1.15' 'pillow>=11' 'matplotlib>=3.10' \
-  'opencv-python>=4.11' 'rasterio>=1.4' \
-  'torch>=2.6' 'torchvision>=0.21' 'timm>=1.0.15' 'pytorch_lightning>=2.4'
+  'opencv-python>=4.11' 'rasterio>=1.4'
+# torch is only for the segmenters. On Linux without an NVIDIA GPU the
+# CPU wheel avoids ~2 GB of CUDA libraries; everything in the study ran
+# on CPU. Set TORCH_INDEX to override (e.g. a CUDA index URL).
+if [ "$(uname -s)" = Linux ] && ! command -v nvidia-smi >/dev/null; then
+  TORCH_INDEX="${TORCH_INDEX:-https://download.pytorch.org/whl/cpu}"
+fi
+python3 -m pip install --upgrade ${TORCH_INDEX:+--index-url "$TORCH_INDEX"} \
+  'torch>=2.6' 'torchvision>=0.21'
+python3 -m pip install --upgrade 'timm>=1.0.15' 'pytorch_lightning>=2.4' \
+  'ultralytics>=8.3'
+# gtsam is only for the fusion experiments (e5_fusion.py, skynav.py);
+# its wheels lag new Python releases, so a failure here is not fatal
+python3 -m pip install 'gtsam>=4.2' \
+  || echo "WARNING: gtsam did not install; only e5_fusion/skynav need it" >&2
 
 say "native ray-marcher"
 # fastmarch.so is rebuilt automatically by skyline.CMarcher whenever the
 # source is newer, so this is only a check that a compiler exists.
 command -v cc >/dev/null || { echo "no C compiler; apt install build-essential" >&2; exit 1; }
+# Apple clang has no -fopenmp: the last fallback builds single-threaded
+# (identical results, slower). brew install libomp + gcc restores it.
 cc -O3 -march=native -fopenmp -shared -fPIC "$HERE/fastmarch.c" -o "$HERE/fastmarch.so" 2>/dev/null \
-  || cc -O3 -fopenmp -shared -fPIC "$HERE/fastmarch.c" -o "$HERE/fastmarch.so"
+  || cc -O3 -mcpu=native -fopenmp -shared -fPIC "$HERE/fastmarch.c" -o "$HERE/fastmarch.so" 2>/dev/null \
+  || cc -O3 -fopenmp -shared -fPIC "$HERE/fastmarch.c" -o "$HERE/fastmarch.so" 2>/dev/null \
+  || { echo "no OpenMP: building the marcher single-threaded" >&2;
+       cc -O3 -shared -fPIC "$HERE/fastmarch.c" -o "$HERE/fastmarch.so"; }
 echo "built $HERE/fastmarch.so"
 
 if [ "$DO_ASSETS" = 1 ]; then
@@ -63,6 +83,13 @@ if [ "$DO_ASSETS" = 1 ]; then
   [ -d "$ASSETS/MobileSAM" ] || \
     git clone --depth 1 https://github.com/ChaoningZhang/MobileSAM "$ASSETS/MobileSAM"
   # the checkpoint ships inside that repo at weights/mobile_sam.pt
+
+  say "SAM 2.1 tiny + base (Apache 2.0, Ultralytics release) -> $ASSETS/sam2"
+  mkdir -p "$ASSETS/sam2"
+  for w in sam2.1_t.pt sam2.1_b.pt; do
+    [ -f "$ASSETS/sam2/$w" ] || curl -fL -o "$ASSETS/sam2/$w" \
+      "https://github.com/ultralytics/assets/releases/download/v8.3.0/$w"
+  done
 
   echo
   echo "export HORIZONATOR_ASSETS=$ASSETS   # add to your shell profile"

@@ -12,11 +12,13 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
+from assets import celnav
+
 import extract
 import skyline as S
 from e5l_samsea import sam_sea_line
 
-path = '/home/user/celestial-navigation/peakfinder/PF_new_akyaka3.jpg'
+path = celnav('peakfinder', 'PF_new_akyaka3.jpg')
 img = extract.load_image(path)
 H, W = img.shape[:2]
 f_px = (W / 2) / np.tan(np.radians(73.74) / 2)

@@ -22,13 +22,14 @@ import time
 import numpy as np
 import cv2
 import matplotlib
+from assets import celnav
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 import extract
 import e5bo_segmenters as E
 
-P = '/home/user/celestial-navigation/peakfinder/'
+P = celnav('peakfinder') + os.sep
 FRAMES = {
     'bosphorus': (P + 'PF_new_bosphorus1.jpg', 'Boğaz — bulutlu gökyüzü'),
     'milas': (P + 'PF_new_milas1.jpg', 'Milas — pus, sol üstte uçak kanadı'),

@@ -22,6 +22,7 @@ import os
 import sys
 import glob
 import time
+from assets import celnav
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import numpy as np
@@ -54,7 +55,7 @@ def ensure_tiles(lat, lon, margin_lat=0.7, margin_lon=0.9):
             a = np.fromfile(p1, dtype='>i2').reshape(3601, 3601)
             a[::3, ::3].astype('>i2').tofile(p3)
 
-CH1 = '/home/user/celestial-navigation/CH1'
+CH1 = celnav('CH1')
 DIR3 = os.path.expanduser('~/.horizonator/DEMs_SRTM3')
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'out')
 AZ = np.arange(-180., 180., 0.1) + 0.05

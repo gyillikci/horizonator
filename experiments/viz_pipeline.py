@@ -10,6 +10,7 @@ Run:   python3 viz_pipeline.py     (needs the CH1 set + DEM tiles; no GL)
 
 import os
 import sys
+from assets import celnav
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import numpy as np
@@ -17,7 +18,7 @@ from PIL import Image
 import skyline as S
 import extract
 
-CH1 = '/home/user/celestial-navigation/CH1/cvg'
+CH1 = celnav('CH1', 'cvg')
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'out')
 DIR3 = os.path.expanduser('~/.horizonator/DEMs_SRTM3')
 AZ = np.arange(-180.0, 180.0, 0.1) + 0.05

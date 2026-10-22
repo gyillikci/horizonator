@@ -26,6 +26,7 @@ refusals and the reverse, and whether each accept was right.
 
 import glob
 import json
+import sys
 import math
 import os
 
@@ -70,8 +71,12 @@ def classify(a, b):
 
 def main():
     P = load()
-    S = '/tmp/claude-0/-home-user/792503f9-74c5-5111-83ca-eeeda63e838d/scratchpad/'
-    fr = json.load(open(S + 'frames_u.json'))
+    # the frame list the resweep ran on (python3 e5bm_ab_report.py
+    # FRAMES.json); without it nothing can be excluded, so say so
+    fr = json.load(open(sys.argv[1])) if len(sys.argv) > 1 else []
+    if not fr:
+        print('no frame list given: frames without EXIF truth are NOT '
+              'excluded')
     no_truth = {'%02d_%s' % (i, f['file'].rsplit('.', 1)[0][:28])
                 for i, f in enumerate(fr) if f.get('truth_src') != 'exif'}
     for t in no_truth:
