@@ -4464,6 +4464,75 @@ sequential estimator.
 > limit, and what a good INS buys is a prediction tight enough that the
 > limit is rarely reached.
 
+> **E5bt - a hill tracker with handover: the combination that holds
+> everywhere.** The operator's idea: lock a 250 x 250 px tracker on a
+> known hill from the known start, and before passing it start tracking
+> the next one, all along the course - on top of INS and skyline.
+> `experiments/e5bt_tracker.py`, same IMU streams and skyline noise as
+> E5bs, 5-s keyframes. Landmarks: 123 prominent DEM summits found
+> automatically; map position from GLO-30, truth from SRTM1 plus the
+> offset a tracker really locks on (30 m / 10 m) - 53-67 m from map to
+> truth. Each hill is a GTSAM variable with the map as prior, refined by
+> the platform's own bearings. Two tracker designs:
+>
+> - *gimbal* (B, C): one 10 deg telephoto tracker, 0.4 mrad jitter +
+>   0.5 mrad encoder; handover when the hill passes 100 deg off the bow,
+>   is occluded or comes within 1.5 km; acquisition by pointing at the
+>   next hill's *estimated* bearing, failed beyond 5 deg; identity known
+>   (oracle).
+> - *wide* (D, E), the operator's refinement: a 90 deg body-fixed
+>   camera, no gimbal (0.3 mrad jitter + 0.5 mrad calibration), two
+>   trackers held at once so the next hill is acquired before the last
+>   is released, and identity **inferred**: the first hill designated at
+>   the start, every later one scored against all mapped hills - its
+>   absolute bearing with the INS uncertainty from the iSAM2 marginals,
+>   plus its angular separation from the other tracked hill in the same
+>   image, which does not depend on attitude - jointly, through a
+>   chi-square gate and a ratio test against the runner-up, deferred
+>   when ambiguous.
+>
+> | online median (final) | A skyline | B + gimbal tracker | C gimbal tracker only | D skyline + wide, 2 trackers | E wide, 2 trackers only |
+> |---|---|---|---|---|---|
+> | drone, mid IMU | 118 m (406) | **51 m (39)** | 1054 m (4.0 km) | **62 m (32)** | 138 m (247) |
+> | drone, low IMU | 334 m (2.6 km) | 91 m (53) | 681 m (627) | **49 m (71)** | 458 m (2.0 km) |
+> | drone, field-like skyline | 1829 m (2.8 km) | 110 m (99) | 988 m (3.6 km) | **63 m (192)** | 56 m (387) |
+> | vessel, mid IMU + log | 60 m (52) | 43 m (46) | 49 m (52) | **18 m (27)** | 29 m (66) |
+>
+> **Identification works.** Across the eight wide-camera runs: 3-8
+> hills identified per run after the designated first, **none wrong**;
+> 0-44 attempts deferred as ambiguous and resolved at a later keyframe.
+> The separation test is what makes it work - before it existed, every
+> attempt was ambiguous, because absolute bearings carry the INS
+> heading and map uncertainty while the angle between two hills in one
+> image does not.
+>
+> **The two halves need each other.** Skyline alone (A) loses the
+> drone on a low-grade IMU and on field-like skylines. Trackers alone
+> drift on the drone: bearings to hills mapped 50-60 m off pin the
+> direction, not the range, and the single gimbal tracker (C) also loses
+> its hills - 47 failed acquisitions once the INS had drifted far enough
+> that the next hill's predicted bearing was off by more than half its
+> 10 deg view. The overlapping wide trackers (E) never lose
+> acquisition, but still drift late. Together (B, D) every scenario
+> holds at 18-110 m median, including the two that fail with skyline
+> alone: the tracker keeps the prediction tight, so each skyline map is
+> centred near the truth and its fix lands in the right basin; the
+> skyline supplies the absolute position the bearings lack. The hills
+> themselves are refined on the way, 53-67 m map error to 33-43 m.
+> On the slow vessel the trackers alone already hold (29-49 m), and
+> wide + skyline is the best result of the whole study at 18 m.
+>
+> Caveats. One realisation per cell. Arm A in this batch (5-s keyframes,
+> QR factorisation, separate noise streams) is worse than E5bs's same
+> configuration (drone 118 vs 82 m; field-like diverged here, 270 m
+> there): with a single realisation, skyline-only runs are sensitive to
+> an unlucky early run of wrong fixes, which is itself the finding of
+> E5br. The gimbal arms assume known identity; the wide arms do not.
+> Tracking is perfect while visible (no texture loss, no drift of the
+> lock point during a track), and hills are point features - a real
+> tracker slides along a ridge, which the aim-point offset only partly
+> represents.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
