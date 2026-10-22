@@ -34,6 +34,17 @@ the campaign's false accepts (E5at, E5bf, E5bi): the fit looks
 acceptable only because the parameter was not allowed to go where it
 wanted.
 
+**Variables & constraints** (top of the side panel) states the problem
+being solved, `min J(n, e, ψ, β)` subject to its bounds, and for the
+current step shows each decision variable as a gauge inside its bound
+(red when it sits on it), the inner heading × β landscape with the
+feasible box dashed, and where the optimum would go if that box were
+three times wider. A red "binding" chip means the bound, not the data,
+chose the answer. Below it: the parameters held fixed (pitch prior,
+roll, field of view, camera height, near-field cut), and under *Solve*
+the acceptance checks, which run after the optimum is found and are
+not constraints of the search.
+
 Keys: ←/→ step, space play, L unlocks PeakFinder so you can drag around
 (L again snaps back to the solver's pose). "open on peakfinder.com"
 opens the same view on the website.

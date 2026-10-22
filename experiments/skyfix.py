@@ -497,7 +497,33 @@ def write_view(path, p, cm, z, lat_c, lon_c, mlat, mlon, g, cc, trace,
                     heading_offset_deg=s * 0.1, beta_mrad=b * 1e3,
                     dem_az=np.round(AZ[m][o], 2).tolist(),
                     dem_el=np.round(el[m][o], 6).tolist(),
-                    dem_range_m=np.round(np.nan_to_num(r[m][o]), 0).tolist())
+                    dem_range_m=np.round(np.nan_to_num(r[m][o]), 0).tolist(),
+                    inner_rms=inner(el))
+
+    # the inner problem at each step, on a grid WIDER than its bounds:
+    # where the unconstrained optimum would go is exactly what tells a
+    # binding bound from an interior one
+    hw_deg = float(args.heading_window) if p['heading'] is not None \
+        else 180.0
+    bmax = float(np.max(np.abs(p['betas'])))
+    psi_span = min(max(3 * hw_deg, 15.0), 45.0)
+    beta_span = max(3 * bmax, 0.020)
+    psi_g = np.arange(-psi_span, psi_span + 1e-9, 0.4)
+    beta_g = np.arange(-beta_span, beta_span + 1e-12, 0.0015)
+
+    def inner(el):
+        out = np.empty((beta_g.size, psi_g.size))
+        W0 = p['w'].sum()
+        for k, ps_ in enumerate(psi_g):
+            sh = int(round(ps_ / 0.1))
+            eo = np.roll(p['el_obs'], sh)
+            ww = np.roll(p['w'], sh)
+            m = ww > 0
+            r = el[m] - eo[m]
+            rb = np.abs(r[None, :] - beta_g[:, None])
+            h = np.where(rb <= 3e-3, 0.5 * rb * rb, 3e-3 * (rb - 1.5e-3))
+            out[:, k] = (h * ww[m][None, :]).sum(1) / W0
+        return np.round(np.sqrt(2 * out) * 1e3, 2).tolist()
 
     steps = [step(0.0, 0.0, 'camera claim: box centre, compass heading',
                   'prior', prior=True)]
@@ -517,9 +543,38 @@ def write_view(path, p, cm, z, lat_c, lon_c, mlat, mlon, g, cc, trace,
         z_m=z, center=dict(lat=lat_c, lon=lon_c),
         # the bounds the nuisances were searched within: a step whose
         # heading or beta sits ON one is the clamping signature
-        search=dict(heading_window_deg=float(args.heading_window)
-                    if p['heading'] is not None else 180.0,
-                    beta_band_mrad=float(np.max(np.abs(p['betas'])) * 1e3)),
+        search=dict(heading_window_deg=hw_deg,
+                    beta_band_mrad=bmax * 1e3,
+                    box_m=float(args.box),
+                    grid_steps_m=[float(g[1] - g[0]),
+                                  float(g[1] - g[0]) / 5,
+                                  float(g[1] - g[0]) / 20],
+                    psi_lattice_deg=0.2,
+                    beta_lattice_mrad=float(np.diff(p['betas']).mean()
+                                            * 1e3),
+                    huber_mrad=3.0),
+        inner_grid=dict(psi_deg=np.round(psi_g, 2).tolist(),
+                        beta_mrad=np.round(beta_g * 1e3, 2).tolist()),
+        # held fixed during the solve: not variables, not constraints
+        fixed=dict(pitch_prior_deg=p['pitch'], roll_deg=p['roll'],
+                   fov_deg=p['fov'], camera_height_m=z,
+                   near_field_m=float(args.dmin),
+                   attitude_source=('sea horizon' if p['level']
+                                    else 'prior')),
+        # tested AFTER the optimum is found; they decide acceptance
+        checks=[
+            dict(name='basin margin', value=result['basin_margin'],
+                 op='>=', limit=float(args.min_margin), unit=''),
+            dict(name='residual rms', value=result['rms_mrad'],
+                 op='<=', limit=float(args.max_rms), unit='mrad'),
+            dict(name='skyline relief', value=result['relief_mrad'],
+                 op='>=', limit=float(args.min_relief), unit='mrad'),
+            dict(name='distance to box edge',
+                 value=float(args.box / 2 - max(abs(dn0), abs(de0))),
+                 op='>', limit=float(g[1] - g[0]), unit='m'),
+            dict(name='covariance computable',
+                 value=1.0 if np.isfinite(result['sigma_major_m'])
+                 else 0.0, op='>=', limit=1.0, unit='')],
         photo_skyline=dict(
             az_rel_deg=np.round(d['az_rel'][keep], 3).tolist(),
             el_rad=np.round(d['el_pt'][keep], 6).tolist()),

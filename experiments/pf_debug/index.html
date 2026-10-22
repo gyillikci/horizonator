@@ -39,7 +39,7 @@
   .spacer { flex: 1; }
   .hint { color: var(--muted); font-size: 12px; }
 
-  main { display: grid; grid-template-columns: 1fr 340px; min-height: 0; }
+  main { display: grid; grid-template-columns: 1fr 400px; min-height: 0; }
   #stagewrap { position: relative; display: flex; align-items: center; justify-content: center;
                padding: 12px; min-width: 0; min-height: 0; }
   #stage { position: relative; background: #f4f4f2; box-shadow: 0 0 0 1px var(--line); }
@@ -79,6 +79,27 @@
   tbody tr.cur { background: #24303b; box-shadow: inset 2px 0 0 var(--dem); }
   td.edge { color: var(--edge); }
 
+  .formula { font: 12px/1.6 var(--mono); background: var(--ground); border: 1px solid var(--line);
+             border-radius: 4px; padding: 6px 8px; margin-bottom: 10px; }
+  .formula .b { color: var(--muted); }
+  .gauge { display: grid; grid-template-columns: 22px 1fr 136px; gap: 8px; align-items: center;
+           font: 12px var(--mono); font-variant-numeric: tabular-nums; margin: 5px 0; }
+  .gauge .val { text-align: right; }
+  .track { position: relative; height: 16px; border-radius: 3px;
+           background: repeating-linear-gradient(135deg, #222a33 0 4px, #1a2027 4px 8px); }
+  .feas { position: absolute; top: 0; bottom: 0; left: 16.67%; right: 16.67%; background: #2c3946;
+          border-left: 2px solid var(--muted); border-right: 2px solid var(--muted); }
+  .zero { position: absolute; top: 2px; bottom: 2px; left: 50%; width: 1px; background: #4a5663; }
+  .dot, .ring { position: absolute; top: 50%; width: 10px; height: 10px; margin: -5px 0 0 -5px;
+                border-radius: 50%; }
+  .dot { background: var(--photo); }
+  .dot.edge { background: var(--edge); }
+  .ring { border: 2px solid var(--dem); width: 12px; height: 12px; margin: -6px 0 0 -6px; }
+  .arrow { position: absolute; top: 50%; transform: translateY(-50%); color: var(--dem);
+           font-size: 11px; }
+  #inner { width: 100%; display: block; border: 1px solid var(--line); border-radius: 4px; }
+  .check { display: grid; grid-template-columns: 1fr auto auto; gap: 8px; align-items: center;
+           font: 12px var(--mono); font-variant-numeric: tabular-nums; margin: 3px 0; }
   .controls { display: grid; grid-template-columns: auto 1fr; gap: 6px 10px; align-items: center; }
   .controls label { color: var(--muted); }
   .row { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
@@ -114,6 +135,19 @@
   </div>
 
   <aside>
+    <section>
+      <h2>Variables &amp; constraints</h2>
+      <div class="formula" id="formula"></div>
+      <div id="gauges"></div>
+      <div class="hint" style="margin:8px 0 4px">Inner problem at this step: residual rms over
+        heading offset ψ (→) and elevation offset β (↑). Dashed box = bounds.
+        ● = what the solver took, ○ = the best point over the whole plotted range (3× the bounds).</div>
+      <canvas id="inner" width="640" height="420"></canvas>
+      <div class="row" style="margin-top:4px" id="binding"></div>
+      <h2 style="margin-top:12px">Held fixed (not variables)</h2>
+      <dl class="kv" id="fixed"></dl>
+    </section>
+
     <section>
       <h2>This step</h2>
       <dl class="kv" id="pose"></dl>
@@ -153,6 +187,8 @@
     <section>
       <h2>Solve</h2>
       <dl class="kv" id="solve"></dl>
+      <h2 style="margin-top:10px">Acceptance checks (after the solve, not constraints)</h2>
+      <div id="checks"></div>
       <div class="hint" id="reasons" style="margin-top:6px"></div>
     </section>
 
@@ -382,6 +418,7 @@ function renderSide() {
   if (cur) { const box = cur.closest('.tablewrap');
     const t = cur.offsetTop - box.clientHeight / 2; box.scrollTop = Math.max(0, t); }
   drawCostmap();
+  renderConstraints();
 }
 
 function renderStatic() {
@@ -402,6 +439,121 @@ function renderStatic() {
     <dt>rms at fix</dt><dd>${fmt(r.rms_mrad, 2)} mrad</dd>
     <dt>photo</dt><dd>${v.photo.file}</dd>`;
   $('reasons').textContent = (r.reasons || []).join(' · ');
+  $('checks').innerHTML = (v.checks || []).map(c => {
+    const ok = c.op === '>=' ? c.value >= c.limit : c.op === '<=' ? c.value <= c.limit : c.value > c.limit;
+    const val = c.name === 'covariance computable' ? (c.value ? 'yes' : 'no')
+      : `${fmt(c.value, c.unit === 'm' ? 0 : 2)} ${c.op} ${fmt(c.limit, c.unit === 'm' ? 0 : 2)} ${c.unit}`;
+    return `<div class="check"><span>${c.name}</span><span>${val}</span>
+      <span class="chip ${ok ? 'ok' : 'edge'}">${ok ? 'pass' : 'fail'}</span></div>`;
+  }).join('');
+}
+
+// ---------- variables & constraints
+function innerOptimum(step) {
+  const v = S.view;
+  if (!step.inner_rms || !v.inner_grid) return null;
+  const R = step.inner_rms, P = v.inner_grid.psi_deg, B = v.inner_grid.beta_mrad;
+  let bi = 0, bk = 0, best = Infinity;
+  for (let i = 0; i < B.length; i++) for (let k = 0; k < P.length; k++)
+    if (R[i][k] < best) { best = R[i][k]; bi = i; bk = k; }
+  return { psi: P[bk], beta: B[bi], rms: best };
+}
+
+function gauge(name, value, bound, unit, digits, free, onEdge) {
+  // the track spans 1.5x the bound each way; the middle two thirds is feasible
+  const pos = (x) => 50 + 50 * x / (1.5 * bound);
+  let ringHtml = '';
+  if (free !== null && free !== undefined) {
+    const x = pos(free);
+    if (x < 0) ringHtml = `<span class="arrow" style="left:1px">◀</span>`;
+    else if (x > 100) ringHtml = `<span class="arrow" style="right:1px">▶</span>`;
+    else ringHtml = `<span class="ring" style="left:${x}%"></span>`;
+  }
+  return `<div class="gauge" title="bound ±${fmt(bound, digits)} ${unit}">
+    <span>${name}</span>
+    <div class="track"><div class="feas"></div><div class="zero"></div>${ringHtml}
+      <span class="dot ${onEdge ? 'edge' : ''}" style="left:${pos(value)}%"></span></div>
+    <span class="val">${fmt(value, digits, true)} / ±${fmt(bound, digits)} ${unit}${
+      free !== null && free !== undefined && Math.abs(free) > bound * 1.02
+        ? `<br><span style="color:var(--dem)">free: ${fmt(free, digits, true)}</span>` : ''}</span></div>`;
+}
+
+function renderConstraints() {
+  const v = S.view, step = v.steps[S.i], sr = v.search;
+  if (!sr || sr.box_m === undefined) {
+    $('formula').textContent = 'This view file predates the constraint export: re-run skyfix --view-json.';
+    return;
+  }
+  const B2 = sr.box_m / 2;
+  $('formula').innerHTML = `min J(n, e, ψ, β) = Σ wᵢ ρ<sub>δ</sub>(E(αᵢ+ψ; n, e) − êᵢ − β)<br>
+    <span class="b">s.t.</span> |n|, |e| ≤ ${fmt(B2)} m &nbsp; |ψ| ≤ ${fmt(sr.heading_window_deg, 0)}° &nbsp; |β| ≤ ${fmt(sr.beta_band_mrad, 1)} mrad<br>
+    <span class="b">lattice:</span> ${sr.grid_steps_m.map(x => fmt(x, x < 20 ? 1 : 0)).join(' → ')} m, ψ ${sr.psi_lattice_deg}°, β ${fmt(sr.beta_lattice_mrad, 1)} mrad; δ = ${sr.huber_mrad} mrad`;
+  const free = innerOptimum(step), ed = atEdge(step);
+  // a position within one coarse cell of the box wall is on the bound
+  const wall = (x) => Math.abs(x) >= B2 - sr.grid_steps_m[0] + 1e-6;
+  $('gauges').innerHTML =
+    gauge('n', step.dn, B2, 'm', 0, null, wall(step.dn)) +
+    gauge('e', step.de, B2, 'm', 0, null, wall(step.de)) +
+    gauge('ψ', step.heading_offset_deg, sr.heading_window_deg, '°', 1, free && free.psi, ed.hdg) +
+    gauge('β', step.beta_mrad, sr.beta_band_mrad, 'mrad', 1, free && free.beta, ed.beta);
+  drawInner(step, free);
+  const chips = [];
+  if (free) {
+    const outPsi = Math.abs(free.psi) > sr.heading_window_deg + 0.2;
+    const outBeta = Math.abs(free.beta) > sr.beta_band_mrad + 0.75;
+    if (outPsi || outBeta) chips.push(`<span class="chip edge">binding: ${[outPsi && 'ψ', outBeta && 'β'].filter(Boolean).join(' and ')} would leave its bounds (rms ${fmt(rms(step.cost), 2)} → ${fmt(free.rms, 2)} mrad)</span>`);
+    else chips.push('<span class="chip ok">bounds not binding: the optimum is interior</span>');
+  }
+  $('binding').innerHTML = chips.join(' ');
+  const f = v.fixed;
+  $('fixed').innerHTML = `
+    <dt>pitch prior θ</dt><dd>${fmt(f.pitch_prior_deg, 2, true)}° (${f.attitude_source})</dd>
+    <dt>roll φ</dt><dd>${fmt(f.roll_deg, 2, true)}°</dd>
+    <dt>field of view</dt><dd>${fmt(f.fov_deg, 1)}°</dd>
+    <dt>camera height z</dt><dd>${fmt(f.camera_height_m, 1)} m</dd>
+    <dt>near-field cut d<sub>min</sub></dt><dd>${fmt(f.near_field_m)} m</dd>`;
+}
+
+function drawInner(step, free) {
+  const cv = $('inner'), ctx = cv.getContext('2d'), v = S.view;
+  const W = cv.width, H = cv.height;
+  ctx.fillStyle = '#12161b'; ctx.fillRect(0, 0, W, H);
+  if (!step.inner_rms) return;
+  const P = v.inner_grid.psi_deg, B = v.inner_grid.beta_mrad, R = step.inner_rms;
+  const L = 44, T = 10, Rm = 10, Bm = 34, pw = W - L - Rm, ph = H - T - Bm;
+  let lo = Infinity, hi = -Infinity;
+  for (const row of R) for (const x of row) { lo = Math.min(lo, Math.log(x)); hi = Math.max(hi, Math.log(x)); }
+  const cw = pw / P.length, ch = ph / B.length;
+  for (let i = 0; i < B.length; i++) for (let k = 0; k < P.length; k++) {
+    const t = (Math.log(R[i][k]) - lo) / (hi - lo || 1);
+    ctx.fillStyle = `hsl(205 ${30 - 20 * t}% ${16 + 78 * t}%)`;
+    ctx.fillRect(L + k * cw, T + (B.length - 1 - i) * ch, cw + 0.6, ch + 0.6);
+  }
+  const X = (psi) => L + (psi - P[0]) / (P[P.length - 1] - P[0]) * (pw - cw) + cw / 2;
+  const Y = (b) => T + (ph - ch) - (b - B[0]) / (B[B.length - 1] - B[0]) * (ph - ch) + ch / 2;
+  const sr = v.search, css = getComputedStyle(document.documentElement);
+  // feasible set
+  ctx.setLineDash([7, 5]); ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2;
+  ctx.strokeRect(X(-sr.heading_window_deg), Y(sr.beta_band_mrad),
+                 X(sr.heading_window_deg) - X(-sr.heading_window_deg), Y(-sr.beta_band_mrad) - Y(sr.beta_band_mrad));
+  ctx.setLineDash([]);
+  // optima
+  if (free) {
+    ctx.strokeStyle = css.getPropertyValue('--dem'); ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.arc(X(free.psi), Y(free.beta), 9, 0, 7); ctx.stroke();
+  }
+  const e = atEdge(step);
+  ctx.fillStyle = css.getPropertyValue(e.hdg || e.beta ? '--edge' : '--photo');
+  ctx.beginPath(); ctx.arc(X(step.heading_offset_deg), Y(step.beta_mrad), 7, 0, 7); ctx.fill();
+  // axes
+  ctx.fillStyle = '#8b96a3'; ctx.font = '18px ' + css.getPropertyValue('--mono');
+  ctx.textAlign = 'center';
+  for (const t of [P[0], -sr.heading_window_deg, 0, sr.heading_window_deg, P[P.length - 1]])
+    ctx.fillText(fmt(t, 0, t !== 0) + '°', X(t), H - 10);
+  ctx.textAlign = 'right';
+  for (const t of [B[0], -sr.beta_band_mrad, 0, sr.beta_band_mrad, B[B.length - 1]])
+    ctx.fillText(fmt(t, 0, t !== 0), L - 6, Y(t) + 6);
+  ctx.textAlign = 'left';
 }
 
 // ---------- cost map
