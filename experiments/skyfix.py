@@ -460,6 +460,79 @@ def fast_photo_cost(el_obs, w, el_syn, shifts, betas=BETAS, topk=12,
     return photo_cost(el_obs, w, el_syn, cand, betas, w_syn)
 
 
+def write_view(path, p, cm, z, lat_c, lon_c, mlat, mlon, g, cc, trace,
+               dn0, de0, result, args):
+    """Everything a human needs to SEE a solve, step by step: for the
+    camera's own claim (box centre, compass heading), every improvement
+    of the running best, and the final fix, the pose the solver would
+    point the camera at and the DEM skyline it compared against. Read
+    by pf_debug/, which hands each pose to PeakFinder and draws the
+    photo and both skylines over it. Nothing here feeds the solve."""
+    d = p['diag']
+    ok = np.isfinite(d['el_pt']) & (d['conf'] > 0)
+    keep = np.linspace(0, d['az_rel'].size - 1,
+                       min(900, d['az_rel'].size)).astype(int)
+    keep = keep[ok[keep]]
+    half = p['fov'] / 2 + 10.0
+    h0 = p['heading'] if p['heading'] is not None else 0.0
+
+    def step(dn, de, label, stage, cost=None, prior=False):
+        el, r = cm.skyline(lat_c + dn / mlat, lon_c + de / mlon, z, AZ)
+        if args.crest_dh:
+            el = el + np.where(np.isfinite(r) & (r > 0),
+                               args.crest_dh / np.maximum(r, args.dmin),
+                               0.0)
+        # the camera's claim keeps the compass heading exactly; every
+        # solver step gets the heading and beta the solver chose there
+        c, s, b = fast_photo_cost(p['el_obs'], p['w'], el,
+                                  [0] if prior else p['shifts'],
+                                  p['betas'])
+        az_cam = h0 + s * 0.1
+        rel = (AZ - az_cam + 180.0) % 360.0 - 180.0
+        m = (np.abs(rel) <= half) & np.isfinite(el)
+        o = np.argsort(rel[m])
+        return dict(label=label, stage=stage, dn=float(dn), de=float(de),
+                    lat=lat_c + dn / mlat, lon=lon_c + de / mlon,
+                    cost=float(c if cost is None else cost),
+                    heading_offset_deg=s * 0.1, beta_mrad=b * 1e3,
+                    dem_az=np.round(AZ[m][o], 2).tolist(),
+                    dem_el=np.round(el[m][o], 6).tolist(),
+                    dem_range_m=np.round(np.nan_to_num(r[m][o]), 0).tolist())
+
+    steps = [step(0.0, 0.0, 'camera claim: box centre, compass heading',
+                  'prior', prior=True)]
+    for k, t in enumerate(trace):
+        steps.append(step(t['dn'], t['de'],
+                          '%s improvement %d' % (t['stage'], k + 1),
+                          t['stage'], t['cost']))
+    steps.append(step(dn0, de0, 'final fix (%s)' % result['status'],
+                      'final'))
+    H, W = p['img'].shape[:2]
+    view = dict(
+        photo=dict(path=os.path.abspath(p['path']),
+                   file=os.path.basename(p['path']), width=W, height=H,
+                   fov_deg=p['fov'], heading_deg=h0,
+                   heading_known=p['heading'] is not None,
+                   pitch_deg=p['pitch'], roll_deg=p['roll']),
+        z_m=z, center=dict(lat=lat_c, lon=lon_c),
+        # the bounds the nuisances were searched within: a step whose
+        # heading or beta sits ON one is the clamping signature
+        search=dict(heading_window_deg=float(args.heading_window)
+                    if p['heading'] is not None else 180.0,
+                    beta_band_mrad=float(np.max(np.abs(p['betas'])) * 1e3)),
+        photo_skyline=dict(
+            az_rel_deg=np.round(d['az_rel'][keep], 3).tolist(),
+            el_rad=np.round(d['el_pt'][keep], 6).tolist()),
+        grid=dict(offsets_m=g.tolist(), cost=cc.tolist()),
+        result={k: result[k] for k in (
+            'status', 'reasons', 'lat', 'lon', 'dn_m', 'de_m',
+            'basin_margin', 'rms_mrad')},
+        steps=steps)
+    with open(path, 'w') as f:
+        json.dump(view, f)
+    print('wrote', path, '(%d steps)' % len(steps))
+
+
 def per_photo_vals(spec, n, default=None):
     """Parse a per-photo CLI value: a single value broadcasts to all
     photos, a comma list gives one per photo, 'x' means unknown."""
@@ -692,6 +765,11 @@ def main():
                          'flooring the per-photo weights')
     ap.add_argument('--out',
                     help='write PREFIX.json and PREFIX.png diagnostics')
+    ap.add_argument('--view-json', metavar='PATH',
+                    help='write what the solver saw at every search step '
+                         '(pose, photo skyline, DEM skyline, cost map) for '
+                         'the PeakFinder debug viewer, pf_debug/serve.py. '
+                         'First photo only')
     args = ap.parse_args()
     global EXTRACTOR, ACROSS_WATER, BOUNDARY_ROWS
     EXTRACTOR = args.extractor
@@ -1177,6 +1255,10 @@ def main():
                       el_offset_mrad=pj[0]['el_offset_mrad'],
                       fov_deg=pj[0]['fov_deg'])
     print(json.dumps(result, indent=1))
+
+    if args.view_json:
+        write_view(args.view_json, photos[0], cm, z, lat_c, lon_c, mlat,
+                   mlon, g, cc, trace, dn0, de0, result, args)
 
     if args.out:
         with open(args.out + '.json', 'w') as fjs:

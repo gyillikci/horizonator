@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Skyfix Eye</title>
+<link rel="icon" href="data:,">
+<script async src="https://www.peakfinder.com/script/peakfinder.1.0.min.js"
+        onload="pfScriptLoaded()" onerror="pfScriptFailed()"></script>
+<style>
+  :root {
+    --ground: #12161b;
+    --panel: #1a2027;
+    --line: #2a323c;
+    --text: #d9dee4;
+    --muted: #8b96a3;
+    --photo: #ffd23f;      /* the skyline the solver read from the photo */
+    --dem: #38c6f4;        /* the skyline the DEM predicts at this pose */
+    --edge: #ff6b5a;       /* a nuisance parameter sitting on its bound */
+    --ok: #5fd38d;
+    --mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--ground); color: var(--text);
+               font: 13px/1.45 var(--sans); }
+  body { display: grid; grid-template-rows: auto 1fr; overflow: hidden; }
+
+  header { display: flex; align-items: center; gap: 12px; padding: 8px 14px;
+           border-bottom: 1px solid var(--line); background: var(--panel); flex-wrap: wrap; }
+  header h1 { font-size: 14px; margin: 0 8px 0 0; letter-spacing: .04em; font-weight: 600; }
+  header .step-label { font-family: var(--mono); min-width: 22ch; }
+  select, button, input[type=number] {
+    font: inherit; color: var(--text); background: var(--ground);
+    border: 1px solid var(--line); border-radius: 4px; padding: 3px 8px; }
+  button { cursor: pointer; }
+  button:hover { border-color: var(--muted); }
+  button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--dem); outline-offset: 1px; }
+  .spacer { flex: 1; }
+  .hint { color: var(--muted); font-size: 12px; }
+
+  main { display: grid; grid-template-columns: 1fr 340px; min-height: 0; }
+  #stagewrap { position: relative; display: flex; align-items: center; justify-content: center;
+               padding: 12px; min-width: 0; min-height: 0; }
+  #stage { position: relative; background: #f4f4f2; box-shadow: 0 0 0 1px var(--line); }
+  #stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  #pfcanvas.locked { pointer-events: none; }
+  #overlay { pointer-events: none; }
+  #pfstate { position: absolute; left: 12px; bottom: 12px; font: 12px var(--mono);
+             background: rgba(18,22,27,.82); padding: 4px 8px; border-radius: 4px; }
+
+  aside { border-left: 1px solid var(--line); background: var(--panel); overflow-y: auto;
+          display: flex; flex-direction: column; gap: 14px; padding: 12px; }
+  aside h2 { font-size: 11px; text-transform: uppercase; letter-spacing: .09em;
+             color: var(--muted); margin: 0 0 6px; font-weight: 600; }
+  .kv { display: grid; grid-template-columns: auto 1fr; gap: 2px 12px;
+        font-family: var(--mono); font-size: 12px; font-variant-numeric: tabular-nums; }
+  .kv dt { color: var(--muted); }
+  .kv dd { margin: 0; text-align: right; }
+  .chip { display: inline-block; font: 11px var(--mono); padding: 0 6px; border-radius: 3px;
+          border: 1px solid currentColor; }
+  .chip.edge { color: var(--edge); }
+  .chip.ok { color: var(--ok); }
+  #costmap { width: 100%; aspect-ratio: 1; display: block; cursor: crosshair;
+             border: 1px solid var(--line); border-radius: 4px; }
+  .legend { display: flex; gap: 14px; font-size: 12px; flex-wrap: wrap; }
+  .swatch { display: inline-block; width: 18px; height: 3px; vertical-align: middle; margin-right: 5px; }
+
+  .tablewrap { max-height: 300px; overflow-y: auto; border: 1px solid var(--line); border-radius: 4px; }
+  thead th { position: sticky; top: 0; background: var(--panel); }
+  table { width: 100%; border-collapse: collapse; font: 11.5px var(--mono);
+          font-variant-numeric: tabular-nums; }
+  th { text-align: right; color: var(--muted); font-weight: 400; padding: 2px 4px;
+       border-bottom: 1px solid var(--line); }
+  td { text-align: right; padding: 2px 4px; }
+  th:first-child, td:first-child { text-align: left; }
+  tbody tr { cursor: pointer; }
+  tbody tr:hover { background: var(--ground); }
+  tbody tr.cur { background: #24303b; box-shadow: inset 2px 0 0 var(--dem); }
+  td.edge { color: var(--edge); }
+
+  .controls { display: grid; grid-template-columns: auto 1fr; gap: 6px 10px; align-items: center; }
+  .controls label { color: var(--muted); }
+  .row { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+  input[type=number] { width: 70px; }
+  input[type=range] { width: 100%; accent-color: var(--photo); }
+  a { color: var(--dem); }
+
+  @media (max-width: 900px) {
+    main { grid-template-columns: 1fr; grid-template-rows: 60vh auto; }
+    aside { border-left: 0; border-top: 1px solid var(--line); }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Skyfix Eye</h1>
+  <select id="runsel" aria-label="Solve"></select>
+  <button id="prev" title="previous step (←)">◀</button>
+  <span class="step-label" id="steplabel">–</span>
+  <button id="next" title="next step (→)">▶</button>
+  <button id="play" title="step through automatically (space)">Play</button>
+  <span class="spacer"></span>
+  <span class="hint">←/→ steps · space play · L unlock PeakFinder</span>
+</header>
+
+<main>
+  <div id="stagewrap">
+    <div id="stage">
+      <canvas id="pfcanvas" class="locked" oncontextmenu="event.preventDefault()"></canvas>
+      <canvas id="overlay"></canvas>
+      <div id="pfstate">PeakFinder: loading…</div>
+    </div>
+  </div>
+
+  <aside>
+    <section>
+      <h2>This step</h2>
+      <dl class="kv" id="pose"></dl>
+      <div class="row" style="margin-top:6px" id="flags"></div>
+    </section>
+
+    <section>
+      <h2>Layers</h2>
+      <div class="legend" style="margin-bottom:8px">
+        <span><span class="swatch" style="background:var(--photo)"></span>photo skyline</span>
+        <span><span class="swatch" style="background:var(--dem)"></span>DEM skyline here</span>
+      </div>
+      <div class="controls">
+        <label for="l-photo">photo</label>
+        <div class="row"><input type="checkbox" id="l-photo" checked>
+          <input type="range" id="l-opacity" min="0" max="1" step="0.05" value="0.55" aria-label="photo opacity"></div>
+        <label for="l-sky">photo skyline</label><input type="checkbox" id="l-sky" checked>
+        <label for="l-dem">DEM skyline</label><input type="checkbox" id="l-dem" checked>
+        <label for="l-pf">PeakFinder</label><input type="checkbox" id="l-pf" checked>
+      </div>
+    </section>
+
+    <section>
+      <h2>Cost map (north up, box centre +)</h2>
+      <canvas id="costmap" width="600" height="600"></canvas>
+      <div class="hint" style="margin-top:4px">Darker = lower cost. Line = order the running best improved; click to jump.</div>
+    </section>
+
+    <section>
+      <h2>Search steps</h2>
+      <div class="tablewrap"><table>
+        <thead><tr><th>step</th><th>Δn m</th><th>Δe m</th><th>rms</th><th>hdg°</th><th>β mrad</th></tr></thead>
+        <tbody id="steps"></tbody>
+      </table></div>
+    </section>
+
+    <section>
+      <h2>Solve</h2>
+      <dl class="kv" id="solve"></dl>
+      <div class="hint" id="reasons" style="margin-top:6px"></div>
+    </section>
+
+    <section>
+      <h2>Overlay alignment</h2>
+      <div class="hint" style="margin-bottom:6px">
+        Only if PeakFinder's rendering and the lines disagree on every step
+        alike: that is a projection mismatch, not a solver result.</div>
+      <div class="controls">
+        <label for="c-axis">PF fov is</label>
+        <select id="c-axis"><option value="h">horizontal</option><option value="v">vertical</option></select>
+        <label>shift px</label>
+        <div class="row"><input type="number" id="c-dx" value="0" step="1" aria-label="shift x">
+          <input type="number" id="c-dy" value="0" step="1" aria-label="shift y"></div>
+        <label for="c-scale">scale</label>
+        <input type="number" id="c-scale" value="1" step="0.005">
+      </div>
+    </section>
+  </aside>
+</main>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const D2R = Math.PI / 180;
+const S = { runs: [], view: null, img: null, i: 0, playing: null,
+            panel: null, pfReady: false, pfFailed: false, token: 0 };
+
+function store(k, v) { try { localStorage.setItem('skyfixeye.' + k, JSON.stringify(v)); } catch (e) {} }
+function recall(k, d) { try { const v = localStorage.getItem('skyfixeye.' + k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } }
+
+// ---------- pose of a step, in the solver's own terms
+function pose(step) {
+  const v = S.view, p = v.photo;
+  return {
+    lat: step.lat, lon: step.lon, z: v.z_m,
+    az: ((p.heading_deg + step.heading_offset_deg) % 360 + 360) % 360,
+    // the solver's beta is a correction to the camera's pitch prior
+    alt: p.pitch_deg + step.beta_mrad / 1000 / D2R,
+    fov: p.fov_deg,
+  };
+}
+
+// ---------- projection: the inverse of skyfix.observation, so the photo
+// skyline lands exactly on the photo's own pixels
+function projector(W, H, ps) {
+  const c = calib();
+  const f = (W / 2) / Math.tan(ps.fov * D2R / 2) * c.scale;
+  return {
+    f,
+    pt(azDeg, elRad) {
+      let d = ((azDeg - ps.az + 540) % 360) - 180;
+      if (Math.abs(d) >= 89) return null;
+      const ur = f * Math.tan(d * D2R);
+      const vr = Math.tan(elRad - ps.alt * D2R) * Math.hypot(ur, f);
+      return [W / 2 + ur + c.dx, H / 2 - vr + c.dy];
+    }
+  };
+}
+
+function calib() {
+  return { axis: $('c-axis').value, dx: +$('c-dx').value || 0,
+           dy: +$('c-dy').value || 0, scale: +$('c-scale').value || 1 };
+}
+
+// ---------- layout: the stage takes the photo's aspect ratio
+function layout() {
+  if (!S.view) return;
+  const wrap = $('stagewrap'), p = S.view.photo;
+  const aw = wrap.clientWidth - 24, ah = wrap.clientHeight - 24;
+  const r = p.width / p.height;
+  let w = aw, h = aw / r;
+  if (h > ah) { h = ah; w = ah * r; }
+  const st = $('stage');
+  st.style.width = Math.floor(w) + 'px';
+  st.style.height = Math.floor(h) + 'px';
+  const dpr = window.devicePixelRatio || 1;
+  const ov = $('overlay');
+  ov.width = Math.floor(w * dpr); ov.height = Math.floor(h * dpr);
+  draw();
+}
+
+function polyline(ctx, pts, color, width) {
+  ctx.strokeStyle = color; ctx.lineWidth = width; ctx.lineJoin = 'round';
+  ctx.beginPath();
+  let pen = false, last = null;
+  for (const q of pts) {
+    if (!q || (last && Math.abs(q[0] - last[0]) > ctx.canvas.width / 4)) { pen = false; last = q; continue; }
+    if (!pen) { ctx.moveTo(q[0], q[1]); pen = true; } else ctx.lineTo(q[0], q[1]);
+    last = q;
+  }
+  ctx.stroke();
+}
+
+function draw() {
+  if (!S.view) return;
+  const ov = $('overlay'), ctx = ov.getContext('2d');
+  const W = ov.width, H = ov.height;
+  ctx.clearRect(0, 0, W, H);
+  const step = S.view.steps[S.i], ps = pose(step), pr = projector(W, H, ps);
+  const p = S.view.photo, css = getComputedStyle(document.documentElement);
+
+  if ($('l-photo').checked && S.img) {
+    const fPhoto = (S.img.naturalWidth / 2) / Math.tan(p.fov_deg * D2R / 2);
+    const k = pr.f / fPhoto, c = calib();
+    ctx.save();
+    ctx.globalAlpha = +$('l-opacity').value;
+    ctx.translate(W / 2 + c.dx, H / 2 + c.dy);
+    ctx.rotate(-p.roll_deg * D2R);           // level the photo: undo its roll
+    ctx.scale(k, k);
+    ctx.drawImage(S.img, -S.img.naturalWidth / 2, -S.img.naturalHeight / 2);
+    ctx.restore();
+  }
+  const lw = Math.max(1.5, W / 700);
+  if ($('l-dem').checked) {
+    const pts = step.dem_az.map((a, j) => pr.pt(a, step.dem_el[j]));
+    polyline(ctx, pts, css.getPropertyValue('--dem'), lw * 1.2);
+  }
+  if ($('l-sky').checked) {
+    const sk = S.view.photo_skyline, beta = step.beta_mrad / 1000;
+    // world elevation of a photo point is el + beta: the solver's
+    // correction to the pitch prior (skyfix: el_syn = el_obs + beta)
+    const pts = sk.az_rel_deg.map((a, j) => pr.pt(ps.az + a, sk.el_rad[j] + beta));
+    polyline(ctx, pts, css.getPropertyValue('--photo'), lw);
+  }
+}
+
+// ---------- PeakFinder
+function pfScriptFailed() {
+  S.pfFailed = true;
+  $('pfstate').textContent = 'PeakFinder unreachable: showing the photo and both skylines only';
+}
+function pfScriptLoaded() {
+  if (!window.PeakFinder || !PeakFinder.utils.caniuse()) {
+    S.pfFailed = true;
+    $('pfstate').textContent = 'PeakFinder cannot run in this browser (WebGL?)';
+    return;
+  }
+  const panel = new PeakFinder.PanoramaPanel({ canvasid: 'pfcanvas', locale: 'en',
+                                               disableinfosheets: true });
+  panel.init(() => {
+    S.panel = panel; S.pfReady = true;
+    try { panel.settings.showZoomButtons(0); panel.settings.projection(0); } catch (e) {}
+    panel.addEventListener('viewpointjourney finished', () => settlePF());
+    pushPF();
+  });
+}
+
+function pfFov(ps) {
+  if (calib().axis === 'h') return ps.fov;
+  const p = S.view.photo;   // the same camera, its vertical field of view
+  return 2 * Math.atan(Math.tan(ps.fov * D2R / 2) * p.height / p.width) / D2R;
+}
+
+function pushPF() {
+  if (!S.pfReady || !S.view) return;
+  if (!$('l-pf').checked) { $('pfcanvas').style.visibility = 'hidden'; return; }
+  $('pfcanvas').style.visibility = 'visible';
+  const ps = pose(S.view.steps[S.i]);
+  S.token++;
+  S.pending = { token: S.token, ps };
+  $('pfstate').textContent = 'PeakFinder: loading viewpoint…';
+  S.panel.loadViewpoint(ps.lat, ps.lon, '', { animation: 'teleport' });
+  aimPF(ps);
+}
+
+function aimPF(ps) {
+  S.panel.azimut(ps.az); S.panel.altitude(ps.alt);
+  S.panel.fieldofview(Math.min(90, Math.max(8, pfFov(ps))));
+}
+
+function settlePF() {
+  const job = S.pending;
+  if (!job || job.token !== S.token) return;
+  const ps = job.ps;
+  // PeakFinder stands the viewer on ITS terrain at this point; lift to
+  // the solver's camera height above sea level
+  let ground = 0;
+  try { ground = +S.panel.viewpoint.elevation() || 0; } catch (e) {}
+  try { S.panel.elevationOffset(Math.max(0, ps.z - ground)); } catch (e) {}
+  aimPF(ps);
+  $('pfstate').textContent = `PeakFinder: ground ${ground.toFixed(0)} m, camera ${ps.z.toFixed(1)} m`;
+}
+
+// ---------- side panel
+function fmt(x, d = 0, sign = false) {
+  if (x === null || x === undefined || !isFinite(x)) return '–';
+  const s = x.toFixed(d);
+  return sign && x >= 0 ? '+' + s : s;
+}
+function atEdge(step) {
+  const s = S.view.search;
+  if (!s) return { hdg: false, beta: false };    // view files before bounds were recorded
+  return { hdg: Math.abs(step.heading_offset_deg) >= s.heading_window_deg - 0.15,
+           beta: Math.abs(step.beta_mrad) >= s.beta_band_mrad - 0.05 };
+}
+function rms(c) { return Math.sqrt(2 * c) * 1e3; }
+
+function pfUrl(ps) {
+  const q = new URLSearchParams({ lat: ps.lat.toFixed(5), lng: ps.lon.toFixed(5),
+    off: Math.round(ps.z), azi: ps.az.toFixed(1), alt: ps.alt.toFixed(1),
+    fov: Math.round(Math.min(90, Math.max(8, pfFov(ps)))) });
+  return 'https://www.peakfinder.com/?' + q;
+}
+
+function renderSide() {
+  const v = S.view, step = v.steps[S.i], ps = pose(step), e = atEdge(step);
+  $('steplabel').textContent = `${S.i + 1}/${v.steps.length}  ${step.label}`;
+  const dist = Math.hypot(step.dn, step.de);
+  $('pose').innerHTML = `
+    <dt>lat, lon</dt><dd>${ps.lat.toFixed(5)}, ${ps.lon.toFixed(5)}</dd>
+    <dt>Δn, Δe from centre</dt><dd>${fmt(step.dn, 0, true)}, ${fmt(step.de, 0, true)} m</dd>
+    <dt>distance</dt><dd>${fmt(dist)} m</dd>
+    <dt>camera height</dt><dd>${fmt(ps.z, 1)} m</dd>
+    <dt>heading</dt><dd>${fmt(ps.az, 2)}° (${fmt(step.heading_offset_deg, 1, true)})</dd>
+    <dt>pitch</dt><dd>${fmt(ps.alt, 2)}° (β ${fmt(step.beta_mrad, 1, true)} mrad)</dd>
+    <dt>roll (levelled out)</dt><dd>${fmt(v.photo.roll_deg, 2, true)}°</dd>
+    <dt>fov</dt><dd>${fmt(ps.fov, 1)}°</dd>
+    <dt>residual rms</dt><dd>${fmt(rms(step.cost), 2)} mrad</dd>`;
+  const flags = [];
+  if (e.hdg) flags.push(`<span class="chip edge">heading on its ±${v.search.heading_window_deg}° bound</span>`);
+  if (e.beta) flags.push(`<span class="chip edge">β on its ±${fmt(v.search.beta_band_mrad, 0)} mrad bound</span>`);
+  if (!flags.length) flags.push('<span class="chip ok">nuisances interior</span>');
+  flags.push(`<a href="${pfUrl(ps)}" target="_blank" rel="noopener">open on peakfinder.com</a>`);
+  $('flags').innerHTML = flags.join(' ');
+  [...$('steps').children].forEach((tr, j) => tr.classList.toggle('cur', j === S.i));
+  const cur = $('steps').children[S.i];
+  if (cur) { const box = cur.closest('.tablewrap');
+    const t = cur.offsetTop - box.clientHeight / 2; box.scrollTop = Math.max(0, t); }
+  drawCostmap();
+}
+
+function renderStatic() {
+  const v = S.view, r = v.result;
+  $('steps').innerHTML = v.steps.map((s, j) => {
+    const e = atEdge(s);
+    const name = s.stage === 'prior' ? 'claim' : s.stage === 'final' ? 'final' :
+      s.stage.replace('refine_', 'r') + ' ' + j;
+    return `<tr data-i="${j}"><td>${name}</td><td>${fmt(s.dn, 0, true)}</td><td>${fmt(s.de, 0, true)}</td>
+      <td>${fmt(rms(s.cost), 2)}</td><td class="${e.hdg ? 'edge' : ''}">${fmt(s.heading_offset_deg, 1, true)}</td>
+      <td class="${e.beta ? 'edge' : ''}">${fmt(s.beta_mrad, 1, true)}</td></tr>`;
+  }).join('');
+  $('steps').querySelectorAll('tr').forEach(tr => tr.onclick = () => go(+tr.dataset.i));
+  $('solve').innerHTML = `
+    <dt>status</dt><dd><span class="chip ${r.status === 'ok' ? 'ok' : 'edge'}">${r.status}</span></dd>
+    <dt>fix − centre</dt><dd>Δn ${fmt(r.dn_m, 0, true)} m, Δe ${fmt(r.de_m, 0, true)} m</dd>
+    <dt>basin margin</dt><dd>${fmt(r.basin_margin, 2)}</dd>
+    <dt>rms at fix</dt><dd>${fmt(r.rms_mrad, 2)} mrad</dd>
+    <dt>photo</dt><dd>${v.photo.file}</dd>`;
+  $('reasons').textContent = (r.reasons || []).join(' · ');
+}
+
+// ---------- cost map
+function drawCostmap() {
+  const cv = $('costmap'), ctx = cv.getContext('2d'), v = S.view;
+  const g = v.grid.offsets_m, C = v.grid.cost, n = g.length;
+  const W = cv.width, cell = W / n;
+  let lo = Infinity, hi = -Infinity;
+  for (const row of C) for (const c of row) if (isFinite(c) && c > 0) {
+    lo = Math.min(lo, Math.log(c)); hi = Math.max(hi, Math.log(c)); }
+  for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) {
+    const c = C[i][j];
+    const t = isFinite(c) && c > 0 ? (Math.log(c) - lo) / (hi - lo || 1) : 1;
+    // dark = low cost: a single-hue ramp, steel blue to near white
+    const L = 16 + 78 * t;
+    ctx.fillStyle = `hsl(205 ${30 - 20 * t}% ${L}%)`;
+    ctx.fillRect(j * cell, (n - 1 - i) * cell, cell + 0.5, cell + 0.5);   // north up
+  }
+  const span = g[n - 1] - g[0];
+  const xy = (dn, de) => [(de - g[0]) / span * (W - cell) + cell / 2,
+                          (W - cell) - (dn - g[0]) / span * (W - cell) + cell / 2];
+  // box centre
+  const [cx, cy] = xy(0, 0);
+  ctx.strokeStyle = '#000'; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(cx - 9, cy); ctx.lineTo(cx + 9, cy); ctx.moveTo(cx, cy - 9); ctx.lineTo(cx, cy + 9); ctx.stroke();
+  // improvement path
+  const css = getComputedStyle(document.documentElement);
+  ctx.strokeStyle = css.getPropertyValue('--photo'); ctx.lineWidth = 2;
+  ctx.beginPath();
+  v.steps.forEach((s, j) => { const [x, y] = xy(s.dn, s.de); j ? ctx.lineTo(x, y) : ctx.moveTo(x, y); });
+  ctx.stroke();
+  v.steps.forEach((s) => { const [x, y] = xy(s.dn, s.de);
+    ctx.fillStyle = css.getPropertyValue('--photo'); ctx.beginPath(); ctx.arc(x, y, 3.5, 0, 7); ctx.fill(); });
+  const s = v.steps[S.i], [x, y] = xy(s.dn, s.de);
+  ctx.strokeStyle = css.getPropertyValue('--edge'); ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.arc(x, y, 11, 0, 7); ctx.stroke();
+  ctx.font = '22px ' + css.getPropertyValue('--mono');
+  const label = `${(span / 1000).toFixed(1)} km box`;
+  ctx.fillStyle = 'rgba(18,22,27,.8)'; ctx.fillRect(6, 6, ctx.measureText(label).width + 12, 30);
+  ctx.fillStyle = '#fff'; ctx.fillText(label, 12, 29);
+}
+
+$('costmap').onclick = (ev) => {
+  const v = S.view, g = v.grid.offsets_m, n = g.length, cv = $('costmap');
+  const r = cv.getBoundingClientRect(), W = cv.width, cell = W / n, span = g[n - 1] - g[0];
+  const px = (ev.clientX - r.left) / r.width * W, py = (ev.clientY - r.top) / r.height * W;
+  const de = (px - cell / 2) / (W - cell) * span + g[0];
+  const dn = ((W - cell) - (py - cell / 2)) / (W - cell) * span + g[0];
+  let best = 0, bd = Infinity;
+  v.steps.forEach((s, j) => { const d = Math.hypot(s.dn - dn, s.de - de); if (d < bd) { bd = d; best = j; } });
+  go(best);
+};
+
+// ---------- navigation
+function go(i) {
+  if (!S.view) return;
+  S.i = Math.max(0, Math.min(S.view.steps.length - 1, i));
+  renderSide(); draw(); pushPF();
+}
+function togglePlay() {
+  if (S.playing) { clearInterval(S.playing); S.playing = null; $('play').textContent = 'Play'; return; }
+  $('play').textContent = 'Stop';
+  S.playing = setInterval(() => {
+    if (S.i >= S.view.steps.length - 1) return togglePlay();
+    go(S.i + 1);
+  }, S.pfReady ? 2500 : 900);
+}
+$('prev').onclick = () => go(S.i - 1);
+$('next').onclick = () => go(S.i + 1);
+$('play').onclick = togglePlay;
+document.addEventListener('keydown', (e) => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+  if (e.key === 'ArrowLeft') go(S.i - 1);
+  else if (e.key === 'ArrowRight') go(S.i + 1);
+  else if (e.key === ' ') { e.preventDefault(); togglePlay(); }
+  else if (e.key === 'l' || e.key === 'L') {
+    const c = $('pfcanvas'); c.classList.toggle('locked');
+    $('pfstate').textContent = c.classList.contains('locked')
+      ? 'PeakFinder locked to the solver pose' : 'PeakFinder unlocked: drag freely, L to re-lock';
+    if (c.classList.contains('locked')) pushPF();
+  }
+});
+['l-photo', 'l-opacity', 'l-sky', 'l-dem'].forEach(id => $(id).addEventListener('input', () => { store(id, $(id).type === 'checkbox' ? $(id).checked : $(id).value); draw(); }));
+$('l-pf').addEventListener('input', () => { store('l-pf', $('l-pf').checked); pushPF(); });
+['c-axis', 'c-dx', 'c-dy', 'c-scale'].forEach(id => $(id).addEventListener('input', () => {
+  store(id, $(id).value); draw(); if (S.pfReady) aimPF(pose(S.view.steps[S.i])); }));
+window.addEventListener('resize', layout);
+
+async function loadRun(id) {
+  S.view = await (await fetch('/run/' + id)).json();
+  const meta = S.runs.find(r => r.id === id);
+  S.img = null;
+  if (meta.has_photo) {
+    const im = new Image();
+    im.onload = () => { S.img = im; draw(); };
+    im.src = '/photo/' + id;
+  }
+  renderStatic();
+  S.i = 0;
+  layout(); go(0);
+}
+
+(async function init() {
+  for (const id of ['l-photo', 'l-sky', 'l-dem', 'l-pf']) $(id).checked = recall(id, $(id).checked);
+  for (const id of ['l-opacity', 'c-axis', 'c-dx', 'c-dy', 'c-scale']) $(id).value = recall(id, $(id).value);
+  S.runs = await (await fetch('/runs')).json();
+  $('runsel').innerHTML = S.runs.map(r => `<option value="${r.id}">${r.name} (${r.status})</option>`).join('');
+  $('runsel').onchange = () => loadRun(+$('runsel').value);
+  if (S.runs.length) loadRun(S.runs[0].id);
+  // a blocked script tag may never fire either handler
+  setTimeout(() => { if (!S.pfReady && !S.pfFailed) pfScriptFailed(); }, 15000);
+})();
+</script>
+</body>
+</html>
