@@ -377,6 +377,161 @@ planetary-rover work (§3.2) and the maritime archipelago work (§3.4).
   2015); (c) refraction/tide are unmodelled outside the navigation-journal
   thread — our §2.2 curvature patch and height nuisance handle this.
 
+
+### 3.8 Update, October 2026: what appeared since, and where it leaves us
+
+*Added 2026-10-22, from a search made while scoping a paper. Abstracts
+and search summaries only unless noted; numbers are the authors'.*
+
+**Closest new work, by scenario.**
+
+- **[Foucher, Seguin, Heller & Laurent, "Deep Visual Geo-localization in
+  marine coastal environment"](https://hal-emse.ccsd.cnrs.fr/LAB-STICC_SHAKER/hal-05138313v1)**
+  (IEEE OCEANS 2025, Brest; [HAL record](https://hal-hceres.archives-ouvertes.fr/LAB-STICC_ENIB/hal-05126353v1))
+  and the **[AAMAS 2026 extended abstract](https://ifaamas.org/Proceedings/aamas2026/pdfs/YIUE1134.pdf)**
+  from the same Lab-STICC group. A boat, a **50° camera**, ground images
+  correlated with DEM-rendered horizons through a siamese network,
+  **unknown start position: mean 38 m, heading to 8°, over 25 km²**.
+  Motivated, like §3.4's Foucher entry, by the accuracy loss of horizon
+  methods at narrow field of view. *Now the closest published system to
+  ours, and better than our accepted median on accuracy.*
+- **[*Evaluating Ground Imagery for Long-Standoff, Vision-Based
+  Navigation, Localization and Positioning*](https://www.mdpi.com/2076-3417/16/15/7397)**
+  (Applied Sciences 16, 7397, July 2026). **Phone photographs** (Samsung
+  S23 Ultra main camera) of terrain beyond 1 km near the Organ
+  Mountains, synthetic horizons pre-computed from terrain and camera
+  data, near-real-time matching inside an Android app. Two things we do
+  not have: **heat maps averaged over several images, keeping only
+  spatially consistent clusters, to suppress single-image false
+  matches**, and an image-quality grading (high/fair/poor). *The closest
+  "phone, single site" study; its multi-image consensus is the obvious
+  comparison for our split-half and drop-one stability check.*
+- **[Praczyk & Zalewski, "Optical Coastal GNSS-Denied Navigation for
+  Reduction in AUV Underwater Navigation
+  Error"](https://pmc.ncbi.nlm.nih.gov/articles/PMC13417250/)** (Sensors
+  26(14), 4601, July 2026). A surfaced AUV, monocular camera, sea/sky/land
+  segmentation, coastline from map data, Gulf of Gdańsk. Their findings:
+  **a flat map is insufficient** for accurate position, and accuracy is
+  **significantly affected by segmentation errors and camera viewing-angle
+  errors**. *Independent confirmation of E5bo (front end dominates the
+  error budget) and of our pitch/roll findings (E5bi).*
+- **[Benham & Mangelson, "The Coastline as a Structural
+  Constraint"](https://arxiv.org/pdf/2608.21276)** (arXiv, Aug 2026, BYU).
+  Coastal-KISS: LiDAR water-surface returns give roll, pitch and heave;
+  shoreline returns registered to a **satellite-derived coastline map**
+  give position and heading. A monocular variant segments the shoreline
+  and registers local submaps through a hierarchical factor graph. ~5 km
+  of real coastal data; they conclude zero-shot segmentation is mature
+  enough for coastal localization. *Different sensor and map (2D
+  coastline, not DEM silhouette), but the same attitude-from-water idea
+  as our sea-horizon levelling.*
+- **[Grelsson, Robinson, Felsberg & Khan, "HorizonNet for visual terrain
+  navigation"](https://arxiv.org/pdf/2608.30471)** (IEEE IPAS 2018, DOI
+  10.1109/IPAS.2018.8708868; an arXiv copy is dated Aug 2026). The
+  conference precursor of §3.4's JFR 2020 paper: two CNNs find the
+  horizon in a 360° panorama, then **MOSSE correlation filters** match it
+  to the DEM. One mirror reports a field-trial error of 2.5 ± 1.3 m; not
+  verified against the paper.
+- **[Zede & Gressin, "Geolocation of a panoramic camera by reference
+  pairing"](https://arodes.hes-so.ch/record/12538/files/Gressin_2023_Geolocation_of_a_panoramic.pdf)**
+  (JURSE 2023). Urban 360° camera; horizon points matched to LiDAR
+  reference points and used as ground control points. Urban, LiDAR; noted
+  for completeness. A separate [ISPRS Annals 2014
+  paper](https://isprs-annals.copernicus.org/articles/II-3/127/2014/)
+  matches horizons with **dynamic time warping** against an elevation
+  model, an alternative to our fixed-shift correlation when the
+  azimuth mapping is uncertain.
+- **[Malik et al., "Geometric Coastline Localization using
+  Vision-Language Models"](https://arxiv.org/pdf/2606.10468)** (arXiv,
+  June 2026). Not camera localization: a 7B vision-language model that
+  outputs the coastline in *aerial* imagery as a polyline (Hausdorff
+  37.7 → 31.8 m against segmentation baselines). Relevant only as a
+  boundary-as-geometry idea for the front end.
+- Large-scale reference point unchanged: CNN skyline features against a
+  DEM database, [49.3 m average over 50 test
+  points](https://journal.hep.com.cn/ol/EN/10.1007/s11801-022-1148-0)
+  (Optoelectronics Letters 2022).
+
+**Integrity: the part of our work the literature has not covered.** No
+paper found treats false acceptance or integrity as the main question
+for skyline-to-DEM matching. The nearest threads:
+
+- **Terrain-referenced navigation (radar altimeter) integrity:**
+  [KAIST protection-level thesis](https://dspace.kaist.ac.kr/handle/10203/309350)
+  and [companion work](https://dspace.kaist.ac.kr/handle/10203/297962)
+  computing latitude/longitude protection levels that overbound TRN
+  error, with terrain roughness driving the lateral terms; an
+  [AIAA 2004 hybrid TRN](https://independent.academia.edu/JanWendel2)
+  detects false fixes with a bank of Kalman filters computing fixes in
+  complementary ways. Solution separation (full solution against
+  subset solutions) is the integrity idea our split-half / drop-one
+  check already approximates.
+- **Estimates on a boundary.** When the optimum sits on the edge of the
+  allowed parameter set, the usual asymptotic (and bootstrap)
+  inference fails: [Self & Liang, JASA 82(398),
+  1987](https://www.stat.cmu.edu/~brian/nynke/726-2007/F%20-%20Neuron%20Firing%20Features%20-%20Sommer/self-liang-87.pdf)
+  (the limit is a projection of a Gaussian onto the admissible set);
+  [Andrews, Econometrica 67(6),
+  1999](https://econometricsociety.org/publications/econometrica/1999/11/01/estimation-when-parameter-boundary)
+  (extremum estimators, linear/curved/kinked boundaries); [Andrews,
+  Econometrica 68(2),
+  2000](https://econometricsociety.org/publications/econometrica/2000/03/01/inconsistency-bootstrap-when-parameter-boundary-parameter-space)
+  (the bootstrap is inconsistent there). *This is the theory behind our
+  three clamping false accepts (E5at, E5bf, E5bi): with heading or beta
+  on its bound, the Laplace covariance and the margin are computed under
+  assumptions that do not hold, which is why neither separated a 400 m
+  fix from a 3 km one (E4v).*
+
+**Design of the pipeline under uncertainty (the optimisation-course
+angle).** No application of reliability-constrained or surrogate-based
+multi-objective optimisation to a *navigation pipeline's* settings was
+found. Closest: [NSGA-II tuning of a confidence-based localization
+algorithm for underwater swarms](https://pure.cardiffmet.ac.uk/en/publications/multi-objective-optimization-of-confidence-based-localization-in-/)
+(deterministic objectives); methods to borrow: [uncertainty-aware
+offline data-driven multi-objective optimisation](https://arxiv.org/pdf/2511.06459)
+(GP-UCB-style fitness), [non-parametric robustness/reliability measures
+for constrained multi-objective optimisation under
+uncertainty](https://researchportal.ip-paris.fr/en/publications/non-parametric-measure-approximations-for-constrained-multi-objec/).
+
+**Phone attitude as an input, not a variable.** Prior single-image phone
+work takes roll and pitch from the device ([Hallquist & Zakhor, WACV
+2013](https://mlanthology.org/wacv/2013/hallquist2013wacv-single); a
+[smartphone skyline-to-DEM orientation table, 2017](https://www.scitepress.org/Papers/2017/61157/61157.pdf))
+or estimates compass bias in a separate filter. Co-estimating them with
+position in one solve, which E5bi showed is necessary, is not reported.
+
+**Where this leaves the work.** The pipeline (grid of DEM horizons,
+heading by correlation, coarse-to-fine) is the established method, and
+newer systems report 10-40 m where our accepted median is ~368 m;
+accuracy is not our contribution. Two things are: (1) a field-documented
+failure mechanism, confident false accepts produced by nuisance
+parameters held at their bounds, tied to boundary-estimation theory and
+paired with checks that catch it; (2) the design of the solver's bounds
+and acceptance thresholds as an optimisation under uncertainty with a
+false-accept chance constraint. Before either is submitted: a held-out
+frame set (most experiments iterated on the same 44 frames), a
+literature baseline run on our frames, and the 54 m Bosphorus result
+reported as an oracle configuration (hand-drawn skyline, roll and pitch
+diagnosed after the fact), not as performance.
+
+**Code and data related to this literature** (each repository checked
+to exist, 2026-10-22):
+
+| what | repository | relation to us |
+|---|---|---|
+| CrossLocate, learned retrieval against DEM renders (WACV 2022) | [JanTomesek/CrossLocate](https://github.com/JanTomesek/CrossLocate) | the open large-scale baseline (§3.6) |
+| LandscapeAR, photo-to-terrain alignment (ECCV 2020) | [brejchajan/LandscapeAR](https://github.com/brejchajan/LandscapeAR) | silhouette/terrain registration code from the GeoPose3K group |
+| KISS-ICP, the odometry Coastal-KISS builds on | [PRBonn/kiss-icp](https://github.com/PRBonn/kiss-icp) | Coastal-KISS's own code is not released |
+| Shoreline-based UAV localization in AirSim (thesis) | [TF017/Airsim-UAV-shoreline-based-localization](https://github.com/TF017/Airsim-UAV-shoreline-based-localization) | water/land segmentation, ray casting, ICP, particle filter, DEM integration |
+| eWaSR maritime segmentation | [tersekmatija/eWaSR](https://github.com/tersekmatija/eWaSR) | already our front end (E5c) |
+| LaRS maritime segmentation benchmark evaluator | [lojzezust/lars_evaluator](https://github.com/lojzezust/lars_evaluator) | a standard way to score our water/sky front ends |
+
+No code was found for Foucher et al., Grelsson et al. (HorizonNet),
+Praczyk & Zalewski, Benham & Mangelson, the 2026 phone study, or
+CoastlineVLM. The [GeoPose3K dataset](https://cphoto.fit.vutbr.cz/geoPose3K/)
+and [MaSTr1325/MODS](https://www2.vicos.si/publications/bovcon2019the/)
+remain the public data closest to ours.
+
 ---
 
 ## 4. Literature: search & optimization techniques for the position sweep
