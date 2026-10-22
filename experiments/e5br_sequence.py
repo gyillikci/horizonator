@@ -60,6 +60,7 @@ LAT0, LON0 = 36.95, 27.25              # ENU origin, Bodrum-Kos strait
 FOV = 73.7
 GRID_HALF, GRID_STEP = 2000.0, 100.0
 HW = 6.0                               # heading window, deg
+GATE = 9.21                            # chi-square, 2 dof, 99 %
 LAM = 20 / (3e-3) ** 2                 # likelihood temper: ~20 independent
                                        # columns at a 3 mrad model error
 
@@ -273,13 +274,20 @@ def simulate(name, seed=20261022):
     res = dict(name=name, scenario=sc, noise=nz, legs=legs,
                truth0=truth[0].tolist(), steps=steps)
     res['gtsam'] = fuse(res)
+    res['gtsam_gated'] = fuse(res, gate=GATE)
     os.makedirs(OUT, exist_ok=True)
     json.dump(res, open(os.path.join(OUT, name + '.json'), 'w'))
     return name
 
 
-def fuse(res):
-    """Loosely coupled iSAM2 with the platform's biases as states."""
+def fuse(res, gate=None):
+    """Loosely coupled iSAM2 with the platform's biases as states.
+
+    gate: if set, a chi-square threshold (2 dof) on the fix innovation -
+    the fix minus the predicted position, scaled by the predicted
+    covariance plus the fix's own. A fix outside it is not added: the
+    standard innovation gate, which a robust loss alone does not replace
+    when the bad fixes are consistently bad."""
     import gtsam
     sc, legs, steps = res['scenario'], res['legs'], res['steps']
     X = lambda k: gtsam.symbol('x', k)
@@ -340,20 +348,33 @@ def fuse(res):
         init.insert(X(k + 1), prev + kk * dist * np.array([np.sin(a), np.cos(a)])
                     + ww * dt)
         s = steps[k]
-        gr.add(gtsam.PriorFactorPoint2(X(k + 1), np.array(s['one']),
-                                       robust(s['cov'])))
+        use = True
+        if gate is not None:
+            isam.update(gr, init)
+            gr, init = gtsam.NonlinearFactorGraph(), gtsam.Values()
+            pe = isam.calculateEstimate()
+            P = isam.marginalCovariance(X(k + 1))
+            nu = np.array(s['one']) - pe.atPoint2(X(k + 1))
+            Sm = P + np.asarray(s['cov'])
+            use = float(nu @ np.linalg.solve(Sm, nu)) <= gate
+        fix_used.append(use)
+        if use:
+            gr.add(gtsam.PriorFactorPoint2(X(k + 1), np.array(s['one']),
+                                           robust(s['cov'])))
         # the solve's heading offset measures the compass correction
-        gr.add(gtsam.PriorFactorVector(
-            Kc, np.array([np.radians(s['one_psi'])]),
-            gtsam.noiseModel.Robust.Create(
-                gtsam.noiseModel.mEstimator.Huber.Create(1.345),
-                gtsam.noiseModel.Isotropic.Sigma(1, np.radians(1.0)))))
+        # (only from a solve the gate kept: a wrong fix's heading is noise)
+        if use:
+            gr.add(gtsam.PriorFactorVector(
+                Kc, np.array([np.radians(s['one_psi'])]),
+                gtsam.noiseModel.Robust.Create(
+                    gtsam.noiseModel.mEstimator.Huber.Create(1.345),
+                    gtsam.noiseModel.Isotropic.Sigma(1, np.radians(1.0)))))
         isam.update(gr, init)
         isam.update()
         est = isam.calculateEstimate()
         online.append(est.atPoint2(X(k + 1)).tolist())
     smooth = [est.atPoint2(X(k + 1)).tolist() for k in range(len(legs))]
-    return dict(online=online, smooth=smooth,
+    return dict(online=online, smooth=smooth, used=fix_used,
                 c_deg=float(np.degrees(est.atVector(Kc)[0])),
                 k=float(est.atVector(Kk)[0]),
                 w=est.atVector(Kw).tolist())
@@ -379,6 +400,8 @@ def report():
                  one=err([s['one'] for s in st]),
                  gtsam=err(r['gtsam']['online']),
                  smooth=err(r['gtsam']['smooth']),
+                 gated=err(r['gtsam_gated']['online']),
+                 gated_smooth=err(r['gtsam_gated']['smooth']),
                  pmf=err([s['pmf'] for s in st]))
         acc = np.array([s['margin'] >= 0.15 for s in st])
         half = slice(len(st) // 2, None)
@@ -390,6 +413,7 @@ def report():
             accepted=int(acc.sum()), n=len(st),
             median=float(np.median(e['one'][acc])) if acc.any() else None,
             wrong_500=int((e['one'][acc] >= 500).sum()))
+        summary[name]['gate_kept'] = int(sum(r['gtsam_gated']['used']))
         summary[name]['states'] = dict(
             c_deg=r['gtsam']['c_deg'], true_c_deg=-r['scenario']['comp_bias'],
             k=r['gtsam']['k'], true_k=1 / r['scenario']['log_scale'],
@@ -400,7 +424,12 @@ def report():
                    label='one-shot (margin ≥ 0.15)')
         ax.scatter(t[~acc], e['one'][~acc], s=18, facecolors='none',
                    edgecolors='#D68910', zorder=3, label='one-shot (refused)')
-        ax.plot(t, e['gtsam'], color='#2E86C1', lw=1.8, label='GTSAM online')
+        ax.plot(t, e['gtsam'], color='#2E86C1', lw=1.2, alpha=.55,
+                label='GTSAM online, all fixes')
+        ax.plot(t, e['gated'], color='#2E86C1', lw=2.0,
+                label='GTSAM online, gated fixes')
+        ax.plot(t, e['gated_smooth'], color='#2E86C1', lw=1.4, ls='--',
+                label='GTSAM smoothed (end of run)')
         ax.plot(t, e['pmf'], color='#1E7F5C', lw=1.8, label='point-mass filter')
         ax.set_yscale('log')
         ax.set_ylim(5, max(5000, e['dr'].max() * 1.3))
@@ -414,8 +443,8 @@ def report():
         ax.plot(*T.T, color='#1A2732', lw=2, label='truth')
         ax.plot(*np.array([s['dr'] for s in st]).T, color='#8A8F98', lw=1.2,
                 label='DR')
-        ax.plot(*np.array(r['gtsam']['online']).T, color='#2E86C1', lw=1.2,
-                label='GTSAM')
+        ax.plot(*np.array(r['gtsam_gated']['online']).T, color='#2E86C1',
+                lw=1.2, label='GTSAM (gated, online)')
         ax.plot(*np.array([s['pmf'] for s in st]).T, color='#1E7F5C', lw=1.2,
                 label='PMF')
         O = np.array([s['one'] for s in st])
@@ -431,15 +460,18 @@ def report():
     json.dump(summary, open(os.path.join(OUT, 'summary.json'), 'w'), indent=1)
     for name, sm in summary.items():
         print('\n' + name)
-        for k in ('dr', 'one', 'gtsam', 'smooth', 'pmf'):
+        for k in ('dr', 'one', 'gtsam', 'smooth', 'gated', 'gated_smooth',
+                  'pmf'):
             v = sm[k]
-            print('  %-7s median %6.0f m | 2nd half %6.0f m | final %6.0f m '
+            print('  %-12s median %6.0f m | 2nd half %6.0f m | final %6.0f m '
                   '| max %6.0f m' % (k, v['median'], v['median_2nd_half'],
                                      v['final'], v['max']))
         g = sm['one_gated']
         print('  one-shot gated: %d/%d accepted, median %s m, wrong >= 500 m: %d'
               % (g['accepted'], g['n'], '%.0f' % g['median'] if g['median']
                  is not None else '-', g['wrong_500']))
+        print('  innovation gate kept %d of %d fixes' % (sm['gate_kept'],
+                                                        g['n']))
         s = sm['states']
         print('  states: compass corr %+.2f deg (true %+.2f), log scale %.3f '
               '(true %.3f), drift (%+.2f, %+.2f) m/s (true %+.2f, %+.2f)' % (
@@ -468,6 +500,7 @@ if __name__ == '__main__':
             f = os.path.join(OUT, nm + '.json')
             r = json.load(open(f))
             r['gtsam'] = fuse(r)
+            r['gtsam_gated'] = fuse(r, gate=GATE)
             json.dump(r, open(f, 'w'))
         report()
     else:

@@ -4344,6 +4344,71 @@ sequential estimator.
 > doubles. `experiments/e5bq_baseline.py` reproduces every number here;
 > `out/baseline/baseline.png` plots the two errors frame by frame.
 
+> **E5br - a series of observations against one shot: 5-30x on clean
+> skylines, and the series does not rescue bad ones.** Every field
+> result so far is one photograph. `experiments/e5br_sequence.py`
+> simulates a platform that keeps looking, from a known start: a vessel
+> (5 m, 6 kn, 60 min, a 73.7 deg frame every 2 min, log +3 %, compass
+> +2 deg, current 0.3 m/s) and a drone (300 m, 20 m/s, 15 min, every
+> 30 s, compass +2.5 deg, wind 3.9 m/s, baro 8 m). Skylines are made
+> directly, no segmenter: the TRUE skyline is ray-cast from SRTM1 and
+> the solver matches against GLO-30 (so model error is not zero), the
+> camera is aimed at the most relief, and two error levels are added -
+> *nominal* (1 mrad white + 1 mrad correlated, 0.2 deg pitch/roll,
+> 0.5 deg compass noise) and *field-like* (2 + 3 mrad, 0.5 deg, 1 deg,
+> 10 % outlier blocks for masts and cloud edges). Each observation's
+> cost map (41 x 41 at 100 m) is computed once and shared: one-shot is
+> its argmin refined to 12.5 m; GTSAM (iSAM2) takes the one-shot fixes
+> as robust factors and carries the compass correction, log scale and
+> current/wind as STATES, with every solve's heading offset measuring
+> the compass correction; the point-mass filter multiplies the maps as
+> likelihoods. One realisation per scenario, no Monte Carlo.
+>
+> | median error | DR | one-shot | GTSAM online | GTSAM smoothed | gated online | gated smoothed | point-mass |
+> |---|---|---|---|---|---|---|---|
+> | vessel, nominal | 289 m | 299 m | 63 m | 44 m | **57 m** | **10 m** | 148 m |
+> | vessel, field-like | 264 m | 908 m | 878 m | **57 m** | 867 m | 616 m | 419 m |
+> | drone, nominal | 1501 m | 338 m | 108 m | 40 m | **80 m** | **30 m** | 284 m |
+> | drone, field-like | 1506 m | 1242 m | **475 m** | **329 m** | 806 m | 535 m | 523 m |
+>
+> **With clean skylines the series is worth an order of magnitude.**
+> One-shot sits at ~300 m with occasional kilometre outliers; the gated
+> GTSAM estimate the navigator would see online is 57-80 m, and the
+> smoothed track 10-30 m, while dead reckoning drifts to 0.6 km
+> (vessel) and 3.2 km (drone). The platform's errors are recovered as a
+> by-product: compass correction -1.6 / -2.0 deg (true -2.0 / -2.5),
+> log scale 0.967 (true 0.971), wind (+3.3, -2.3) m/s (true +3.0,
+> -2.5). The heading offset each skyline solve co-estimates is a
+> compass measurement; feeding it to the graph is what lets DR stop
+> drifting between observations.
+>
+> **With field-like skylines it is not.** One-shot is mostly wrong
+> (median 0.9-1.2 km, none passes the margin gate), and the online
+> estimate is pulled by runs of consistently wrong fixes: the vessel's
+> online error sits near 900 m for half an hour, worse than dead
+> reckoning. The information is in the data - smoothing the same graph
+> at the end gives 57 m - but an online estimator cannot find it.
+> Innovation gating, the textbook remedy, helps on clean skylines and
+> **hurts** here: it accepts early wrong fixes, then rejects the right
+> ones as inconsistent with the drifted prediction (13 of 30 kept, lock
+> out). The tightly coupled point-mass filter is the most stable on the
+> vessel (419 m median, 103 m final) but lags on the drone, because it
+> has no wind state and each 117 m wind step must be corrected by a
+> weak likelihood.
+>
+> What this says: a series turns a decent single-shot matcher into a
+> good navigator, and the gain is largest exactly where dead reckoning
+> is worst (the drone's wind). It does not turn a bad single-shot matcher
+> into a good one - the bottleneck stays the per-observation
+> likelihood, i.e. extraction and model fidelity (E5bo, E5bq). The
+> two practical next steps are a multi-hypothesis front end (keep the
+> top basins of each map as a max-mixture factor instead of one fix)
+> and a point-mass filter with the bias states, which together address
+> both failure modes seen here. Caveats: one realisation each; the
+> SRTM1-vs-GLO-30 difference (0.5 mrad rms here) is far smaller than
+> the real model error at a 1-3 km subject (canopy, buildings), which
+> the field-like level only stands in for.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
