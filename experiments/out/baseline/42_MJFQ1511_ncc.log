@@ -1,0 +1,94 @@
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+extractor pre-check: eWaSR disagrees with the seam on 37% of columns — falling back to the seam
+photo 0: MJFQ1511.JPG  fov 73.7, heading 165.389, pitch +0.00, roll +0.00, weight 1.00
+z 167.2 m, box 6000 m at (39.11494,27.69958)
+INCONCLUSIVE: ambiguous landscape: basin margin 0.09 < 0.15
+INCONCLUSIVE: minimum on the search-box boundary: the true position may lie outside the box
+INCONCLUSIVE: residual 36.4 mrad > 12.0: the DEM cannot explain this observation
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.09 < 0.15",
+  "minimum on the search-box boundary: the true position may lie outside the box",
+  "residual 36.4 mrad > 12.0: the DEM cannot explain this observation"
+ ],
+ "lat": 39.09821261812991,
+ "lon": 27.664459392617523,
+ "fix_ok": false,
+ "basin_margin": 0.08811042677916961,
+ "relief_mrad": 30.092598113950498,
+ "dn_m": -1860.0,
+ "de_m": -3030.0,
+ "sigma_n_m": 129.15836785251332,
+ "sigma_e_m": 233.25034519381018,
+ "sigma_major_m": 251.92252444202208,
+ "sigma_minor_m": 87.3077842927854,
+ "major_bearing_deg": 66.2481368745634,
+ "anisotropy": 2.885453187051495,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": null,
+ "peak_dh_mad_m": null,
+ "n_peaks": 0,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.04303899760626562,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2700.0,
+   "cost": 0.03764865170082454,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": -3000.0,
+   "cost": 0.02787210579220345,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1860.0,
+   "de": -3060.0,
+   "cost": 0.02414628654747697,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -1860.0,
+   "de": -3030.0,
+   "cost": 0.023469133805066766,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "search_evals": 491,
+ "cost": 0.023469133805066766,
+ "rms_mrad": 36.35170405127634,
+ "n_photos": 1,
+ "z_m": 167.2,
+ "photos": [
+  {
+   "file": "MJFQ1511.JPG",
+   "fov_deg": 73.74,
+   "heading_deg": 165.389,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 36.35170405127634,
+   "heading_offset_deg": -2.0,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior",
+   "ncc": 0.9765308661949332
+  }
+ ],
+ "heading_offset_deg": -2.0,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 73.74
+}
+wrote /home/user/horizonator/experiments/out/baseline/42_MJFQ1511_ncc.json/.png

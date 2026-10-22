@@ -1,0 +1,129 @@
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+extractor pre-check: eWaSR disagrees with the seam on 67% of columns — falling back to the seam
+photo 0: UYXQ4404.JPG  fov 104.2, heading 36.455, pitch +0.00, roll +0.00, weight 1.00
+z 18.8 m, box 6000 m at (37.47685,27.41420)
+peak witness: 13 crests, median height residual -22 m (spread 62 m)
+INCONCLUSIVE: ambiguous landscape: basin margin 0.07 < 0.15
+INCONCLUSIVE: residual 21.3 mrad > 12.0: the DEM cannot explain this observation
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.07 < 0.15",
+  "residual 21.3 mrad > 12.0: the DEM cannot explain this observation"
+ ],
+ "lat": 37.47307284925514,
+ "lon": 27.419299484744542,
+ "fix_ok": false,
+ "basin_margin": 0.0745355061116393,
+ "relief_mrad": 25.075066283580732,
+ "dn_m": -420.0,
+ "de_m": 450.0,
+ "sigma_n_m": 240.34758278897323,
+ "sigma_e_m": 953.3695380182098,
+ "sigma_major_m": 953.3916378266728,
+ "sigma_minor_m": 240.25990405336404,
+ "major_bearing_deg": 90.40312985078816,
+ "anisotropy": 3.968167895442576,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -21.70275927764891,
+ "peak_dh_mad_m": 61.960309916904386,
+ "n_peaks": 13,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.22061071581263858,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2700.0,
+   "cost": 0.18795039003642477,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2400.0,
+   "cost": 0.186404346648382,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1800.0,
+   "cost": 0.17861395107154165,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 3000.0,
+   "cost": 0.17010831065004017,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": 0.0,
+   "cost": 0.1698377424725469,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": 300.0,
+   "cost": 0.16692125915560985,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 300.0,
+   "cost": 0.15873854370645268,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 600.0,
+   "cost": 0.15830869215816,
+   "stage": "coarse"
+  },
+  {
+   "dn": -420.0,
+   "de": 480.0,
+   "cost": 0.14983623952805025,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -420.0,
+   "de": 450.0,
+   "cost": 0.14947752219404842,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "search_evals": 491,
+ "cost": 0.14947752219404842,
+ "rms_mrad": 21.254673707297638,
+ "n_photos": 1,
+ "z_m": 18.8,
+ "photos": [
+  {
+   "file": "UYXQ4404.JPG",
+   "fov_deg": 104.25,
+   "heading_deg": 36.455,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 21.254673707297638,
+   "heading_offset_deg": -3.4000000000000004,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior",
+   "ncc": 0.8505224778059516
+  }
+ ],
+ "heading_offset_deg": -3.4000000000000004,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 104.25
+}
+wrote /home/user/horizonator/experiments/out/baseline/46_UYXQ4404_ncc.json/.png

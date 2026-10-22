@@ -1,0 +1,147 @@
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+photo 0: PF_new_bodrum6.jpg  fov 73.7, heading 114.661, pitch +0.00, roll +0.00, weight 1.00
+z 2.0 m, box 6000 m at (37.01988,27.34774)
+peak witness: 8 crests, median height residual +0 m (spread 15 m)
+{
+ "status": "ok",
+ "reasons": [],
+ "lat": 37.01853101759112,
+ "lon": 27.349598505914084,
+ "fix_ok": true,
+ "basin_margin": 0.3159623195741639,
+ "relief_mrad": 6.510540247050469,
+ "dn_m": -150.0,
+ "de_m": 165.0,
+ "sigma_n_m": 743.7635623247888,
+ "sigma_e_m": 510.5057476380487,
+ "sigma_major_m": 897.2437545368424,
+ "sigma_minor_m": 93.5628129022083,
+ "major_bearing_deg": 145.7780775177273,
+ "anisotropy": 9.589747536498718,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": 0.34558342682126597,
+ "peak_dh_mad_m": 14.887077351063754,
+ "n_peaks": 8,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.8873601820383212,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2700.0,
+   "cost": 0.6334040413157853,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2100.0,
+   "cost": 0.39732225621249073,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -900.0,
+   "cost": 0.3971698215777594,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -600.0,
+   "cost": 0.39525784285052545,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -300.0,
+   "cost": 0.3945390479851547,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 0.0,
+   "cost": 0.39318129923135203,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 300.0,
+   "cost": 0.3923506228940655,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 600.0,
+   "cost": 0.39134558940617636,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 900.0,
+   "cost": 0.39125082575008485,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -2100.0,
+   "cost": 0.3414346408383684,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": 2400.0,
+   "cost": 0.28950714206074657,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 300.0,
+   "cost": 0.21999652858938168,
+   "stage": "coarse"
+  },
+  {
+   "dn": -180.0,
+   "de": 180.0,
+   "cost": 0.15628509707916471,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -150.0,
+   "de": 165.0,
+   "cost": 0.14836410613747386,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "search_evals": 491,
+ "cost": 0.14836410613747386,
+ "rms_mrad": 3.5508399072415706,
+ "n_photos": 1,
+ "z_m": 2.0,
+ "photos": [
+  {
+   "file": "PF_new_bodrum6.jpg",
+   "fov_deg": 73.74,
+   "heading_deg": 114.661,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 3.5508399072415706,
+   "heading_offset_deg": -0.6000000000000001,
+   "el_offset_mrad": 4.049163864626842,
+   "attitude_source": "prior",
+   "ncc": 0.8516358938625261
+  }
+ ],
+ "heading_offset_deg": -0.6000000000000001,
+ "el_offset_mrad": 4.049163864626842,
+ "fov_deg": 73.74
+}
+wrote /home/user/horizonator/experiments/out/baseline/06_PF_new_bodrum6_ncc.json/.png

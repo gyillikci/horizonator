@@ -1,0 +1,398 @@
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+photo 0: EURK8793.JPG  fov 104.2, heading 164.35, pitch +0.00, roll +0.00, weight 1.00
+z 164.2 m, box 6000 m at (39.11653,27.69941)
+peak witness: 14 crests, median height residual -374 m (spread 654 m)
+INCONCLUSIVE: ambiguous landscape: basin margin 0.03 < 0.15
+INCONCLUSIVE: minimum on the search-box boundary: the true position may lie outside the box
+INCONCLUSIVE: residual 16.2 mrad > 12.0: the DEM cannot explain this observation
+INCONCLUSIVE: covariance degenerate: the cost surface has no measurable curvature at the fix (sigma cannot be computed) — the landscape does not pin a position here
+INCONCLUSIVE: peak heights disagree: matched crests stand a median -374 m (spread 654 m) from the model at this fix (limits 30/90 m) — position error or DEM bias is leaking into the height channel
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.03 < 0.15",
+  "minimum on the search-box boundary: the true position may lie outside the box",
+  "residual 16.2 mrad > 12.0: the DEM cannot explain this observation",
+  "covariance degenerate: the cost surface has no measurable curvature at the fix (sigma cannot be computed) \u2014 the landscape does not pin a position here",
+  "peak heights disagree: matched crests stand a median -374 m (spread 654 m) from the model at this fix (limits 30/90 m) \u2014 position error or DEM bias is leaking into the height channel"
+ ],
+ "lat": 39.144858630586434,
+ "lon": 27.729836955350518,
+ "fix_ok": false,
+ "basin_margin": 0.0344281520381145,
+ "relief_mrad": 37.87167249406186,
+ "dn_m": 3150.0,
+ "de_m": 2625.0,
+ "sigma_n_m": 0.0,
+ "sigma_e_m": 3665.424121581514,
+ "sigma_major_m": 4098.981655402201,
+ "sigma_minor_m": 0.0,
+ "major_bearing_deg": 105.55693563725079,
+ "anisotropy": Infinity,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -373.88470984269145,
+ "peak_dh_mad_m": 653.652034194442,
+ "n_peaks": 14,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.0008124221098336235,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2700.0,
+   "cost": 0.0007233024025674113,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2100.0,
+   "cost": 0.0007228117556824194,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1800.0,
+   "cost": 0.0007012303613527045,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1500.0,
+   "cost": 0.0006965203947902337,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1200.0,
+   "cost": 0.0006753996972752921,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -900.0,
+   "cost": 0.000637942246239118,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -600.0,
+   "cost": 0.0004909705180333312,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -300.0,
+   "cost": 0.00047987444312395466,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 0.0,
+   "cost": 0.0003501639780908681,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 300.0,
+   "cost": 0.0002933412736834453,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 600.0,
+   "cost": 0.00025450914429579204,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 900.0,
+   "cost": 0.00022036427291531016,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1200.0,
+   "cost": 0.00021859632511965087,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1500.0,
+   "cost": 0.00019704205022436625,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1800.0,
+   "cost": 0.0001746632463246491,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": 2100.0,
+   "cost": 0.00017163457784059446,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": 2100.0,
+   "cost": 0.00016511415781420694,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": 2100.0,
+   "cost": 0.00016225197845807224,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 2100.0,
+   "cost": 0.00016220408728013106,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 2400.0,
+   "cost": 0.0001611240503901064,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": 2100.0,
+   "cost": 0.00016026915539572777,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": 2400.0,
+   "cost": 0.00015951482615620885,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 2100.0,
+   "cost": 0.00015862497988003855,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 2400.0,
+   "cost": 0.00015713728013734882,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": 2100.0,
+   "cost": 0.00015666026652072894,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": 2400.0,
+   "cost": 0.0001544295435558363,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": 2400.0,
+   "cost": 0.00015223997215498493,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 2400.0,
+   "cost": 0.00015008517309273966,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": 2100.0,
+   "cost": 0.000149911869914324,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": 2400.0,
+   "cost": 0.00014773032297284784,
+   "stage": "coarse"
+  },
+  {
+   "dn": 300.0,
+   "de": 2100.0,
+   "cost": 0.000147350770165914,
+   "stage": "coarse"
+  },
+  {
+   "dn": 300.0,
+   "de": 2400.0,
+   "cost": 0.00014518429748464342,
+   "stage": "coarse"
+  },
+  {
+   "dn": 600.0,
+   "de": 2100.0,
+   "cost": 0.00014509287326546129,
+   "stage": "coarse"
+  },
+  {
+   "dn": 600.0,
+   "de": 2400.0,
+   "cost": 0.0001428061841496163,
+   "stage": "coarse"
+  },
+  {
+   "dn": 900.0,
+   "de": 2400.0,
+   "cost": 0.00014076722644550146,
+   "stage": "coarse"
+  },
+  {
+   "dn": 900.0,
+   "de": 2700.0,
+   "cost": 0.0001406251061185096,
+   "stage": "coarse"
+  },
+  {
+   "dn": 1200.0,
+   "de": 2400.0,
+   "cost": 0.00013905243154308357,
+   "stage": "coarse"
+  },
+  {
+   "dn": 1200.0,
+   "de": 2700.0,
+   "cost": 0.00013869094976413443,
+   "stage": "coarse"
+  },
+  {
+   "dn": 1500.0,
+   "de": 2400.0,
+   "cost": 0.00013776028737273667,
+   "stage": "coarse"
+  },
+  {
+   "dn": 1500.0,
+   "de": 2700.0,
+   "cost": 0.00013729466157561064,
+   "stage": "coarse"
+  },
+  {
+   "dn": 1800.0,
+   "de": 2400.0,
+   "cost": 0.00013654885510680658,
+   "stage": "coarse"
+  },
+  {
+   "dn": 1800.0,
+   "de": 2700.0,
+   "cost": 0.00013625268330934667,
+   "stage": "coarse"
+  },
+  {
+   "dn": 2100.0,
+   "de": 2400.0,
+   "cost": 0.0001355642506922523,
+   "stage": "coarse"
+  },
+  {
+   "dn": 2100.0,
+   "de": 2700.0,
+   "cost": 0.00013522381548700723,
+   "stage": "coarse"
+  },
+  {
+   "dn": 2400.0,
+   "de": 2400.0,
+   "cost": 0.0001345685849030487,
+   "stage": "coarse"
+  },
+  {
+   "dn": 2400.0,
+   "de": 2700.0,
+   "cost": 0.0001341537829073662,
+   "stage": "coarse"
+  },
+  {
+   "dn": 2700.0,
+   "de": 2100.0,
+   "cost": 0.0001340692289249829,
+   "stage": "coarse"
+  },
+  {
+   "dn": 2700.0,
+   "de": 2400.0,
+   "cost": 0.0001332894065931574,
+   "stage": "coarse"
+  },
+  {
+   "dn": 2700.0,
+   "de": 2700.0,
+   "cost": 0.00013297588303618702,
+   "stage": "coarse"
+  },
+  {
+   "dn": 3000.0,
+   "de": 2100.0,
+   "cost": 0.00013276915818839704,
+   "stage": "coarse"
+  },
+  {
+   "dn": 3000.0,
+   "de": 2400.0,
+   "cost": 0.00013204659511239342,
+   "stage": "coarse"
+  },
+  {
+   "dn": 3000.0,
+   "de": 2700.0,
+   "cost": 0.00013171788010688857,
+   "stage": "coarse"
+  },
+  {
+   "dn": 3120.0,
+   "de": 2640.0,
+   "cost": 0.00013123342956898986,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": 3150.0,
+   "de": 2625.0,
+   "cost": 0.00013111127740039025,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "search_evals": 491,
+ "cost": 0.00013111127740039025,
+ "rms_mrad": 16.193287337683493,
+ "n_photos": 1,
+ "z_m": 164.2,
+ "photos": [
+  {
+   "file": "EURK8793.JPG",
+   "fov_deg": 104.25,
+   "heading_deg": 164.35,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 16.193287337683493,
+   "heading_offset_deg": 3.8000000000000003,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": 3.8000000000000003,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 104.25
+}
+wrote /home/user/horizonator/experiments/out/baseline/39_EURK8793_huber.json/.png

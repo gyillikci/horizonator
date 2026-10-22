@@ -510,7 +510,9 @@ paired with checks that catch it; (2) the design of the solver's bounds
 and acceptance thresholds as an optimisation under uncertainty with a
 false-accept chance constraint. Before either is submitted: a held-out
 frame set (most experiments iterated on the same 44 frames), a
-literature baseline run on our frames, and the 54 m Bosphorus result
+literature baseline run on our frames (done for the 1D correlation
+matcher in E5bq: it is at least as accurate as ours; agreement between
+the two cuts false accepts 6 -> 2), and the 54 m Bosphorus result
 reported as an oracle configuration (hand-drawn skyline, roll and pitch
 diagnosed after the fact), not as performance.
 
@@ -4275,6 +4277,72 @@ sequential estimator.
 > regression-tested across the accepted frames before replacing eWaSR.
 > Segment-everything gives the cleanest partition of all but costs about
 > four minutes per frame on CPU.
+
+> **E5bq - against the literature's matcher: no more accurate, slightly
+> more honest, and the two together are an integrity check.** The
+> first question a reviewer asks is "against what?" (§3.8). CrossLocate,
+> the open learned baseline, could not be run: its trained models and
+> rendered databases sit on a host this environment cannot resolve, and
+> they cover the Alps. What can be reproduced exactly is the matcher
+> nearly every horizon paper uses for a levelled camera - correlate the
+> 1D elevation-vs-azimuth horizon with DEM horizons over a position
+> grid, heading by shift (Cozman & Krotkov 2000, Chiodini 2017,
+> Grelsson 2020). `skyfix --cost ncc` is that matcher inside the
+> identical pipeline: same eWaSR extractor, GLO-30, 6 km box, grid and
+> refinement, +-6 deg heading window, `--crest-dh 9 --max-peak-dh 30`.
+> Only the misfit differs: this instrument's robust residual in absolute
+> elevation with a bounded offset, against 1 - weighted Pearson, which
+> is offset- and scale-free. Frames: the 44 field frames of E5bm, now
+> stored as `experiments/data/campaign_frames.json` (rebuilt from the
+> stored runs; the original list was lost with a session scratchpad).
+> The Huber arm reproduces the stored E5bm run on 40 of 44 frames
+> exactly and on the other 4 to within one refinement cell (15-30 m),
+> with every verdict unchanged.
+>
+> | 44 field frames, every solve, no gates | Huber (ours) | NCC (literature) |
+> |---|---|---|
+> | median error | 2831 m | **1399 m** |
+> | within 300 m | 3 | **5** |
+> | within 500 m | 7 | **10** |
+> | closer of the two, per frame | 18 | 26 |
+>
+> **Accuracy is not where this instrument beats the literature.** The
+> textbook matcher is at least as accurate on these frames; the
+> per-frame difference is not significant (sign test, 18 of 44,
+> p = 0.29). Its three most striking wins - Bodrum 3 at 45 m, Akbük 1 at
+> 142 m, a Theodolite wide frame at 153 m, where Huber is 3.2-3.9 km off
+> - are frames where the absolute-elevation residual is pulled by a
+> uniform offset the bounded beta cannot absorb and a shape-only score
+> does not see. That is the E5bi lesson from the other side.
+>
+> **Integrity at equal availability.** The literature has no acceptance
+> gate, so each matcher's solves were ranked by its own basin margin and
+> the 13 most confident compared - 13 being what this instrument's full
+> gate set accepts. Huber: 3 within 300 m, 6 wrong by >= 500 m (the
+> full gate set gives exactly the same, so the gates add nothing over
+> ranking by margin). NCC: 3 within 300 m, **8 wrong**. A small edge,
+> on 13 frames.
+>
+> **The two matchers together are the useful result.** They fail
+> differently - one trusts absolute elevations, the other only shape -
+> so a fix both put in the same place is evidence neither gives alone:
+> solution separation across misfits rather than across measurement
+> subsets. Accepting only when the gates pass *and* the two fixes lie
+> within 500 m of each other: **9 accepted, all 3 good fixes kept, false
+> accepts 6 -> 2**, and those two are borderline (503 m and 544 m). The
+> four it removes are the campaign's worst accepted errors: Bodrum 4
+> (2652 m, the fixes 3.8 km apart), EWAC7374 (1641 m, 3.0 km), Bodrum 9
+> (664 m, 2.5 km - the E5bf compass frame) and QNJZ1625 (655 m,
+> 2.4 km). At 300 m: 7 accepted, 2 good, 1 wrong.
+>
+> Caveats, plainly: the 500 m threshold was examined on the same 44
+> frames it is reported on (it is the campaign's own false-accept line,
+> not a tuned value, and 500 and 1000 m give the same result), and 13
+> accepted frames is a small sample. It needs a held-out set before it
+> becomes a default. The cost is one more solve per frame - the
+> ray-casts can be shared, so in practice only the per-candidate misfit
+> doubles. `experiments/e5bq_baseline.py` reproduces every number here;
+> `out/baseline/baseline.png` plots the two errors frame by frame.
 
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction

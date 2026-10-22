@@ -147,6 +147,18 @@ def report(a):
         g = sum(r[name]['err'] < GOOD for r in top)
         print('  %s, top-%d by own margin: %d within %d m, %d wrong >= %d '
               'm' % (name.ljust(5), k, g, GOOD, w, BAD))
+    # solution separation across MISFITS: the two matchers fail
+    # differently (absolute elevations vs shape only), so a fix both put
+    # in the same place is evidence neither can give alone
+    print('\nagreement check: accept only when the gates pass AND the two '
+          'matchers land within T m of each other')
+    for T in (300, 500, 1000):
+        keep = [r for r in acc if math.hypot(
+            r['huber']['dn'] - r['ncc']['dn'],
+            r['huber']['de'] - r['ncc']['de']) < T]
+        print('  T = %4d m: %2d accepted, %d within %d m, %d wrong >= %d m'
+              % (T, len(keep), sum(r['huber']['err'] < GOOD for r in keep),
+                 GOOD, sum(r['huber']['err'] >= BAD for r in keep), BAD))
     json.dump(rows, open(os.path.join(OUT, 'report.json'), 'w'), indent=1)
     draw(rows, eh, ec)
 
@@ -172,7 +184,7 @@ def draw(rows, eh, ec):
     ax.set_ylabel('position error, this instrument (Huber) (m)')
     ax.set_title('Same %d frames, extractor, DEM and search; only the misfit '
                  'differs' % len(rows), fontsize=10.5)
-    ax.legend(loc='upper left', fontsize=9)
+    ax.legend(loc='lower right', fontsize=9)
     ax.grid(alpha=.3, which='both')
     fig.tight_layout()
     fig.savefig(os.path.join(OUT, 'baseline.png'), dpi=110)

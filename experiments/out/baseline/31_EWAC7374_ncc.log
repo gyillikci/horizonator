@@ -1,0 +1,177 @@
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+photo 0: EWAC7374.JPG  fov 20.4, heading 347.645, pitch +0.00, roll +0.00, weight 1.00
+z 4.1 m, box 6000 m at (38.80561,26.97368)
+peak witness: 2 crests, median height residual -9 m (spread 10 m)
+{
+ "status": "ok",
+ "reasons": [],
+ "lat": 38.81883002760701,
+ "lon": 26.968313682800673,
+ "fix_ok": true,
+ "basin_margin": 0.1578542058199755,
+ "relief_mrad": 6.43659904512762,
+ "dn_m": 1470.0,
+ "de_m": -465.0,
+ "sigma_n_m": 296.0738046073969,
+ "sigma_e_m": 131.77702960726828,
+ "sigma_major_m": 297.8638823820557,
+ "sigma_minor_m": 127.67924999428367,
+ "major_bearing_deg": 173.04070161986755,
+ "anisotropy": 2.3329075193924727,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -8.651241921439738,
+ "peak_dh_mad_m": 10.281948658582234,
+ "n_peaks": 2,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.06784449958971106,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -900.0,
+   "cost": 0.032440642069025416,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 2400.0,
+   "cost": 0.029578905685946122,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 2700.0,
+   "cost": 0.02586710372274237,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": 2400.0,
+   "cost": 0.01900473769233546,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": 2700.0,
+   "cost": 0.018235170326058925,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": 3000.0,
+   "cost": 0.01706915421565791,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": 2100.0,
+   "cost": 0.016294005174612214,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": 2400.0,
+   "cost": 0.015282075830583497,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": -1200.0,
+   "cost": 0.010183017028396413,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": -1800.0,
+   "cost": 0.008950260218041683,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": -1800.0,
+   "cost": 0.007889781318511924,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": -1800.0,
+   "cost": 0.007286603470197495,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": -1800.0,
+   "cost": 0.006924011417163922,
+   "stage": "coarse"
+  },
+  {
+   "dn": 900.0,
+   "de": -300.0,
+   "cost": 0.006792577277765277,
+   "stage": "coarse"
+  },
+  {
+   "dn": 1200.0,
+   "de": -600.0,
+   "cost": 0.00661017318796886,
+   "stage": "coarse"
+  },
+  {
+   "dn": 1200.0,
+   "de": -300.0,
+   "cost": 0.00610860283192427,
+   "stage": "coarse"
+  },
+  {
+   "dn": 1500.0,
+   "de": -600.0,
+   "cost": 0.005980037367710245,
+   "stage": "coarse"
+  },
+  {
+   "dn": 1500.0,
+   "de": -480.0,
+   "cost": 0.005560934443877064,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": 1470.0,
+   "de": -465.0,
+   "cost": 0.0055554848627502595,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "search_evals": 491,
+ "cost": 0.0055554848627502595,
+ "rms_mrad": 3.710372428002662,
+ "n_photos": 1,
+ "z_m": 4.1,
+ "photos": [
+  {
+   "file": "EWAC7374.JPG",
+   "fov_deg": 20.408,
+   "heading_deg": 347.645,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 3.710372428002662,
+   "heading_offset_deg": -5.800000000000001,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior",
+   "ncc": 0.9944445151372497
+  }
+ ],
+ "heading_offset_deg": -5.800000000000001,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 20.408
+}
+wrote /home/user/horizonator/experiments/out/baseline/31_EWAC7374_ncc.json/.png

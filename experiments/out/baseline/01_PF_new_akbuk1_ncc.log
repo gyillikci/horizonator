@@ -1,0 +1,145 @@
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+extractor pre-check: eWaSR disagrees with the seam on 36% of columns — falling back to the seam
+photo 0: PF_new_akbuk1.jpg  fov 73.7, heading 85.469, pitch +0.00, roll +0.00, weight 1.00
+z 33.0 m, box 6000 m at (37.03631,28.18522)
+peak witness: 5 crests, median height residual -18 m (spread 23 m)
+INCONCLUSIVE: residual 18.6 mrad > 12.0: the DEM cannot explain this observation
+{
+ "status": "inconclusive",
+ "reasons": [
+  "residual 18.6 mrad > 12.0: the DEM cannot explain this observation"
+ ],
+ "lat": 37.03590530527734,
+ "lon": 28.18674092470032,
+ "fix_ok": false,
+ "basin_margin": 1.0411845039693335,
+ "relief_mrad": 84.19846697273279,
+ "dn_m": -45.0,
+ "de_m": 135.0,
+ "sigma_n_m": 385.3649191646339,
+ "sigma_e_m": 383.73652322697296,
+ "sigma_major_m": 387.0688384367802,
+ "sigma_minor_m": 382.01774107008663,
+ "major_bearing_deg": 144.40378657306192,
+ "anisotropy": 1.0132221539045405,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -17.848732316759143,
+ "peak_dh_mad_m": 22.749234603105787,
+ "n_peaks": 5,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.022108021844884473,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -3000.0,
+   "cost": 0.015395045502063165,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": -3000.0,
+   "cost": 0.010373252515880504,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": -3000.0,
+   "cost": 0.007114990725384129,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": -3000.0,
+   "cost": 0.006862133253848213,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": -2700.0,
+   "cost": 0.0064166805875770505,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": -2400.0,
+   "cost": 0.006198728123157138,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": -300.0,
+   "cost": 0.005086899811311052,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": -600.0,
+   "cost": 0.00508144946121869,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": -300.0,
+   "cost": 0.004253124182210355,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 0.0,
+   "cost": 0.0034324795413012144,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": 0.0,
+   "cost": 0.003036828915319978,
+   "stage": "coarse"
+  },
+  {
+   "dn": -60.0,
+   "de": 120.0,
+   "cost": 0.002918666319154828,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -45.0,
+   "de": 135.0,
+   "cost": 0.0029057760338129235,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "search_evals": 491,
+ "cost": 0.0029057760338129235,
+ "rms_mrad": 18.637849471841587,
+ "n_photos": 1,
+ "z_m": 33.0,
+ "photos": [
+  {
+   "file": "PF_new_akbuk1.jpg",
+   "fov_deg": 73.74,
+   "heading_deg": 85.469,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 18.637849471841587,
+   "heading_offset_deg": -0.2,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior",
+   "ncc": 0.9970942239661871
+  }
+ ],
+ "heading_offset_deg": -0.2,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 73.74
+}
+wrote /home/user/horizonator/experiments/out/baseline/01_PF_new_akbuk1_ncc.json/.png

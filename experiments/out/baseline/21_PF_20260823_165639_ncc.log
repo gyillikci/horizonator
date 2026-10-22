@@ -1,0 +1,131 @@
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+extractor pre-check: eWaSR disagrees with the seam on 73% of columns — falling back to the seam
+photo 0: PF_20260823_165639.jpg  fov 38.1, heading 324.701, pitch +0.00, roll +0.00, weight 1.00
+z 4.0 m, box 6000 m at (36.64116,28.09566)
+peak witness: 1 crests, median height residual -20 m (spread 0 m)
+INCONCLUSIVE: minimum on the search-box boundary: the true position may lie outside the box
+INCONCLUSIVE: residual 21.2 mrad > 12.0: the DEM cannot explain this observation
+INCONCLUSIVE: covariance degenerate: the cost surface has no measurable curvature at the fix (sigma cannot be computed) — the landscape does not pin a position here
+{
+ "status": "inconclusive",
+ "reasons": [
+  "minimum on the search-box boundary: the true position may lie outside the box",
+  "residual 21.2 mrad > 12.0: the DEM cannot explain this observation",
+  "covariance degenerate: the cost surface has no measurable curvature at the fix (sigma cannot be computed) \u2014 the landscape does not pin a position here"
+ ],
+ "lat": 36.666116174564245,
+ "lon": 28.13029287661268,
+ "fix_ok": false,
+ "basin_margin": 1.5274654168610395,
+ "relief_mrad": 44.16119867504194,
+ "dn_m": 2775.0,
+ "de_m": 3090.0,
+ "sigma_n_m": 0.0,
+ "sigma_e_m": 0.0,
+ "sigma_major_m": 34.00422945682102,
+ "sigma_minor_m": 0.0,
+ "major_bearing_deg": 146.8257458552932,
+ "anisotropy": Infinity,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -19.80707957602726,
+ "peak_dh_mad_m": 0.0,
+ "n_peaks": 1,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 1.4038509912648705,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1800.0,
+   "cost": 1.3504140387050345,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 300.0,
+   "cost": 1.119358231599877,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 600.0,
+   "cost": 0.342646648370012,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1800.0,
+   "cost": 0.05104061212988098,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 2700.0,
+   "cost": 0.013695949766198257,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": 2100.0,
+   "cost": 0.012485859780114517,
+   "stage": "coarse"
+  },
+  {
+   "dn": 1200.0,
+   "de": 2700.0,
+   "cost": 0.010175688149310691,
+   "stage": "coarse"
+  },
+  {
+   "dn": 2700.0,
+   "de": 3000.0,
+   "cost": 0.004026044463923184,
+   "stage": "coarse"
+  },
+  {
+   "dn": 2760.0,
+   "de": 3060.0,
+   "cost": 0.002001484645004048,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": 2775.0,
+   "de": 3090.0,
+   "cost": 0.001730383610627384,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "search_evals": 491,
+ "cost": 0.001730383610627384,
+ "rms_mrad": 21.200861821826773,
+ "n_photos": 1,
+ "z_m": 4.0,
+ "photos": [
+  {
+   "file": "PF_20260823_165639.jpg",
+   "fov_deg": 38.07,
+   "heading_deg": 324.701,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 21.200861821826773,
+   "heading_offset_deg": 1.4000000000000001,
+   "el_offset_mrad": -10.12290966156711,
+   "attitude_source": "prior",
+   "ncc": 0.9982696163893726
+  }
+ ],
+ "heading_offset_deg": 1.4000000000000001,
+ "el_offset_mrad": -10.12290966156711,
+ "fov_deg": 38.07
+}
+wrote /home/user/horizonator/experiments/out/baseline/21_PF_20260823_165639_ncc.json/.png

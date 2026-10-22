@@ -1,0 +1,116 @@
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+photo 0: PF_new_akyaka2.jpg  fov 73.7, heading 177.004, pitch +0.00, roll +0.00, weight 1.00
+z 17.0 m, box 6000 m at (37.04860,28.29299)
+peak witness: 2 crests, median height residual +83 m (spread 122 m)
+INCONCLUSIVE: residual 31.5 mrad > 12.0: the DEM cannot explain this observation
+INCONCLUSIVE: peak heights disagree: matched crests stand a median +83 m (spread 122 m) from the model at this fix (limits 30/90 m) — position error or DEM bias is leaking into the height channel
+{
+ "status": "inconclusive",
+ "reasons": [
+  "residual 31.5 mrad > 12.0: the DEM cannot explain this observation",
+  "peak heights disagree: matched crests stand a median +83 m (spread 122 m) from the model at this fix (limits 30/90 m) \u2014 position error or DEM bias is leaking into the height channel"
+ ],
+ "lat": 37.046711424627574,
+ "lon": 28.297722531809608,
+ "fix_ok": false,
+ "basin_margin": 0.2096835912126488,
+ "relief_mrad": 9.53425301787672,
+ "dn_m": -210.0,
+ "de_m": 420.0,
+ "sigma_n_m": 553.3200353092926,
+ "sigma_e_m": 274.4337745746239,
+ "sigma_major_m": 556.5086098802745,
+ "sigma_minor_m": 267.90880021208085,
+ "major_bearing_deg": 172.9949735569736,
+ "anisotropy": 2.0772315408815745,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": 82.95352533261212,
+ "peak_dh_mad_m": 121.84112655081023,
+ "n_peaks": 2,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.3062531943018947,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2700.0,
+   "cost": 0.23222251602026556,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2400.0,
+   "cost": 0.21133950750656905,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1500.0,
+   "cost": 0.15780015102672962,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": 300.0,
+   "cost": 0.15565790246744238,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 0.0,
+   "cost": 0.1446310365200062,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 300.0,
+   "cost": 0.1304474592968089,
+   "stage": "coarse"
+  },
+  {
+   "dn": -240.0,
+   "de": 420.0,
+   "cost": 0.12521832298222713,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -210.0,
+   "de": 420.0,
+   "cost": 0.12507961812358048,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "search_evals": 491,
+ "cost": 0.12507961812358048,
+ "rms_mrad": 31.452655127342403,
+ "n_photos": 1,
+ "z_m": 17.0,
+ "photos": [
+  {
+   "file": "PF_new_akyaka2.jpg",
+   "fov_deg": 73.74,
+   "heading_deg": 177.004,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 31.452655127342403,
+   "heading_offset_deg": 6.0,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior",
+   "ncc": 0.8749203818764195
+  }
+ ],
+ "heading_offset_deg": 6.0,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 73.74
+}
+wrote /home/user/horizonator/experiments/out/baseline/13_PF_new_akyaka2_ncc.json/.png

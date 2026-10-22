@@ -1,0 +1,141 @@
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+extractor pre-check: eWaSR disagrees with the seam on 38% of columns — falling back to the seam
+photo 0: GAQB1096.JPG  fov 104.2, heading 212.131, pitch +0.00, roll +0.00, weight 1.00
+z 2.5 m, box 6000 m at (40.90622,29.13945)
+peak witness: 10 crests, median height residual -3 m (spread 6 m)
+INCONCLUSIVE: ambiguous landscape: basin margin 0.01 < 0.15
+INCONCLUSIVE: residual 19.0 mrad > 12.0: the DEM cannot explain this observation
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.01 < 0.15",
+  "residual 19.0 mrad > 12.0: the DEM cannot explain this observation"
+ ],
+ "lat": 40.91970982408878,
+ "lon": 29.16425986037915,
+ "fix_ok": false,
+ "basin_margin": 0.013583980154175388,
+ "relief_mrad": 31.41713560243689,
+ "dn_m": 1500.0,
+ "de_m": 2085.0,
+ "sigma_n_m": 175.49808318064322,
+ "sigma_e_m": 181.22066911795307,
+ "sigma_major_m": 185.26416832185475,
+ "sigma_minor_m": 171.2241106025961,
+ "major_bearing_deg": 57.03503077654095,
+ "anisotropy": 1.081998134899617,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -3.1435157931340165,
+ "peak_dh_mad_m": 5.634269087838154,
+ "n_peaks": 10,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 1.0031711785950679,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2700.0,
+   "cost": 0.8651649402745956,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2400.0,
+   "cost": 0.8374957363132922,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2100.0,
+   "cost": 0.8131251569411079,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1800.0,
+   "cost": 0.8117064691088889,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1500.0,
+   "cost": 0.7560157745148272,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -2100.0,
+   "cost": 0.7437764072229649,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -1200.0,
+   "cost": 0.7140628796053081,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": -1200.0,
+   "cost": 0.7006528465331645,
+   "stage": "coarse"
+  },
+  {
+   "dn": 900.0,
+   "de": 2700.0,
+   "cost": 0.6958555271382492,
+   "stage": "coarse"
+  },
+  {
+   "dn": 1500.0,
+   "de": 2100.0,
+   "cost": 0.623173370370045,
+   "stage": "coarse"
+  },
+  {
+   "dn": 1500.0,
+   "de": 2100.0,
+   "cost": 0.623173370370045,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": 1500.0,
+   "de": 2085.0,
+   "cost": 0.6196719831897302,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "search_evals": 491,
+ "cost": 0.6196719831897302,
+ "rms_mrad": 18.995976721110416,
+ "n_photos": 1,
+ "z_m": 2.5,
+ "photos": [
+  {
+   "file": "GAQB1096.JPG",
+   "fov_deg": 104.25,
+   "heading_deg": 212.131,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 18.995976721110416,
+   "heading_offset_deg": -0.4,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior",
+   "ncc": 0.38032801681026984
+  }
+ ],
+ "heading_offset_deg": -0.4,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 104.25
+}
+wrote /home/user/horizonator/experiments/out/baseline/41_GAQB1096_ncc.json/.png

@@ -1,0 +1,87 @@
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+extractor pre-check: eWaSR disagrees with the seam on 34% of columns — falling back to the seam
+photo 0: QMLO5628.JPG  fov 73.7, heading 205.342, pitch +0.00, roll +0.00, weight 1.00
+z 61.4 m, box 6000 m at (37.02713,27.36178)
+peak witness: 6 crests, median height residual -7 m (spread 21 m)
+INCONCLUSIVE: minimum on the search-box boundary: the true position may lie outside the box
+INCONCLUSIVE: residual 30.0 mrad > 12.0: the DEM cannot explain this observation
+{
+ "status": "inconclusive",
+ "reasons": [
+  "minimum on the search-box boundary: the true position may lie outside the box",
+  "residual 30.0 mrad > 12.0: the DEM cannot explain this observation"
+ ],
+ "lat": 37.0028483166402,
+ "lon": 27.331872096214614,
+ "fix_ok": false,
+ "basin_margin": 0.244588245042859,
+ "relief_mrad": 23.76531195242866,
+ "dn_m": -2700.0,
+ "de_m": -2655.0,
+ "sigma_n_m": 205.15345556216045,
+ "sigma_e_m": 197.85319890906587,
+ "sigma_major_m": 231.4854299557458,
+ "sigma_minor_m": 166.27785290245131,
+ "major_bearing_deg": 41.74346349944341,
+ "anisotropy": 1.3921603263156712,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -6.8130095499549235,
+ "peak_dh_mad_m": 20.82816385391269,
+ "n_peaks": 6,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.04412833749568923,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -2700.0,
+   "cost": 0.03616822112687168,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -2640.0,
+   "cost": 0.03490297543193355,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -2700.0,
+   "de": -2655.0,
+   "cost": 0.03457729987308866,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "search_evals": 491,
+ "cost": 0.03457729987308866,
+ "rms_mrad": 29.99412198452595,
+ "n_photos": 1,
+ "z_m": 61.4,
+ "photos": [
+  {
+   "file": "QMLO5628.JPG",
+   "fov_deg": 73.74,
+   "heading_deg": 205.342,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 29.99412198452595,
+   "heading_offset_deg": -4.4,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior",
+   "ncc": 0.9654227001269113
+  }
+ ],
+ "heading_offset_deg": -4.4,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 73.74
+}
+wrote /home/user/horizonator/experiments/out/baseline/44_QMLO5628_ncc.json/.png

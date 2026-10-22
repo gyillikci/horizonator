@@ -1,0 +1,112 @@
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.03 < 0.15",
+  "peak heights disagree: matched crests stand a median -40 m (spread 7 m) from the model at this fix (limits 30/90 m) \u2014 position error or DEM bias is leaking into the height channel"
+ ],
+ "lat": 37.042388006228265,
+ "lon": 27.32712748528783,
+ "fix_ok": false,
+ "basin_margin": 0.033781687453983834,
+ "relief_mrad": 17.199204889386316,
+ "dn_m": 2505.0,
+ "de_m": -1830.0,
+ "sigma_n_m": 116.47652278929512,
+ "sigma_e_m": 274.01657735231686,
+ "sigma_major_m": 274.4138994820731,
+ "sigma_minor_m": 115.53733940162427,
+ "major_bearing_deg": 86.60003344718388,
+ "anisotropy": 2.3751100804578096,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -40.4476664384038,
+ "peak_dh_mad_m": 7.306152819709347,
+ "n_peaks": 3,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.23351393678612686,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -300.0,
+   "cost": 0.1877407693182218,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 0.0,
+   "cost": 0.18612704816611592,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 300.0,
+   "cost": 0.14739434320509792,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 600.0,
+   "cost": 0.13479041618509324,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 900.0,
+   "cost": 0.13197834923622476,
+   "stage": "coarse"
+  },
+  {
+   "dn": 900.0,
+   "de": -2400.0,
+   "cost": 0.1279500883846706,
+   "stage": "coarse"
+  },
+  {
+   "dn": 2400.0,
+   "de": -1800.0,
+   "cost": 0.12376896392872694,
+   "stage": "coarse"
+  },
+  {
+   "dn": 2520.0,
+   "de": -1800.0,
+   "cost": 0.09480493914221666,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": 2505.0,
+   "de": -1830.0,
+   "cost": 0.09306661244731296,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "search_evals": 491,
+ "cost": 0.09306661244731296,
+ "rms_mrad": 11.824657289844406,
+ "n_photos": 1,
+ "z_m": 2.0,
+ "photos": [
+  {
+   "file": "PF_new_bodrum4.jpg",
+   "fov_deg": 73.74,
+   "heading_deg": 206.76,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 11.824657289844406,
+   "heading_offset_deg": -5.4,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior",
+   "ncc": 0.906933387552687
+  }
+ ],
+ "heading_offset_deg": -5.4,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 73.74
+}

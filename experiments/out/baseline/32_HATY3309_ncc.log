@@ -1,0 +1,130 @@
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+extractor pre-check: eWaSR disagrees with the seam on 41% of columns — falling back to the seam
+photo 0: HATY3309.JPG  fov 73.7, heading 40.525, pitch +0.00, roll +0.00, weight 1.00
+z 14.2 m, box 6000 m at (37.47686,27.41421)
+peak witness: 4 crests, median height residual -17 m (spread 18 m)
+{
+ "status": "ok",
+ "reasons": [],
+ "lat": 37.480906947226636,
+ "lon": 27.41743967410371,
+ "fix_ok": true,
+ "basin_margin": 5.910797054910179,
+ "relief_mrad": 19.64883334055039,
+ "dn_m": 450.0,
+ "de_m": 285.0,
+ "sigma_n_m": 575.5441811821848,
+ "sigma_e_m": 218.12971453580806,
+ "sigma_major_m": 598.8640688129191,
+ "sigma_minor_m": 142.10384914202726,
+ "major_bearing_deg": 16.526875455587117,
+ "anisotropy": 4.21427056641075,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -16.804526534123653,
+ "peak_dh_mad_m": 18.381588171037404,
+ "n_peaks": 4,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.24655223786360103,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2400.0,
+   "cost": 0.22637630711395573,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1500.0,
+   "cost": 0.20512176888164746,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 2100.0,
+   "cost": 0.1375992624903205,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 2400.0,
+   "cost": 0.11756340093598538,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": 0.0,
+   "cost": 0.07283469965032807,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": 300.0,
+   "cost": 0.047330474352732854,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 300.0,
+   "cost": 0.029245315345218015,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": 300.0,
+   "cost": 0.021330188375867865,
+   "stage": "coarse"
+  },
+  {
+   "dn": 300.0,
+   "de": 300.0,
+   "cost": 0.017011554528642336,
+   "stage": "coarse"
+  },
+  {
+   "dn": 420.0,
+   "de": 300.0,
+   "cost": 0.01632174371067352,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": 450.0,
+   "de": 285.0,
+   "cost": 0.01614498424682065,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "search_evals": 491,
+ "cost": 0.01614498424682065,
+ "rms_mrad": 11.88992438903881,
+ "n_photos": 1,
+ "z_m": 14.2,
+ "photos": [
+  {
+   "file": "HATY3309.JPG",
+   "fov_deg": 73.74,
+   "heading_deg": 40.525,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 11.88992438903881,
+   "heading_offset_deg": 6.0,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior",
+   "ncc": 0.9838550157531794
+  }
+ ],
+ "heading_offset_deg": 6.0,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 73.74
+}
+wrote /home/user/horizonator/experiments/out/baseline/32_HATY3309_ncc.json/.png

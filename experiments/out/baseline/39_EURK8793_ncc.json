@@ -1,0 +1,78 @@
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.08 < 0.15",
+  "minimum on the search-box boundary: the true position may lie outside the box",
+  "residual 22.1 mrad > 12.0: the DEM cannot explain this observation",
+  "peak heights disagree: matched crests stand a median -93 m (spread 56 m) from the model at this fix (limits 30/90 m) \u2014 position error or DEM bias is leaking into the height channel"
+ ],
+ "lat": 39.140541886878026,
+ "lon": 27.6717649377101,
+ "fix_ok": false,
+ "basin_margin": 0.08351471347755447,
+ "relief_mrad": 37.87167249406186,
+ "dn_m": 2670.0,
+ "de_m": -2385.0,
+ "sigma_n_m": 339.4590756140665,
+ "sigma_e_m": 224.63670304932396,
+ "sigma_major_m": 371.294347676887,
+ "sigma_minor_m": 166.8371054556557,
+ "major_bearing_deg": 26.967861164859357,
+ "anisotropy": 2.225490226906237,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -92.75892754082261,
+ "peak_dh_mad_m": 55.67648978558603,
+ "n_peaks": 7,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.10222909335095243,
+   "stage": "coarse"
+  },
+  {
+   "dn": 2700.0,
+   "de": -2400.0,
+   "cost": 0.09434952020434206,
+   "stage": "coarse"
+  },
+  {
+   "dn": 2640.0,
+   "de": -2400.0,
+   "cost": 0.09174703596175493,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": 2670.0,
+   "de": -2385.0,
+   "cost": 0.09152997570763877,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "search_evals": 491,
+ "cost": 0.09152997570763877,
+ "rms_mrad": 22.099263739496028,
+ "n_photos": 1,
+ "z_m": 164.2,
+ "photos": [
+  {
+   "file": "EURK8793.JPG",
+   "fov_deg": 104.25,
+   "heading_deg": 164.35,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 22.099263739496028,
+   "heading_offset_deg": 6.0,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior",
+   "ncc": 0.9084700242923612
+  }
+ ],
+ "heading_offset_deg": 6.0,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 104.25
+}

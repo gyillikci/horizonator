@@ -1,0 +1,144 @@
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+photo 0: PF_20260824_195733.jpg  fov 73.7, heading 196.515, pitch +0.00, roll +0.00, weight 1.00
+z 3.0 m, box 6000 m at (37.05190,28.32292)
+peak witness: 3 crests, median height residual +6 m (spread 81 m)
+INCONCLUSIVE: ambiguous landscape: basin margin 0.11 < 0.15
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.11 < 0.15"
+ ],
+ "lat": 37.040838344247206,
+ "lon": 28.32106071023306,
+ "fix_ok": false,
+ "basin_margin": 0.10752632109773004,
+ "relief_mrad": 58.3581771835994,
+ "dn_m": -1230.0,
+ "de_m": -165.0,
+ "sigma_n_m": 789.8554383257429,
+ "sigma_e_m": 1034.4780876360417,
+ "sigma_major_m": 1169.021867768139,
+ "sigma_minor_m": 572.1926248491543,
+ "major_bearing_deg": 122.28411092424817,
+ "anisotropy": 2.0430565110417582,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": 5.5418421244726055,
+ "peak_dh_mad_m": 81.25323246879563,
+ "n_peaks": 3,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.00020940054023841796,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 600.0,
+   "cost": 0.00018962134234696648,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1200.0,
+   "cost": 0.00014443953215253236,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1500.0,
+   "cost": 0.00010088318552057295,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1800.0,
+   "cost": 9.247578543746668e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 2100.0,
+   "cost": 9.236656928502955e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 2400.0,
+   "cost": 7.861822113730471e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": -300.0,
+   "cost": 7.544371804827964e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 0.0,
+   "cost": 7.415537490679021e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": -300.0,
+   "cost": 7.250456738809523e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": 0.0,
+   "cost": 7.144880803034408e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": -300.0,
+   "cost": 7.098542006602776e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": -180.0,
+   "cost": 7.026675061160488e-05,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -1230.0,
+   "de": -165.0,
+   "cost": 7.021492174097722e-05,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "search_evals": 491,
+ "cost": 7.021492174097722e-05,
+ "rms_mrad": 11.850309847508395,
+ "n_photos": 1,
+ "z_m": 3.0,
+ "photos": [
+  {
+   "file": "PF_20260824_195733.jpg",
+   "fov_deg": 73.7,
+   "heading_deg": 196.515,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 11.850309847508395,
+   "heading_offset_deg": -0.4,
+   "el_offset_mrad": -10.12290966156711,
+   "attitude_source": "prior",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": -0.4,
+ "el_offset_mrad": -10.12290966156711,
+ "fov_deg": 73.7
+}
+wrote /home/user/horizonator/experiments/out/baseline/24_PF_20260824_195733_huber.json/.png

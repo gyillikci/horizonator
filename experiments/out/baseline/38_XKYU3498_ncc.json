@@ -1,0 +1,89 @@
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.04 < 0.15",
+  "minimum on the search-box boundary: the true position may lie outside the box",
+  "residual 21.9 mrad > 12.0: the DEM cannot explain this observation"
+ ],
+ "lat": 37.45851383923926,
+ "lon": 27.384463001676348,
+ "fix_ok": false,
+ "basin_margin": 0.04019602389762247,
+ "relief_mrad": 13.809165673549382,
+ "dn_m": -2040.0,
+ "de_m": -2625.0,
+ "sigma_n_m": 152.96773692316032,
+ "sigma_e_m": 128.21080419425772,
+ "sigma_major_m": 154.04976289748066,
+ "sigma_minor_m": 126.90866559365232,
+ "major_bearing_deg": 167.95260317839112,
+ "anisotropy": 1.21386323129999,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": null,
+ "peak_dh_mad_m": null,
+ "n_peaks": 0,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.4429761858816613,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -600.0,
+   "cost": 0.20418094850306778,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 900.0,
+   "cost": 0.17137263523812418,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": -2700.0,
+   "cost": 0.15353142730973535,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2040.0,
+   "de": -2640.0,
+   "cost": 0.13834805561724628,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -2040.0,
+   "de": -2625.0,
+   "cost": 0.13575740886017984,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "search_evals": 491,
+ "cost": 0.13575740886017984,
+ "rms_mrad": 21.860771290134274,
+ "n_photos": 1,
+ "z_m": 14.2,
+ "photos": [
+  {
+   "file": "XKYU3498.JPG",
+   "fov_deg": 73.74,
+   "heading_deg": 355.31,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 21.860771290134274,
+   "heading_offset_deg": -6.0,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior",
+   "ncc": 0.8642425911398202
+  }
+ ],
+ "heading_offset_deg": -6.0,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 73.74
+}
