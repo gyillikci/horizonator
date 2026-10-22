@@ -34,9 +34,10 @@ python3 -m pip install --upgrade \
   'opencv-python>=4.11' 'rasterio>=1.4'
 # torch is only for the segmenters. On Linux without an NVIDIA GPU the
 # CPU wheel avoids ~2 GB of CUDA libraries; everything in the study ran
-# on CPU. Set TORCH_INDEX to override (e.g. a CUDA index URL).
+# on CPU. Set TORCH_INDEX to override (a CUDA index URL), or to the
+# empty string to use plain PyPI.
 if [ "$(uname -s)" = Linux ] && ! command -v nvidia-smi >/dev/null; then
-  TORCH_INDEX="${TORCH_INDEX:-https://download.pytorch.org/whl/cpu}"
+  TORCH_INDEX="${TORCH_INDEX-https://download.pytorch.org/whl/cpu}"
 fi
 python3 -m pip install --upgrade ${TORCH_INDEX:+--index-url "$TORCH_INDEX"} \
   'torch>=2.6' 'torchvision>=0.21'
