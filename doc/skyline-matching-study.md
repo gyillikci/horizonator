@@ -600,6 +600,73 @@ to have no published counterpart in skyline navigation.
 
 ---
 
+### 3.10 PCA, haze and texture as range cues for the mountain body (added 2026-10-23)
+
+Context: E5cc found that far ridges are missing from the photo's
+skyline because the segmenter drops low-contrast terrain (c ~ 0.08-0.16).
+E5cd found that the mountain body's texture and brightness carry range
+(per-frame Spearman -0.36; leave-one-frame-out near/far AUC ~0.8). The
+literature that bears on both:
+
+**Low-rank / PCA sky models (for finding faint ridges).**
+* Robust PCA / Principal Component Pursuit (Candès, Li, Ma, Wright,
+  J. ACM 2011): data = low-rank + sparse. The sky above the coast is
+  nearly low-rank across columns, and a faint ridge is a sparse
+  departure from it. No paper applying RPCA to horizon or skyline
+  detection was found. Caveat: RPCA assumes the sparse part is randomly
+  scattered, and a ridge is structured.
+* Python implementations: `pyrpca` (PCP by inexact ALM),
+  `skpcp` (scikit-learn style), `dfm/pcp`, `sverdoot/robust-pca`
+  (PCP, stable PCP, IRCUR), `yukara-ikemiya/online-rpca`.
+* Sky colour is low-dimensional. Clear-sky colorimetry needs ~3
+  principal components (Hernández-Andrés et al., JOSA A 2001). Spectral
+  skylight per pixel has been estimated with a PCA basis
+  (López-Álvarez et al., Applied Optics 2005; Uetani, EuroSun 2014).
+  A 3-PC sky colour model whose residual flags non-sky pixels is the
+  simplest faint-ridge detector.
+* Astronomy uses PCA eigen-images of sky frames to remove the sky
+  background, as a template for the method.
+
+**Haze as per-pixel depth (the physics behind the brightness cue).**
+* Dark channel prior (He, Sun, Tang, CVPR 2009 / PAMI 2011): the haze
+  transmission t = exp(-beta d) yields a depth map as a by-product.
+* Non-local dehazing / haze-lines (Berman, Treibitz, Avidan, CVPR
+  2016; air-light, ICCP 2017): pixels of one colour cluster spread
+  along a line towards the air-light as distance grows, and the position
+  on the line gives the distance. Official MATLAB code:
+  `danaberman/non-local-dehazing`.
+* Colour attenuation prior (Zhu, Mai, Shao, IEEE TIP 2015): depth is a
+  LINEAR function of brightness and saturation, fitted by supervised
+  learning. This is the closest published analogue of E5cd's
+  texture + brightness model, and we have exact per-pixel DEM range to
+  fit it.
+* PCA for the air-light (Kim et al., Applied Sciences 2018): the PCA
+  axis of a haze-free patch passes through the RGB origin; haze shifts
+  it.
+
+**Texture energy as depth (the operator's frequency idea).**
+* Make3D (Saxena, Chung, Ng, NIPS 2005; Saxena, Sun, Ng, PAMI 2009):
+  monocular depth from texture variation, texture gradient (Laws'
+  masks on intensity) and haze (low-frequency colour), in an MRF over
+  patches. It is the same cue set as E5cd, used on terrestrial scenes.
+* PCANet (Chan et al., IEEE TIP 2015): PCA-learned filter banks for
+  texture classification (CUReT). Python: `stjordanis/pcanet` (Chainer,
+  IncrementalPCA). It would learn the body-texture filters from data
+  instead of a hand-set high-pass.
+
+**PCA in skyline-to-DEM matching itself.** None found. The matching
+literature uses curvelets (Baatz et al.), silhouette cross-correlation
+(Baboud et al.) and learned cross-domain descriptors (Brejcha et al.).
+PCA could compress a DEM skyline database for fast retrieval, but
+skyfix ray-casts per candidate, so that does not apply here.
+
+**What to test first.** Every cue above can be scored the way E5cd
+scores texture, against the true per-pixel range from the DEM ray: dark
+channel, saturation, haze-line position, a 3-PC sky-colour residual,
+and a PCA of a Laws/Gabor filter bank. The faint-ridge detector (RPCA
+or the sky-colour PCA residual) is judged on XKYU3498's 26 km range,
+which is visible in a contrast stretch and dropped by both segmenters.
+
 ## 4. Literature: search & optimization techniques for the position sweep
 
 The per-candidate cost (synthesize a skyline, compare to the observation) is
