@@ -22,6 +22,10 @@ The search is reproduced with skyfix's own functions and parameters;
 the script checks that its final fix equals the solver's.
 
     python3 e5by_search_video.py [bosphorus|bodrum9|bodrum9_soft]
+    python3 e5by_search_video.py 38_XKYU3498 [5]
+
+Any tag of data/campaign_frames.json runs with that frame's E5bm
+settings; a second argument is the soft compass sigma in degrees.
 
 bodrum9_soft is the same search under E5bz's soft compass prior
 (sigma 5 deg, search +-20 deg) instead of the hard +-6 deg window; the
@@ -75,6 +79,28 @@ CFGS['bodrum9_soft'] = dict(
     label='Bodrum 9 · eWaSR · soft compass σ 5°',
     verdict=os.path.join(HERE, 'out', 'compass',
                          '09_PF_new_bodrum9_soft5.json'))
+
+
+def frame_cfg(tag, sigma=None):
+    """A campaign frame (data/campaign_frames.json) with its E5bm
+    flags: eWaSR, prior attitude, crest 9 m, +-6 deg or a soft prior."""
+    fr = next(f for f in json.load(open(os.path.join(
+        HERE, 'data', 'campaign_frames.json')))['frames'] if f['tag'] == tag)
+    name = tag + ('_soft%g' % sigma if sigma else '')
+    c = dict(photo=fr['path'], lat=fr['lat'], lon=fr['lon'], z=fr['z'],
+             heading=fr['heading'], fov=fr['fov'], roll=0.0, pitch=0.0,
+             window=6.0, box=fr['box'], crest_dh=9.0, boundary=None,
+             extractor='ewasr', dem='~/.horizonator/DEMs_COP30', name=name,
+             label='%s · eWaSR · %s' % (tag[3:], 'soft compass σ %g°' % sigma
+                                         if sigma else 'compass ±6°'),
+             verdict=os.path.join(HERE, 'out', 'compass', '%s_soft%g.json'
+                                  % (tag, sigma)) if sigma else
+             os.path.join(HERE, 'out', 'baseline', tag + '_huber.json'))
+    if sigma:
+        c['compass_sigma'] = float(sigma)
+    return c
+
+
 WIDE = 30.0          # the heading panel shows the cost far beyond the window
 OUT = os.path.join(HERE, 'out', 'search_video')
 BG, PANEL, GRID, TXT, MUTED = '#0d1117', '#151b23', '#2a3440', '#d9dee4', '#8b96a3'
@@ -170,8 +196,8 @@ def project(diag, el_syn_need, AZn, shift, beta, c, H, W):
     return u + (W - 1) / 2, (H - 1) / 2 - v
 
 
-def main(name='bosphorus'):
-    c = CFGS[name]
+def main(name='bosphorus', sigma=None):
+    c = CFGS[name] if name in CFGS else frame_cfg(name, sigma)
     os.makedirs(OUT, exist_ok=True)
     fdir = os.path.join(OUT, 'frames_' + c['name'])
     os.makedirs(fdir, exist_ok=True)
@@ -438,4 +464,5 @@ def main(name='bosphorus'):
 
 
 if __name__ == '__main__':
-    main(sys.argv[1] if len(sys.argv) > 1 else 'bosphorus')
+    main(sys.argv[1] if len(sys.argv) > 1 else 'bosphorus',
+         float(sys.argv[2]) if len(sys.argv) > 2 else None)
