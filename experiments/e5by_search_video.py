@@ -21,9 +21,15 @@ records every candidate it evaluates: the 21 x 21 coarse grid over the
 The search is reproduced with skyfix's own functions and parameters;
 the script checks that its final fix equals the solver's.
 
-    python3 e5by_search_video.py
+    python3 e5by_search_video.py [bosphorus|bodrum9|bodrum9_soft]
+
+bodrum9_soft is the same search under E5bz's soft compass prior
+(sigma 5 deg, search +-20 deg) instead of the hard +-6 deg window; the
+heading panel then shows the prior's penalty and the raw photo cost
+apart, and the last frame carries the solver's verdict.
 """
 
+import json
 import math
 import os
 import subprocess
@@ -59,8 +65,16 @@ CFGS = {
         z=9.0, heading=167.093, fov=73.7, roll=0.0, pitch=0.0, window=6.0,
         box=6000.0, crest_dh=9.0, boundary=None, extractor='ewasr',
         dem='~/.horizonator/DEMs_COP30', name='bodrum9',
-        label='Bodrum 9 · eWaSR skyline · prior attitude'),
+        label='Bodrum 9 · eWaSR skyline · prior attitude',
+        verdict=os.path.join(HERE, 'out', 'baseline',
+                             '09_PF_new_bodrum9_huber.json')),
 }
+# E5bz: the same frame, soft compass prior instead of the hard window
+CFGS['bodrum9_soft'] = dict(
+    CFGS['bodrum9'], name='bodrum9_soft', compass_sigma=5.0,
+    label='Bodrum 9 · eWaSR · soft compass σ 5°',
+    verdict=os.path.join(HERE, 'out', 'compass',
+                         '09_PF_new_bodrum9_soft5.json'))
 WIDE = 30.0          # the heading panel shows the cost far beyond the window
 OUT = os.path.join(HERE, 'out', 'search_video')
 BG, PANEL, GRID, TXT, MUTED = '#0d1117', '#151b23', '#2a3440', '#d9dee4', '#8b96a3'
@@ -76,6 +90,10 @@ def run_search(c):
                                     c['pitch'])
     half = max(0.010, 2.0 * np.radians(0.29))
     betas = np.arange(-half, half * 1.001, half / 5)
+    if c.get('compass_sigma'):
+        # skyfix --compass-sigma, defaults: sigma_m 3 mrad, n_eff 20
+        F.COMPASS_K = 0.5 * (0.1 / c['compass_sigma']) ** 2 * (3e-3) ** 2 / 20.0
+        c['window'] = min(max(c['window'], 4 * c['compass_sigma']), 180.0)
     hw = int(round(c['window'] / 0.1))
     shifts = np.arange(-hw, hw + 1, 2)
     mlat, mlon = S.meters_per_degree(c['lat'])
@@ -116,7 +134,9 @@ def run_search(c):
         el_t = el_t + np.where(np.isfinite(r_t) & (r_t > 0),
                                c['crest_dh'] / np.maximum(r_t, 1000.0), 0.0)
     lags = np.arange(-int(WIDE / 0.1), int(WIDE / 0.1) + 1, 2)
-    ct = F.photo_cost_curve(el_obs, w, el_t, lags, betas)
+    # the photo's own preference, without the prior's penalty
+    ct = F.photo_cost_curve(el_obs, w, el_t, lags, betas) \
+        - F.COMPASS_K * lags.astype(float) ** 2
     ctx = dict(el_obs=el_obs, w=w, betas=betas, lags=lags,
                psi_truth=float(lags[int(np.argmin(ct))] * 0.1))
     return img, diag, evals, need, (dn0, de0), mlat, mlon, ctx
@@ -170,6 +190,9 @@ def main(name='bosphorus'):
                                            ctx['lags'], ctx['betas'])
         return curves[i]
     clamp = lambda e: abs(e['shift'] * 0.1) >= c['window'] - 0.15
+    soft = bool(c.get('compass_sigma'))
+    verdict = json.load(open(c['verdict'])) if c.get('verdict') \
+        and os.path.exists(c['verdict']) else None
     print('evaluations: %d, fix dn %+.1f de %+.1f m (%.0f m)'
           % (len(ev), fix[0], fix[1], math.hypot(*fix)), flush=True)
     rgb, ext = hillshade(c, mlat, mlon)
@@ -283,6 +306,19 @@ def main(name='bosphorus'):
                     ha='right', va='top', color='#0d1117', fontsize=11,
                     weight='bold', bbox=dict(fc='#ffd23f', ec='none', pad=4),
                     zorder=9)
+            if verdict:
+                acc = verdict['status'] == 'ok'
+                why = [r.split(':')[0] for r in verdict.get('reasons', [])]
+                ax.text(0.98, 0.90, 'SOLVER: %s%s' % (
+                    'ACCEPTED' if acc else 'REJECTED (inconclusive)',
+                    '' if acc else '\n' + '\n'.join('· ' + w for w in why)),
+                    transform=ax.transAxes, ha='right', va='top',
+                    color='#ffffff', fontsize=10, weight='bold',
+                    family='monospace', zorder=9,
+                    # an accepted wrong fix is the failure; a rejection
+                    # of a wrong fix is the integrity working
+                    bbox=dict(fc=('#c0392b' if err >= 500 else '#1f7a4d')
+                              if acc else '#2f5f8a', ec='none', pad=4))
 
         # ---------------- photo with the candidate's skyline
         ax = fig.add_subplot(gs[0, 1])
@@ -318,9 +354,20 @@ def main(name='bosphorus'):
             ish = ib if mode == 'final' else k - 1
             hc = heading_curve(ish)
             x = ctx['lags'] * 0.1
-            ax.axvspan(-c['window'], c['window'], color='#45d6ff', alpha=0.10,
-                       label='allowed: compass ±%g°' % c['window'])
-            ax.plot(x, hc, color='#d9dee4', lw=1.3)
+            pen = F.COMPASS_K * ctx['lags'].astype(float) ** 2
+            if soft:
+                ax.axvspan(-c['window'], c['window'], color='#45d6ff',
+                           alpha=0.06, label='searched ±%g°' % c['window'])
+                ax.plot(x, hc - pen, color='#8b96a3', lw=1.0, ls='--',
+                        label='photo cost alone')
+                ax.plot(x, hc.min() + pen, color='#c38bff', lw=1.0, ls=':',
+                        label='compass penalty (σ %g°)' % c['compass_sigma'])
+            else:
+                ax.axvspan(-c['window'], c['window'], color='#45d6ff',
+                           alpha=0.10, label='allowed: compass ±%g°'
+                           % c['window'])
+            ax.plot(x, hc, color='#d9dee4', lw=1.3,
+                    label='photo cost + penalty' if soft else None)
             ins = np.abs(x) <= c['window'] + 1e-9
             jc = int(np.argmin(np.where(ins, hc, np.inf)))
             jg = int(np.argmin(hc))
@@ -329,14 +376,17 @@ def main(name='bosphorus'):
             if jg != jc:
                 ax.scatter([x[jg]], [hc[jg]], s=55, facecolors='none',
                            edgecolors='#ffffff', lw=1.8, zorder=5,
-                           label='best without the bound %+.1f°' % x[jg])
+                           label='best %s %+.1f°' % (
+                               'beyond the search' if soft else
+                               'without the bound', x[jg]))
             ax.axvline(ctx['psi_truth'], color='#ff5a4f', lw=1.2, ls='--',
                        label='best at the true position %+.1f°' % ctx['psi_truth'])
             if clamp(ev[ish]):
                 ax.text(0.5, 0.92, 'CLAMPED: the heading sits on the window edge',
                         transform=ax.transAxes, ha='center', color='#ff5a4f',
                         fontsize=9.5, weight='bold')
-            lo_, hi_ = np.nanmin(hc), np.nanpercentile(hc, 90)
+            lo_ = np.nanmin(hc - pen) if soft else np.nanmin(hc)
+            hi_ = np.nanpercentile(hc, 90)
             ax.set_ylim(lo_ - 0.05 * (hi_ - lo_), hi_ + 0.25 * (hi_ - lo_))
             ax.legend(loc='upper right', fontsize=7.5, facecolor=PANEL,
                       edgecolor=GRID, labelcolor=TXT, ncol=2)
