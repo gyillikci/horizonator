@@ -4939,6 +4939,48 @@ and each blocks the other's fix.
   the image: the contrast of the segmenter's own boundary), not fixed.
   It only pays once the heading is right.
 
+### E5cb - does a skyline's frequency content reveal its range? (2026-10-23)
+
+**Hypothesis (operator).** Near ridges carry high-frequency detail,
+far ridges only low frequencies. The skyline's local spectrum would
+then tell range, and flag hazy far terrain.
+
+**Geometry.** A feature of size L at range r subtends L/r, so far
+terrain moves to HIGHER angular frequency at smaller amplitude. For
+self-similar terrain the angular spectrum keeps its shape and scales
+as r^(H-1). Only blur in angle (haze, optics) could take the far high
+frequencies out of the photo.
+
+**Measured** (`e5cb_spectral.py`, at the truth, 44 frames). Two
+features per column: hf, the rms of the skyline minus its 2 deg mean;
+and shape, hf over the 2-8 deg band. Results on the frames where the
+DEM explains the photo (rms < 8 mrad, 1592 samples ~0.5 deg apart):
+
+| crest range km | 0-3 | 3-6 | 6-10 | 10-15 | 15-25 | 25-41 |
+|---|---|---|---|---|---|---|
+| DEM hf, mrad | 0.73 | 0.46 | 0.63 | 0.64 | 0.46 | 0.66 |
+| photo hf, mrad | 0.71 | 0.44 | 0.59 | 0.55 | 0.52 | 0.75 |
+| DEM shape | 0.29 | 0.24 | 0.27 | 0.28 | 0.42 | 0.42 |
+| photo shape | 0.30 | 0.26 | 0.33 | 0.29 | 0.48 | 0.42 |
+
+* High-frequency amplitude does not follow range (Spearman +0.08 on
+  the photo).
+* The spectral shape goes the OTHER way: far skyline is relatively
+  RICHER in high frequencies (Spearman +0.18; AUC far >15 km vs near
+  <6 km = 0.70, far higher). That is the angular compression the
+  geometry predicts. The phone resolves ~0.8 mrad/px, finer than the
+  far ridges' detail, so no blur removes it.
+* Haze does not smooth a far ridge. It erases it: the segmenter calls
+  it sky, so the missing terrain has no spectrum in the photo at all.
+  A frequency cue cannot flag what is not there. As a per-column range
+  estimator, an AUC of 0.70 is too weak to use.
+* What does tell range physically is contrast, not frequency: aerial
+  perspective, C(r) = C0 exp(-3.9 r / V) (Koschmieder). The visible
+  ridges' contrast against the sky, together with their DEM range at a
+  candidate, gives the day's visibility V. That predicts which far
+  ridges should be missing, which is the per-frame visibility nuisance
+  E5bz/E5ca call for, measured instead of searched.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
