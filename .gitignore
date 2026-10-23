@@ -24,3 +24,4 @@ experiments/out/extract/solve_*.log
 experiments/out/tracker_trace/frames_*/
 experiments/out/tracker_trace/work_*/
 experiments/out/search_video/frames_*/
+experiments/out/search_video/*.log
