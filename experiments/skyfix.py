@@ -86,6 +86,9 @@ _EWASR = None
 ACROSS_WATER = False
 MASK_COLS = []
 COST = 'huber'          # set from --cost
+# soft compass prior, set from --compass-sigma: cost added per heading
+# shift s (0.1 deg lags) is COMPASS_K * s^2. 0 = the hard window alone.
+COMPASS_K = 0.0
 BOUNDARY_ROWS = None    # set from --boundary-npy: a hand-digitised curve
 BOUNDARY_CONF = None    # per-column confidence, when the file is an .npz
 ACROSS_WATER_MIN_PX = 8
@@ -401,7 +404,7 @@ def photo_cost(el_obs, w, el_syn, shifts, betas=BETAS, w_syn=None):
             rb = np.abs(r - b)
             h = np.where(rb <= 3e-3, 0.5 * rb * rb, 3e-3 * (rb - 1.5e-3))
             c = float((np.sum(h * wm) + C0_NOINFO * (W_obs - Weff))
-                      / W_obs)
+                      / W_obs) + COMPASS_K * s * s
             if c < best[0]:
                 best = (c, s, b)
     return best
@@ -424,7 +427,8 @@ def photo_cost_curve(el_obs, w, el_syn, shifts, betas=BETAS):
         wm = ww[m]
         rb = np.abs(r[None, :] - np.asarray(betas)[:, None])
         h = np.where(rb <= 3e-3, 0.5 * rb * rb, 3e-3 * (rb - 1.5e-3))
-        out[k] = float(((h * wm[None, :]).sum(1) / wm.sum()).min())
+        out[k] = float(((h * wm[None, :]).sum(1) / wm.sum()).min()) \
+            + COMPASS_K * s * s
     return out
 
 
@@ -491,7 +495,10 @@ def fast_photo_cost(el_obs, w, el_syn, shifts, betas=BETAS, topk=12,
     S2 = C - 2 * B + (w * el_obs ** 2).sum()
     C2 = (S2 - S1 ** 2 / W0) / W0
     li = lags % n
-    top = lags[np.argsort(C2[li])[:topk]]
+    # the compass prior in the preselect's units: C2 is a variance, the
+    # Huber cost is ~half of one, so the same prior enters doubled
+    q = C2[li] + 2 * COMPASS_K * lags.astype(float) ** 2
+    top = lags[np.argsort(q)[:topk]]
     cand = np.unique(np.concatenate([top - 1, top, top + 1]))
     cand = cand[np.isin(cand, lags) | np.isin(cand % n, li)]
     # the quadratic preselect ignores w_syn (its correlations would need
@@ -723,6 +730,19 @@ def main():
                          'around the heading prior, degrees (default 6; '
                          'set it from the compass accuracy the device '
                          'reports)')
+    ap.add_argument('--compass-sigma', type=float, default=None,
+                    metavar='DEG',
+                    help='SOFT compass prior instead of the hard window: '
+                         'the azimuth search widens to +-4 sigma (at '
+                         'least --heading-window) and each heading offset '
+                         'psi pays 0.5 (psi/sigma)^2 sigma_m^2 / n_eff on '
+                         'top of the mean Huber cost, i.e. the prior as '
+                         'one more term of the same likelihood (sigma_m = '
+                         '3 mrad, n_eff = --compass-neff). Huber cost only')
+    ap.add_argument('--compass-neff', type=float, default=20.0,
+                    help='independent skyline columns the photo is worth '
+                         'when weighing it against the compass prior '
+                         '(default 20, the E5br measurement model)')
     ap.add_argument('--dem2', default=None,
                     help='second, independent DEM family (e.g. '
                          '~/.horizonator/DEMs_GLO30_1). Enables the '
@@ -811,6 +831,12 @@ def main():
     ap.add_argument('--dem', default=os.path.expanduser(
         os.environ.get('HORIZONATOR_DEMS', '~/.horizonator/DEMs_SRTM3')))
     ap.add_argument('--dmin', type=float, default=1000.0)
+    ap.add_argument('--dmax', type=float, default=40000.0,
+                    help='farthest terrain the DEM skyline may contain, '
+                         'metres (default 40 km). A haze cut: terrain '
+                         'beyond the visibility of the day is in the DEM '
+                         'but not in the photo (E5bz, Bodrum 9: Kos at '
+                         '22 km)')
     ap.add_argument('--dmin-soft', type=float,
                     help='soft near-field mode for LAND observers: '
                          'instead of hard-masking terrain nearer than '
@@ -873,9 +899,25 @@ def main():
                          'the PeakFinder debug viewer, pf_debug/serve.py. '
                          'First photo only')
     args = ap.parse_args()
-    global EXTRACTOR, ACROSS_WATER, BOUNDARY_ROWS, BOUNDARY_CONF, COST
+    global EXTRACTOR, ACROSS_WATER, BOUNDARY_ROWS, BOUNDARY_CONF, COST, \
+        COMPASS_K
     EXTRACTOR = args.extractor
     COST = args.cost
+    if args.compass_sigma:
+        if COST != 'huber':
+            ap.error('--compass-sigma needs --cost huber')
+        # mean Huber cost ~ 0.5 r^2 averaged over the columns; a photo
+        # worth n_eff independent columns of sigma_m has negative log
+        # likelihood n_eff * cost / sigma_m^2, so the prior's
+        # 0.5 (psi/sigma_c)^2 enters the mean cost scaled by
+        # sigma_m^2 / n_eff. psi = 0.1 deg per lag.
+        COMPASS_K = 0.5 * (0.1 / args.compass_sigma) ** 2 \
+            * (3e-3) ** 2 / args.compass_neff
+        args.heading_window = min(max(args.heading_window,
+                                      4 * args.compass_sigma), 180.0)
+        print('soft compass prior: sigma %.1f deg, n_eff %.0f, search '
+              '+-%.0f deg' % (args.compass_sigma, args.compass_neff,
+                              args.heading_window), flush=True)
     ACROSS_WATER = args.across_water
     if args.boundary_npy:
         _b = np.load(os.path.expanduser(args.boundary_npy))
@@ -1028,13 +1070,15 @@ def main():
     mlat, mlon = S.meters_per_degree(lat_c)
     cm = S.CMarcher(args.dem, (lat_c - 0.6, lat_c + 0.6),
                     (lon_c - 0.8, lon_c + 0.8),
-                    d_min=150.0 if args.dmin_soft else args.dmin)
+                    d_min=150.0 if args.dmin_soft else args.dmin,
+                    d_max=args.dmax)
     cm2 = None
     if args.dem2:
         cm2 = S.CMarcher(os.path.expanduser(args.dem2),
                          (lat_c - 0.6, lat_c + 0.6),
                          (lon_c - 0.8, lon_c + 0.8),
-                         d_min=150.0 if args.dmin_soft else args.dmin)
+                         d_min=150.0 if args.dmin_soft else args.dmin,
+                         d_max=args.dmax)
     DEM_TOL = 2.5e-3      # disagreement scale: ~the DEM noise floor
     usum = sum(uw)
 
@@ -1277,7 +1321,8 @@ def main():
         pj.append(dict(file=os.path.basename(p['path']), fov_deg=p['fov'],
                        heading_deg=p['heading'], pitch_deg=p['pitch'],
                        roll_deg=p['roll'], weight=p['weight'],
-                       rms_mrad=float(np.sqrt(2 * cb) * 1e3),
+                       rms_mrad=float(np.sqrt(
+                           2 * max(cb - COMPASS_K * sb * sb, 0.0)) * 1e3),
                        heading_offset_deg=sb * 0.1,
                        el_offset_mrad=bb * 1e3,
                        attitude_source=(
@@ -1298,7 +1343,8 @@ def main():
               f'residual {peak_dh_med:+.0f} m '
               f'(spread {peak_dh_mad:.0f} m)', flush=True)
 
-    rms_mrad = float(np.sqrt(2 * c0) * 1e3) if COST == 'huber' else \
+    rms_mrad = float(np.sqrt(2 * c0) * 1e3) \
+        if COST == 'huber' and not COMPASS_K else \
         float(np.sqrt(np.mean([d['rms_mrad'] ** 2 for d in pj])))
     if rms_mrad > args.max_rms:
         reasons.append(f'residual {rms_mrad:.1f} mrad > {args.max_rms:.1f}: '
@@ -1359,6 +1405,7 @@ def main():
                   # the trace lists IMPROVEMENTS of the running best,
                   # not work done: the scan is exhaustive
                   heading_window_deg=float(args.heading_window),
+                  compass_sigma_deg=args.compass_sigma,
                   search_evals=int(cc.size + 50),
                   cost=c0, rms_mrad=rms_mrad,
                   n_photos=N, z_m=z,
