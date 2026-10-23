@@ -5218,6 +5218,36 @@ useful next check is agreement between the two front ends, as E5bq's
 agreement gate: accept only where SegFormer and eWaSR land within
 500 m of each other. That is a test to run, not a result yet.
 
+### E5ci - accept only when two front ends agree, 44 frames (2026-10-23)
+
+`e5ci_agreement.py` (stored solves only). Accept when both solves pass
+the gates (soft arms: |psi| <= 2 sigma) and the two fixes lie within T m
+of each other; report their mean. As in E5bq, with front ends instead
+of matchers.
+
+| pair | T | accepted | good <300 | wrong >=500 |
+|---|---|---|---|---|
+| eWaSR hard + SegFormer hard | 300 m | 10 | 3 | 4 |
+| same | 500 m | 11 | 3 | 4 |
+| same | none | 13 | 3 | 6 |
+| eWaSR soft + SegFormer soft | 500 m | 9 | 3 | 3 |
+| eWaSR soft + SegFormer+detector soft | 500 m | 7 | 2 | 3 |
+| (E5bq: huber + ncc matchers, 500 m) | | 9 | 3 | 2 |
+
+* Two wrong accepts go (EWAC7374 at 1423 m, KWHC9160 at 670 m under
+  hard), because the segmenters disagree there. No good fix is lost.
+* The remaining wrong accepts are fixes both front ends agree on:
+  Bodrum 4 (2662 m), Bodrum 9 (652 m), QNJZ1625 (670 m), MYQR7719 and
+  PF_175658_wide (503 m, on the 500 m line). Two front ends reading the
+  same photo make the same mistake, because the failure is in the
+  scene or the DEM match, not in the pixels. That agrees with E5bv
+  (front-end agreement is not an integrity check). Matcher
+  disagreement (E5bq: 2 wrong) is the stronger signal, because the two
+  matchers do differ on what a good place is.
+* Reading: use matcher agreement as the gate and treat the front end as
+  an accuracy lever (SegFormer: <300 m 3 -> 5, E5ch), not an integrity
+  one.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
