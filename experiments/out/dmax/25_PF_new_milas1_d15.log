@@ -1,0 +1,184 @@
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+extractor pre-check: eWaSR disagrees with the seam on 42% of columns — falling back to the seam
+photo 0: PF_new_milas1.jpg  fov 69.0, heading 334.813, pitch +0.00, roll +0.00, weight 1.00
+z 6.0 m, box 6000 m at (37.24433,27.67671)
+peak witness: 7 crests, median height residual -94 m (spread 20 m)
+INCONCLUSIVE: ambiguous landscape: basin margin 0.03 < 0.15
+INCONCLUSIVE: peak heights disagree: matched crests stand a median -94 m (spread 20 m) from the model at this fix (limits 30/90 m) — position error or DEM bias is leaking into the height channel
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.03 < 0.15",
+  "peak heights disagree: matched crests stand a median -94 m (spread 20 m) from the model at this fix (limits 30/90 m) \u2014 position error or DEM bias is leaking into the height channel"
+ ],
+ "lat": 37.23920386684626,
+ "lon": 27.674507059330995,
+ "fix_ok": false,
+ "basin_margin": 0.02586247018541407,
+ "relief_mrad": 36.60118126630411,
+ "dn_m": -570.0,
+ "de_m": -195.0,
+ "sigma_n_m": 1727.5237104682176,
+ "sigma_e_m": 721.9028840013842,
+ "sigma_major_m": 1833.6422817401062,
+ "sigma_minor_m": 378.4678675585697,
+ "major_bearing_deg": 20.037454735694638,
+ "anisotropy": 4.844908746331923,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -93.84247477317027,
+ "peak_dh_mad_m": 19.55356723224422,
+ "n_peaks": 7,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.00040697498443106894,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2400.0,
+   "cost": 0.0004035691777680257,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2100.0,
+   "cost": 0.00035113827531557164,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1800.0,
+   "cost": 0.0002662980633048708,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1500.0,
+   "cost": 0.0001746366807332417,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1200.0,
+   "cost": 0.00014209788166273164,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -900.0,
+   "cost": 8.493699026278052e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -600.0,
+   "cost": 5.91555428621247e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -300.0,
+   "cost": 5.703973383439598e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 0.0,
+   "cost": 4.9743548557555765e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 900.0,
+   "cost": 4.601950443837848e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1800.0,
+   "cost": 4.5501370281317344e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 2100.0,
+   "cost": 4.322983529883546e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -300.0,
+   "cost": 3.973531316215642e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": 0.0,
+   "cost": 3.5829657991660336e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 900.0,
+   "cost": 3.470341793548941e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 300.0,
+   "cost": 3.355249385277011e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": -300.0,
+   "cost": 3.2510388053847504e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -540.0,
+   "de": -180.0,
+   "cost": 3.240111329944987e-05,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -570.0,
+   "de": -195.0,
+   "cost": 3.236386377730851e-05,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "compass_sigma_deg": null,
+ "search_evals": 491,
+ "cost": 3.236386377730851e-05,
+ "rms_mrad": 8.045354408266737,
+ "n_photos": 1,
+ "z_m": 6.0,
+ "photos": [
+  {
+   "file": "PF_new_milas1.jpg",
+   "fov_deg": 69.0,
+   "heading_deg": 334.813,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 8.045354408266737,
+   "heading_offset_deg": 3.8000000000000003,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": 3.8000000000000003,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 69.0
+}
+wrote /home/user/horizonator/experiments/out/dmax/25_PF_new_milas1_d15.json/.png

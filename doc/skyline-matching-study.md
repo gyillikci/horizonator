@@ -4889,6 +4889,56 @@ be estimated jointly like beta, and needs an integrity check of its own
 because it is one more freedom. Scale the compass prior by the photo's
 own residual. Zero-weight columns below the sea horizon.
 
+### E5ca - cutting the DEM skyline at 15 km (haze), 44 frames (2026-10-23)
+
+**Hypothesis (operator).** The segmenter does not pick up the hazy far
+ridges, while the DEM skyline used for matching includes them. To
+explain a skyline lower than the DEM, the solver moves the camera, so
+it places itself in the wrong spot. A lower `--dmax` should help.
+
+**XKYU3498 first** (compass +15.2 deg off; 34% of the columns crest
+beyond 15 km):
+
+| dmax | hard +-6 | soft sigma 5 | true heading given |
+|---|---|---|---|
+| 40 km | 975 m, rejected | 637 m, ACCEPTED | 700 m, accepted, beta on bound |
+| 20 km | 1020 m, ACCEPTED | 1584 m, rejected | |
+| 15 km | 1020 m, ACCEPTED | 1584 m, rejected | **287 m**, accepted, margin 0.99 |
+| 10 km | 1150 m, ACCEPTED | 1485 m, ACCEPTED | |
+
+The cut confirms the far ridges: the rms falls from ~4.5 to 3 mrad.
+With the compass 15 deg out, though, the cut does not move the fix to
+the truth. It only makes a wrong fix look clean enough to accept. With
+the true heading, the cut takes 700 m to 287 m. The two errors compound,
+and each blocks the other's fix.
+
+**44 frames** (`e5ca_dmax.py`, hard +-6, otherwise the E5bq flags):
+
+| | median | <300 | <500 | accepted | good | wrong |
+|---|---|---|---|---|---|---|
+| 40 km (stored) | 2831 m | 3 | 7 | 13 | 3 | 6 |
+| 15 km cut | 2936 m | 3 | 7 | 11 | 3 | **4** |
+| - 24 frames >15% far columns, 40 km | 3013 m | 0 | 0 | 4 | 0 | 4 |
+| - same, 15 km | 3054 m | 0 | 0 | 3 | 0 | 3 |
+| - 20 frames <=15% far, 40 km | 953 m | 3 | 7 | 9 | 3 | 2 |
+| - same, 15 km | 952 m | 3 | 7 | 8 | 3 | 1 |
+
+* The cut moves the fix closer by >50 m on 13 frames and farther on 6.
+  It removes three wrong accepts (Bodrum 9: margin 0.16 -> 0.10;
+  EWAC7374; PQBC6867) and adds one (XKYU3498).
+* Accuracy does not improve. None of the 24 hazy frames gets within
+  500 m either way. Their rms at the fix is mostly 7-28 mrad, so a
+  second error dominates them: compass, extraction, or attitude.
+* Clear days lose, as E5bz predicted. EWAC7374 (100% far, fit
+  1.3 mrad) goes from 1641 to 3217 m, PQBC6867 from 544 to 1273 m,
+  UYXQ4404 from 2081 to 3951 m and VSFK5163 from 1697 to 4455 m. A
+  fixed cut throws away the ridges that ARE visible on those days.
+* Verdict: a modest integrity gain (wrong accepts 6 -> 4), no accuracy
+  gain. The haze effect is real, but it is not the bottleneck on its
+  own. Visibility must be estimated per frame (a nuisance V, or from
+  the image: the contrast of the segmenter's own boundary), not fixed.
+  It only pays once the heading is right.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the

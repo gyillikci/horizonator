@@ -1,0 +1,188 @@
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+extractor pre-check: eWaSR disagrees with the seam on 34% of columns — falling back to the seam
+photo 0: YBPL9738.JPG  fov 104.2, heading 208.985, pitch +0.00, roll +0.00, weight 1.00
+z 61.2 m, box 6000 m at (37.02713,27.36177)
+peak witness: 6 crests, median height residual +11 m (spread 53 m)
+INCONCLUSIVE: ambiguous landscape: basin margin 0.05 < 0.15
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.05 < 0.15"
+ ],
+ "lat": 37.01552875128365,
+ "lon": 27.3886364220445,
+ "fix_ok": false,
+ "basin_margin": 0.05126447209548495,
+ "relief_mrad": 20.71475730679893,
+ "dn_m": -1290.0,
+ "de_m": 2385.0,
+ "sigma_n_m": 3109.335298858876,
+ "sigma_e_m": 2007.5208957050836,
+ "sigma_major_m": 3678.3610182722687,
+ "sigma_minor_m": 409.59292801189264,
+ "major_bearing_deg": 32.52233047147163,
+ "anisotropy": 8.980528633945228,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": 11.196513937901178,
+ "peak_dh_mad_m": 53.19226574165377,
+ "n_peaks": 6,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.00014448067243340553,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2700.0,
+   "cost": 0.00010185125812464853,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2400.0,
+   "cost": 8.73538571883194e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2100.0,
+   "cost": 4.442878491165417e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1800.0,
+   "cost": 3.577009725897444e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1500.0,
+   "cost": 2.9675685212493594e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1200.0,
+   "cost": 2.627121561443392e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -900.0,
+   "cost": 2.5939923612972345e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 300.0,
+   "cost": 2.5747034477256214e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 600.0,
+   "cost": 2.5666976760548614e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -900.0,
+   "cost": 2.5603030284961786e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -600.0,
+   "cost": 2.531629894498741e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": 600.0,
+   "cost": 2.4649290209861602e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": 900.0,
+   "cost": 2.4623728899623765e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": 600.0,
+   "cost": 2.4439745507466352e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": 900.0,
+   "cost": 2.3883991302515522e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": 900.0,
+   "cost": 2.3581482416850272e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": 1200.0,
+   "cost": 2.3434083905215258e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 2400.0,
+   "cost": 2.2291330609227295e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1260.0,
+   "de": 2400.0,
+   "cost": 2.2158024676707757e-05,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -1290.0,
+   "de": 2385.0,
+   "cost": 2.214929154146111e-05,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "compass_sigma_deg": null,
+ "search_evals": 491,
+ "cost": 2.214929154146111e-05,
+ "rms_mrad": 6.655718074176686,
+ "n_photos": 1,
+ "z_m": 61.2,
+ "photos": [
+  {
+   "file": "YBPL9738.JPG",
+   "fov_deg": 104.25,
+   "heading_deg": 208.985,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 6.655718074176686,
+   "heading_offset_deg": 5.800000000000001,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": 5.800000000000001,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 104.25
+}
+wrote /home/user/horizonator/experiments/out/dmax/49_YBPL9738_d15.json/.png

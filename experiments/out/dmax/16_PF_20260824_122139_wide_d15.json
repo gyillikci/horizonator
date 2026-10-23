@@ -1,0 +1,78 @@
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.15 < 0.15",
+  "minimum on the search-box boundary: the true position may lie outside the box",
+  "peak heights disagree: matched crests stand a median -32 m (spread 38 m) from the model at this fix (limits 30/90 m) \u2014 position error or DEM bias is leaking into the height channel"
+ ],
+ "lat": 36.61801729904907,
+ "lon": 28.06034285689364,
+ "fix_ok": false,
+ "basin_margin": 0.14894899176919774,
+ "relief_mrad": 18.478664540544465,
+ "dn_m": -2550.0,
+ "de_m": -3135.0,
+ "sigma_n_m": 577.194378391352,
+ "sigma_e_m": 630.5558786736808,
+ "sigma_major_m": 650.1948496668493,
+ "sigma_minor_m": 554.9781293377424,
+ "major_bearing_deg": 117.91604710689387,
+ "anisotropy": 1.1715684191784808,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -32.495358773357964,
+ "peak_dh_mad_m": 37.718557584988545,
+ "n_peaks": 4,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 5.706981757439726e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -3000.0,
+   "cost": 5.7008922824264325e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2580.0,
+   "de": -3120.0,
+   "cost": 5.559712967566086e-05,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -2550.0,
+   "de": -3135.0,
+   "cost": 5.531508831010138e-05,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "compass_sigma_deg": null,
+ "search_evals": 491,
+ "cost": 5.531508831010138e-05,
+ "rms_mrad": 10.518088068665461,
+ "n_photos": 1,
+ "z_m": 4.0,
+ "photos": [
+  {
+   "file": "PF_20260824_122139_wide.jpg",
+   "fov_deg": 73.7,
+   "heading_deg": 297.024,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 10.518088068665461,
+   "heading_offset_deg": 1.4000000000000001,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": 1.4000000000000001,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 73.7
+}

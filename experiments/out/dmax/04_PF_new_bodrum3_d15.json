@@ -1,0 +1,97 @@
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.05 < 0.15",
+  "minimum on the search-box boundary: the true position may lie outside the box",
+  "residual 13.2 mrad > 12.0: the DEM cannot explain this observation",
+  "peak heights disagree: matched crests stand a median -41 m (spread 9 m) from the model at this fix (limits 30/90 m) \u2014 position error or DEM bias is leaking into the height channel"
+ ],
+ "lat": 36.99166136941356,
+ "lon": 27.332614020506437,
+ "fix_ok": false,
+ "basin_margin": 0.053482744652114306,
+ "relief_mrad": 9.348206198414825,
+ "dn_m": -3150.0,
+ "de_m": -1350.0,
+ "sigma_n_m": 5927.076701961523,
+ "sigma_e_m": 4364.033293250195,
+ "sigma_major_m": 6403.81977229418,
+ "sigma_minor_m": 3628.514453534027,
+ "major_bearing_deg": 152.64531401003507,
+ "anisotropy": 1.7648599321568412,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -40.89331309937656,
+ "peak_dh_mad_m": 8.700571209568992,
+ "n_peaks": 3,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.00022914400567944528,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2700.0,
+   "cost": 0.00022125721040572977,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2400.0,
+   "cost": 0.00010809446877569303,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2100.0,
+   "cost": 9.170442041472501e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1200.0,
+   "cost": 8.747923575261594e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3120.0,
+   "de": -1320.0,
+   "cost": 8.671929017854975e-05,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -3150.0,
+   "de": -1350.0,
+   "cost": 8.652362230510094e-05,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "compass_sigma_deg": null,
+ "search_evals": 491,
+ "cost": 8.652362230510094e-05,
+ "rms_mrad": 13.154742285966757,
+ "n_photos": 1,
+ "z_m": 2.0,
+ "photos": [
+  {
+   "file": "PF_new_bodrum3.jpg",
+   "fov_deg": 73.74,
+   "heading_deg": 109.372,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 13.154742285966757,
+   "heading_offset_deg": 6.0,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": 6.0,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 73.74
+}

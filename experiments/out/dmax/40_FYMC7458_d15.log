@@ -1,0 +1,240 @@
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+extractor pre-check: eWaSR disagrees with the seam on 84% of columns — falling back to the seam
+photo 0: FYMC7458.JPG  fov 73.7, heading 80.105, pitch +0.00, roll +0.00, weight 1.00
+z 18.5 m, box 6000 m at (37.47685,27.41421)
+peak witness: 6 crests, median height residual +1 m (spread 201 m)
+INCONCLUSIVE: minimum on the search-box boundary: the true position may lie outside the box
+INCONCLUSIVE: residual 12.9 mrad > 12.0: the DEM cannot explain this observation
+INCONCLUSIVE: peak heights disagree: matched crests stand a median +1 m (spread 201 m) from the model at this fix (limits 30/90 m) — position error or DEM bias is leaking into the height channel
+{
+ "status": "inconclusive",
+ "reasons": [
+  "minimum on the search-box boundary: the true position may lie outside the box",
+  "residual 12.9 mrad > 12.0: the DEM cannot explain this observation",
+  "peak heights disagree: matched crests stand a median +1 m (spread 201 m) from the model at this fix (limits 30/90 m) \u2014 position error or DEM bias is leaking into the height channel"
+ ],
+ "lat": 37.48980023112523,
+ "lon": 27.378513606788218,
+ "fix_ok": false,
+ "basin_margin": 0.1836689639983935,
+ "relief_mrad": 39.20164824755621,
+ "dn_m": 1440.0,
+ "de_m": -3150.0,
+ "sigma_n_m": 781.0265456215805,
+ "sigma_e_m": 1522.7491225415956,
+ "sigma_major_m": 1524.8666572812294,
+ "sigma_minor_m": 776.884182281212,
+ "major_bearing_deg": 93.51006237107657,
+ "anisotropy": 1.9627979202815937,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": 1.467550086042344,
+ "peak_dh_mad_m": 200.66650164542202,
+ "n_peaks": 6,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.00082760878471968,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2100.0,
+   "cost": 0.0007044791014022577,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1500.0,
+   "cost": 0.0006650296881396321,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1200.0,
+   "cost": 0.000565635663115142,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -900.0,
+   "cost": 0.0005650583369220306,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -2100.0,
+   "cost": 0.0005536382104900751,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": -3000.0,
+   "cost": 0.0005192168405485102,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": -2700.0,
+   "cost": 0.0005147775044086188,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": -2400.0,
+   "cost": 0.0005040920992620701,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": -3000.0,
+   "cost": 0.0004055570290566956,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": -3000.0,
+   "cost": 0.00038114729803203555,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": -3000.0,
+   "cost": 0.00035004788486914966,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 1800.0,
+   "cost": 0.000312918874139821,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": 1500.0,
+   "cost": 0.0003009936378210859,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": 1800.0,
+   "cost": 0.00026645679783292357,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": -600.0,
+   "cost": 0.00019456194301983187,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": -600.0,
+   "cost": 0.00013476391602319985,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": -1200.0,
+   "cost": 0.00011553374937465562,
+   "stage": "coarse"
+  },
+  {
+   "dn": 300.0,
+   "de": -1200.0,
+   "cost": 0.00011229473677470953,
+   "stage": "coarse"
+  },
+  {
+   "dn": 600.0,
+   "de": -2100.0,
+   "cost": 0.00011056132668567083,
+   "stage": "coarse"
+  },
+  {
+   "dn": 600.0,
+   "de": -1800.0,
+   "cost": 0.00010394237784154205,
+   "stage": "coarse"
+  },
+  {
+   "dn": 900.0,
+   "de": -3000.0,
+   "cost": 0.00010091232997285676,
+   "stage": "coarse"
+  },
+  {
+   "dn": 900.0,
+   "de": -2700.0,
+   "cost": 9.980860786487423e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 900.0,
+   "de": -2100.0,
+   "cost": 9.672206920132269e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 1200.0,
+   "de": -3000.0,
+   "cost": 8.88251502251187e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 1200.0,
+   "de": -2700.0,
+   "cost": 8.837281333386028e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 1500.0,
+   "de": -3000.0,
+   "cost": 8.443142109507666e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 1440.0,
+   "de": -3120.0,
+   "cost": 8.289291690564819e-05,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": 1440.0,
+   "de": -3150.0,
+   "cost": 8.267257489318431e-05,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "compass_sigma_deg": null,
+ "search_evals": 491,
+ "cost": 8.267257489318431e-05,
+ "rms_mrad": 12.85866049736008,
+ "n_photos": 1,
+ "z_m": 18.5,
+ "photos": [
+  {
+   "file": "FYMC7458.JPG",
+   "fov_deg": 73.74,
+   "heading_deg": 80.105,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 12.85866049736008,
+   "heading_offset_deg": 5.0,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": 5.0,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 73.74
+}
+wrote /home/user/horizonator/experiments/out/dmax/40_FYMC7458_d15.json/.png

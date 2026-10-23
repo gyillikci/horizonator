@@ -1,0 +1,177 @@
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+photo 0: QNJZ1625.JPG  fov 41.1, heading 195.912, pitch +0.00, roll +0.00, weight 1.00
+z 2.5 m, box 6000 m at (40.90622,29.13945)
+{
+ "status": "ok",
+ "reasons": [],
+ "lat": 40.90028447740093,
+ "lon": 29.141234882041665,
+ "fix_ok": true,
+ "basin_margin": 2.02384916721056,
+ "relief_mrad": 13.889969056315252,
+ "dn_m": -660.0,
+ "de_m": 150.0,
+ "sigma_n_m": 233.156467394886,
+ "sigma_e_m": 480.5463278744024,
+ "sigma_major_m": 486.8541706000718,
+ "sigma_minor_m": 219.680968886591,
+ "major_bearing_deg": 100.35788304801507,
+ "anisotropy": 2.216187287718161,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": null,
+ "peak_dh_mad_m": null,
+ "n_peaks": 0,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 6.023742287607925e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2700.0,
+   "cost": 3.935095853178182e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2400.0,
+   "cost": 3.864235087638919e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 900.0,
+   "cost": 3.1011012899306696e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1200.0,
+   "cost": 2.7532536993130758e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": -900.0,
+   "cost": 2.6877335040356136e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": -600.0,
+   "cost": 2.459950972537267e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": -300.0,
+   "cost": 1.8833272169069004e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 0.0,
+   "cost": 1.8780314651152233e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": -900.0,
+   "cost": 1.6090514008967026e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": -600.0,
+   "cost": 1.156305522947112e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": -300.0,
+   "cost": 8.87127236272157e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": -600.0,
+   "cost": 6.36789344196792e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": -300.0,
+   "cost": 6.224802198792846e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 0.0,
+   "cost": 5.388153550967856e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": -600.0,
+   "cost": 4.364792083565343e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": 0.0,
+   "cost": 4.117054236333216e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": 0.0,
+   "cost": 3.395012449899613e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -660.0,
+   "de": 120.0,
+   "cost": 3.157454884685437e-06,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -660.0,
+   "de": 150.0,
+   "cost": 3.130274616690493e-06,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "compass_sigma_deg": null,
+ "search_evals": 491,
+ "cost": 3.130274616690493e-06,
+ "rms_mrad": 2.5021089571361568,
+ "n_photos": 1,
+ "z_m": 2.5,
+ "photos": [
+  {
+   "file": "QNJZ1625.JPG",
+   "fov_deg": 41.112,
+   "heading_deg": 195.912,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 2.5021089571361568,
+   "heading_offset_deg": 4.2,
+   "el_offset_mrad": -1.734723475976807e-15,
+   "attitude_source": "prior",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": 4.2,
+ "el_offset_mrad": -1.734723475976807e-15,
+ "fov_deg": 41.112
+}
+wrote /home/user/horizonator/experiments/out/dmax/37_QNJZ1625_d15.json/.png
