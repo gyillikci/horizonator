@@ -91,6 +91,8 @@ COST = 'huber'          # set from --cost
 COMPASS_K = 0.0
 BOUNDARY_ROWS = None    # set from --boundary-npy: a hand-digitised curve
 BOUNDARY_CONF = None    # per-column confidence, when the file is an .npz
+USED_EXTRACTOR = None   # what the last extraction really used (the
+                        # eWaSR pre-check can fall back to the seam)
 ACROSS_WATER_MIN_PX = 8
 
 
@@ -244,6 +246,8 @@ def extract_boundary(img, horizon_rows=None, tol_px=4):
                     conf[x] = 1.0
     else:
         rows, conf = extract.skyline_seam(img)
+    global USED_EXTRACTOR
+    USED_EXTRACTOR = EXTRACTOR
     Hh = img.shape[0]
     if EXTRACTOR == 'ewasr':
         # extractor-disagreement pre-check (blind trial t3): in deep
@@ -262,6 +266,7 @@ def extract_boundary(img, horizon_rows=None, tol_px=4):
                       f'seam on {frac*100:.0f}% of columns — falling '
                       f'back to the seam', flush=True)
                 rows, conf = rows_s, conf_s
+                USED_EXTRACTOR = 'seam'
     if ACROSS_WATER:
         # "only the hills that stand above the water": a crest seen
         # ACROSS the bay has water somewhere below it in its own

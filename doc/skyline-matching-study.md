@@ -4857,6 +4857,32 @@ compass is not the missing piece. Roll and beta must be co-estimated
 where no sea horizon levels the frame, and the result tested on all 44
 frames, since each freedom also helps wrong places.
 
+**Second example, XKYU3498** (`e5by_search_video.py 38_XKYU3498 [5]`).
+The compass is really +15.2 deg out, and the DEM explains the photo at
+the truth (rms 5.3 mrad). eWaSR's pre-check falls back to the seam.
+* Hard +-6: fix Δn -240, Δe +945 (975 m), psi on the +6.0 bound;
+  REJECTED (margin 0.145 < 0.15).
+* Soft sigma 5: fix Δn +570, Δe -285 (637 m), psi +19.6, beta on its
+  +10.1 bound; ACCEPTED (margin 0.29). The soft prior makes this frame
+  WORSE in integrity terms. psi +19.6 is 3.9 sigma, so the
+  prior-consistency gate (\|psi\| <= 2 sigma) would reject it.
+* Mean cost, beta +-30 mrad, soft prior:
+
+  | | truth | hard fix | soft fix |
+  |---|---|---|---|
+  | roll 0, 40 km | 1.60e-5 | 1.91e-5 | **1.38e-5** |
+  | roll -1.0, 40 km | 1.08e-5 | 1.24e-5 | **8.8e-6** |
+  | roll 0, 15 km cut | 6.2e-6 | **5.0e-6** | 8.4e-6 |
+  | roll -0.5, 15 km cut | 4.1e-6 | **3.1e-6** | 5.9e-6 |
+
+  Unlike Bodrum 9, no roll makes the truth win. Cutting far terrain
+  (34% of the columns crest beyond 15 km here) more than halves every
+  cost, but then the hard fix at psi +6 beats the truth at psi +15. A
+  ~1 km shift of the camera buys ~9 deg of heading: heading and
+  position are nearly unidentifiable from this skyline. Only an
+  independent heading (a better compass, the sun, a second frame)
+  breaks that tie.
+
 **Next.** Visibility as a per-frame nuisance V in {10, 15, 20, 30,
 40 km} (the photo skyline is the DEM skyline truncated at V). It would
 be estimated jointly like beta, and needs an integrity check of its own

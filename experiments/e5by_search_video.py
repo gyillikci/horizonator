@@ -114,6 +114,11 @@ def run_search(c):
     img = extract.load_image(celnav(c['photo']))
     el_obs, w, diag = F.observation(img, c['fov'], c['heading'], c['roll'],
                                     c['pitch'])
+    if F.USED_EXTRACTOR and F.USED_EXTRACTOR != c['extractor']:
+        # say what the skyline really came from
+        c['label'] = c['label'].replace('eWaSR', '%s (eWaSR fell back)'
+                                        % F.USED_EXTRACTOR)
+        c['extractor'] = F.USED_EXTRACTOR
     half = max(0.010, 2.0 * np.radians(0.29))
     betas = np.arange(-half, half * 1.001, half / 5)
     if c.get('compass_sigma'):
@@ -408,8 +413,8 @@ def main(name='bosphorus', sigma=None):
             ax.axvline(ctx['psi_truth'], color='#ff5a4f', lw=1.2, ls='--',
                        label='best at the true position %+.1f°' % ctx['psi_truth'])
             if clamp(ev[ish]):
-                ax.text(0.5, 0.92, 'CLAMPED: the heading sits on the window edge',
-                        transform=ax.transAxes, ha='center', color='#ff5a4f',
+                ax.text(0.02, 0.92, 'CLAMPED: heading on the window edge',
+                        transform=ax.transAxes, ha='left', color='#ff5a4f',
                         fontsize=9.5, weight='bold')
             lo_ = np.nanmin(hc - pen) if soft else np.nanmin(hc)
             hi_ = np.nanpercentile(hc, 90)
