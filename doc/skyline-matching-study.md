@@ -534,6 +534,70 @@ CoastlineVLM. The [GeoPose3K dataset](https://cphoto.fit.vutbr.cz/geoPose3K/)
 and [MaSTr1325/MODS](https://www2.vicos.si/publications/bovcon2019the/)
 remain the public data closest to ours.
 
+
+### 3.9 Per-measurement confidence in skyline and pose matching
+
+*Added 2026-10-23, after E5bw (calibrated per-column skyline
+confidence). Abstracts and search summaries only.*
+
+**Skyline-specific - thin.** No paper found calibrates a per-column
+uncertainty of an extracted skyline and uses it as the measurement
+weight in DEM matching, as E5bw does.
+
+- [Smartphone skyline-to-DEM orientation table (SciTePress
+  2017)](https://www.scitepress.org/Papers/2017/61157/pdf/index.html)
+  extracts a skyline *probability map* and down-weights edge scores
+  column by column before registering to the DEM - the closest
+  precedent, with heuristic rather than calibrated weights.
+- [Grelsson et al., HorizonNet for visual terrain
+  navigation](https://arxiv.org/pdf/2608.30471) (IPAS 2018): CNN
+  horizon localisation in a 360 deg panorama, matched to the DEM with
+  MOSSE correlation filters; no per-column weighting or calibration.
+- [Castelletti et al., snow cover from public
+  photographs](https://arxiv.org/pdf/1508.01055): photo-to-terrain
+  matching succeeds 72.4 % (top-1) / 82.9 % (top-3) without clouds and
+  less with them, and cloud edges above the skyline break the edge
+  filtering - the failure E5bh and E5bw meet, named but not modelled.
+
+**General theory - well established.**
+
+- [Kendall & Gal, *What Uncertainties Do We Need in Bayesian Deep
+  Learning for Computer Vision?* (NeurIPS
+  2017)](https://arxiv.org/pdf/1703.04977v2.pdf): input-dependent
+  *aleatoric* uncertainty learned per pixel ("learned attenuation") -
+  the formal version of "low confidence where the boundary cannot be
+  seen".
+- [Muhle et al., *Learning Correspondence Uncertainty via
+  Differentiable Nonlinear Least Squares* (CVPR
+  2023)](https://openaccess.thecvf.com/content/CVPR2023/papers/Muhle_Learning_Correspondence_Uncertainty_via_Differentiable_Nonlinear_Least_Squares_CVPR_2023_paper.pdf):
+  per-feature covariances learned *through the pose solver*,
+  supervised by pose error rather than by pixel accuracy.
+- [MAC-VO, metrics-aware covariance for learning-based visual
+  odometry](https://arxiv.org/html/2409.09479v2): learned covariances
+  used both to select features and to weight residuals in the pose
+  graph.
+- [*Protection Levels for Vision-Based Pose Estimation*
+  (2026)](https://arxiv.org/pdf/2608.10023): residuals weighted by
+  predicted covariance, then the uncertainty carried into integrity
+  monitoring - the bridge between E5bw and the integrity thread of
+  §3.8.
+- [UnLoc (2025)](https://arxiv.org/pdf/2509.11301): in floorplan
+  localisation, predicted (aleatoric) uncertainty *flattens the
+  likelihood* of an observation rather than hard-weighting a fix.
+
+**What it says about E5bw.** Muhle et al.'s premise is E5bw's result:
+weights calibrated for pixel accuracy are not the weights that give the
+best pose. E5bw's sigma predicts the extraction error well (5 / 45 /
+72 mrad residual by tercile over 44 frames) and still does not improve
+single-shot fixes. Their remedy is to fit the weighting to *pose*
+error; here that means tuning the weight function (sigma_0, the
+combination of the three signals) by solve error on synthetic frames
+and keeping the field frames for testing. UnLoc's use - uncertainty in
+the likelihood of a filter, not in a snapshot argmin - is where E5bw
+already concluded the sigma belongs (the per-column measurement noise
+of E5br's point-mass filter). The 44-frame calibration itself appears
+to have no published counterpart in skyline navigation.
+
 ---
 
 ## 4. Literature: search & optimization techniques for the position sweep
