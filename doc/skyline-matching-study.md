@@ -4834,6 +4834,29 @@ only a median 0.3 mrad and hurts the clear days. 31_EWAC7374 is crested
 * At azimuth >214 deg the extractor follows the shoreline below the
   sea horizon (to -16 mrad), which no skyline can do.
 
+**Bodrum 9 search video under the soft prior**
+(`e5by_search_video.py bodrum9_soft`, `out/search_video/search_bodrum9_soft.mp4`).
+The video reproduces the solver: the fix is at Δn +1515, Δe -3135 m
+(3482 m), psi +6.8 deg, beta on its -10.1 mrad bound. The solver
+REJECTS it (ambiguous, box edge, peak heights). The hard-window video
+now shows its verdict too: ACCEPTED at 664 m. The soft prior turns a
+confident wrong answer into a refusal; it does not find the truth.
+Mean Huber cost with the soft prior, beta range +-30 mrad:
+
+| | truth | soft fix | hard fix |
+|---|---|---|---|
+| roll 0 (prior), 40 km | 1.96e-5 | 1.52e-5 | 2.12e-5 |
+| roll +0.77 deg, 40 km | **9.2e-6** | 1.62e-5 | 2.23e-5 |
+| roll +0.77 deg, 15 km cut | **6.3e-6** | 1.58e-5 | 2.23e-5 |
+
+With roll 0 the photo fits a wrong place better than the truth, so no
+compass treatment can rescue this frame. With the roll the residual
+tilt implies, the truth wins by 2x, and by 2.5x with the 15 km cut.
+The missing nuisances are roll and a wider beta, then visibility. The
+compass is not the missing piece. Roll and beta must be co-estimated
+where no sea horizon levels the frame, and the result tested on all 44
+frames, since each freedom also helps wrong places.
+
 **Next.** Visibility as a per-frame nuisance V in {10, 15, 20, 30,
 40 km} (the photo skyline is the DEM skyline truncated at V). It would
 be estimated jointly like beta, and needs an integrity check of its own
