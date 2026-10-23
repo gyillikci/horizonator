@@ -1,0 +1,198 @@
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.01 < 0.15",
+  "covariance degenerate: the cost surface has no measurable curvature at the fix (sigma cannot be computed) \u2014 the landscape does not pin a position here",
+  "peak heights disagree: matched crests stand a median -53 m (spread 78 m) from the model at this fix (limits 30/90 m) \u2014 position error or DEM bias is leaking into the height channel"
+ ],
+ "lat": 37.480906947226636,
+ "lon": 27.385312915914167,
+ "fix_ok": false,
+ "basin_margin": 0.010949235837726286,
+ "relief_mrad": 15.080147386455145,
+ "dn_m": 450.0,
+ "de_m": -2550.0,
+ "sigma_n_m": 0.0,
+ "sigma_e_m": 827.8988886566043,
+ "sigma_major_m": 883.6491165587735,
+ "sigma_minor_m": 0.0,
+ "major_bearing_deg": 83.58244638994532,
+ "anisotropy": Infinity,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -52.630814979103036,
+ "peak_dh_mad_m": 78.3667024728868,
+ "n_peaks": 9,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.0005048966855831172,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2700.0,
+   "cost": 0.00046151735972291974,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2400.0,
+   "cost": 0.00043261315433248813,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2100.0,
+   "cost": 0.000410362938998436,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -3000.0,
+   "cost": 0.0003466616746443994,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -2700.0,
+   "cost": 0.0003440753501755045,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": -3000.0,
+   "cost": 0.00032327010247403193,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": -3000.0,
+   "cost": 0.000309053078281659,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 2100.0,
+   "cost": 0.000259116075690022,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 2400.0,
+   "cost": 0.00019561205199992838,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": 2400.0,
+   "cost": 0.00014218838945090234,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": 2700.0,
+   "cost": 0.00013672870629929167,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 0.0,
+   "cost": 9.908190642425175e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 2700.0,
+   "cost": 9.367116509923183e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": -300.0,
+   "cost": 7.358063648805888e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": 0.0,
+   "cost": 7.30055278023532e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": 300.0,
+   "cost": 6.33874343127798e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": -900.0,
+   "cost": 5.7409820661784316e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": -900.0,
+   "cost": 5.4741811581436065e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 300.0,
+   "de": -2700.0,
+   "cost": 4.758486973035862e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 600.0,
+   "de": -2700.0,
+   "cost": 4.7258769248301716e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 600.0,
+   "de": -2400.0,
+   "cost": 4.58958404058487e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 480.0,
+   "de": -2520.0,
+   "cost": 4.453855331233774e-05,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": 450.0,
+   "de": -2550.0,
+   "cost": 4.42238837022562e-05,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "compass_sigma_deg": null,
+ "search_evals": 491,
+ "cost": 4.42238837022562e-05,
+ "rms_mrad": 9.404667320246496,
+ "n_photos": 1,
+ "z_m": 14.2,
+ "photos": [
+  {
+   "file": "HATY3309.JPG",
+   "fov_deg": 73.74,
+   "heading_deg": 40.525,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 9.404667320246496,
+   "heading_offset_deg": -5.4,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": -5.4,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 73.74
+}

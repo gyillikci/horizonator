@@ -1,0 +1,100 @@
+{
+ "status": "inconclusive",
+ "reasons": [
+  "covariance degenerate: the cost surface has no measurable curvature at the fix (sigma cannot be computed) \u2014 the landscape does not pin a position here"
+ ],
+ "lat": 36.66876534668785,
+ "lon": 28.067409207558143,
+ "fix_ok": false,
+ "basin_margin": 0.1600574556007591,
+ "relief_mrad": 51.81823704723526,
+ "dn_m": 2160.0,
+ "de_m": -2250.0,
+ "sigma_n_m": 88.20628110380397,
+ "sigma_e_m": 0.0,
+ "sigma_major_m": 108.32708078639982,
+ "sigma_minor_m": 0.0,
+ "major_bearing_deg": 2.4120515154789075,
+ "anisotropy": Infinity,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": 14.500249095518402,
+ "peak_dh_mad_m": 15.52802451211588,
+ "n_peaks": 2,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.0001332135555925395,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2700.0,
+   "cost": 0.00013015297711037934,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2400.0,
+   "cost": 0.00011232416073642346,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2100.0,
+   "cost": 9.849799897237694e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 2100.0,
+   "de": -2400.0,
+   "cost": 9.501748732348516e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 2100.0,
+   "de": -2100.0,
+   "cost": 8.490786253459124e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 2160.0,
+   "de": -2220.0,
+   "cost": 6.729163979897365e-05,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": 2160.0,
+   "de": -2250.0,
+   "cost": 6.596575905504647e-05,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "compass_sigma_deg": null,
+ "search_evals": 491,
+ "cost": 6.596575905504647e-05,
+ "rms_mrad": 11.486144614712673,
+ "n_photos": 1,
+ "z_m": 4.0,
+ "photos": [
+  {
+   "file": "PF_20260823_175709.jpg",
+   "fov_deg": 38.07,
+   "heading_deg": 191.448,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 11.486144614712673,
+   "heading_offset_deg": -1.6,
+   "el_offset_mrad": 8.098327729253686,
+   "attitude_source": "prior",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": -1.6,
+ "el_offset_mrad": 8.098327729253686,
+ "fov_deg": 38.07
+}

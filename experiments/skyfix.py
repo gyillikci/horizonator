@@ -338,7 +338,8 @@ def observation(img, fov_deg, heading, roll_deg, pitch_deg=0.0,
     order = np.argsort(az_rel)
     el[m] = np.interp(rel[m], az_rel[order], el_pt[order])
     wt[m] = np.interp(rel[m], az_rel[order], conf[order])
-    wt = wt / (wt[m].max() + 1e-9)
+    # an all-rejected boundary leaves no column: zero weight, no crash
+    wt = wt / (wt[m].max() + 1e-9) if m.any() else wt
     return (np.where(np.isfinite(el), el, 0.0), wt,
             dict(rows=rows, conf=conf, az_rel=az_rel, el_pt=el_pt))
 

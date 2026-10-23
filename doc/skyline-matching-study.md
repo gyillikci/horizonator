@@ -5107,6 +5107,84 @@ not visibility. Two consistent fixes:
 
 (A) is the better path: it adds information instead of discarding it.
 
+### E5ce - which image cue tells the body's range? (2026-10-23)
+
+`e5ce_depth_cues.py` uses the pixels and truth of E5cd (true range from
+the DEM ray, 31 frames with > 2 km of range spread). Per-frame Spearman
+with range:
+
+| cue | median | right sign |
+|---|---|---|
+| dark channel prior, -ln t (He et al.) | **+0.53** | **28 / 31** (14/15 well-explained) |
+| fine texture (operator's idea) | -0.36 | 24 / 31 |
+| haze-lines, -ln t (Berman et al.) | +0.34 | 24 / 31 |
+| similarity to sky colour (3-PC sky model) | +0.34 | 26 / 31 |
+| brightness over sky | +0.23 | 20 / 31 |
+| colour attenuation, v - s (Zhu et al.) | +0.21 | 20 / 31 |
+| Laws filter bank, PC1 | -0.36 | (PC1 = total texture energy) |
+
+The dark channel prior is the best single range cue, with no training.
+A leave-one-frame-out linear model on all cues reaches +0.55 on the
+well-explained frames. Brightness alone fails across frames (-0.28):
+exposure differs from frame to frame.
+
+### E5cf - a faint-ridge detector over eWaSR, 44 frames (2026-10-23)
+
+`e5cf_faint_ridge.py`. Above eWaSR's boundary, find the topmost DARKER
+colour step that is significant against the sky's own step noise,
+measured on eWaSR sky well above the boundary. Place the edge at the
+strongest step. Reject steps under bright cloud, using the column's
+20th-percentile sky luminance. Move up only while the band below stays
+darker. Two earlier versions failed:
+* An extrapolated sky-colour model read the horizon brightening as
+  terrain (Bodrum 9 climbed 24 px into the sky).
+* A band test with the wrong inequality missed the ridges.
+
+**At the truth (DEM rms, wide heading/offset fit).** Against raw eWaSR
+the detector is better on 21 frames and worse on 4. Some gains:
+
+| frame | eWaSR raw | detector |
+|---|---|---|
+| YBPL9738 | 16.0 mrad | 6.1 |
+| XKYU3498 | 7.7 | 4.4 |
+| MJFQ1511 | 16.1 | 10.9 |
+| FYMC7458 | 19.6 | 13.1 |
+| QNJZ1625 | 4.4 | 2.6 |
+| PQBC6867 | 2.3 | 1.1 |
+
+The far-column residual (crest > 15 km) shrinks on most hazy frames,
+for example FYMC7458 -70 -> -19 and XKYU3498 -17 -> -3 mrad. Against
+skyfix's default, which already falls back to the seam where eWaSR
+fails, it is even: 14 better, 15 worse. The detector runs on eWaSR
+only, so it loses the seam's rescue on frames like HATY3309 and
+UYXQ4404.
+
+**Navigation (43 frames, --boundary-npy).** Frame 18 has no silhouette
+left after screening and is inconclusive.
+
+| arm | median | <300 | <500 | accepted | good | wrong |
+|---|---|---|---|---|---|---|
+| hard +-6 (stored) | 2658 m | 3 | 7 | 13 | 3 | 6 |
+| soft 5 + 2-sigma gate | 2162 m | 3 | 5 | 9 | 3 | 4 |
+| detector + hard +-6 | 2652 m | 4 | 6 | 11 | 3 | 6 |
+| detector + soft 5 + gate | 2527 m | **5** | **8** | 11 | 3 | 6 |
+
+* Single-frame wins: PQBC6867 544 -> 42 m, Bosphorus 3136 -> 1907 m,
+  QMLO5628 4072 -> 3061 m, HATY3309 4455 -> 2589 m. XKYU3498 under the
+  soft prior: 637 -> 299 m, but the 2-sigma gate rejects it because
+  its compass really is 15 deg out.
+* The set of wrong accepts changes, not its size. The detector removes
+  Bodrum 9, EWAC7374 (hard) and PQBC6867. It adds 23_153457 (2514 m),
+  KWHC9160 (415 -> 1185 m) and LHCG7767 (503 m).
+
+**Reading.** The detector recovers the far terrain the segmenter
+dropped. That is what the operator saw, and the truth residuals
+confirm it. Pixel accuracy is no longer what limits most frames:
+accuracy improves at the margin (<500 m: 7 -> 8), and integrity does
+not. The next combination is the detector applied above WHICHEVER
+boundary the pre-check keeps (seam or eWaSR), and the dark channel as
+the per-column range cue for weighting far segments.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the

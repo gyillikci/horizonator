@@ -1,0 +1,128 @@
+{
+ "status": "ok",
+ "reasons": [],
+ "lat": 40.90014957916004,
+ "lon": 29.14301976408333,
+ "fix_ok": true,
+ "basin_margin": 5.732661225457433,
+ "relief_mrad": 11.655359950483566,
+ "dn_m": -675.0,
+ "de_m": 300.0,
+ "sigma_n_m": 85.35291591562647,
+ "sigma_e_m": 56.45567959810781,
+ "sigma_major_m": 93.8086850956465,
+ "sigma_minor_m": 40.89369896218783,
+ "major_bearing_deg": 27.453101855139607,
+ "anisotropy": 2.293964289764696,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": 4.245977904164972,
+ "peak_dh_mad_m": 3.8594964786467867,
+ "n_peaks": 2,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 3.26642537807605e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2700.0,
+   "cost": 1.1750556747665019e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": -900.0,
+   "cost": 8.112818191676492e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": -600.0,
+   "cost": 6.328892867315505e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 0.0,
+   "cost": 5.563395695034477e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": -600.0,
+   "cost": 4.809672582961109e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": -300.0,
+   "cost": 4.207038863764798e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": 0.0,
+   "cost": 3.294068538720105e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": -300.0,
+   "cost": 2.7027503688657703e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": 0.0,
+   "cost": 2.13813056935144e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": 300.0,
+   "cost": 8.647336864008977e-07,
+   "stage": "coarse"
+  },
+  {
+   "dn": -660.0,
+   "de": 300.0,
+   "cost": 6.142022193638267e-07,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -675.0,
+   "de": 300.0,
+   "cost": 5.684902162957905e-07,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "compass_sigma_deg": null,
+ "search_evals": 491,
+ "cost": 5.684902162957905e-07,
+ "rms_mrad": 1.0662928456064877,
+ "n_photos": 1,
+ "z_m": 2.5,
+ "photos": [
+  {
+   "file": "QNJZ1625.JPG",
+   "fov_deg": 41.112,
+   "heading_deg": 195.912,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 1.0662928456064877,
+   "heading_offset_deg": 6.0,
+   "el_offset_mrad": -1.734723475976807e-15,
+   "attitude_source": "prior",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": 6.0,
+ "el_offset_mrad": -1.734723475976807e-15,
+ "fov_deg": 41.112
+}
