@@ -5185,6 +5185,39 @@ not. The next combination is the detector applied above WHICHEVER
 boundary the pre-check keeps (seam or eWaSR), and the dark channel as
 the per-column range cue for weighting far segments.
 
+### E5ch - SegFormer (ADE20K) as the skyline front end, 44 frames (2026-10-23)
+
+`segformer_bridge.py` maps ADE20K to sky / water / land with the same
+boundary rule as eWaSR. Scored at the truth (DEM rms, mrad) on the 4
+E5cf frames, SegFormer beats eWaSR on all four (Bodrum 9 6.0 -> 5.1,
+XKYU3498 7.7 -> 5.4, PQBC6867 2.3 -> 1.3, EWAC7374 1.2 -> 0.8), and the
+soaring-detector on top helps two more.
+
+Navigation, 44 frames (`e5ch_segformer.py report all`):
+
+| arm | median | <300 | <500 | accepted | good | wrong >= 500 |
+|---|---|---|---|---|---|---|
+| eWaSR, hard +-6 | 2831 m | 3 | 7 | 13 | 3 | 6 |
+| SegFormer, hard | 2767 m | 5 | 8 | 17 | 5 | 9 |
+| SegFormer + detector, hard | 2675 m | 5 | 8 | 13 | 4 | 6 |
+| eWaSR, soft 5 + 2-sigma gate | 2172 m | 3 | 5 | 9 | 3 | 4 |
+| SegFormer, soft 5 + gate | 2454 m | 5 | 8 | 13 | 5 | 6 |
+| SegFormer + detector, soft 5 + gate | 2040 m | 5 | 9 | 13 | 4 | 7 |
+
+* SegFormer finds more good fixes (<300 m: 3 -> 5) and more within
+  500 m (5 -> 8 under the soft prior).
+* It also accepts more wrong fixes (hard: 6 -> 9; soft: 4 -> 6-7).
+  The per-frame DEM residual at the truth is better, so the failures
+  are not pixel errors: the DEM matches a wrong place well, and the
+  acceptance gates cannot see that.
+* The wrong accepts differ by segmenter. Only SegFormer's frames include
+  KWHC9160 and LHCG7767 as wrong; eWaSR's include Bodrum 9 and PQBC.
+
+**Reading.** A better front end alone does not improve integrity. The
+useful next check is agreement between the two front ends, as E5bq's
+agreement gate: accept only where SegFormer and eWaSR land within
+500 m of each other. That is a test to run, not a result yet.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
