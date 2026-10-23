@@ -21,3 +21,5 @@ experiments/*.ts
 # per-solve diagnostics of the front-end study (E5bv); the report and
 # boundaries are tracked
 experiments/out/extract/solve_*.log
+experiments/out/tracker_trace/frames_*/
+experiments/out/tracker_trace/work_*/

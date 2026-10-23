@@ -127,14 +127,16 @@ def main(path):
         # sea below the horizon dip, terrain above it, shaded by range
         ax.fill_between([-FOV / 2, FOV / 2], y(EL_LO), y(dip),
                         color='#1f4d6e', zorder=1)
-        rr = np.where(np.isfinite(rg), rg, 4e4)
-        shade = np.clip(np.log10(np.maximum(rr, 500)) - 2.7, 0, 2) / 2
-        for i in range(0, az_rel.size - 1, 3):
-            if eld[i] > dip + 0.01:
-                c = (0.20 + 0.45 * shade[i], 0.26 + 0.42 * shade[i],
-                     0.20 + 0.55 * shade[i])
-                ax.fill_between(az_rel[i:i + 4], y(dip), y(eld[i:i + 4]),
-                                color=c, lw=0, zorder=2)
+        # terrain: one fill, toned by the median range of what is seen
+        # (near land dark, distant ridges hazier)
+        land = eld > dip + 0.01
+        rr = np.where(np.isfinite(rg) & land, rg, np.nan)
+        hz = (np.clip((np.log10(np.nanmedian(rr)) - 3.0) / 1.5, 0, 1)
+              if np.isfinite(rr).any() else 1.0)
+        tone = (0.26 + 0.28 * hz, 0.33 + 0.25 * hz, 0.24 + 0.36 * hz)
+        ax.fill_between(az_rel, y(dip), y(np.maximum(eld, dip)),
+                        where=land, color=tone, lw=0, zorder=2,
+                        interpolate=True)
         ax.plot(az_rel, y(eld), color=C_TRUE, lw=1.3, zorder=4,
                 label='true skyline')
         # predicted skyline from the ESTIMATED pose, in the true camera
@@ -148,8 +150,13 @@ def main(path):
         shift = yaw_e - yaw_t
         ax.plot(az_rel - shift, y(el2d), color=C_PRED, lw=1.4, ls='--',
                 zorder=5, label='skyline predicted from the estimate')
-        # tracker windows
+        # tracker windows: 250 px of a 1920 px sensor, drawn SQUARE on
+        # screen as the real camera would show them, whatever the
+        # vertical exaggeration of this panel
         box_w = FOV * 250 / 1920
+        bb = ax.get_position()
+        px_w, px_h = bb.width * 1600, bb.height * 900
+        box_h = box_w * (px_w / FOV) * (y(EL_HI) - y(EL_LO)) / px_h
         for d in s['tracks']:
             h = hills[d['j']]
             dv = np.array(h['true']) - p
@@ -159,13 +166,13 @@ def main(path):
                              - rng * (1 - K_REFR) / (2 * R_E))
             col = C_UNK if d['id'] is None else (C_OK if d['id'] == d['j']
                                                  else C_BAD)
-            ax.add_patch(Rectangle((a - box_w / 2, y(e) - box_w * 0.5),
-                                   box_w, box_w, fill=False, ec=col, lw=2.2,
+            ax.add_patch(Rectangle((a - box_w / 2, y(e) - box_h / 2),
+                                   box_w, box_h, fill=False, ec=col, lw=2.2,
                                    zorder=6))
             lab = ('?  identifying' if d['id'] is None else
                    'hill #%d%s' % (d['id'], '' if d['id'] == d['j']
                                    else '  WRONG'))
-            ax.text(a - box_w / 2, y(e) + box_w * 0.55, lab + '  %.1f km' % (
+            ax.text(a - box_w / 2, y(e) + box_h * 0.62, lab + '  %.1f km' % (
                 rng / 1000), color=col, fontsize=9.5, weight='bold',
                 zorder=7, family='monospace')
         if s['photo']:
