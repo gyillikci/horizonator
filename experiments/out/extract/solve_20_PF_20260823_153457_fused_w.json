@@ -1,0 +1,121 @@
+{
+ "status": "ok",
+ "reasons": [],
+ "lat": 36.65676799242476,
+ "lon": 28.108791486612493,
+ "fix_ok": true,
+ "basin_margin": 0.2289389139597784,
+ "relief_mrad": 13.707500368817632,
+ "dn_m": 1770.0,
+ "de_m": 1185.0,
+ "sigma_n_m": 126.05183178302445,
+ "sigma_e_m": 82.39214029398406,
+ "sigma_major_m": 132.81557693896852,
+ "sigma_minor_m": 70.97571134161583,
+ "major_bearing_deg": 158.11534109465578,
+ "anisotropy": 1.8712820826790861,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -4.107732057211917,
+ "peak_dh_mad_m": 3.9367086353704686,
+ "n_peaks": 2,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.00032649607585292687,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2700.0,
+   "cost": 0.0003257820884479738,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2400.0,
+   "cost": 0.0003095567785565508,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1800.0,
+   "cost": 0.0002965489359264571,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1200.0,
+   "cost": 0.0001368487252139332,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -900.0,
+   "cost": 5.641370038616674e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -600.0,
+   "cost": 2.7348321443862386e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 300.0,
+   "cost": 2.5679880107649038e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -300.0,
+   "cost": 1.8867074309041492e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 1800.0,
+   "de": 1200.0,
+   "cost": 1.5352328821820502e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 1740.0,
+   "de": 1200.0,
+   "cost": 1.5228802390331445e-05,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": 1770.0,
+   "de": 1185.0,
+   "cost": 1.3559971326606387e-05,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "search_evals": 491,
+ "cost": 1.3559971326606387e-05,
+ "rms_mrad": 5.207681120538466,
+ "n_photos": 1,
+ "z_m": 4.0,
+ "photos": [
+  {
+   "file": "PF_20260823_153457.jpg",
+   "fov_deg": 38.07,
+   "heading_deg": 266.788,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 5.207681120538466,
+   "heading_offset_deg": 5.4,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": 5.4,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 38.07
+}

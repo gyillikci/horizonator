@@ -327,7 +327,7 @@ def report():
         ax.plot(e, np.arange(1, e.size + 1) / e.size, lw=2,
                 label='%s (median %.0f m)' % (k, np.median(e)),
                 color=['#8A8F98', '#B9770E', '#2E86C1', '#C0392B',
-                       '#1E7F5C'][i])
+                       '#1E7F5C', '#5DADE2', '#7D3C98'][i % 7])
     for v in (GOOD, BAD):
         ax.axvline(v, color='#1A2732', lw=.7, ls=':')
     ax.set_xscale('log')

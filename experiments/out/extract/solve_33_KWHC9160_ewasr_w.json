@@ -1,0 +1,175 @@
+{
+ "status": "ok",
+ "reasons": [],
+ "lat": 40.90824347361332,
+ "lon": 29.124635479054177,
+ "fix_ok": true,
+ "basin_margin": 2.488726253842465,
+ "relief_mrad": 6.499198265352221,
+ "dn_m": 225.0,
+ "de_m": -1245.0,
+ "sigma_n_m": 72.49282506291587,
+ "sigma_e_m": 53.64503994820724,
+ "sigma_major_m": 77.36915381090334,
+ "sigma_minor_m": 46.3358828040651,
+ "major_bearing_deg": 154.13198571971085,
+ "anisotropy": 1.669745975016055,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": null,
+ "peak_dh_mad_m": null,
+ "n_peaks": 0,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.0003210737038552237,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2700.0,
+   "cost": 0.000256883054503866,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2400.0,
+   "cost": 0.00020166715926110747,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2100.0,
+   "cost": 0.0001594203750197446,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1800.0,
+   "cost": 0.00011210012834377726,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1500.0,
+   "cost": 1.5074686883287707e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1200.0,
+   "cost": 1.3039763247375415e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -600.0,
+   "cost": 1.1442081583858169e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -300.0,
+   "cost": 7.574507735287765e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 0.0,
+   "cost": 7.076662045913591e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 300.0,
+   "cost": 5.209960061314341e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 600.0,
+   "cost": 2.9749380310079415e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": 1200.0,
+   "cost": 2.5348378316453383e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": -900.0,
+   "cost": 1.3520032250417582e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": -900.0,
+   "cost": 4.0913368936836653e-07,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": -600.0,
+   "cost": 2.0441561091669554e-07,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": -900.0,
+   "cost": 1.614318136383902e-07,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": -300.0,
+   "cost": 1.426031157081102e-07,
+   "stage": "coarse"
+  },
+  {
+   "dn": 300.0,
+   "de": -1200.0,
+   "cost": 1.3913467324666715e-07,
+   "stage": "coarse"
+  },
+  {
+   "dn": 240.0,
+   "de": -1260.0,
+   "cost": 1.0766269556996144e-07,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": 225.0,
+   "de": -1245.0,
+   "cost": 1.0585932232529973e-07,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "search_evals": 491,
+ "cost": 1.0585932232529973e-07,
+ "rms_mrad": 0.46012894350453487,
+ "n_photos": 1,
+ "z_m": 2.5,
+ "photos": [
+  {
+   "file": "KWHC9160.JPG",
+   "fov_deg": 10.286,
+   "heading_deg": 244.345,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 0.46012894350453487,
+   "heading_offset_deg": -4.0,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": -4.0,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 10.286
+}

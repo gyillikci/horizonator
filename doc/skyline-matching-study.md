@@ -4634,6 +4634,62 @@ sequential estimator.
 > imagery, or several frames to separate moving cloud from fixed
 > terrain, would be the next step; neither was testable here.
 
+> **E5bw - calibrated per-column confidence: it finds the bad pixels,
+> and still does not change the fix.** The operator's proposal: give
+> the columns the extractor cannot see clearly a low confidence, the
+> ones it is sure of a high one, and let the matching weigh them so.
+> Each column now gets a 1-sigma of its boundary row from three
+> independent signs of doubt - how far the boundary can slide before
+> the fused sky likelihood rises by 2 nats (sigma = run / 4), how far
+> eWaSR and SAM disagree there after their constant offset, and how
+> weak the sky/not-sky contrast is - and the weight
+> 1 / (1 + (sigma / 3 px)^2), which skyfix's Huber misfit already uses
+> per column. Nothing is dropped outright except skyless columns (the
+> clipped weights of E5bv's fused_dp dropped 19 %).
+>
+> **Calibration is good.** Against the hand line on the Bosphorus frame:
+> Spearman(sigma, |error|) +0.43 / +0.47; median error by sigma
+> tercile 2.9 / 3.0 / 10.0 px (eWaSR) and 1.7 / 2.1 / 5.8 px (fused);
+> the weight-averaged eWaSR error falls from 9.6 to 3.2 px. Against the
+> DEM skyline at the true position on all 44 frames
+> (`e5bw_calibration.py`, a lower bound since the residual includes
+> DEM error): eWaSR's sigma correlates with the residual on 35 of 44
+> frames, and its low / middle / high sigma terciles carry median
+> residuals of **5.3 / 45 / 72 mrad** - the columns it doubts are the
+> ones on cloud and foreground. fused_w separates less (26 of 44;
+> 5.2 / 44 / 57 mrad).
+>
+> **Navigation does not follow** (same solver, DEM, search, gates):
+>
+> | front end | median | < 500 m | accepted | right | wrong >= 500 m |
+> |---|---|---|---|---|---|
+> | eWaSR, uniform | 2995 m | 7 | 14 | 3 | 7 |
+> | eWaSR, sigma-weighted | 2525 m | 5 | 14 | 2 | 9 |
+> | fused, clipped (E5bv) | 2405 m | 6 | 15 | 0 | 10 |
+> | fused, sigma-weighted | 2779 m | 6 | 18 | 2 | 13 |
+>
+> Two reasons, both measurable. The weights are honest and therefore
+> small (median 0.15-0.19): the fix rests on fewer effective columns,
+> the cost surface flattens, and the gates - tuned on uniform weights -
+> accept more. And as E5bv already showed, the frames that fail do so
+> for reasons no weighting can repair: the Bosphorus frame stays at
+> 1.9-3.1 km for every automatic front end because the uniform
+> configuration leaves its 1.75 deg roll uncorrected (E5bi), and the
+> rest fail on near subjects and model content. Mean confidence is not
+> an acceptance signal either: the two right accepts average weight
+> 0.17, the wrong ones 0.24; across all frames the ones within 500 m
+> do average higher (0.30 vs 0.16), which says clean skylines succeed
+> more often, not which accepted fix to trust.
+>
+> Where the confidence belongs is not the single-shot argmin but the
+> likelihood: a per-column sigma is exactly the measurement noise a
+> sequence filter needs (E5br's point-mass filter tempered its
+> likelihood with one global 3 mrad; per-column sigmas replace that
+> guess), and roll - the parameter that actually broke the Bosphorus
+> frame - should be co-estimated before any weighting can help.
+> Kept as front ends `ewasr_w` / `fused_w` with the sigma stored per
+> frame; not made the default.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the

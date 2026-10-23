@@ -1,0 +1,77 @@
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.01 < 0.15",
+  "minimum on the search-box boundary: the true position may lie outside the box",
+  "peak heights disagree: matched crests stand a median -151 m (spread 162 m) from the model at this fix (limits 30/90 m) \u2014 position error or DEM bias is leaking into the height channel"
+ ],
+ "lat": 36.61599382543575,
+ "lon": 28.066058947159746,
+ "fix_ok": false,
+ "basin_margin": 0.011055212506905634,
+ "relief_mrad": 18.478664540544465,
+ "dn_m": -2775.0,
+ "de_m": -2625.0,
+ "sigma_n_m": 545.7804331094729,
+ "sigma_e_m": 310.77541639057654,
+ "sigma_major_m": 590.519796983284,
+ "sigma_minor_m": 213.8784934693554,
+ "major_bearing_deg": 24.18160314389317,
+ "anisotropy": 2.7610059684093198,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -151.0556954522761,
+ "peak_dh_mad_m": 162.19304613475305,
+ "n_peaks": 11,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 7.16029485616202e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -2700.0,
+   "cost": 7.131236369587125e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2760.0,
+   "de": -2640.0,
+   "cost": 7.118603273549245e-05,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -2775.0,
+   "de": -2625.0,
+   "cost": 7.113428584691898e-05,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "search_evals": 491,
+ "cost": 7.113428584691898e-05,
+ "rms_mrad": 11.927638982373585,
+ "n_photos": 1,
+ "z_m": 4.0,
+ "photos": [
+  {
+   "file": "PF_20260824_122139_wide.jpg",
+   "fov_deg": 73.7,
+   "heading_deg": 297.024,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 11.927638982373585,
+   "heading_offset_deg": 6.0,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": 6.0,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 73.7
+}
