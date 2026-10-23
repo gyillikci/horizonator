@@ -1,0 +1,166 @@
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.00 < 0.15"
+ ],
+ "lat": 37.04164773369253,
+ "lon": 28.297735074975098,
+ "fix_ok": false,
+ "basin_margin": 0.0005757601872425141,
+ "relief_mrad": 58.3581771835994,
+ "dn_m": -1140.0,
+ "de_m": -2235.0,
+ "sigma_n_m": 597.9937099369545,
+ "sigma_e_m": 1154.1383905344896,
+ "sigma_major_m": 1156.054885808257,
+ "sigma_minor_m": 594.2802391368591,
+ "major_bearing_deg": 86.1524395639746,
+ "anisotropy": 1.9453025856746091,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -20.811568995743357,
+ "peak_dh_mad_m": 0.0,
+ "n_peaks": 1,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.00023625571033935694,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2700.0,
+   "cost": 0.00022820111577080872,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2400.0,
+   "cost": 0.000210852884144194,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 600.0,
+   "cost": 0.00018962134234696648,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 900.0,
+   "cost": 0.0001663764666126472,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1200.0,
+   "cost": 0.00011317779327793525,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1500.0,
+   "cost": 9.415484155197526e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1800.0,
+   "cost": 8.98222414933387e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 2100.0,
+   "cost": 8.106152808956595e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 2400.0,
+   "cost": 7.807670115451376e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": -300.0,
+   "cost": 7.548744720181202e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 0.0,
+   "cost": 7.423637490679021e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": -2400.0,
+   "cost": 7.420436727727197e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": -2100.0,
+   "cost": 7.341622528701035e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": -300.0,
+   "cost": 7.259672738809523e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": 0.0,
+   "cost": 7.150964803034408e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": -2100.0,
+   "cost": 7.10150924031287e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1140.0,
+   "de": -2220.0,
+   "cost": 7.067504515485033e-05,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -1140.0,
+   "de": -2235.0,
+   "cost": 7.066450087928485e-05,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 20.0,
+ "compass_sigma_deg": 5.0,
+ "search_evals": 491,
+ "cost": 7.066450087928485e-05,
+ "rms_mrad": 11.611675234804395,
+ "n_photos": 1,
+ "z_m": 3.0,
+ "photos": [
+  {
+   "file": "PF_20260824_195733.jpg",
+   "fov_deg": 73.7,
+   "heading_deg": 196.515,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 11.611675234804395,
+   "heading_offset_deg": -19.0,
+   "el_offset_mrad": -10.12290966156711,
+   "attitude_source": "prior",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": -19.0,
+ "el_offset_mrad": -10.12290966156711,
+ "fov_deg": 73.7
+}

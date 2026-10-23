@@ -277,12 +277,28 @@ def report(a):
             ', '.join('%s (%.0f, %+.1f)' % (r['tag'][3:], r[k]['err'],
                                             r['psi'] or float('nan'))
                       for r in wrong)))
-    # does the compass error explain the failures?
-    big = [r for r in rows if r['psi'] is not None and abs(r['psi']) > 6]
-    print('\nframes whose compass is off by > 6 deg at the truth: %d '
-          '(%s)' % (len(big), ', '.join('%s %+.1f' % (r['tag'][3:],
-                                                      r['psi'])
-                                        for r in big)))
+    # prior-consistency gate: a soft prior still lets psi wander, so
+    # reject a fix whose heading offset is implausible under the prior
+    # it was solved with (|psi| > K sigma). Post-hoc on these frames.
+    print('\nprior-consistency gate (accept only if |psi| <= K sigma):')
+    for s in SIGMAS:
+        k = 'soft%d' % s
+        for K in (2.0, 3.0):
+            acc = [r for r in rows if r[k]['ok']
+                   and abs(r[k]['hoff']) <= K * s]
+            summ[k]['gate%.0f' % K] = dict(
+                accepted=len(acc), good=sum(r[k]['err'] < GOOD for r in acc),
+                wrong=sum(r[k]['err'] >= BAD for r in acc))
+            print('  %-6s K=%.0f: %2d accepted, %d within 300 m, %d wrong'
+                  % (k, K, *summ[k]['gate%.0f' % K].values()))
+    # how wrong is the compass, where the DEM can tell at all? psi* is
+    # only meaningful where the DEM at the truth explains the photo
+    # (rms < 8 mrad) and the best psi is interior to +-30
+    ok = [r for r in rows if r['tag'] in pt and pt[r['tag']]['rms_mrad'] < 8
+          and abs(r['psi']) < 29.9]
+    print('\nDEM at the truth explains the photo (rms < 8 mrad) on %d '
+          'frames; compass error there: %s' % (len(ok), ', '.join(
+              '%s %+.1f' % (r['tag'][3:], r['psi']) for r in ok)))
     json.dump(dict(summary=summ, rows=rows),
               open(os.path.join(OUT, 'report.json'), 'w'), indent=1)
 

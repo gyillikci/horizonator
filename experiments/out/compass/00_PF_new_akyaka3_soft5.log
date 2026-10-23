@@ -1,0 +1,270 @@
+soft compass prior: sigma 5.0 deg, n_eff 20, search +-20 deg
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+photo 0: PF_new_akyaka3.jpg  fov 73.7, heading 172.599, pitch +0.00, roll +0.00, weight 1.00
+z 16.0 m, box 6000 m at (37.04859,28.29302)
+peak witness: 9 crests, median height residual -86 m (spread 207 m)
+INCONCLUSIVE: ambiguous landscape: basin margin 0.08 < 0.15
+INCONCLUSIVE: residual 13.4 mrad > 12.0: the DEM cannot explain this observation
+INCONCLUSIVE: peak heights disagree: matched crests stand a median -86 m (spread 207 m) from the model at this fix (limits 30/90 m) — position error or DEM bias is leaking into the height channel
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.08 < 0.15",
+  "residual 13.4 mrad > 12.0: the DEM cannot explain this observation",
+  "peak heights disagree: matched crests stand a median -86 m (spread 207 m) from the model at this fix (limits 30/90 m) \u2014 position error or DEM bias is leaking into the height channel"
+ ],
+ "lat": 37.05533491204439,
+ "lon": 28.30941484018037,
+ "fix_ok": false,
+ "basin_margin": 0.08277113184240281,
+ "relief_mrad": 49.190970371954485,
+ "dn_m": 750.0,
+ "de_m": 1455.0,
+ "sigma_n_m": 520.1968968276376,
+ "sigma_e_m": 513.5891498748213,
+ "sigma_major_m": 547.623429825712,
+ "sigma_minor_m": 484.2387896938543,
+ "major_bearing_deg": 42.00246880868181,
+ "anisotropy": 1.1308954207735626,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -85.61495232562321,
+ "peak_dh_mad_m": 207.43973486827434,
+ "n_peaks": 9,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.00023258710178791208,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -3000.0,
+   "cost": 0.00021653264326340323,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": -3000.0,
+   "cost": 0.00020397004826445508,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": -3000.0,
+   "cost": 0.00019368205568712826,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": -3000.0,
+   "cost": 0.00018592811890103677,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": -3000.0,
+   "cost": 0.0001788153802212182,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": -3000.0,
+   "cost": 0.00017010091955388504,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 2400.0,
+   "cost": 0.00016640966828309353,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 2700.0,
+   "cost": 0.0001589980390022184,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": 2400.0,
+   "cost": 0.00014806502984999258,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": 2700.0,
+   "cost": 0.00014407317379879088,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": 3000.0,
+   "cost": 0.00014353705143287053,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": 1200.0,
+   "cost": 0.0001418935209701505,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": 2400.0,
+   "cost": 0.00013465828005967682,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": 2700.0,
+   "cost": 0.00013044568985705175,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 600.0,
+   "cost": 0.00012908717411236947,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 900.0,
+   "cost": 0.0001276141748784378,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 1200.0,
+   "cost": 0.00012257707153664514,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 1800.0,
+   "cost": 0.00012235484506299102,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 2700.0,
+   "cost": 0.00012063555815455956,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 3000.0,
+   "cost": 0.00011986743188204706,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": 600.0,
+   "cost": 0.0001169814488501854,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": 900.0,
+   "cost": 0.00011494994314897672,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": 1200.0,
+   "cost": 0.00011014362577352866,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": 1500.0,
+   "cost": 0.00010968071237245461,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": 1800.0,
+   "cost": 0.0001091135113062107,
+   "stage": "coarse"
+  },
+  {
+   "dn": 300.0,
+   "de": 600.0,
+   "cost": 0.000108113924107325,
+   "stage": "coarse"
+  },
+  {
+   "dn": 300.0,
+   "de": 900.0,
+   "cost": 0.00010526798024111059,
+   "stage": "coarse"
+  },
+  {
+   "dn": 300.0,
+   "de": 1200.0,
+   "cost": 0.0001021170948441896,
+   "stage": "coarse"
+  },
+  {
+   "dn": 300.0,
+   "de": 1500.0,
+   "cost": 9.84293613459587e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 600.0,
+   "de": 1200.0,
+   "cost": 9.670152655176902e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 600.0,
+   "de": 1500.0,
+   "cost": 9.441637742562087e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 720.0,
+   "de": 1440.0,
+   "cost": 9.378903388308616e-05,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": 750.0,
+   "de": 1455.0,
+   "cost": 9.369341638610104e-05,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 20.0,
+ "compass_sigma_deg": 5.0,
+ "search_evals": 491,
+ "cost": 9.369341638610104e-05,
+ "rms_mrad": 13.423368905464905,
+ "n_photos": 1,
+ "z_m": 16.0,
+ "photos": [
+  {
+   "file": "PF_new_akyaka3.jpg",
+   "fov_deg": 73.74,
+   "heading_deg": 172.599,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 13.423368905464905,
+   "heading_offset_deg": -20.0,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": -20.0,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 73.74
+}
+wrote /home/user/horizonator/experiments/out/compass/00_PF_new_akyaka3_soft5.json/.png

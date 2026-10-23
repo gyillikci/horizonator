@@ -1,0 +1,228 @@
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.08 < 0.15",
+  "residual 14.0 mrad > 12.0: the DEM cannot explain this observation",
+  "peak heights disagree: matched crests stand a median -105 m (spread 172 m) from the model at this fix (limits 30/90 m) \u2014 position error or DEM bias is leaking into the height channel"
+ ],
+ "lat": 37.05560470852616,
+ "lon": 28.31583756107577,
+ "fix_ok": false,
+ "basin_margin": 0.07762417945148793,
+ "relief_mrad": 49.190970371954485,
+ "dn_m": 780.0,
+ "de_m": 2025.0,
+ "sigma_n_m": 1443.153432112557,
+ "sigma_e_m": 1605.192367064973,
+ "sigma_major_m": 1615.3151545658095,
+ "sigma_minor_m": 1431.8139946696772,
+ "major_bearing_deg": 76.02720150506177,
+ "anisotropy": 1.1281599150303503,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -105.05389956491157,
+ "peak_dh_mad_m": 171.83749888274764,
+ "n_peaks": 9,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.00022085720781586416,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -3000.0,
+   "cost": 0.0002058510151867772,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": -3000.0,
+   "cost": 0.0001956394915300427,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": -3000.0,
+   "cost": 0.00018666481528600585,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": -3000.0,
+   "cost": 0.00018039235628418047,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": -3000.0,
+   "cost": 0.00017374446566540213,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": -3000.0,
+   "cost": 0.00016921579834818214,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 2400.0,
+   "cost": 0.00016824672189212706,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 2700.0,
+   "cost": 0.0001599714790022184,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 3000.0,
+   "cost": 0.00015921592790076866,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": 2400.0,
+   "cost": 0.00014967747934871897,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": 2700.0,
+   "cost": 0.00014457493379879088,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": 3000.0,
+   "cost": 0.00014361449143287052,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": 2400.0,
+   "cost": 0.00013590308379178746,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": 2700.0,
+   "cost": 0.00013091224985705175,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 1800.0,
+   "cost": 0.0001300855109161855,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 2400.0,
+   "cost": 0.00012482295182087425,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 2700.0,
+   "cost": 0.00012097411815455955,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 3000.0,
+   "cost": 0.00011994487188204706,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": 1800.0,
+   "cost": 0.00011805830704729982,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": 2100.0,
+   "cost": 0.00011380516556553059,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": 2700.0,
+   "cost": 0.00011330742264834448,
+   "stage": "coarse"
+  },
+  {
+   "dn": 300.0,
+   "de": 1800.0,
+   "cost": 0.00011028528330272993,
+   "stage": "coarse"
+  },
+  {
+   "dn": 300.0,
+   "de": 2100.0,
+   "cost": 0.00010587859069663232,
+   "stage": "coarse"
+  },
+  {
+   "dn": 600.0,
+   "de": 1800.0,
+   "cost": 0.00010525180467286355,
+   "stage": "coarse"
+  },
+  {
+   "dn": 600.0,
+   "de": 2100.0,
+   "cost": 0.000102778835635348,
+   "stage": "coarse"
+  },
+  {
+   "dn": 900.0,
+   "de": 2100.0,
+   "cost": 0.00010253210540431635,
+   "stage": "coarse"
+  },
+  {
+   "dn": 780.0,
+   "de": 2040.0,
+   "cost": 0.00010221614198118327,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": 780.0,
+   "de": 2025.0,
+   "cost": 0.00010221056261604994,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 12.0,
+ "compass_sigma_deg": 3.0,
+ "search_evals": 491,
+ "cost": 0.00010221056261604994,
+ "rms_mrad": 14.043543898606927,
+ "n_photos": 1,
+ "z_m": 16.0,
+ "photos": [
+  {
+   "file": "PF_new_akyaka3.jpg",
+   "fov_deg": 73.74,
+   "heading_deg": 172.599,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 14.043543898606927,
+   "heading_offset_deg": -12.0,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": -12.0,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 73.74
+}

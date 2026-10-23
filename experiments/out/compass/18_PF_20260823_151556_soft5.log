@@ -1,0 +1,119 @@
+soft compass prior: sigma 5.0 deg, n_eff 20, search +-20 deg
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+extractor pre-check: eWaSR disagrees with the seam on 100% of columns — falling back to the seam
+photo 0: PF_20260823_151556.jpg  fov 38.1, heading 232.066, pitch +0.00, roll +0.00, weight 1.00
+z 6.0 m, box 6000 m at (36.64087,28.09550)
+peak witness: 1 crests, median height residual -2 m (spread 0 m)
+INCONCLUSIVE: minimum on the search-box boundary: the true position may lie outside the box
+INCONCLUSIVE: residual 14.5 mrad > 12.0: the DEM cannot explain this observation
+{
+ "status": "inconclusive",
+ "reasons": [
+  "minimum on the search-box boundary: the true position may lie outside the box",
+  "residual 14.5 mrad > 12.0: the DEM cannot explain this observation"
+ ],
+ "lat": 36.651122266307475,
+ "lon": 28.12979650597955,
+ "fix_ok": false,
+ "basin_margin": 0.18817821185393405,
+ "relief_mrad": 72.20425517045756,
+ "dn_m": 1140.0,
+ "de_m": 3060.0,
+ "sigma_n_m": 242.90218966611468,
+ "sigma_e_m": 188.5490824721743,
+ "sigma_major_m": 244.59532379328311,
+ "sigma_minor_m": 186.34741163791603,
+ "major_bearing_deg": 169.55246365447044,
+ "anisotropy": 1.3125769853382574,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -2.1105460459831598,
+ "peak_dh_mad_m": 0.0,
+ "n_peaks": 1,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.0011071909914845263,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2400.0,
+   "cost": 0.0010924351251386795,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1800.0,
+   "cost": 0.001063679688102523,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1500.0,
+   "cost": 0.0009387327784850974,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -900.0,
+   "cost": 0.0007680782071243413,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 600.0,
+   "cost": 0.00013176615940833038,
+   "stage": "coarse"
+  },
+  {
+   "dn": 1200.0,
+   "de": 3000.0,
+   "cost": 0.00011089763984371795,
+   "stage": "coarse"
+  },
+  {
+   "dn": 1140.0,
+   "de": 3060.0,
+   "cost": 0.00010613065814573427,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": 1140.0,
+   "de": 3060.0,
+   "cost": 0.00010613065814573427,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 20.0,
+ "compass_sigma_deg": 5.0,
+ "search_evals": 491,
+ "cost": 0.00010613065814573427,
+ "rms_mrad": 14.451069036284775,
+ "n_photos": 1,
+ "z_m": 6.0,
+ "photos": [
+  {
+   "file": "PF_20260823_151556.jpg",
+   "fov_deg": 38.07,
+   "heading_deg": 232.066,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 14.451069036284775,
+   "heading_offset_deg": 13.8,
+   "el_offset_mrad": -10.12290966156711,
+   "attitude_source": "prior",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": 13.8,
+ "el_offset_mrad": -10.12290966156711,
+ "fov_deg": 38.07
+}
+wrote /home/user/horizonator/experiments/out/compass/18_PF_20260823_151556_soft5.json/.png

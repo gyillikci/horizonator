@@ -1,0 +1,203 @@
+soft compass prior: sigma 5.0 deg, n_eff 20, search +-20 deg
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+extractor pre-check: eWaSR disagrees with the seam on 37% of columns — falling back to the seam
+photo 0: MJFQ1511.JPG  fov 73.7, heading 165.389, pitch +0.00, roll +0.00, weight 1.00
+z 167.2 m, box 6000 m at (39.11494,27.69958)
+peak witness: 4 crests, median height residual -226 m (spread 239 m)
+INCONCLUSIVE: ambiguous landscape: basin margin 0.01 < 0.15
+INCONCLUSIVE: peak heights disagree: matched crests stand a median -226 m (spread 239 m) from the model at this fix (limits 30/90 m) — position error or DEM bias is leaking into the height channel
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.01 < 0.15",
+  "peak heights disagree: matched crests stand a median -226 m (spread 239 m) from the model at this fix (limits 30/90 m) \u2014 position error or DEM bias is leaking into the height channel"
+ ],
+ "lat": 39.1249224698257,
+ "lon": 27.697145898498245,
+ "fix_ok": false,
+ "basin_margin": 0.009380676716511558,
+ "relief_mrad": 30.092598113950498,
+ "dn_m": 1110.0,
+ "de_m": -210.0,
+ "sigma_n_m": 308.4630251923664,
+ "sigma_e_m": 446.6850273159635,
+ "sigma_major_m": 453.24528184752904,
+ "sigma_minor_m": 298.7401312546466,
+ "major_bearing_deg": 103.02745937303492,
+ "anisotropy": 1.5171891367389874,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -225.69797222634546,
+ "peak_dh_mad_m": 238.724184083838,
+ "n_peaks": 4,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.000630252979735135,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 0.0,
+   "cost": 0.0005362087493957663,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 300.0,
+   "cost": 0.0001381241402555342,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 600.0,
+   "cost": 8.598253808013938e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 900.0,
+   "cost": 7.538533374793655e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1200.0,
+   "cost": 7.440509971956408e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": 600.0,
+   "cost": 7.174916755523048e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": 900.0,
+   "cost": 7.102811690842524e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": 600.0,
+   "cost": 6.871451250423058e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": 2700.0,
+   "cost": 6.615548109265774e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 2700.0,
+   "cost": 6.438224514348371e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": 2700.0,
+   "cost": 6.362637746423293e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": 3000.0,
+   "cost": 6.281913925233019e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 3000.0,
+   "cost": 6.190889010373223e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": 300.0,
+   "cost": 6.115511700877358e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": 300.0,
+   "cost": 5.870560650813491e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 300.0,
+   "cost": 5.6265081903693684e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 900.0,
+   "de": -600.0,
+   "cost": 5.512889956967524e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 900.0,
+   "de": -300.0,
+   "cost": 5.3315110658239333e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 900.0,
+   "de": 0.0,
+   "cost": 5.2437887266214445e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 1200.0,
+   "de": -300.0,
+   "cost": 5.151341191324811e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 1080.0,
+   "de": -180.0,
+   "cost": 5.079585049039798e-05,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": 1110.0,
+   "de": -210.0,
+   "cost": 5.070314774351196e-05,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 20.0,
+ "compass_sigma_deg": 5.0,
+ "search_evals": 491,
+ "cost": 5.070314774351196e-05,
+ "rms_mrad": 9.965278495206439,
+ "n_photos": 1,
+ "z_m": 167.2,
+ "photos": [
+  {
+   "file": "MJFQ1511.JPG",
+   "fov_deg": 73.74,
+   "heading_deg": 165.389,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 9.965278495206439,
+   "heading_offset_deg": -10.8,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": -10.8,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 73.74
+}
+wrote /home/user/horizonator/experiments/out/compass/42_MJFQ1511_soft5.json/.png

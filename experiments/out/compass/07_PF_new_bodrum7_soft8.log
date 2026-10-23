@@ -1,0 +1,176 @@
+soft compass prior: sigma 8.0 deg, n_eff 20, search +-32 deg
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+photo 0: PF_new_bodrum7.jpg  fov 73.7, heading 312.663, pitch +0.00, roll +0.00, weight 1.00
+z 3.0 m, box 6000 m at (37.02700,27.44082)
+peak witness: 17 crests, median height residual -39 m (spread 147 m)
+INCONCLUSIVE: peak heights disagree: matched crests stand a median -39 m (spread 147 m) from the model at this fix (limits 30/90 m) — position error or DEM bias is leaking into the height channel
+{
+ "status": "inconclusive",
+ "reasons": [
+  "peak heights disagree: matched crests stand a median -39 m (spread 147 m) from the model at this fix (limits 30/90 m) \u2014 position error or DEM bias is leaking into the height channel"
+ ],
+ "lat": 37.00528138321707,
+ "lon": 27.453999731654157,
+ "fix_ok": false,
+ "basin_margin": 0.31839808783950885,
+ "relief_mrad": 11.67632056877285,
+ "dn_m": -2415.0,
+ "de_m": 1170.0,
+ "sigma_n_m": 512.9032667157815,
+ "sigma_e_m": 711.4603645926145,
+ "sigma_major_m": 769.80040245479,
+ "sigma_minor_m": 420.30102518839925,
+ "major_bearing_deg": 62.88293187744811,
+ "anisotropy": 1.8315453837157027,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -38.76349151516523,
+ "peak_dh_mad_m": 147.15600472581542,
+ "n_peaks": 17,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 7.994131384923272e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2700.0,
+   "cost": 7.694670084442086e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2400.0,
+   "cost": 7.43434041851276e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2100.0,
+   "cost": 7.234549742991712e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1800.0,
+   "cost": 7.055587199965695e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1500.0,
+   "cost": 6.914387202019325e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1200.0,
+   "cost": 6.72649558235354e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -900.0,
+   "cost": 6.543242882598889e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -600.0,
+   "cost": 6.348085098684795e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -300.0,
+   "cost": 6.182540930171332e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 0.0,
+   "cost": 6.043018802556565e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 300.0,
+   "cost": 5.88271863346579e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 600.0,
+   "cost": 4.225700483208668e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 900.0,
+   "cost": 4.001353304811074e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1200.0,
+   "cost": 3.88210445722329e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1800.0,
+   "cost": 3.561548628353042e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": 1200.0,
+   "cost": 3.047038264617808e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": 1200.0,
+   "cost": 3.047038264617808e-05,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -2415.0,
+   "de": 1170.0,
+   "cost": 3.0436728864370217e-05,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 32.0,
+ "compass_sigma_deg": 8.0,
+ "search_evals": 491,
+ "cost": 3.0436728864370217e-05,
+ "rms_mrad": 7.326217149985416,
+ "n_photos": 1,
+ "z_m": 3.0,
+ "photos": [
+  {
+   "file": "PF_new_bodrum7.jpg",
+   "fov_deg": 73.74,
+   "heading_deg": 312.663,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 7.326217149985416,
+   "heading_offset_deg": -32.0,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": -32.0,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 73.74
+}
+wrote /home/user/horizonator/experiments/out/compass/07_PF_new_bodrum7_soft8.json/.png

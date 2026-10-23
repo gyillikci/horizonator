@@ -1,0 +1,202 @@
+soft compass prior: sigma 3.0 deg, n_eff 20, search +-12 deg
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+photo 0: KWHC9160.JPG  fov 10.3, heading 244.345, pitch +0.00, roll +0.00, weight 1.00
+z 2.5 m, box 6000 m at (40.90622,29.13945)
+{
+ "status": "ok",
+ "reasons": [],
+ "lat": 40.90500591583201,
+ "lon": 29.128383731341675,
+ "fix_ok": true,
+ "basin_margin": 1.89419782841761,
+ "relief_mrad": 6.499198265352221,
+ "dn_m": -135.0,
+ "de_m": -930.0,
+ "sigma_n_m": 108.30908409719892,
+ "sigma_e_m": 81.43328884089813,
+ "sigma_major_m": 111.22874026653982,
+ "sigma_minor_m": 77.39771035462144,
+ "major_bearing_deg": 161.52271045886883,
+ "anisotropy": 1.4371063401864357,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": null,
+ "peak_dh_mad_m": null,
+ "n_peaks": 0,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.00032244193356044295,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2700.0,
+   "cost": 0.0002471107570792582,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2400.0,
+   "cost": 0.00019078363647391028,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2100.0,
+   "cost": 0.00015610233721605505,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1800.0,
+   "cost": 1.6208042239597143e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1500.0,
+   "cost": 1.4328042239597144e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1200.0,
+   "cost": 1.3443042239597145e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -900.0,
+   "cost": 1.3040042239597144e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -600.0,
+   "cost": 1.1352434627429731e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -300.0,
+   "cost": 8.795723174382826e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 0.0,
+   "cost": 7.445600753259193e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 300.0,
+   "cost": 5.872924974804575e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 600.0,
+   "cost": 4.41877628432295e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": 1200.0,
+   "cost": 3.6552300673923034e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": 1500.0,
+   "cost": 3.398369146726396e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": -600.0,
+   "cost": 3.2173275314863254e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": -900.0,
+   "cost": 2.425584560182456e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": -600.0,
+   "cost": 1.8198384640513667e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": -900.0,
+   "cost": 1.0906645180696238e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": -600.0,
+   "cost": 9.529181781726787e-07,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": -900.0,
+   "cost": 3.9212209423400494e-07,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": -900.0,
+   "cost": 3.545127896466903e-07,
+   "stage": "coarse"
+  },
+  {
+   "dn": -120.0,
+   "de": -960.0,
+   "cost": 2.533636074681489e-07,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -135.0,
+   "de": -930.0,
+   "cost": 2.483029585818758e-07,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 12.0,
+ "compass_sigma_deg": 3.0,
+ "search_evals": 491,
+ "cost": 2.483029585818758e-07,
+ "rms_mrad": 0.7032822457333553,
+ "n_photos": 1,
+ "z_m": 2.5,
+ "photos": [
+  {
+   "file": "KWHC9160.JPG",
+   "fov_deg": 10.286,
+   "heading_deg": 244.345,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 0.7032822457333553,
+   "heading_offset_deg": 0.2,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": 0.2,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 10.286
+}
+wrote /home/user/horizonator/experiments/out/compass/33_KWHC9160_soft3.json/.png

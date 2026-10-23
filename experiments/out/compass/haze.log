@@ -1,0 +1,77 @@
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+00_PF_new_akyaka3            far(>=15 km)  16%  res 15-20:-49 20-30:-60 | rms 40/20/15 km 13.7/13.7/13.5 mrad
+extractor pre-check: eWaSR disagrees with the seam on 36% of columns — falling back to the seam
+01_PF_new_akbuk1             far(>=15 km)  28%  res 15-20:-59 20-30:-46 30-41:-64 | rms 40/20/15 km 15.1/14.8/14.7 mrad
+02_PF_new_bodrum1            far(>=15 km)  37%  res 20-30:-35 30-41:+48 | rms 40/20/15 km 15.0/14.7/14.7 mrad
+03_PF_new_bodrum2            far(>=15 km)  78%  res 15-20:-32 30-41:-63 | rms 40/20/15 km 18.2/17.2/16.5 mrad
+04_PF_new_bodrum3            far(>=15 km)  46%  res 30-41:-48 | rms 40/20/15 km 15.4/14.1/14.1 mrad
+05_PF_new_bodrum4            far(>=15 km)  17%  res 15-20:+47 20-30:+39 | rms 40/20/15 km 13.4/13.6/13.6 mrad
+06_PF_new_bodrum6            far(>=15 km)  12%  res 15-20:+1 30-41:+5 | rms 40/20/15 km 3.9/5.2/5.2 mrad
+07_PF_new_bodrum7            far(>=15 km)   3%  res 15-20:+7 | rms 40/20/15 km 10.4/10.4/10.4 mrad
+08_PF_new_bodrum8            far(>=15 km)   9%  res 20-30:+2 | rms 40/20/15 km 3.9/4.5/4.5 mrad
+09_PF_new_bodrum9            far(>=15 km)   9%  res 20-30:-16 | rms 40/20/15 km 6.6/6.1/6.1 mrad
+10_PF_20260824_195733_clean  far(>=15 km)   6%  res 15-20:-11 20-30:+7 | rms 40/20/15 km 4.6/4.7/4.6 mrad
+extractor pre-check: eWaSR disagrees with the seam on 76% of columns — falling back to the seam
+12_PF_new_bosphorus1         far(>=15 km)   0%  res - | rms 40/20/15 km 27.5/27.5/27.5 mrad
+13_PF_new_akyaka2            far(>=15 km)  35%  res 15-20:-107 20-30:-117 | rms 40/20/15 km 28.5/28.4/28.4 mrad
+14_PF_20260823_175647        far(>=15 km)   0%  res - | rms 40/20/15 km 4.6/4.6/4.6 mrad
+15_PF_20260823_175658_wide   far(>=15 km)   0%  res - | rms 40/20/15 km 8.4/8.4/8.4 mrad
+16_PF_20260824_122139_wide   far(>=15 km)  15%  res 20-30:-44 | rms 40/20/15 km 14.8/14.4/14.3 mrad
+17_PF_20260824_122139        far(>=15 km)   0%  res - | rms 40/20/15 km 5.0/4.9/5.0 mrad
+extractor pre-check: eWaSR disagrees with the seam on 100% of columns — falling back to the seam
+18_PF_20260823_151556        far(>=15 km)   0%  res - | rms 40/20/15 km 38.1/38.1/38.1 mrad
+19_PF_20260823_151613        far(>=15 km)   0%  res - | rms 40/20/15 km 22.6/22.6/22.6 mrad
+extractor pre-check: eWaSR disagrees with the seam on 45% of columns — falling back to the seam
+20_PF_20260823_153457        far(>=15 km)  16%  res 20-30:+83 | rms 40/20/15 km 38.9/39.0/39.0 mrad
+extractor pre-check: eWaSR disagrees with the seam on 73% of columns — falling back to the seam
+21_PF_20260823_165639        far(>=15 km)   0%  res - | rms 40/20/15 km 49.2/49.2/49.2 mrad
+22_PF_20260823_175124        far(>=15 km)   0%  res - | rms 40/20/15 km 13.3/13.3/13.3 mrad
+extractor pre-check: eWaSR disagrees with the seam on 64% of columns — falling back to the seam
+23_PF_20260823_175709        far(>=15 km)   0%  res - | rms 40/20/15 km 11.0/11.0/11.0 mrad
+24_PF_20260824_195733        far(>=15 km)   4%  res 15-20:+234 | rms 40/20/15 km 15.2/15.2/15.2 mrad
+extractor pre-check: eWaSR disagrees with the seam on 42% of columns — falling back to the seam
+25_PF_new_milas1             far(>=15 km)  48%  res 15-20:-9 20-30:-8 30-41:-5 | rms 40/20/15 km 8.8/8.6/8.5 mrad
+31_EWAC7374                  far(>=15 km) 100%  res 15-20:+1 20-30:-1 30-41:-3 | rms 40/20/15 km 1.8/2.1/2.1 mrad
+extractor pre-check: eWaSR disagrees with the seam on 41% of columns — falling back to the seam
+32_HATY3309                  far(>=15 km)  24%  res 15-20:+1 20-30:-1 30-41:+17 | rms 40/20/15 km 9.7/9.7/9.7 mrad
+33_KWHC9160                  far(>=15 km)   0%  res - | rms 40/20/15 km 1.1/1.1/1.1 mrad
+34_LHCG7767                  far(>=15 km)   0%  res - | rms 40/20/15 km 2.9/2.9/2.9 mrad
+35_MYQR7719                  far(>=15 km)   0%  res - | rms 40/20/15 km 3.4/3.4/3.4 mrad
+extractor pre-check: eWaSR disagrees with the seam on 26% of columns — falling back to the seam
+36_PQBC6867                  far(>=15 km)  27%  res 30-41:-0 | rms 40/20/15 km 1.8/3.0/3.0 mrad
+37_QNJZ1625                  far(>=15 km)  49%  res 30-41:-1 | rms 40/20/15 km 4.4/4.0/4.0 mrad
+extractor pre-check: eWaSR disagrees with the seam on 26% of columns — falling back to the seam
+38_XKYU3498                  far(>=15 km)  34%  res 20-30:-19 30-41:-5 | rms 40/20/15 km 5.3/2.9/2.9 mrad
+39_EURK8793                  far(>=15 km)  34%  res 20-30:-68 30-41:-84 | rms 40/20/15 km 16.4/15.7/15.5 mrad
+extractor pre-check: eWaSR disagrees with the seam on 84% of columns — falling back to the seam
+40_FYMC7458                  far(>=15 km)  46%  res 15-20:-3 20-30:-27 30-41:-31 | rms 40/20/15 km 13.9/13.9/14.8 mrad
+extractor pre-check: eWaSR disagrees with the seam on 38% of columns — falling back to the seam
+41_GAQB1096                  far(>=15 km)  73%  res 20-30:-30 30-41:-26 | rms 40/20/15 km 14.4/13.2/13.2 mrad
+extractor pre-check: eWaSR disagrees with the seam on 37% of columns — falling back to the seam
+42_MJFQ1511                  far(>=15 km)   8%  res 20-30:-60 30-41:-59 | rms 40/20/15 km 10.1/9.7/9.7 mrad
+extractor pre-check: eWaSR disagrees with the seam on 32% of columns — falling back to the seam
+43_NCVO7252                  far(>=15 km)  63%  res 15-20:-118 20-30:-108 30-41:-74 | rms 40/20/15 km 24.8/24.4/23.6 mrad
+extractor pre-check: eWaSR disagrees with the seam on 34% of columns — falling back to the seam
+44_QMLO5628                  far(>=15 km)  94%  res 15-20:-134 20-30:-136 30-41:-146 | rms 40/20/15 km 27.8/26.6/25.7 mrad
+extractor pre-check: eWaSR disagrees with the seam on 30% of columns — falling back to the seam
+45_UYKQ7227                  far(>=15 km)  78%  res 15-20:-76 20-30:-75 30-41:-66 | rms 40/20/15 km 20.1/19.5/18.3 mrad
+extractor pre-check: eWaSR disagrees with the seam on 67% of columns — falling back to the seam
+46_UYXQ4404                  far(>=15 km)  47%  res 15-20:-41 20-30:-83 30-41:-71 | rms 40/20/15 km 20.4/18.6/18.6 mrad
+extractor pre-check: eWaSR disagrees with the seam on 78% of columns — falling back to the seam
+47_VSFK5163                  far(>=15 km)  56%  res 15-20:-68 20-30:-93 30-41:-88 | rms 40/20/15 km 22.0/20.4/20.4 mrad
+extractor pre-check: eWaSR disagrees with the seam on 45% of columns — falling back to the seam
+48_XRQV0283                  far(>=15 km)  72%  res 20-30:+34 30-41:+5 | rms 40/20/15 km 14.5/15.2/15.2 mrad
+extractor pre-check: eWaSR disagrees with the seam on 34% of columns — falling back to the seam
+49_YBPL9738                  far(>=15 km)  84%  res 15-20:-19 20-30:-1 30-41:-25 | rms 40/20/15 km 9.9/7.9/7.0 mrad
+
+frames with >5% of columns crested beyond 15 km: 30 of 44
+  crest  0- 5 km: 35 frames, median of per-frame median residual (photo - DEM)  +0.3 mrad, negative on 17
+  crest  5-10 km: 36 frames, median of per-frame median residual (photo - DEM)  -2.2 mrad, negative on 23
+  crest 10-15 km: 16 frames, median of per-frame median residual (photo - DEM)  -8.9 mrad, negative on 11
+  crest 15-20 km: 14 frames, median of per-frame median residual (photo - DEM) -25.2 mrad, negative on 11
+  crest 20-30 km: 23 frames, median of per-frame median residual (photo - DEM) -27.2 mrad, negative on 18
+  crest 30-41 km: 18 frames, median of per-frame median residual (photo - DEM) -37.0 mrad, negative on 14
+  cutting the ray-cast at 20 km changes the truth rms by a median -0.30 mrad on those frames (better on 20 of 30)

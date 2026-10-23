@@ -1,0 +1,185 @@
+soft compass prior: sigma 3.0 deg, n_eff 20, search +-12 deg
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+extractor pre-check: eWaSR disagrees with the seam on 78% of columns — falling back to the seam
+photo 0: VSFK5163.JPG  fov 104.2, heading 14.366, pitch +0.00, roll +0.00, weight 1.00
+z 18.3 m, box 6000 m at (37.47685,27.41421)
+peak witness: 11 crests, median height residual +16 m (spread 88 m)
+INCONCLUSIVE: ambiguous landscape: basin margin 0.01 < 0.15
+INCONCLUSIVE: residual 22.0 mrad > 12.0: the DEM cannot explain this observation
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.01 < 0.15",
+  "residual 22.0 mrad > 12.0: the DEM cannot explain this observation"
+ ],
+ "lat": 37.48359491204439,
+ "lon": 27.393982043846655,
+ "fix_ok": false,
+ "basin_margin": 0.00868860272900192,
+ "relief_mrad": 19.630738001090517,
+ "dn_m": 750.0,
+ "de_m": -1785.0,
+ "sigma_n_m": 1838.4258476003965,
+ "sigma_e_m": 1158.5352899350241,
+ "sigma_major_m": 1840.7816898010713,
+ "sigma_minor_m": 1154.78845926134,
+ "major_bearing_deg": 176.2762630820432,
+ "anisotropy": 1.5940423330681073,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": 16.160406968691596,
+ "peak_dh_mad_m": 88.03856650899883,
+ "n_peaks": 11,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.0005589136091145109,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -3000.0,
+   "cost": 0.00048405096491737867,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": -3000.0,
+   "cost": 0.00048194042516890083,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 2400.0,
+   "cost": 0.00045404921995272096,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 2700.0,
+   "cost": 0.0004099008314691022,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 3000.0,
+   "cost": 0.0003968488888400817,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": 2700.0,
+   "cost": 0.0003630004580082913,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": 3000.0,
+   "cost": 0.0003435855375297592,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 0.0,
+   "cost": 0.0003292269213797061,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 300.0,
+   "cost": 0.00029862164801126384,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 3000.0,
+   "cost": 0.00029693545381074394,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": -300.0,
+   "cost": 0.00028919745758072905,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": 0.0,
+   "cost": 0.00026210355998613127,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": 300.0,
+   "cost": 0.0002479806044777931,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": 300.0,
+   "cost": 0.0002471228950394235,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": 600.0,
+   "cost": 0.00024709488158111746,
+   "stage": "coarse"
+  },
+  {
+   "dn": 600.0,
+   "de": -2100.0,
+   "cost": 0.00024355072682029688,
+   "stage": "coarse"
+  },
+  {
+   "dn": 900.0,
+   "de": -1800.0,
+   "cost": 0.0002433096482342871,
+   "stage": "coarse"
+  },
+  {
+   "dn": 780.0,
+   "de": -1800.0,
+   "cost": 0.00024274869173892578,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": 750.0,
+   "de": -1785.0,
+   "cost": 0.0002425875007477223,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 12.0,
+ "compass_sigma_deg": 3.0,
+ "search_evals": 491,
+ "cost": 0.0002425875007477223,
+ "rms_mrad": 22.022147976422385,
+ "n_photos": 1,
+ "z_m": 18.3,
+ "photos": [
+  {
+   "file": "VSFK5163.JPG",
+   "fov_deg": 104.25,
+   "heading_deg": 14.366,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 22.022147976422385,
+   "heading_offset_deg": 2.0,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": 2.0,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 104.25
+}
+wrote /home/user/horizonator/experiments/out/compass/47_VSFK5163_soft3.json/.png

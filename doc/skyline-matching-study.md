@@ -4754,6 +4754,92 @@ sequential estimator.
 > Kept as front ends `ewasr_w` / `fused_w` with the sigma stored per
 > frame; not made the default.
 
+### E5bz - soft compass prior and invisible far terrain (2026-10-23)
+
+**Question.** (a) The hard +-6 deg heading window lets a compass error
+beyond it leak into position (Bodrum 9: +12.8 deg at the truth, 664 m
+false accept; E5by video). Does a soft prior do better? (b) Does the
+DEM skyline contain far terrain the photo does not show?
+
+**Soft prior.** `skyfix --compass-sigma S` widens the heading search
+to +-4 S and adds `0.5 (psi/S)^2 * sigma_m^2 / n_eff` to the mean Huber
+cost (sigma_m = 3 mrad, n_eff = `--compass-neff`, default 20, the E5br
+measurement model). The term enters both the exact pass and, doubled,
+the FFT preselect. The reported rms excludes it. `e5bz_compass.py`
+solves the 44 E5bm frames with S = 3, 5, 8 deg; the other flags are
+unchanged. The hard arm is the stored E5bq huber run.
+
+| arm | median | <300 m | <500 m | accepted | good <300 | wrong >=500 |
+|---|---|---|---|---|---|---|
+| hard +-6 | 2831 m | 3 | 7 | 13 | 3 | 6 |
+| soft 3 | 2176 m | 3 | 6 | 14 | 3 | 8 |
+| soft 5 | 2172 m | 3 | 5 | 12 | 3 | 7 |
+| soft 8 | 2283 m | 3 | 7 | 13 | 3 | 7 |
+| soft 3/5 + gate \|psi\| <= 2 sigma | | | | 9 | 3 | 4 |
+| hard +-6 + gate psi not on bound | | | | 10 | 3 | 5 |
+
+* The prior removes the two compass-caused false accepts. Bodrum 9
+  becomes inconclusive (soft 5: margin 0.01, minimum on the box edge,
+  peak heights -292 m). Bodrum 4 is the other.
+* The wider search opens new ones. 23_175124 is accepted at psi =
+  -12.0 (soft 3: on the +-12 search bound, a clamp again) and -18.8
+  (soft 5). XKYU3498 is accepted at +19.6.
+* The prior also pulls well-fitting frames toward the compass:
+  KWHC9160 (rms 1.1 mrad at truth, psi* +2.6) goes from 415 m to
+  899 m. Heading and cross-track position trade off, so any heading
+  prior that is wrong, hard or soft, biases the fix. n_eff = 20 at
+  3 mrad under-weights a 1 mrad photo nine-fold. The prior's weight
+  should scale with the photo's own residual.
+* Integrity improves only with the prior-consistency gate (reject
+  \|psi\| > 2 sigma): 9 accepted, 3 good, 4 wrong. The hard window's
+  analogue (reject psi on the bound) gives 10/3/5. Both K values were
+  picked on these same frames, so this is post-hoc.
+* psi* (the heading that best fits the DEM at the TRUE position,
+  +-30 deg) is meaningful on only 13 of the 44 frames, where the DEM at
+  the truth explains the photo (rms < 8 mrad). On the rest, the photo
+  does not match the DEM even at the truth. On the 13, the compass is
+  within 4.4 deg on 11. Bodrum 9 (+12.8) and XKYU3498 (+15.2) are the
+  exceptions. The hard window is not what fails most frames.
+
+**Far terrain (`e5bz_compass.py haze`, at the truth, 44 frames).**
+Median per-frame residual, photo minus DEM, by DEM crest range:
+
+| crest range | 0-5 | 5-10 | 10-15 | 15-20 | 20-30 | 30-40 km |
+|---|---|---|---|---|---|---|
+| frames | 35 | 36 | 16 | 14 | 23 | 18 |
+| median | +0.3 | -2.2 | -8.9 | -25 | -27 | -37 mrad |
+
+The photo skyline sits lower and lower as the DEM crest recedes.
+Terrain beyond ~10-15 km is in the DEM but missing from the photo:
+haze, or a far ridge too faint for the segmenter, which then calls it
+sky. 30 of 44 frames have more than 5% of their columns crested beyond
+15 km. A fixed cut is no fix. `--dmax 20000` improves the truth rms by
+only a median 0.3 mrad and hurts the clear days. 31_EWAC7374 is crested
+100% beyond 15 km and fits to 1.8 mrad at 40 km; 36_PQBC6867 goes from
+1.8 to 3.0 mrad when cut. Visibility is a property of the day.
+
+**Bodrum 9 specifically (`e5bz_bodrum9.py`, `out/compass/bodrum9_range.png`).**
+* 77% of the columns are the Bodrum peninsula at 3-6 km (+2.6 mrad).
+* 11% (azimuth 210-218 deg) are Kos at 22-23 km. The DEM puts it at
+  +18.5 mrad; the photo shows sea and haze at -0.8 mrad, so the
+  residual there is -20 mrad.
+* Cutting the ray-cast at 15 km takes the truth rms from 6.6 to
+  6.1 mrad and leaves psi unchanged. Kos is real but not what made the
+  664 m fix.
+* At the truth, the elevation offset is also on its bound: unbounded
+  it would be -16.5 mrad, against a window of +-10.1. The residual
+  tilts by about 0.8 deg of roll across the frame. Bodrum 9 has a
+  pitch/roll error as well as a compass error, so two nuisances clamp
+  at once.
+* At azimuth >214 deg the extractor follows the shoreline below the
+  sea horizon (to -16 mrad), which no skyline can do.
+
+**Next.** Visibility as a per-frame nuisance V in {10, 15, 20, 30,
+40 km} (the photo skyline is the DEM skyline truncated at V). It would
+be estimated jointly like beta, and needs an integrity check of its own
+because it is one more freedom. Scale the compass prior by the photo's
+own residual. Zero-weight columns below the sea horizon.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the

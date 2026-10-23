@@ -1,0 +1,221 @@
+soft compass prior: sigma 5.0 deg, n_eff 20, search +-20 deg
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:207: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.11/dist-packages/torchvision/models/_utils.py:222: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+photo 0: PF_20260824_195733_clean.jpg  fov 73.7, heading 196.515, pitch +0.00, roll +0.00, weight 1.00
+z 3.0 m, box 6000 m at (37.05190,28.32292)
+peak witness: 6 crests, median height residual -20 m (spread 14 m)
+{
+ "status": "ok",
+ "reasons": [],
+ "lat": 37.04960672990491,
+ "lon": 28.31937044680857,
+ "fix_ok": true,
+ "basin_margin": 1.7066188043693267,
+ "relief_mrad": 15.930863440390926,
+ "dn_m": -255.0,
+ "de_m": -315.0,
+ "sigma_n_m": 246.28148037058455,
+ "sigma_e_m": 338.0224190872109,
+ "sigma_major_m": 384.6926494394347,
+ "sigma_minor_m": 164.08927096664436,
+ "major_bearing_deg": 121.85923886661824,
+ "anisotropy": 2.3444107416238933,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -19.769137333679723,
+ "peak_dh_mad_m": 14.364643780420788,
+ "n_peaks": 6,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.00038079204999940427,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 600.0,
+   "cost": 0.0003675976927266751,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 900.0,
+   "cost": 0.00030620627799134907,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1200.0,
+   "cost": 0.00026386359130732085,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1500.0,
+   "cost": 0.00011796730112869112,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1800.0,
+   "cost": 0.00010299581511874484,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 2100.0,
+   "cost": 9.061557366081153e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 2400.0,
+   "cost": 8.604076471763214e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 2700.0,
+   "cost": 7.523598816479665e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 3000.0,
+   "cost": 7.241751039975814e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": 1800.0,
+   "cost": 6.934269047361813e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": 2400.0,
+   "cost": 6.377316181478708e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": 2100.0,
+   "cost": 5.980432546865773e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": 1500.0,
+   "cost": 5.631935653541292e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": 1800.0,
+   "cost": 3.9947412941314595e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": 2100.0,
+   "cost": 3.929511146779047e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 1500.0,
+   "cost": 3.492357618088631e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 1800.0,
+   "cost": 2.901018340677697e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": 1500.0,
+   "cost": 2.1770068013069616e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 1500.0,
+   "cost": 1.77211442344021e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": 1200.0,
+   "cost": 1.7621044538074735e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": -300.0,
+   "cost": 1.633146105551071e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": 0.0,
+   "cost": 1.2973386740263897e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": -600.0,
+   "cost": 8.972981050252942e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": -300.0,
+   "cost": 5.16959941128806e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -240.0,
+   "de": -300.0,
+   "cost": 5.004552357307467e-06,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -255.0,
+   "de": -315.0,
+   "cost": 4.931285748964e-06,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 20.0,
+ "compass_sigma_deg": 5.0,
+ "search_evals": 491,
+ "cost": 4.931285748964e-06,
+ "rms_mrad": 3.0283083558197963,
+ "n_photos": 1,
+ "z_m": 3.0,
+ "photos": [
+  {
+   "file": "PF_20260824_195733_clean.jpg",
+   "fov_deg": 73.7,
+   "heading_deg": 196.515,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 3.0283083558197963,
+   "heading_offset_deg": -6.2,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": -6.2,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 73.7
+}
+wrote /home/user/horizonator/experiments/out/compass/10_PF_20260824_195733_clean_soft5.json/.png
