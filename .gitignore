@@ -34,3 +34,4 @@ experiments/out/segformer/*_seg*.npz
 experiments/out/segformer/*_seg*.json
 experiments/out/segformer/*_seg*.log
 experiments/out/segformer/*.log
+experiments/out/segformer/report_*.json
