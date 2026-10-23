@@ -56,7 +56,7 @@ from assets import celnav  # noqa: E402
 
 OUT = os.path.join(HERE, 'out', 'extract')
 FRAMES = os.path.join(HERE, 'data', 'campaign_frames.json')
-METHODS = ('seam', 'ewasr', 'sam_t', 'fused_dp')
+METHODS = ('seam', 'ewasr', 'sam_t', 'fused_dp', 'ewasr_w', 'fused_w')
 BAD, GOOD = 500.0, 300.0
 
 
@@ -65,7 +65,8 @@ def frames():
 
 
 # ------------------------------------------------------------ fused DP
-def dp_boundary(P, edge, alpha=0.4, jump=60.0, lam_edge=6.0, top=0.9):
+def dp_boundary(P, edge, alpha=0.4, jump=60.0, lam_edge=6.0, top=0.9,
+                return_cost=False):
     """Globally optimal sky boundary through a soft sky map P (H x W,
     probability of sky). Returns rows (W,), confidence (W,)."""
     H, W = P.shape
@@ -115,7 +116,56 @@ def dp_boundary(P, edge, alpha=0.4, jump=60.0, lam_edge=6.0, top=0.9):
         dn = P[y:min(H, y + 12), x]
         if up.size >= 4 and dn.size >= 4:
             conf[x] = np.clip((up.mean() - dn.mean() - 0.3) / 0.5, 0, 1)
+    if return_cost:
+        return rows.astype(float), conf, C
     return rows.astype(float), conf
+
+
+def column_sigma(C, rows, P, r_e, r_s, sky_any, nat=2.0, s0=3.0):
+    """Per-column 1-sigma of the boundary row, in pixels, from three
+    independent signs of doubt, and the matching weight.
+
+      cost   the column's negative log-likelihood C(r) under the fused
+             sky belief: the run of rows within `nat` nats of its best
+             value around the chosen row. For a Gaussian likelihood that
+             run is +-2 sigma, so sigma = run / 4. A boundary the image
+             pins sharply has a narrow run; mush has a wide one.
+      agree  where the two segmenters disagree (after their constant
+             offset), and how far the chosen row is from their mean.
+      contrast  sky above against not-sky below, 12 px either side:
+             1.5 px at full contrast, growing as it fades (haze, cloud
+             fringe, a ridge the same tone as the sky).
+
+    weight = 1 / (1 + (sigma / s0)^2): nothing is dropped outright
+    except columns with no sky at all; doubtful ones just count less."""
+    Hs, W = C.shape
+    H = P.shape[0]
+    ok_s = np.isfinite(r_s)
+    o_s = np.median((r_s - r_e)[ok_s]) if ok_s.any() else 0.0
+    r_s2 = np.where(ok_s, r_s - o_s, r_e)
+    sig = np.empty(W)
+    for x in range(W):
+        r = int(min(max(rows[x], 0), Hs - 1))
+        lo, hi = max(0, r - 60), min(Hs, r + 61)
+        seg = C[lo:hi, x]
+        k = r - lo
+        cmin = seg[max(0, k - 3):k + 4].min()
+        okk = seg <= cmin + nat
+        L = R = k
+        while L > 0 and okk[L - 1]:
+            L -= 1
+        while R < seg.size - 1 and okk[R + 1]:
+            R += 1
+        s_cost = (R - L + 1) / 4.0
+        mid = 0.5 * (r_e[x] + r_s2[x])
+        s_agree = math.hypot(r_e[x] - r_s2[x], rows[x] - mid)
+        up = P[max(0, r - 12):r, x]
+        dn = P[r:min(H, r + 12), x]
+        con = (up.mean() - dn.mean()) if up.size >= 4 and dn.size >= 4 else 0
+        s_con = 1.5 / max(con, 0.05)
+        sig[x] = math.sqrt(s_cost ** 2 + s_agree ** 2 + s_con ** 2)
+    w = np.where(sky_any, 1.0 / (1.0 + (sig / s0) ** 2), 0.0)
+    return sig, w
 
 
 def extract_all(only=None):
@@ -170,9 +220,21 @@ def extract_all(only=None):
         edge = gy / (np.percentile(gy, 99.5) + 1e-9)
         edge = np.clip(edge, 0, 1)
         res['fused_dp'] = dp_boundary(P, edge)
+        # E5bw: the same boundaries, now with calibrated per-column
+        # confidence instead of uniform (eWaSR) or clipped (fused) weights
+        r_f, _, Cf = dp_boundary(P, edge, return_cost=True)
+        r_e = res['ewasr'][0]
+        r_s = np.where(np.asarray(cs) > 0, rs, np.nan)
+        sky_any = sky.any(0)
+        sig_e, w_e = column_sigma(Cf, r_e, P, r_e, r_s, sky_any & (res['ewasr'][1] > 0))
+        sig_f, w_f = column_sigma(Cf, r_f, P, r_e, r_s, sky_any)
+        res['ewasr_w'] = (r_e, w_e)
+        res['fused_w'] = (r_f, w_f)
+        extra = dict(ewasr_w=sig_e, fused_w=sig_f)
         for k, (r, c) in res.items():
             np.savez(os.path.join(OUT, '%s_%s.npz' % (tag, k)),
-                     rows=r, conf=c, H=H, W=W)
+                     rows=r, conf=c, H=H, W=W,
+                     sigma=extra.get(k, np.full(W, np.nan)))
         print('%-36s %s' % (tag, '  '.join(
             '%s %.0f%%' % (k, 100 * np.mean(np.asarray(c) > 0))
             for k, (r, c) in res.items())), flush=True)
