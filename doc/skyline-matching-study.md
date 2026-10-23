@@ -4981,6 +4981,65 @@ DEM explains the photo (rms < 8 mrad, 1592 samples ~0.5 deg apart):
   ridges should be missing, which is the per-frame visibility nuisance
   E5bz/E5ca call for, measured instead of searched.
 
+### E5cc - visibility from the photo's contrast (Koschmieder), 4 frames (2026-10-23)
+
+**Method** (`e5cc_visibility.py`):
+* Per column, the Weber contrast c = (L_sky - L_terrain)/L_sky, in
+  linear luminance, across the photo's own boundary.
+* Range: the DEM crest range at the prior position, on columns where
+  the photo matches the DEM within 3 mrad (demonstrably visible).
+* Fit ln c = ln C0 - 3.912 r / V (Theil-Sen over 1 km bins), then
+  r_vis = V ln(C0/eps)/3.912 with eps = 0.05, and solve with
+  --dmax r_vis.
+* No range leverage (< 4 km spread) or no significant decay: no cut.
+
+**Frames:** Bodrum 9, XKYU3498 (hazy) and EWAC7374, PQBC6867 (clear
+days that the fixed cut hurt).
+
+**Result.** V is not identifiable on any of the four, so r_vis = 40 km
+on all, and the solves are the stored ones unchanged.
+* Bodrum 9: the matched terrain spans 3-7 km only. Its contrast, 0.71
+  -> 0.58, would put V near 58 km, so Kos at 21 km should have shown.
+  Kos lies toward the setting sun, where forward-scattered airlight is
+  far stronger than Koschmieder's uniform sky assumes.
+* EWAC7374: everything matched sits at 19-22 km. No decay is
+  measurable, and the 1.3 mrad fit says those ridges are plainly
+  visible.
+* PQBC6867 and XKYU3498: no significant decay (CI of the slope crosses
+  0).
+
+**XKYU3498 inspected** (`e5cc_xkyu_inspect.py`; contrast-stretched
+crops `out/visibility/xkyu_*_stretch.png`). The "missing" ridges are
+IN the photo:
+
+| columns | DEM crest | contrast at the DEM ridge | photo boundary vs DEM |
+|---|---|---|---|
+| 850-1000 | 6 km | 0.555 | -3 px (matched) |
+| 1330-1500 | 10 km | 0.162 | 72 px off: the seam follows clouds, eWaSR runs below the hills |
+| 50-400 | 26 km | 0.085 | 22 px below: both trace the nearer ridge |
+
+A stretched crop shows the 26 km range clearly, and the 10 km hills
+are visible to the eye. Haze did not hide them; the segmenters drop
+them. eWaSR misses c = 0.16 and 0.085, and the seam detector prefers
+the stronger cloud and near-ridge edges. Their working threshold is
+~0.2, against ~0.05 for the camera and the eye. A Koschmieder fit
+through these three points gives V ~ 42 km and r_vis(eps = 0.05)
+~ 32 km. At the segmenter's threshold (eps ~ 0.2) it gives ~17 km,
+which is why the 15 km cut helped XKYU once the heading was right
+(E5ca: 700 -> 287 m).
+
+**So.** The missing far terrain is mostly a segmentation threshold,
+not visibility. Two consistent fixes:
+* (A) A boundary finder sensitive to faint ridges. The sky is smooth
+  in row and colour, so the first sustained, spatially coherent
+  departure from a fitted sky model is terrain, however faint. This
+  RECOVERS the far ridges, which are geometrically the most valuable.
+* (B) Keep the segmenter, and cut the DEM where the predicted contrast
+  falls to the segmenter's own measured threshold, not to eps = 0.05.
+  This needs V from more than the matched columns.
+
+(A) is the better path: it adds information instead of discarding it.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
