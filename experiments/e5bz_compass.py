@@ -156,6 +156,7 @@ def haze(a):
                   fits[40]['rms'], fits[20]['rms'], fits[15]['rms']),
               flush=True)
     json.dump(out, open(os.path.join(OUT, 'haze.json'), 'w'), indent=1)
+    haze_figure(out)
     v = [x for x in out.values() if x['far_frac'] > 0.05]
     print('\nframes with >5%% of columns crested beyond 15 km: %d of %d'
           % (len(v), len(out)))
@@ -174,6 +175,36 @@ def haze(a):
         print('  cutting the ray-cast at 20 km changes the truth rms by '
               'a median %+.2f mrad on those frames (better on %d of %d)'
               % (-np.median(d20), sum(d > 0 for d in d20), len(d20)))
+
+
+def haze_figure(out=None):
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+    if out is None:
+        out = json.load(open(os.path.join(OUT, 'haze.json')))
+    fig, ax = plt.subplots(figsize=(8, 4.2))
+    for k, (lo, hi) in enumerate(BANDS):
+        rs = [b['res'] for x in out.values() for b in x['bands']
+              if b['band'] == [lo, hi] and b['res'] is not None
+              and b['frac'] > 0.02]
+        xs = k + np.linspace(-0.25, 0.25, len(rs)) if len(rs) > 1 \
+            else [k] * len(rs)
+        ax.scatter(xs, np.clip(rs, -80, 40), s=14, color='#3a6ea5',
+                   alpha=.7)
+        if rs:
+            ax.plot([k - .35, k + .35], [np.median(rs)] * 2, color='#c0392b',
+                    lw=2.5)
+    ax.axhline(0, color='0.4', lw=.8)
+    ax.set_xticks(range(len(BANDS)))
+    ax.set_xticklabels(['%d-%d' % (lo, min(hi, 40)) for lo, hi in BANDS])
+    ax.set_xlabel('DEM crest range at the true position, km')
+    ax.set_ylabel('photo - DEM, mrad (clipped to [-80, 40])')
+    ax.set_title('Far terrain sits in the DEM skyline, not in the photo '
+                 '(44 frames, red = median)', fontsize=10)
+    ax.grid(alpha=.3)
+    fig.tight_layout()
+    fig.savefig(os.path.join(OUT, 'haze.png'), dpi=110)
 
 
 def run(a):
