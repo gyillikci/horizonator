@@ -17,3 +17,7 @@ experiments/__pycache__/
 experiments/*.pt
 experiments/*.ts
 !experiments/out/e4x/*.png
+
+# per-solve diagnostics of the front-end study (E5bv); the report and
+# boundaries are tracked
+experiments/out/extract/solve_*.log
