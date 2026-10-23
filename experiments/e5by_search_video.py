@@ -43,19 +43,34 @@ import skyline as S  # noqa: E402
 import extract  # noqa: E402
 from assets import celnav  # noqa: E402
 
-CFG = dict(photo='peakfinder/PF_new_bosphorus1.jpg', lat=41.12590,
-           lon=29.07076, z=7.0, heading=47.10, fov=73.7, roll=1.75,
-           pitch=1.45, window=12.0, box=5000.0,
-           boundary=os.path.join(HERE, 'data', 'bosphorus1_hand_skyline.npy'),
-           dem='~/.horizonator/DEMs_COP30', name='bosphorus')
+CFGS = {
+    # E5bi's 54 m configuration: hand skyline, attitude given, +-12 deg
+    'bosphorus': dict(
+        photo='peakfinder/PF_new_bosphorus1.jpg', lat=41.12590,
+        lon=29.07076, z=7.0, heading=47.10, fov=73.7, roll=1.75,
+        pitch=1.45, window=12.0, box=5000.0, crest_dh=0.0,
+        boundary=os.path.join(HERE, 'data', 'bosphorus1_hand_skyline.npy'),
+        extractor='seam', dem='~/.horizonator/DEMs_COP30', name='bosphorus',
+        label='Bosphorus · hand skyline · roll 1.75°'),
+    # E5bm's uniform configuration: eWaSR, prior attitude, +-6 deg -
+    # the frame whose phone compass was ~13 deg out (E5bf)
+    'bodrum9': dict(
+        photo='peakfinder/PF_new_bodrum9.jpg', lat=37.01992, lon=27.44426,
+        z=9.0, heading=167.093, fov=73.7, roll=0.0, pitch=0.0, window=6.0,
+        box=6000.0, crest_dh=9.0, boundary=None, extractor='ewasr',
+        dem='~/.horizonator/DEMs_COP30', name='bodrum9',
+        label='Bodrum 9 · eWaSR skyline · prior attitude'),
+}
+WIDE = 30.0          # the heading panel shows the cost far beyond the window
 OUT = os.path.join(HERE, 'out', 'search_video')
 BG, PANEL, GRID, TXT, MUTED = '#0d1117', '#151b23', '#2a3440', '#d9dee4', '#8b96a3'
 
 
 def run_search(c):
     """skyfix's search, every evaluation recorded."""
-    F.BOUNDARY_ROWS = np.load(c['boundary'])
+    F.BOUNDARY_ROWS = np.load(c['boundary']) if c['boundary'] else None
     F.BOUNDARY_CONF = None
+    F.EXTRACTOR = c['extractor']
     img = extract.load_image(celnav(c['photo']))
     el_obs, w, diag = F.observation(img, c['fov'], c['heading'], c['roll'],
                                     c['pitch'])
@@ -66,12 +81,15 @@ def run_search(c):
     mlat, mlon = S.meters_per_degree(c['lat'])
     cm = S.CMarcher(os.path.expanduser(c['dem']), (c['lat'] - .6, c['lat'] + .6),
                     (c['lon'] - .8, c['lon'] + .8), d_min=1000.0)
-    need = np.abs(((F.AZ - c['heading'] + 180) % 360) - 180) <= c['fov'] / 2 + c['window'] + 2
+    need = np.abs(((F.AZ - c['heading'] + 180) % 360) - 180) <= c['fov'] / 2 + WIDE + 2
     evals = []
 
     def C(dn, de, stage):
-        el, _ = cm.skyline(c['lat'] + dn / mlat, c['lon'] + de / mlon, c['z'],
+        el, r = cm.skyline(c['lat'] + dn / mlat, c['lon'] + de / mlon, c['z'],
                            F.AZ)
+        if c['crest_dh']:
+            el = el + np.where(np.isfinite(r) & (r > 0),
+                               c['crest_dh'] / np.maximum(r, 1000.0), 0.0)
         cost, s, b = F.fast_photo_cost(el_obs, w, el, shifts, betas)
         evals.append(dict(dn=float(dn), de=float(de), cost=float(cost),
                           shift=int(s), beta=float(b), stage=stage,
@@ -91,7 +109,17 @@ def run_search(c):
                 if cst < best[0]:
                     best = (cst, dn0 + di * step, de0 + dj * step)
         _, dn0, de0 = best
-    return img, diag, evals, need, (dn0, de0), mlat, mlon
+    # the heading the photo really wants: the best offset at the TRUE
+    # position over the wide range - where the compass should have been
+    el_t, r_t = cm.skyline(c['lat'], c['lon'], c['z'], F.AZ)
+    if c['crest_dh']:
+        el_t = el_t + np.where(np.isfinite(r_t) & (r_t > 0),
+                               c['crest_dh'] / np.maximum(r_t, 1000.0), 0.0)
+    lags = np.arange(-int(WIDE / 0.1), int(WIDE / 0.1) + 1, 2)
+    ct = F.photo_cost_curve(el_obs, w, el_t, lags, betas)
+    ctx = dict(el_obs=el_obs, w=w, betas=betas, lags=lags,
+               psi_truth=float(lags[int(np.argmin(ct))] * 0.1))
+    return img, diag, evals, need, (dn0, de0), mlat, mlon, ctx
 
 
 def hillshade(c, mlat, mlon, half=6500.0, step=30.0):
@@ -122,12 +150,26 @@ def project(diag, el_syn_need, AZn, shift, beta, c, H, W):
     return u + (W - 1) / 2, (H - 1) / 2 - v
 
 
-def main():
-    c = CFG
+def main(name='bosphorus'):
+    c = CFGS[name]
     os.makedirs(OUT, exist_ok=True)
     fdir = os.path.join(OUT, 'frames_' + c['name'])
     os.makedirs(fdir, exist_ok=True)
-    img, diag, ev, need, fix, mlat, mlon = run_search(c)
+    img, diag, ev, need, fix, mlat, mlon, ctx = run_search(c)
+    print('best heading offset at the true position: %+.1f deg (window '
+          '+-%g)' % (ctx['psi_truth'], c['window']), flush=True)
+    curves = {}
+
+    def heading_curve(i):
+        """cost against heading offset at evaluation i, beta minimised,
+        far beyond the window the solver was allowed"""
+        if i not in curves:
+            full = np.zeros(F.AZ.size)
+            full[need] = np.nan_to_num(ev[i]['el'])
+            curves[i] = F.photo_cost_curve(ctx['el_obs'], ctx['w'], full,
+                                           ctx['lags'], ctx['betas'])
+        return curves[i]
+    clamp = lambda e: abs(e['shift'] * 0.1) >= c['window'] - 0.15
     print('evaluations: %d, fix dn %+.1f de %+.1f m (%.0f m)'
           % (len(ev), fix[0], fix[1], math.hypot(*fix)), flush=True)
     rgb, ext = hillshade(c, mlat, mlon)
@@ -159,9 +201,10 @@ def main():
         best = ev[ib]
         stage = cur['stage']
         fig = plt.figure(figsize=(16, 9), dpi=100, facecolor=BG)
-        gs = fig.add_gridspec(2, 2, left=0.045, right=0.985, top=0.92,
-                              bottom=0.07, wspace=0.08, hspace=0.25,
-                              width_ratios=[1.0, 1.05], height_ratios=[1.25, 0.8])
+        gs = fig.add_gridspec(3, 2, left=0.045, right=0.985, top=0.92,
+                              bottom=0.07, wspace=0.08, hspace=0.42,
+                              width_ratios=[1.0, 1.05],
+                              height_ratios=[1.0, 0.85, 0.75])
         fig.text(0.03, 0.955, 'SKYLINE FIX · SEARCHING THE TOPOGRAPHY',
                  color=TXT, fontsize=15, weight='bold', family='monospace')
         lbl = {'intro': 'photo and search box',
@@ -185,6 +228,12 @@ def main():
                                        ec='none', zorder=3,
                                        alpha=0.82 if (stage == 'coarse' and mode != 'final')
                                        or e['stage'] != 'coarse' else 0.35))
+            # where the heading the solver chose sits ON the window edge
+            cl = [e for e in ev[:k] if clamp(e)]
+            if cl:
+                ax.scatter([e['de'] for e in cl], [e['dn'] for e in cl], s=7,
+                           color='#ff5a4f', zorder=4,
+                           label='heading clamped at ±%g°' % c['window'])
             # the current candidate's camera view cone
             hd = math.radians(c['heading'] + cur['shift'] * 0.1)
             L = 4200.0
@@ -206,9 +255,14 @@ def main():
             vx, vy, vh = 0.0, 0.0, 3600.0
         else:
             zoom = 600.0 if '50' in stage else 180.0
-            if mode == 'final':
-                zoom = 180.0
             vx, vy, vh = best['de'], best['dn'], zoom
+            if mode == 'final':
+                # frame both the fix and the truth, whatever their distance
+                d = math.hypot(best['de'], best['dn'])
+                vx, vy = best['de'] / 2, best['dn'] / 2
+                vh = max(180.0, 0.75 * d)
+                ax.plot([0, best['de']], [0, best['dn']], color='#ffd23f',
+                        lw=1.5, ls=':', zorder=8)
         ax.set_xlim(vx - vh, vx + vh)
         ax.set_ylim(vy - vh, vy + vh)
         ax.set_aspect('equal')
@@ -235,7 +289,8 @@ def main():
         ax.imshow(img)
         ok = diag['conf'] > 0
         ax.plot(np.arange(W)[ok], obs_rows[ok], color='#ffd23f', lw=1.6,
-                label='skyline in the photo (operator)')
+                label='skyline in the photo (%s)' % (
+                    'operator' if c['boundary'] else c['extractor']))
         if mode != 'intro':
             show = best if mode == 'final' else cur
             xs, ys = project(diag, show['el'], AZn, show['shift'], show['beta'],
@@ -244,19 +299,60 @@ def main():
                     label='DEM skyline from the %s' % (
                         'fix' if mode == 'final' else 'candidate'))
         ax.set_xlim(0, W)
-        ax.set_ylim(H * 0.62, H * 0.30)
+        r0, r1 = np.percentile(obs_rows[ok], [2, 98])
+        ax.set_ylim(min(H, r1 + 0.16 * H), max(0, r0 - 0.16 * H))
         ax.set_xticks([]), ax.set_yticks([])
         for sp in ax.spines.values():
             sp.set_color(GRID)
-        ax.set_title('PHOTO · Bosphorus · roll 1.75° · candidate heading %+.1f° '
-                     '· β %+.1f mrad' % ((show['shift'] * 0.1, show['beta'] * 1e3)
-                                         if mode != 'intro' else (0, 0)),
+        ax.set_title('PHOTO · %s · heading %+.1f° · β %+.1f mrad' % (
+            (c['label'],) + ((show['shift'] * 0.1, show['beta'] * 1e3)
+                             if mode != 'intro' else (0, 0))),
                      color=TXT, fontsize=10, loc='left', family='monospace')
         ax.legend(loc='lower left', fontsize=8.5, facecolor=PANEL,
                   edgecolor=GRID, labelcolor=TXT)
 
-        # ---------------- cost
+        # ---------------- heading search at the shown candidate
         ax = fig.add_subplot(gs[1, 1])
+        ax.set_facecolor(PANEL)
+        if mode != 'intro':
+            ish = ib if mode == 'final' else k - 1
+            hc = heading_curve(ish)
+            x = ctx['lags'] * 0.1
+            ax.axvspan(-c['window'], c['window'], color='#45d6ff', alpha=0.10,
+                       label='allowed: compass ±%g°' % c['window'])
+            ax.plot(x, hc, color='#d9dee4', lw=1.3)
+            ins = np.abs(x) <= c['window'] + 1e-9
+            jc = int(np.argmin(np.where(ins, hc, np.inf)))
+            jg = int(np.argmin(hc))
+            ax.scatter([x[jc]], [hc[jc]], s=55, color='#45d6ff', zorder=5,
+                       label='chosen %+.1f°' % x[jc])
+            if jg != jc:
+                ax.scatter([x[jg]], [hc[jg]], s=55, facecolors='none',
+                           edgecolors='#ffffff', lw=1.8, zorder=5,
+                           label='best without the bound %+.1f°' % x[jg])
+            ax.axvline(ctx['psi_truth'], color='#ff5a4f', lw=1.2, ls='--',
+                       label='best at the true position %+.1f°' % ctx['psi_truth'])
+            if clamp(ev[ish]):
+                ax.text(0.5, 0.92, 'CLAMPED: the heading sits on the window edge',
+                        transform=ax.transAxes, ha='center', color='#ff5a4f',
+                        fontsize=9.5, weight='bold')
+            lo_, hi_ = np.nanmin(hc), np.nanpercentile(hc, 90)
+            ax.set_ylim(lo_ - 0.05 * (hi_ - lo_), hi_ + 0.25 * (hi_ - lo_))
+            ax.legend(loc='upper right', fontsize=7.5, facecolor=PANEL,
+                      edgecolor=GRID, labelcolor=TXT, ncol=2)
+        ax.set_xlim(-WIDE, WIDE)
+        ax.set_xlabel('heading offset from the compass (deg)  ·  at this '
+                      'candidate, β minimised', color=MUTED, fontsize=9)
+        ax.set_ylabel('cost', color=MUTED, fontsize=9)
+        ax.tick_params(colors=MUTED, labelsize=8)
+        ax.grid(color=GRID, lw=0.5)
+        for sp in ax.spines.values():
+            sp.set_color(GRID)
+        ax.set_title('HEADING SEARCH AT THIS CANDIDATE', color=TXT,
+                     fontsize=10, loc='left', family='monospace')
+
+        # ---------------- cost
+        ax = fig.add_subplot(gs[2, 1])
         ax.set_facecolor(PANEL)
         if mode != 'intro':
             ax.scatter(np.arange(1, k + 1), cost[:k], s=6,
@@ -267,8 +363,11 @@ def main():
         ax.set_xlim(0, len(ev) + 1)
         ax.set_yscale('log')
         ax.set_ylim(cost.min() * 0.7, cost.max() * 1.3)
-        ax.set_xlabel('evaluation  ·  441 coarse (250 m), then 25 + 25 '
-                      'refinement (50 m, 12.5 m)', color=MUTED, fontsize=9)
+        st0 = c['box'] / 20
+        ax.set_xlabel('evaluation  ·  %d coarse (%g m), then 25 + 25 '
+                      'refinement (%g m, %g m)' % (ncoarse, st0, st0 / 5,
+                                                    st0 / 20),
+                      color=MUTED, fontsize=9)
         ax.set_ylabel('match cost (Huber)', color=MUTED, fontsize=9)
         ax.tick_params(colors=MUTED, labelsize=8)
         ax.grid(color=GRID, lw=0.5, which='both')
@@ -289,4 +388,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv[1] if len(sys.argv) > 1 else 'bosphorus')
