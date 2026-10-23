@@ -1,0 +1,163 @@
+{
+ "status": "ok",
+ "reasons": [],
+ "lat": 37.01597061055467,
+ "lon": 27.451510015612882,
+ "fix_ok": true,
+ "basin_margin": 6.110954545846031,
+ "relief_mrad": 15.364620614363517,
+ "dn_m": -90.0,
+ "de_m": 285.0,
+ "sigma_n_m": 116.2112958488399,
+ "sigma_e_m": 214.8819778243447,
+ "sigma_major_m": 215.20143040390658,
+ "sigma_minor_m": 115.61865778792496,
+ "major_bearing_deg": 86.297317590154,
+ "anisotropy": 1.8613036556663944,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": 3.926639220647323,
+ "peak_dh_mad_m": 1.5983209071774467,
+ "n_peaks": 5,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 4.820726391804537e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2400.0,
+   "cost": 4.795592479082933e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2100.0,
+   "cost": 4.731650217206547e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1800.0,
+   "cost": 4.6729108051602014e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1500.0,
+   "cost": 4.536936382917097e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1200.0,
+   "cost": 4.189150882978281e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -900.0,
+   "cost": 3.915329815404964e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": -900.0,
+   "cost": 3.3127369261372825e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": -1500.0,
+   "cost": 2.5777472350918694e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": 0.0,
+   "cost": 2.0481204695838827e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": -600.0,
+   "cost": 1.756894500108944e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": -300.0,
+   "cost": 1.3042619104959378e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 0.0,
+   "cost": 9.515999974578832e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 300.0,
+   "cost": 9.313773926490553e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": -300.0,
+   "cost": 8.689462182526181e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": 0.0,
+   "cost": 4.893040552647406e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": 300.0,
+   "cost": 2.8511880236057363e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -60.0,
+   "de": 300.0,
+   "cost": 2.5759006078890064e-06,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -90.0,
+   "de": 285.0,
+   "cost": 2.473284723852008e-06,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "search_evals": 491,
+ "cost": 2.473284723852008e-06,
+ "rms_mrad": 2.2240884532104417,
+ "n_photos": 1,
+ "z_m": 1.0,
+ "photos": [
+  {
+   "file": "PF_new_bodrum8.jpg",
+   "fov_deg": 73.74,
+   "heading_deg": 188.611,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 2.2240884532104417,
+   "heading_offset_deg": 5.6000000000000005,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": 5.6000000000000005,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 73.74
+}

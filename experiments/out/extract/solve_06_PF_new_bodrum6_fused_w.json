@@ -1,0 +1,97 @@
+{
+ "status": "ok",
+ "reasons": [],
+ "lat": 37.01772162814579,
+ "lon": 27.35111910166197,
+ "fix_ok": true,
+ "basin_margin": 0.24449322400425258,
+ "relief_mrad": 28.59832869954015,
+ "dn_m": -240.0,
+ "de_m": 300.0,
+ "sigma_n_m": 233.95675219792648,
+ "sigma_e_m": 158.81299806911548,
+ "sigma_major_m": 240.09341758838337,
+ "sigma_minor_m": 149.37362914997078,
+ "major_bearing_deg": 163.3251174532658,
+ "anisotropy": 1.60733470127669,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": null,
+ "peak_dh_mad_m": null,
+ "n_peaks": 0,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 6.211826814962379e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2700.0,
+   "cost": 6.20692346880019e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2400.0,
+   "cost": 1.6294198163316502e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -2100.0,
+   "cost": 1.4163070079238595e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": -2100.0,
+   "cost": 1.2917076672579127e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 300.0,
+   "cost": 1.0379386904990483e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -240.0,
+   "de": 300.0,
+   "cost": 9.997092326907309e-06,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -240.0,
+   "de": 300.0,
+   "cost": 9.997092326907309e-06,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "search_evals": 491,
+ "cost": 9.997092326907309e-06,
+ "rms_mrad": 4.471485732261103,
+ "n_photos": 1,
+ "z_m": 2.0,
+ "photos": [
+  {
+   "file": "PF_new_bodrum6.jpg",
+   "fov_deg": 73.74,
+   "heading_deg": 114.661,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 4.471485732261103,
+   "heading_offset_deg": 1.4000000000000001,
+   "el_offset_mrad": 4.049163864626842,
+   "attitude_source": "prior",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": 1.4000000000000001,
+ "el_offset_mrad": 4.049163864626842,
+ "fov_deg": 73.74
+}
