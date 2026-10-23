@@ -52,8 +52,10 @@ sys.path.insert(0, HERE)
 # point is mapped to ~1 m - the limiting case of a very fine, current
 # surface model. Default 'cop30' is E5bt.
 MAP = os.environ.get('E5BT_MAP', 'cop30')
-OUT = os.path.join(HERE, 'out', 'tracker' if MAP == 'cop30'
-                   else 'tracker_' + MAP)
+TRACE = os.environ.get('E5BT_TRACE') == '1'
+OUT = os.path.join(HERE, 'out', ('tracker' if MAP == 'cop30'
+                                 else 'tracker_' + MAP)
+                   + ('_trace' if TRACE else ''))
 # git clone https://github.com/Aceinna/gnss-ins-sim  next to the
 # repository checkouts (<parent>/ext/gnss-ins-sim), or set $GNSS_INS_SIM
 SIMDIR = os.environ.get('GNSS_INS_SIM', os.path.join(
@@ -445,6 +447,7 @@ def simulate(name, seed=20261023):
         return ok, rh, az
 
     active, used, handovers, acq_fail, track_kf = None, [], 0, 0, 0
+    trace = []
     tracks, n_ident, n_misid, n_ambig = [], 0, 0, 0
     sig_w = math.hypot(WIDE['jitter'], WIDE['calib'])
     from scipy.stats import chi2 as CHI2
@@ -706,9 +709,42 @@ def simulate(name, seed=20261023):
             active = [tk['id'] for tk in tracks]
 
         photo = (k + 1) % pc['photo_every'] == 0
+
+        def log_kf(fix=None):
+            """E5BT_TRACE=1: one record per keyframe, for replay videos"""
+            if not TRACE:
+                return
+            pe = est.atPose3(X(k + 1))
+            Re = pe.rotation().matrix()
+            try:
+                Cm = isam.marginalCovariance(X(k + 1))[3:5, 3:5]
+                cov_en = Cm[::-1, ::-1].tolist()          # (n,e) -> (e,n)
+            except RuntimeError:
+                cov_en = None
+            if trk_mode == 'wide':
+                trk = [dict(j=int(tk['j']), id=None if tk['id'] is None
+                            else int(tk['id'])) for tk in tracks]
+            elif trk_mode == 'gimbal' and active is not None:
+                trk = [dict(j=int(active), id=int(active))]
+            else:
+                trk = []
+            trace.append(dict(
+                k=k + 1, t=float(t[i1]), truth=enu(ned[i1]).tolist(),
+                z=float(tr['alt0'] - ned[i1][2]),
+                est=enu(np.asarray(pe.translation())).tolist(), cov=cov_en,
+                free=enu(np.asarray(free_state.pose().translation())).tolist(),
+                yaw_true=float(ypr[i1][0]),
+                yaw_est=float(math.atan2(Re[1, 0], Re[0, 0])),
+                photo=bool(photo), fix=None if fix is None else
+                [float(fix[0]), float(fix[1])], tracks=trk,
+                hills_est={str(c): enu(np.asarray(est.atPoint3(L(c)))
+                                       ).tolist() for c in used
+                           if est.exists(L(c))}))
+
         if not photo:
             isam.update(fg, vals)
             est = isam.calculateEstimate()
+            log_kf()
             continue
 
         # ---- the photograph (variants A and B)
@@ -744,6 +780,7 @@ def simulate(name, seed=20261023):
         isam.update(fg, vals)
         isam.update()
         est = isam.calculateEstimate()
+        log_kf(fix)
         on = enu(np.asarray(est.atPose3(X(k + 1)).translation()))
         free = enu(np.asarray(free_state.pose().translation()))
         Re = est.atPose3(X(k + 1)).rotation().matrix()
@@ -773,6 +810,12 @@ def simulate(name, seed=20261023):
                log_scale=(float(est.atVector(gtsam.symbol('s', 0))[0])
                           if pc.get('log') else None),
                variant=variant, scenario=scen,
+               trace=trace if TRACE else None,
+               hills=[dict(true=enu(h['true']).tolist(),
+                           map=enu(h['map']).tolist(),
+                           h=float(tr['alt0'] - h['true'][2]))
+                      for h in LMS] if TRACE else None,
+               start=st0.tolist() if TRACE else None,
                tracker=dict(hills=len(used), handovers=handovers,
                             identified=n_ident, misidentified=n_misid,
                             ambiguous_attempts=n_ambig,
