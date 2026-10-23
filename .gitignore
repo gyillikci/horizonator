@@ -29,3 +29,8 @@ experiments/out/texture/pixels.npz
 experiments/out/texture/run.log
 experiments/out/texture/cues.log
 experiments/out/faint/*.log
+experiments/out/segformer/*_ewasr.npz
+experiments/out/segformer/*_seg*.npz
+experiments/out/segformer/*_seg*.json
+experiments/out/segformer/*_seg*.log
+experiments/out/segformer/*.log
