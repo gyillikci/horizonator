@@ -57,6 +57,65 @@ def auc(neg, pos):
         / (neg.size * pos.size)
 
 
+def body_pixels(fr, net, dem, demdir):
+    """The sampled body pixels of one frame with their TRUE range.
+
+    Returns dict(img, cls, rms, x, y, r_km, top) or None: eWaSR land
+    pixels between its sky and its water, every XSTEP-th column and
+    YSTEP-th row; r_km from the DEM ray at the truth (fitted heading
+    and offset); top[x] = first non-sky row of column x (or -1)."""
+    img = extract.load_image(celnav(fr['path']))
+    el_obs, w, d = F.observation(img, fr['fov'], fr['heading'], 0.0)
+    if (w > 0).sum() < 200:
+        return None
+    cm = S.CMarcher(demdir, (fr['lat'] - .6, fr['lat'] + .6),
+                    (fr['lon'] - .8, fr['lon'] + .8), d_min=1000.0)
+    el, r = cm.skyline(fr['lat'], fr['lon'], fr['z'], F.AZ)
+    el = np.nan_to_num(el + np.where(np.isfinite(r) & (r > 0),
+                                     9.0 / np.maximum(r, 1000.0), 0))
+    c, s, b = F.photo_cost(el_obs, w, el, np.arange(-300, 301, 2),
+                           np.linspace(-0.03, 0.03, 61))
+    H, W = img.shape[:2]
+    f = (W / 2) / math.tan(math.radians(fr['fov']) / 2)
+    cls = net.predict(img)
+    # DEM ray profiles for the sampled columns
+    xs = np.arange(XSTEP // 2, W, XSTEP)
+    az = np.radians(fr['heading'] + np.degrees(
+        np.arctan((xs - (W - 1) / 2) / f)) + s * 0.1)
+    dd = np.arange(300.0, 40000.0, 30.0)
+    mlat, mlon = S.meters_per_degree(fr['lat'])
+    la = fr['lat'] + dd[None] * np.cos(az)[:, None] / mlat
+    lo = fr['lon'] + dd[None] * np.sin(az)[:, None] / mlon
+    h = dem.sample(la.ravel(), lo.ravel()).reshape(la.shape)
+    ang = np.arctan((h - fr['z'] - dd[None] ** 2 / (2 * REFF)) / dd[None])
+    run = np.maximum.accumulate(ang, axis=1)
+    X, Y, R = [], [], []
+    top = np.full(W, -1)
+    for j, x in enumerate(xs):
+        col = cls[:, x]
+        sky = np.flatnonzero(col == 2)
+        if sky.size < 5:
+            continue
+        top[x] = sky.max() + 1             # first non-sky row below sky
+        water = np.flatnonzero((col == 1) & (np.arange(H) > top[x]))
+        bot = water.min() if water.size else H
+        ys = np.arange(top[x] + 3, bot - 3, YSTEP)
+        ys = ys[cls[ys, x] == 0]
+        if ys.size == 0:
+            continue
+        u = x - (W - 1) / 2
+        e = np.arctan2((H - 1) / 2 - ys, math.hypot(u, f)) + b
+        # first range whose running terrain angle reaches the pixel
+        k = np.searchsorted(run[j], e)
+        ok = k < dd.size
+        X.extend([x] * int(ok.sum()))
+        Y.extend(ys[ok].tolist())
+        R.extend((dd[k[ok]] / 1e3).tolist())
+    return dict(img=img, cls=cls, rms=math.sqrt(2 * c) * 1e3,
+                x=np.array(X, int), y=np.array(Y, int), r_km=np.array(R),
+                top=top)
+
+
 def main():
     os.makedirs(OUT, exist_ok=True)
     from ewasr_bridge import EWasr
@@ -68,66 +127,27 @@ def main():
     P = dict(r=[], tex=[], lum=[], fit=[], tag=[])
     per = {}
     for fr in meta['frames']:
-        img = extract.load_image(celnav(fr['path']))
-        el_obs, w, d = F.observation(img, fr['fov'], fr['heading'], 0.0)
-        if (w > 0).sum() < 200:
+        bp = body_pixels(fr, net, dem, demdir)
+        if bp is None or bp['x'].size == 0:
             continue
-        cm = S.CMarcher(demdir, (fr['lat'] - .6, fr['lat'] + .6),
-                        (fr['lon'] - .8, fr['lon'] + .8), d_min=1000.0)
-        el, r = cm.skyline(fr['lat'], fr['lon'], fr['z'], F.AZ)
-        el = np.nan_to_num(el + np.where(np.isfinite(r) & (r > 0),
-                                         9.0 / np.maximum(r, 1000.0), 0))
-        c, s, b = F.photo_cost(el_obs, w, el, np.arange(-300, 301, 2),
-                               np.linspace(-0.03, 0.03, 61))
-        rms = math.sqrt(2 * c) * 1e3
-        H, W = img.shape[:2]
-        f = (W / 2) / math.tan(math.radians(fr['fov']) / 2)
-        cls = net.predict(img)
+        img, rms = bp['img'], bp['rms']
         L = lin(img) @ np.array([0.2126, 0.7152, 0.0722])
         hp = L - gaussian_filter(L, 1.5)
         mu = gaussian_filter(L, 4)
         tex = np.sqrt(gaussian_filter(hp * hp, 4)) / np.maximum(mu, 1e-3)
-
-        # DEM ray profiles for the sampled columns
-        xs = np.arange(XSTEP // 2, W, XSTEP)
-        az = np.radians(fr['heading'] + np.degrees(
-            np.arctan((xs - (W - 1) / 2) / f)) + s * 0.1)
-        dd = np.arange(300.0, 40000.0, 30.0)
-        mlat, mlon = S.meters_per_degree(fr['lat'])
-        la = fr['lat'] + dd[None] * np.cos(az)[:, None] / mlat
-        lo = fr['lon'] + dd[None] * np.sin(az)[:, None] / mlon
-        h = dem.sample(la.ravel(), lo.ravel()).reshape(la.shape)
-        ang = np.arctan((h - fr['z'] - dd[None] ** 2 / (2 * REFF)) / dd[None])
-        run = np.maximum.accumulate(ang, axis=1)
-        n = 0
-        for j, x in enumerate(xs):
-            col = cls[:, x]
-            sky = np.flatnonzero(col == 2)
-            if sky.size < 5:
-                continue
-            top = sky.max() + 1            # first non-sky row below sky
-            water = np.flatnonzero((col == 1) & (np.arange(H) > top))
-            bot = water.min() if water.size else H
-            ys = np.arange(top + 3, bot - 3, YSTEP)
-            ys = ys[cls[ys, x] == 0]
-            if ys.size == 0:
-                continue
-            u = x - (W - 1) / 2
-            e = np.arctan2((H - 1) / 2 - ys, math.hypot(u, f)) + b
-            # first range whose running terrain angle reaches the pixel
-            k = np.searchsorted(run[j], e)
-            ok = k < dd.size
-            if not ok.any():
-                continue
-            sky_l = np.median(L[max(top - 14, 0):max(top - 4, 1), x])
-            P['r'].extend((dd[k[ok]] / 1e3).tolist())
-            P['tex'].extend(tex[ys[ok], x].tolist())
-            P['lum'].extend((mu[ys[ok], x] / max(sky_l, 1e-3)).tolist())
-            P['fit'].extend([rms < 8] * int(ok.sum()))
-            P['tag'].extend([fr['tag']] * int(ok.sum()))
-            n += int(ok.sum())
-        rr = np.array(P['r'][-n:]) if n else np.array([])
-        tt = np.array(P['tex'][-n:]) if n else np.array([])
+        x, y, rr = bp['x'], bp['y'], bp['r_km']
+        sky_col = np.zeros(img.shape[1])
+        for c_ in np.unique(x):
+            a = bp['top'][c_]
+            sky_col[c_] = np.median(L[max(a - 14, 0):max(a - 4, 1), c_])
+        sky_l = sky_col[x]
+        tt = tex[y, x]
+        n = x.size
+        P['r'].extend(rr.tolist())
+        P['tex'].extend(tt.tolist())
+        P['lum'].extend((mu[y, x] / np.maximum(sky_l, 1e-3)).tolist())
+        P['fit'].extend([rms < 8] * n)
+        P['tag'].extend([fr['tag']] * n)
         if n > 50 and np.ptp(rr) > 2:
             rho = spearmanr(rr, tt).correlation
             per[fr['tag']] = dict(rms=rms, n=n, rho=float(rho),
