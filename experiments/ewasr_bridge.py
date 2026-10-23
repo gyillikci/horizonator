@@ -76,4 +76,15 @@ class EWasr:
             out = self.model({'image': t, 'imu_mask': mk})['out']
             out = torch.nn.functional.interpolate(
                 out, size=(H, W), mode='bilinear', align_corners=False)
+        if getattr(self, '_want_proba', False):
+            return torch.softmax(out, 1)[0].numpy()
         return out.argmax(1)[0].numpy().astype(np.uint8)
+
+    def predict_proba(self, rgb01, imu_mask=None):
+        """As predict, but the 3 x H x W class probabilities (obstacle,
+        water, sky) - for front ends that want a soft sky map."""
+        self._want_proba = True
+        try:
+            return self.predict(rgb01, imu_mask)
+        finally:
+            self._want_proba = False

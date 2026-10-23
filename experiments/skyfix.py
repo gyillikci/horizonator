@@ -87,6 +87,7 @@ ACROSS_WATER = False
 MASK_COLS = []
 COST = 'huber'          # set from --cost
 BOUNDARY_ROWS = None    # set from --boundary-npy: a hand-digitised curve
+BOUNDARY_CONF = None    # per-column confidence, when the file is an .npz
 ACROSS_WATER_MIN_PX = 8
 
 
@@ -178,7 +179,14 @@ def extract_boundary(img, horizon_rows=None, tol_px=4):
         k = W / src.size
         rows = np.interp(np.linspace(0, src.size - 1, W),
                          np.arange(src.size), src) * k
-        return rows, np.ones(W)
+        if BOUNDARY_CONF is None:
+            return rows, np.ones(W)
+        # an automatic front end's curve (.npz with rows + conf): its
+        # own confidence, then the same plausibility screen every
+        # built-in extractor gets, so front ends compare on equal terms
+        conf = np.interp(np.linspace(0, src.size - 1, W),
+                         np.arange(src.size), np.asarray(BOUNDARY_CONF, float))
+        return rows, terrain_plausible(rows, conf, img.shape[0])
 
     # A terrain silhouette seen from sea level lies AT OR ABOVE the sea
     # horizon; anything a detector returns below that line is water,
@@ -865,12 +873,16 @@ def main():
                          'the PeakFinder debug viewer, pf_debug/serve.py. '
                          'First photo only')
     args = ap.parse_args()
-    global EXTRACTOR, ACROSS_WATER, BOUNDARY_ROWS, COST
+    global EXTRACTOR, ACROSS_WATER, BOUNDARY_ROWS, BOUNDARY_CONF, COST
     EXTRACTOR = args.extractor
     COST = args.cost
     ACROSS_WATER = args.across_water
     if args.boundary_npy:
-        BOUNDARY_ROWS = np.load(os.path.expanduser(args.boundary_npy))
+        _b = np.load(os.path.expanduser(args.boundary_npy))
+        if isinstance(_b, np.lib.npyio.NpzFile):
+            BOUNDARY_ROWS, BOUNDARY_CONF = _b['rows'], _b['conf']
+        else:
+            BOUNDARY_ROWS = _b
         print('hand-digitised boundary: %d columns from %s'
               % (BOUNDARY_ROWS.size, args.boundary_npy), flush=True)
     if args.mask_cols:
