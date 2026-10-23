@@ -28,3 +28,4 @@ experiments/out/search_video/*.log
 experiments/out/texture/pixels.npz
 experiments/out/texture/run.log
 experiments/out/texture/cues.log
+experiments/out/faint/*.log
