@@ -53,6 +53,10 @@ GROUPS = dict(
     m_ewasr=('ewasr_hard', 'ewasr_ncc'), m_seg=('seg_hard', 'seg_ncc'),
     m_segf=('segf_hard', 'segf_ncc'),
     four=('ewasr_hard', 'ewasr_ncc', 'seg_hard', 'seg_ncc'))
+# E5bq's own rule, for a like-for-like comparison: only the FIRST solve
+# (huber) needs to pass its gates, the others need only land within T,
+# and the reported error is the first solve's fix
+E5BQ_RULE = ('m_ewasr', 'm_seg', 'm_segf', 'four')
 
 
 def load(tag, key):
@@ -90,6 +94,26 @@ def main():
                 dn = sum(x['dn'] for x in m) / len(m)
                 de = sum(x['de'] for x in m) / len(m)
                 acc.append((t, math.hypot(dn, de)))
+            if name in E5BQ_RULE and T < 1e8:
+                lenient = []
+                for t in tags:
+                    m = [R[t][k] for k in keys]
+                    if not m[0]['ok']:
+                        continue
+                    if max(math.hypot(m[0]['dn'] - y['dn'],
+                                      m[0]['de'] - y['de'])
+                           for y in m) >= T:
+                        continue
+                    lenient.append((t, math.hypot(m[0]['dn'], m[0]['de'])))
+                out['%s_E5bq_T%g' % (name, T)] = dict(
+                    accepted=len(lenient),
+                    good=sum(e < GOOD for _, e in lenient),
+                    wrong=sum(e >= BAD for _, e in lenient))
+                print('%-8s %5s | %4d %4d %5d | (E5bq rule: first solve '
+                      'gated, others within T)' % (
+                          name, 'e%d' % T, len(lenient),
+                          sum(e < GOOD for _, e in lenient),
+                          sum(e >= BAD for _, e in lenient)))
             good = sum(e < GOOD for _, e in acc)
             wrong = [(t, e) for t, e in acc if e >= BAD]
             out['%s_T%g' % (name, T)] = dict(

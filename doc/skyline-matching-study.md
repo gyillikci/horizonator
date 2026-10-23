@@ -5248,6 +5248,52 @@ of matchers.
   an accuracy lever (SegFormer: <300 m 3 -> 5, E5ch), not an integrity
   one.
 
+### E5ci (continued) - ncc on SegFormer, matcher and front-end agreement together (2026-10-23)
+
+88 more solves: `--cost ncc` with the SegFormer boundary and with
+SegFormer + detector, hard +-6 (`e5ch_segformer.py solve all --ncc`).
+Alone, at the same gates:
+
+| solve | accepted | good <300 | wrong >=500 |
+|---|---|---|---|
+| eWaSR huber | 13 | 3 | 6 |
+| eWaSR ncc | 11 | 2 | 6 |
+| SegFormer huber | 17 | 5 | 9 |
+| SegFormer ncc | 11 | 4 | **4** |
+| SegFormer+detector huber | 13 | 4 | 6 |
+| SegFormer+detector ncc | 11 | 3 | 5 |
+
+Agreement (`e5ci_agreement.py`), T = 500 m. Strict rule: every member
+passes its gates (ncc: its own status) and every pair of fixes is
+within T; the fix is the mean. E5bq rule: only the huber solve is
+gated, ncc must only land within T, and the huber fix is scored. The
+E5bq rule reproduces the E5bq figure (eWaSR huber + ncc: 9 / 3 / 2).
+
+| group | strict: accepted / good / wrong | E5bq rule |
+|---|---|---|
+| huber + ncc on eWaSR | 7 / 2 / 2 | 9 / 3 / 2 |
+| huber + ncc on SegFormer | 9 / 3 / 2 | 12 / 5 / 4 |
+| huber + ncc on SegFormer+detector | 7 / 2 / 1 | 8 / 3 / 2 |
+| **four: huber and ncc on eWaSR and SegFormer** | **6 / 2 / 0** | 8 / 3 / 2 |
+
+* The four-way agreement is the first gate with no wrong accept on
+  these 44 frames (T = 500 m: 6 accepted, 2 within 300 m, 0 wrong;
+  300 m: 4 accepted, 1 good). At T = 1000 m it admits KWHC9160
+  (661 m), giving 1 wrong.
+* The price is availability: 6 of 44 accepted and 2 good. The
+  accepted fixes are Bodrum 6, Bodrum 8, 195733_clean, 175658_wide,
+  LHCG7767 and MYQR7719, all with errors of 147-484 m.
+* A second matcher helps more than a second front end alone
+  (E5ci: 6 -> 4 wrong with two front ends; here 6 -> 2 with two
+  matchers on one front end), and the two together are better again.
+  Two front ends reading one photo share their errors (the scene is the
+  same), two matchers sharing one front end share the pixels, but not
+  the cost surface.
+* Caveats: T and the 2-sigma gate were chosen on these same 44 frames,
+  "wrong" is a 500 m line that several accepted fixes sit just under
+  (484, 503), and 0 wrong out of 6 accepted is a small number. None of
+  it is held-out.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the
