@@ -104,6 +104,9 @@ def solve_one(fr, k, arm, flags):
            '--out', out] + flags.split()
     if arm == 'soft5':
         cmd += ['--compass-sigma', '5']
+    elif arm == 'ncc':
+        # the literature matcher (E5bq): 1 - Pearson, hard +-6 window
+        cmd += ['--cost', 'ncc']
     with open(out + '.log', 'w') as lg:
         subprocess.run(cmd, stdout=lg, stderr=subprocess.STDOUT, cwd=HERE,
                        env=dict(os.environ, OMP_NUM_THREADS='1'))
@@ -113,7 +116,8 @@ def solve_one(fr, k, arm, flags):
 def solve(a):
     flags = json.load(open(FRAMES))['flags'].replace(
         '~', os.path.expanduser('~'))
-    jobs = [(fr, k, arm) for arm in ('hard6', 'soft5')
+    arms = ('hard6', 'soft5', 'ncc') if a.ncc else ('hard6', 'soft5')
+    jobs = [(fr, k, arm) for arm in arms
             for k in ('seg', 'seg_f') for fr in frames(a.tags)
             if os.path.exists(os.path.join(OUT, '%s_%s.npz' % (fr['tag'], k)))]
     with ThreadPoolExecutor(a.jobs) as ex:
@@ -182,5 +186,7 @@ if __name__ == '__main__':
         p = sp.add_parser(n)
         p.add_argument('tags', nargs='*')
         p.add_argument('--jobs', type=int, default=4)
+        p.add_argument('--ncc', action='store_true',
+                       help='solve: add the ncc matcher arm')
     a = ap.parse_args()
     dict(eval=evaluate, solve=solve, report=report)[a.cmd](a)
