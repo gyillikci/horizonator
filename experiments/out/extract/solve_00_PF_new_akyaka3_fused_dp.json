@@ -1,0 +1,203 @@
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.02 < 0.15",
+  "residual 14.3 mrad > 12.0: the DEM cannot explain this observation",
+  "peak heights disagree: matched crests stand a median -94 m (spread 228 m) from the model at this fix (limits 30/90 m) \u2014 position error or DEM bias is leaking into the height channel"
+ ],
+ "lat": 37.06154023112523,
+ "lon": 28.31161208680248,
+ "fix_ok": false,
+ "basin_margin": 0.022847578979830332,
+ "relief_mrad": 49.01835910597463,
+ "dn_m": 1440.0,
+ "de_m": 1650.0,
+ "sigma_n_m": 718.522936888092,
+ "sigma_e_m": 731.636294133385,
+ "sigma_major_m": 871.7474845181921,
+ "sigma_minor_m": 540.02148194653,
+ "major_bearing_deg": 46.163586013600295,
+ "anisotropy": 1.61428297514377,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -94.06881215977792,
+ "peak_dh_mad_m": 228.32910145826384,
+ "n_peaks": 9,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.00022362788395860256,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -3000.0,
+   "cost": 0.0002065858730309123,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": -3000.0,
+   "cost": 0.0001922134135062045,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": -3000.0,
+   "cost": 0.00018244235518686579,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": -3000.0,
+   "cost": 0.00017337962898379754,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": -3000.0,
+   "cost": 0.00016723325359916345,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": -3000.0,
+   "cost": 0.00016307458837800715,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": -3000.0,
+   "cost": 0.00015851796282626406,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": 2700.0,
+   "cost": 0.00014880306928426222,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": 2400.0,
+   "cost": 0.00014212310047390388,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": 2700.0,
+   "cost": 0.00013646434388023027,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 2400.0,
+   "cost": 0.00013011935655424353,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 2700.0,
+   "cost": 0.00012642900498825436,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": 2400.0,
+   "cost": 0.00012041176480680833,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": 2700.0,
+   "cost": 0.00011885549504798673,
+   "stage": "coarse"
+  },
+  {
+   "dn": 300.0,
+   "de": 2400.0,
+   "cost": 0.0001135106904989045,
+   "stage": "coarse"
+  },
+  {
+   "dn": 300.0,
+   "de": 2700.0,
+   "cost": 0.00011297802134934386,
+   "stage": "coarse"
+  },
+  {
+   "dn": 600.0,
+   "de": 2400.0,
+   "cost": 0.00010945294799854157,
+   "stage": "coarse"
+  },
+  {
+   "dn": 600.0,
+   "de": 2700.0,
+   "cost": 0.00010918461312494984,
+   "stage": "coarse"
+  },
+  {
+   "dn": 900.0,
+   "de": 2400.0,
+   "cost": 0.0001071288998087006,
+   "stage": "coarse"
+  },
+  {
+   "dn": 1200.0,
+   "de": 1500.0,
+   "cost": 0.00010615692338218897,
+   "stage": "coarse"
+  },
+  {
+   "dn": 1200.0,
+   "de": 2400.0,
+   "cost": 0.00010570382281336237,
+   "stage": "coarse"
+  },
+  {
+   "dn": 1500.0,
+   "de": 1800.0,
+   "cost": 0.00010449110555992326,
+   "stage": "coarse"
+  },
+  {
+   "dn": 1440.0,
+   "de": 1680.0,
+   "cost": 0.00010271605998002112,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": 1440.0,
+   "de": 1650.0,
+   "cost": 0.00010219438445258399,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "search_evals": 491,
+ "cost": 0.00010219438445258399,
+ "rms_mrad": 14.296460013065051,
+ "n_photos": 1,
+ "z_m": 16.0,
+ "photos": [
+  {
+   "file": "PF_new_akyaka3.jpg",
+   "fov_deg": 73.74,
+   "heading_deg": 172.599,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 14.296460013065051,
+   "heading_offset_deg": -5.2,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": -5.2,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 73.74
+}

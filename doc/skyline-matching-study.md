@@ -4577,6 +4577,63 @@ sequential estimator.
 > realisation per cell; E's field-like run diverged in its last minutes
 > (final 1.3 km) after 19 deferred identifications.
 
+> **E5bv - better extraction, judged by the solver: no front end changes
+> the field result, and the reason is not extraction.** E5bu said the
+> image side, not the map, limits the skyline alone. Literature search
+> (2023-2026): learned segmenters (FCN/SegNet/U-Net benchmarks, Ahmad
+> et al.; foundation models), edge-cost dynamic programming for a
+> continuous boundary (Lie 2005, Ahmad 2021, code public), and other
+> wavelengths (thermal/NIR make the sky separable; no skyline-
+> localisation paper found that uses them). New front end tried:
+> `fused_dp` (`experiments/e5bv_extraction.py`) - eWaSR's soft sky
+> probability averaged with SAM 2.1-t's mask, an image-edge bonus, and
+> a globally optimal continuous boundary by dynamic programming (L1
+> price on row change, fixed price for a jump; the transform vectorised
+> as two running minima, identical to the loop version on 20/20 random
+> cases), with per-column confidence from the sky/not-sky contrast.
+>
+> Pixel check on the one hand-labelled frame (Bosphorus): every
+> segmenter sits a constant 10-15 px above the operator's line
+> (rooftops and trees against the drawn terrain - an elevation offset
+> the solver absorbs); shape error after the offset: eWaSR 3.4 px, SAM
+> 3.3 px, **fused_dp 2.7 px**; the seam detector is lost in the clouds
+> (230 px).
+>
+> Navigation check, all 44 field frames, each front end through the
+> same door (`skyfix --boundary-npy` now takes rows + confidence and
+> applies the same plausibility screen), same DEM, search and gates:
+>
+> | front end | median error | < 300 m | accepted | right | **wrong >= 500 m** |
+> |---|---|---|---|---|---|
+> | default (eWaSR + seam fallback) | 2831 m | 3 | 13 | 3 | 6 |
+> | seam | 2570 m | 3 | 13 | 3 | 8 |
+> | eWaSR | 2995 m | 3 | 14 | 3 | 7 |
+> | SAM 2.1-t | 2032 m | 2 | 14 | 2 | 10 |
+> | fused_dp | 2405 m | 1 | 15 | 0 | 10 |
+>
+> The best pixels did not make the best fixes. fused_dp's boundary
+> differs from eWaSR's by a median 3 px offset and 2 px of shape, and
+> zero-weights the 19 % of columns with weak contrast - and that is
+> enough to move the winner to another basin on frame after frame. SAM
+> is closest to the truth on the most frames (18 of 44) and also
+> accepts the most wrong fixes. The cost surfaces of these frames are
+> so flat between basins that pixel-level changes reshuffle them.
+>
+> **Agreement between front ends is not an integrity check here**,
+> unlike agreement between misfits (E5bq). Requiring all four front
+> ends to land within 300-500 m of each other still leaves 3-4 wrong
+> accepts: when the boundaries agree and the fix is still kilometres
+> off, extraction is not the cause - the near subject, the canopy and
+> buildings no DEM carries, and terrain that looks alike from several
+> places are (E4x, E5aw). For these frames the next gain is not a
+> sharper boundary but more evidence per fix: several frames, a
+> tracker, a sequence (E5br-E5bt), or a model that contains the near
+> field (E5bu's caveat). Where extraction does decide the outcome -
+> cumulus over a low ridge (E5bh), gradient skies - the segmenters
+> already beat the seam detector, and that is where thermal or NIR
+> imagery, or several frames to separate moving cloud from fixed
+> terrain, would be the next step; neither was testable here.
+
 **Implementation order in this repo:** (1) `vertex.glsl` curvature patch +
 `viewer_z` in the Python API (small, self-contained); (2) skyline extraction
 from the range image + 1D cost module in Python; (3) E0/E1 scripts; (4) the

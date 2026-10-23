@@ -1,0 +1,121 @@
+{
+ "status": "ok",
+ "reasons": [],
+ "lat": 36.653666743708406,
+ "lon": 28.090948613618878,
+ "fix_ok": true,
+ "basin_margin": 0.25898720733047,
+ "relief_mrad": 39.5311664448097,
+ "dn_m": 480.0,
+ "de_m": -150.0,
+ "sigma_n_m": 295.2169274869814,
+ "sigma_e_m": 206.81829927087068,
+ "sigma_major_m": 296.4634928168859,
+ "sigma_minor_m": 205.027414301018,
+ "major_bearing_deg": 172.71374063219596,
+ "anisotropy": 1.4459700124863442,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -15.612071204706865,
+ "peak_dh_mad_m": 15.878374519027087,
+ "n_peaks": 12,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.00012934181454903997,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2700.0,
+   "cost": 0.00011021907251173666,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2400.0,
+   "cost": 7.215926550233035e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2100.0,
+   "cost": 5.615522267302251e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1800.0,
+   "cost": 5.2785535523556086e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1500.0,
+   "cost": 5.184311161069184e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -1500.0,
+   "cost": 2.2141198519467257e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 300.0,
+   "de": -300.0,
+   "cost": 1.990715996584896e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 300.0,
+   "de": 0.0,
+   "cost": 1.9232703016188397e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 600.0,
+   "de": 0.0,
+   "cost": 1.7586515883997732e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 480.0,
+   "de": -120.0,
+   "cost": 1.3618747907061917e-05,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": 480.0,
+   "de": -150.0,
+   "cost": 1.3281119879338058e-05,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "search_evals": 491,
+ "cost": 1.3281119879338058e-05,
+ "rms_mrad": 5.153856784843378,
+ "n_photos": 1,
+ "z_m": 4.0,
+ "photos": [
+  {
+   "file": "PF_20260823_175658_wide.jpg",
+   "fov_deg": 73.7,
+   "heading_deg": 200.551,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 5.153856784843378,
+   "heading_offset_deg": -6.0,
+   "el_offset_mrad": -2.0245819323134238,
+   "attitude_source": "prior",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": -6.0,
+ "el_offset_mrad": -2.0245819323134238,
+ "fov_deg": 73.7
+}

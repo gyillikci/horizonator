@@ -1,0 +1,306 @@
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.01 < 0.15",
+  "minimum on the search-box boundary: the true position may lie outside the box",
+  "residual 21.9 mrad > 12.0: the DEM cannot explain this observation",
+  "peak heights disagree: matched crests stand a median -72 m (spread 352 m) from the model at this fix (limits 30/90 m) \u2014 position error or DEM bias is leaking into the height channel"
+ ],
+ "lat": 37.505178630586435,
+ "lon": 27.378513606788218,
+ "fix_ok": false,
+ "basin_margin": 0.010698065205881832,
+ "relief_mrad": 38.37450166678677,
+ "dn_m": 3150.0,
+ "de_m": -3150.0,
+ "sigma_n_m": 3002.9534849692077,
+ "sigma_e_m": 2510.7589096041297,
+ "sigma_major_m": 3203.4616824217374,
+ "sigma_minor_m": 2249.327273720061,
+ "major_bearing_deg": 29.27957214305789,
+ "anisotropy": 1.4241865645116536,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -72.3211970123733,
+ "peak_dh_mad_m": 352.2375553163716,
+ "n_peaks": 13,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.0009826507322741509,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2100.0,
+   "cost": 0.000819227081596364,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1500.0,
+   "cost": 0.0007996471794703441,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1200.0,
+   "cost": 0.0007035454396412673,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -2100.0,
+   "cost": 0.000684166909937124,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": -3000.0,
+   "cost": 0.0006423365508244339,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": -2700.0,
+   "cost": 0.000639716462686492,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": -2400.0,
+   "cost": 0.0006349583607641229,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": -3000.0,
+   "cost": 0.0005642179203710089,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": -3000.0,
+   "cost": 0.0005275610839585312,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": -3000.0,
+   "cost": 0.0005136185330200269,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": 1800.0,
+   "cost": 0.0004898652368447695,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 1800.0,
+   "cost": 0.00045940641038862113,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 2100.0,
+   "cost": 0.00045616881724887286,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": -600.0,
+   "cost": 0.00045283092006924647,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": -300.0,
+   "cost": 0.00043827046713527896,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": 1800.0,
+   "cost": 0.00040207924721276573,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": -600.0,
+   "cost": 0.00033831229881106775,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": -1200.0,
+   "cost": 0.00033459582631163606,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": -600.0,
+   "cost": 0.00031929076700809507,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": -1200.0,
+   "cost": 0.0003127612074003718,
+   "stage": "coarse"
+  },
+  {
+   "dn": 300.0,
+   "de": -1800.0,
+   "cost": 0.00030570695610006185,
+   "stage": "coarse"
+  },
+  {
+   "dn": 300.0,
+   "de": -1500.0,
+   "cost": 0.00029747112218637424,
+   "stage": "coarse"
+  },
+  {
+   "dn": 300.0,
+   "de": -1200.0,
+   "cost": 0.0002924297893592394,
+   "stage": "coarse"
+  },
+  {
+   "dn": 600.0,
+   "de": -1800.0,
+   "cost": 0.00028579705658568895,
+   "stage": "coarse"
+  },
+  {
+   "dn": 600.0,
+   "de": -1500.0,
+   "cost": 0.00027978420409485505,
+   "stage": "coarse"
+  },
+  {
+   "dn": 900.0,
+   "de": -2100.0,
+   "cost": 0.0002689690505527465,
+   "stage": "coarse"
+  },
+  {
+   "dn": 1200.0,
+   "de": -3000.0,
+   "cost": 0.00025863607201988866,
+   "stage": "coarse"
+  },
+  {
+   "dn": 1200.0,
+   "de": -2700.0,
+   "cost": 0.0002569989189167975,
+   "stage": "coarse"
+  },
+  {
+   "dn": 1500.0,
+   "de": -3000.0,
+   "cost": 0.0002533336700942724,
+   "stage": "coarse"
+  },
+  {
+   "dn": 1800.0,
+   "de": -3000.0,
+   "cost": 0.00025139246139689825,
+   "stage": "coarse"
+  },
+  {
+   "dn": 1800.0,
+   "de": -2400.0,
+   "cost": 0.00025128021151100835,
+   "stage": "coarse"
+  },
+  {
+   "dn": 1800.0,
+   "de": -2100.0,
+   "cost": 0.00025067189592465884,
+   "stage": "coarse"
+  },
+  {
+   "dn": 2100.0,
+   "de": -3000.0,
+   "cost": 0.0002487597194386221,
+   "stage": "coarse"
+  },
+  {
+   "dn": 2100.0,
+   "de": -1800.0,
+   "cost": 0.00024780738300817596,
+   "stage": "coarse"
+  },
+  {
+   "dn": 2100.0,
+   "de": -1500.0,
+   "cost": 0.0002474695445804525,
+   "stage": "coarse"
+  },
+  {
+   "dn": 2400.0,
+   "de": -3000.0,
+   "cost": 0.00024613095942783666,
+   "stage": "coarse"
+  },
+  {
+   "dn": 2400.0,
+   "de": -1200.0,
+   "cost": 0.00024600947884917857,
+   "stage": "coarse"
+  },
+  {
+   "dn": 2700.0,
+   "de": -3000.0,
+   "cost": 0.0002444691957849853,
+   "stage": "coarse"
+  },
+  {
+   "dn": 3000.0,
+   "de": -3000.0,
+   "cost": 0.00024340551082292395,
+   "stage": "coarse"
+  },
+  {
+   "dn": 3120.0,
+   "de": -3120.0,
+   "cost": 0.000240424622057476,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": 3150.0,
+   "de": -3150.0,
+   "cost": 0.0002396100100146313,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "search_evals": 491,
+ "cost": 0.0002396100100146313,
+ "rms_mrad": 21.89109453703178,
+ "n_photos": 1,
+ "z_m": 18.5,
+ "photos": [
+  {
+   "file": "FYMC7458.JPG",
+   "fov_deg": 73.74,
+   "heading_deg": 80.105,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 21.89109453703178,
+   "heading_offset_deg": 4.800000000000001,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": 4.800000000000001,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 73.74
+}

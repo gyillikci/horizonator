@@ -1,0 +1,227 @@
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.03 < 0.15",
+  "residual 16.9 mrad > 12.0: the DEM cannot explain this observation",
+  "peak heights disagree: matched crests stand a median -127 m (spread 87 m) from the model at this fix (limits 30/90 m) \u2014 position error or DEM bias is leaking into the height channel"
+ ],
+ "lat": 37.00838875128365,
+ "lon": 27.37164270120658,
+ "fix_ok": false,
+ "basin_margin": 0.025549384873255563,
+ "relief_mrad": 16.17759774754886,
+ "dn_m": -1290.0,
+ "de_m": 2115.0,
+ "sigma_n_m": 1320.3028573085544,
+ "sigma_e_m": 1032.557796945157,
+ "sigma_major_m": 1460.686785422746,
+ "sigma_minor_m": 822.0519168159233,
+ "major_bearing_deg": 148.835804301375,
+ "anisotropy": 1.7768789969865468,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -126.83662564941616,
+ "peak_dh_mad_m": 86.9289258834589,
+ "n_peaks": 9,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.0004647024256767522,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2700.0,
+   "cost": 0.00032137580255607015,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2400.0,
+   "cost": 0.0002663819229891005,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2100.0,
+   "cost": 0.00021366032079828622,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1800.0,
+   "cost": 0.00020789486707871696,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1500.0,
+   "cost": 0.00019158507467396837,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1200.0,
+   "cost": 0.00018329174761572045,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -900.0,
+   "cost": 0.00016947370242077712,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -600.0,
+   "cost": 0.00016262024148068683,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -300.0,
+   "cost": 0.0001586910877144903,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 0.0,
+   "cost": 0.0001558352540297005,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 600.0,
+   "cost": 0.00015573993144822937,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 900.0,
+   "cost": 0.00015492888302374248,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1200.0,
+   "cost": 0.0001541354659282756,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1500.0,
+   "cost": 0.00015342529754239524,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1800.0,
+   "cost": 0.00015275608905078943,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 2100.0,
+   "cost": 0.00015209422733132707,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 2400.0,
+   "cost": 0.00015141243941033035,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 2700.0,
+   "cost": 0.00015072506157168088,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 3000.0,
+   "cost": 0.00015007605453778444,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": 3000.0,
+   "cost": 0.00014948772814577088,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": 900.0,
+   "cost": 0.0001494745322954733,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": 3000.0,
+   "cost": 0.00014890642895773104,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": 1200.0,
+   "cost": 0.0001478037546769631,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 1500.0,
+   "cost": 0.00014606034147974812,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 1800.0,
+   "cost": 0.0001451552644978123,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 2100.0,
+   "cost": 0.0001433025206074421,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1260.0,
+   "de": 2100.0,
+   "cost": 0.00014289438937538287,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -1290.0,
+   "de": 2115.0,
+   "cost": 0.00014282287404247625,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "search_evals": 491,
+ "cost": 0.00014282287404247625,
+ "rms_mrad": 16.90105760255708,
+ "n_photos": 1,
+ "z_m": 2.0,
+ "photos": [
+  {
+   "file": "PF_new_bodrum2.jpg",
+   "fov_deg": 73.74,
+   "heading_deg": 192.018,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 16.90105760255708,
+   "heading_offset_deg": 6.0,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": 6.0,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 73.74
+}

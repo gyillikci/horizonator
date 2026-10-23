@@ -1,0 +1,112 @@
+{
+ "status": "inconclusive",
+ "reasons": [
+  "minimum on the search-box boundary: the true position may lie outside the box",
+  "covariance degenerate: the cost surface has no measurable curvature at the fix (sigma cannot be computed) \u2014 the landscape does not pin a position here"
+ ],
+ "lat": 36.61362055534066,
+ "lon": 28.097181201273507,
+ "fix_ok": false,
+ "basin_margin": 1.2131315469463142,
+ "relief_mrad": 103.42175039099604,
+ "dn_m": -3030.0,
+ "de_m": 150.0,
+ "sigma_n_m": 0.0,
+ "sigma_e_m": 0.0,
+ "sigma_major_m": 186.4671657220103,
+ "sigma_minor_m": 0.0,
+ "major_bearing_deg": 40.661166811511805,
+ "anisotropy": Infinity,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -4.215794227536532,
+ "peak_dh_mad_m": 0.0,
+ "n_peaks": 1,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.0007040484818395265,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1800.0,
+   "cost": 0.0006267521083628515,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1500.0,
+   "cost": 0.000512750171863307,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1200.0,
+   "cost": 0.00041554969150944365,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -900.0,
+   "cost": 0.0003919687140770104,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -300.0,
+   "cost": 0.0002408789892252376,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 0.0,
+   "cost": 5.3236702057967937e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 300.0,
+   "cost": 4.437037499158535e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3060.0,
+   "de": 180.0,
+   "cost": 4.031909779839756e-05,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -3030.0,
+   "de": 150.0,
+   "cost": 3.953695891335268e-05,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "search_evals": 491,
+ "cost": 3.953695891335268e-05,
+ "rms_mrad": 8.892351647719819,
+ "n_photos": 1,
+ "z_m": 6.0,
+ "photos": [
+  {
+   "file": "PF_20260823_151613.jpg",
+   "fov_deg": 38.07,
+   "heading_deg": 218.62,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 8.892351647719819,
+   "heading_offset_deg": 0.0,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": 0.0,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 38.07
+}

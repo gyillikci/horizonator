@@ -1,0 +1,208 @@
+{
+ "status": "inconclusive",
+ "reasons": [
+  "minimum on the search-box boundary: the true position may lie outside the box",
+  "peak heights disagree: matched crests stand a median -77 m (spread 120 m) from the model at this fix (limits 30/90 m) \u2014 position error or DEM bias is leaking into the height channel"
+ ],
+ "lat": 37.4813116419493,
+ "lon": 27.382763173200708,
+ "fix_ok": false,
+ "basin_margin": 0.1783099462463234,
+ "relief_mrad": 30.008538446249307,
+ "dn_m": 495.0,
+ "de_m": -2775.0,
+ "sigma_n_m": 384.1122026956045,
+ "sigma_e_m": 578.9138635114696,
+ "sigma_major_m": 601.7985928995081,
+ "sigma_minor_m": 347.1626408610491,
+ "major_bearing_deg": 70.46419648785698,
+ "anisotropy": 1.7334774024269977,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -77.03303731569981,
+ "peak_dh_mad_m": 120.49803451481105,
+ "n_peaks": 11,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.00045421522366974175,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2700.0,
+   "cost": 0.0004106719997020851,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2400.0,
+   "cost": 0.00038202559836484967,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -3000.0,
+   "cost": 0.0002966775031308264,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -2700.0,
+   "cost": 0.00029431662597402953,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": -3000.0,
+   "cost": 0.0002750856190834143,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": -3000.0,
+   "cost": 0.0002693644009395795,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 2100.0,
+   "cost": 0.00021010684924278568,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 2400.0,
+   "cost": 0.00015137324302799316,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": 2400.0,
+   "cost": 0.00010460172725805846,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 0.0,
+   "cost": 7.370489057486399e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 2400.0,
+   "cost": 7.17337846642268e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 2700.0,
+   "cost": 6.465995046589568e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": -300.0,
+   "cost": 4.483513035833471e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": 300.0,
+   "cost": 4.462410042530603e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": -300.0,
+   "cost": 4.316976540319712e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": 600.0,
+   "cost": 4.2358739265160674e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": 900.0,
+   "cost": 3.987330196223033e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": 1200.0,
+   "cost": 3.86250714344234e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": -1200.0,
+   "cost": 3.787048352762637e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": -1800.0,
+   "cost": 3.406691504741429e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": -1500.0,
+   "cost": 3.399215151827894e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 300.0,
+   "de": -2100.0,
+   "cost": 3.315747834049591e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 600.0,
+   "de": -2700.0,
+   "cost": 2.8848225907424314e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 480.0,
+   "de": -2760.0,
+   "cost": 2.847885974965461e-05,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": 495.0,
+   "de": -2775.0,
+   "cost": 2.8382727192386833e-05,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "search_evals": 491,
+ "cost": 2.8382727192386833e-05,
+ "rms_mrad": 7.534285260379624,
+ "n_photos": 1,
+ "z_m": 14.2,
+ "photos": [
+  {
+   "file": "HATY3309.JPG",
+   "fov_deg": 73.74,
+   "heading_deg": 40.525,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 7.534285260379624,
+   "heading_offset_deg": 6.0,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": 6.0,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 73.74
+}

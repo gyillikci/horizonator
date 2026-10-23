@@ -1,0 +1,145 @@
+{
+ "status": "ok",
+ "reasons": [],
+ "lat": 41.13304960676705,
+ "lon": 29.049807121559567,
+ "fix_ok": true,
+ "basin_margin": 0.3547074641804364,
+ "relief_mrad": 14.283035839473628,
+ "dn_m": 795.0,
+ "de_m": -1755.0,
+ "sigma_n_m": 98.03428047859927,
+ "sigma_e_m": 106.98978876736163,
+ "sigma_major_m": 117.03258635493366,
+ "sigma_minor_m": 85.79573870837834,
+ "major_bearing_deg": 126.57699058920338,
+ "anisotropy": 1.364083905760519,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -5.468995942060576,
+ "peak_dh_mad_m": 11.579275276375208,
+ "n_peaks": 4,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.0001377767427556767,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2700.0,
+   "cost": 0.00011572671893402269,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2400.0,
+   "cost": 5.4209789228613915e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2100.0,
+   "cost": 4.687000620522102e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1800.0,
+   "cost": 3.772894080525875e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1500.0,
+   "cost": 3.6718014894092554e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -1800.0,
+   "cost": 3.480480924158749e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -1500.0,
+   "cost": 3.478537105362497e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": -2100.0,
+   "cost": 3.2709961815395674e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": -1800.0,
+   "cost": 2.6147429682131705e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -900.0,
+   "de": -600.0,
+   "cost": 2.5982924002409386e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": -1200.0,
+   "cost": 2.531120804641797e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 900.0,
+   "de": -2100.0,
+   "cost": 2.3299872180016806e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 900.0,
+   "de": -1800.0,
+   "cost": 1.917973045060942e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 780.0,
+   "de": -1740.0,
+   "cost": 1.412122982011905e-05,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": 795.0,
+   "de": -1755.0,
+   "cost": 1.4082664443558408e-05,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "search_evals": 491,
+ "cost": 1.4082664443558408e-05,
+ "rms_mrad": 5.307101740791938,
+ "n_photos": 1,
+ "z_m": 7.0,
+ "photos": [
+  {
+   "file": "PF_new_bosphorus1.jpg",
+   "fov_deg": 73.7,
+   "heading_deg": 47.101,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 5.307101740791938,
+   "heading_offset_deg": -1.2000000000000002,
+   "el_offset_mrad": 8.098327729253686,
+   "attitude_source": "prior",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": -1.2000000000000002,
+ "el_offset_mrad": 8.098327729253686,
+ "fov_deg": 73.7
+}

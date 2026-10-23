@@ -1,0 +1,82 @@
+{
+ "status": "inconclusive",
+ "reasons": [
+  "minimum on the search-box boundary: the true position may lie outside the box",
+  "peak heights disagree: matched crests stand a median -81 m (spread 107 m) from the model at this fix (limits 30/90 m) \u2014 position error or DEM bias is leaking into the height channel"
+ ],
+ "lat": 36.617477706085516,
+ "lon": 28.06706766897141,
+ "fix_ok": false,
+ "basin_margin": 0.21654332365134282,
+ "relief_mrad": 7.695500362453265,
+ "dn_m": -2610.0,
+ "de_m": -2535.0,
+ "sigma_n_m": 186.46560746153438,
+ "sigma_e_m": 244.66858337193207,
+ "sigma_major_m": 286.03176140018525,
+ "sigma_minor_m": 113.21647373741409,
+ "major_bearing_deg": 124.33647818398005,
+ "anisotropy": 2.5264146811672137,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -80.57399446406257,
+ "peak_dh_mad_m": 106.970168462987,
+ "n_peaks": 8,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 1.2019287391365435e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2700.0,
+   "cost": 7.891619457193028e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -2400.0,
+   "cost": 7.495417955757772e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2580.0,
+   "de": -2520.0,
+   "cost": 7.0214256076030295e-06,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -2610.0,
+   "de": -2535.0,
+   "cost": 6.800542717636941e-06,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "search_evals": 491,
+ "cost": 6.800542717636941e-06,
+ "rms_mrad": 3.6879649449627205,
+ "n_photos": 1,
+ "z_m": 4.0,
+ "photos": [
+  {
+   "file": "PF_20260824_122139.jpg",
+   "fov_deg": 38.07,
+   "heading_deg": 297.024,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 3.6879649449627205,
+   "heading_offset_deg": 6.0,
+   "el_offset_mrad": -4.049163864626846,
+   "attitude_source": "prior",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": 6.0,
+ "el_offset_mrad": -4.049163864626846,
+ "fov_deg": 38.07
+}

@@ -1,0 +1,107 @@
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.13 < 0.15",
+  "minimum on the search-box boundary: the true position may lie outside the box",
+  "peak heights disagree: matched crests stand a median -93 m (spread 88 m) from the model at this fix (limits 30/90 m) \u2014 position error or DEM bias is leaking into the height channel"
+ ],
+ "lat": 37.47422693342313,
+ "lon": 27.379193566201145,
+ "fix_ok": false,
+ "basin_margin": 0.12620038137879586,
+ "relief_mrad": 28.63867433654379,
+ "dn_m": -285.0,
+ "de_m": -3090.0,
+ "sigma_n_m": 143.4227052637451,
+ "sigma_e_m": 425.67834366675817,
+ "sigma_major_m": 434.7375735762693,
+ "sigma_minor_m": 113.02816805143561,
+ "major_bearing_deg": 102.14082113345042,
+ "anisotropy": 3.8462763846480614,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -92.69739117235552,
+ "peak_dh_mad_m": 87.88180909191016,
+ "n_peaks": 2,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.00017031110331198543,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -3000.0,
+   "cost": 0.00010879372700424332,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": -3000.0,
+   "cost": 9.99308335024466e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 1200.0,
+   "cost": 9.19388703863261e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 1500.0,
+   "cost": 8.370481314946021e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 1800.0,
+   "cost": 7.899766500282263e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": -3000.0,
+   "cost": 4.414211259644599e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": -3060.0,
+   "cost": 4.280995347765643e-05,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -285.0,
+   "de": -3090.0,
+   "cost": 4.275577376133715e-05,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "search_evals": 491,
+ "cost": 4.275577376133715e-05,
+ "rms_mrad": 9.247245401884514,
+ "n_photos": 1,
+ "z_m": 14.0,
+ "photos": [
+  {
+   "file": "XRQV0283.JPG",
+   "fov_deg": 73.74,
+   "heading_deg": 352.385,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 9.247245401884514,
+   "heading_offset_deg": 0.0,
+   "el_offset_mrad": -10.12290966156711,
+   "attitude_source": "prior",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": 0.0,
+ "el_offset_mrad": -10.12290966156711,
+ "fov_deg": 73.74
+}

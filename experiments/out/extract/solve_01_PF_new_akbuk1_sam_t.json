@@ -1,0 +1,102 @@
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.03 < 0.15",
+  "minimum on the search-box boundary: the true position may lie outside the box",
+  "residual 15.4 mrad > 12.0: the DEM cannot explain this observation",
+  "peak heights disagree: matched crests stand a median -124 m (spread 287 m) from the model at this fix (limits 30/90 m) \u2014 position error or DEM bias is leaking into the height channel"
+ ],
+ "lat": 37.022685277670334,
+ "lon": 28.15277360639322,
+ "fix_ok": false,
+ "basin_margin": 0.03067262929204676,
+ "relief_mrad": 84.11856663269725,
+ "dn_m": -1515.0,
+ "de_m": -2880.0,
+ "sigma_n_m": 1206.6660646815058,
+ "sigma_e_m": 3381.347120220963,
+ "sigma_major_m": 3485.1178137315515,
+ "sigma_minor_m": 862.2674547329071,
+ "major_bearing_deg": 75.52374359654085,
+ "anisotropy": 4.041806048230232,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -123.67561116062129,
+ "peak_dh_mad_m": 287.18097084643495,
+ "n_peaks": 12,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.00015109564597480933,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -3000.0,
+   "cost": 0.00014339400750727345,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2400.0,
+   "de": -3000.0,
+   "cost": 0.00013424687238996325,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": -3000.0,
+   "cost": 0.00012757291267932071,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": -3000.0,
+   "cost": 0.00012230445426782382,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": -3000.0,
+   "cost": 0.00011840943865502818,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1500.0,
+   "de": -2880.0,
+   "cost": 0.00011822651926361757,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -1515.0,
+   "de": -2880.0,
+   "cost": 0.00011817828902160819,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "search_evals": 491,
+ "cost": 0.00011817828902160819,
+ "rms_mrad": 15.37389274202264,
+ "n_photos": 1,
+ "z_m": 33.0,
+ "photos": [
+  {
+   "file": "PF_new_akbuk1.jpg",
+   "fov_deg": 73.74,
+   "heading_deg": 85.469,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 15.37389274202264,
+   "heading_offset_deg": -3.8000000000000003,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": -3.8000000000000003,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 73.74
+}

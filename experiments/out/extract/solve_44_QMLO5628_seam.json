@@ -1,0 +1,199 @@
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.01 < 0.15",
+  "minimum on the search-box boundary: the true position may lie outside the box",
+  "residual 27.1 mrad > 12.0: the DEM cannot explain this observation",
+  "covariance degenerate: the cost surface has no measurable curvature at the fix (sigma cannot be computed) \u2014 the landscape does not pin a position here",
+  "peak heights disagree: matched crests stand a median -235 m (spread 111 m) from the model at this fix (limits 30/90 m) \u2014 position error or DEM bias is leaking into the height channel"
+ ],
+ "lat": 37.003927502567294,
+ "lon": 27.397263953643677,
+ "fix_ok": false,
+ "basin_margin": 0.006732560382034469,
+ "relief_mrad": 23.76531195242866,
+ "dn_m": -2580.0,
+ "de_m": 3150.0,
+ "sigma_n_m": 3190.2961327762655,
+ "sigma_e_m": 0.0,
+ "sigma_major_m": 5079.121247342845,
+ "sigma_minor_m": 0.0,
+ "major_bearing_deg": 167.39449684776585,
+ "anisotropy": Infinity,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -235.392675737521,
+ "peak_dh_mad_m": 111.36534103110145,
+ "n_peaks": 7,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 0.000487394397280063,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2700.0,
+   "cost": 0.0004469812523871852,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2400.0,
+   "cost": 0.00043918959652684814,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2100.0,
+   "cost": 0.00043013933170255795,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1800.0,
+   "cost": 0.0004189108843638356,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1500.0,
+   "cost": 0.00041030087122343633,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1200.0,
+   "cost": 0.0004030386974515017,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -900.0,
+   "cost": 0.0003982710479634371,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -600.0,
+   "cost": 0.0003912488779349062,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -300.0,
+   "cost": 0.0003883494568996568,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 0.0,
+   "cost": 0.00038558767160145723,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 300.0,
+   "cost": 0.0003832342044328964,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 600.0,
+   "cost": 0.0003812200418591343,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 900.0,
+   "cost": 0.0003779962000965736,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1200.0,
+   "cost": 0.00037511507844710485,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1500.0,
+   "cost": 0.0003736205117354761,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1800.0,
+   "cost": 0.00037232875698681476,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 2100.0,
+   "cost": 0.0003712788418651408,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 2400.0,
+   "cost": 0.000370223351383789,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 2700.0,
+   "cost": 0.0003693252963315957,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 3000.0,
+   "cost": 0.0003686151574642909,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": 3000.0,
+   "cost": 0.00036819723648837984,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2580.0,
+   "de": 3120.0,
+   "cost": 0.0003677954514060374,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -2580.0,
+   "de": 3150.0,
+   "cost": 0.0003677063237749683,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "search_evals": 491,
+ "cost": 0.0003677063237749683,
+ "rms_mrad": 27.118492722677942,
+ "n_photos": 1,
+ "z_m": 61.4,
+ "photos": [
+  {
+   "file": "QMLO5628.JPG",
+   "fov_deg": 73.74,
+   "heading_deg": 205.342,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 27.118492722677942,
+   "heading_offset_deg": 6.0,
+   "el_offset_mrad": 10.122909661567109,
+   "attitude_source": "prior",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": 6.0,
+ "el_offset_mrad": 10.122909661567109,
+ "fov_deg": 73.74
+}

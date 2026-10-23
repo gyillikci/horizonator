@@ -1,0 +1,103 @@
+{
+ "status": "ok",
+ "reasons": [],
+ "lat": 37.01920550879556,
+ "lon": 27.34909164066479,
+ "fix_ok": true,
+ "basin_margin": 0.45435413305043526,
+ "relief_mrad": 12.256894154083248,
+ "dn_m": -75.0,
+ "de_m": 120.0,
+ "sigma_n_m": 232.88211065413972,
+ "sigma_e_m": 180.46800311992982,
+ "sigma_major_m": 265.829554395474,
+ "sigma_minor_m": 127.03316741200189,
+ "major_bearing_deg": 146.70556821961534,
+ "anisotropy": 2.092599592776578,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": 2.9262583592770612,
+ "peak_dh_mad_m": 34.62196850977931,
+ "n_peaks": 10,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 6.48986652733952e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2400.0,
+   "cost": 2.5033353278825487e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2100.0,
+   "cost": 1.7820668745366896e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": -2100.0,
+   "cost": 1.617634216628811e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": -1500.0,
+   "cost": 1.548929582538218e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 300.0,
+   "cost": 1.1662268505354945e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": 0.0,
+   "cost": 1.0650291750396551e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -60.0,
+   "de": 120.0,
+   "cost": 9.18071150219444e-06,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -75.0,
+   "de": 120.0,
+   "cost": 9.09818732024191e-06,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 6.0,
+ "search_evals": 491,
+ "cost": 9.09818732024191e-06,
+ "rms_mrad": 4.265720881689731,
+ "n_photos": 1,
+ "z_m": 2.0,
+ "photos": [
+  {
+   "file": "PF_new_bodrum6.jpg",
+   "fov_deg": 73.74,
+   "heading_deg": 114.661,
+   "pitch_deg": 0.0,
+   "roll_deg": 0.0,
+   "weight": 1.0,
+   "rms_mrad": 4.265720881689731,
+   "heading_offset_deg": -0.2,
+   "el_offset_mrad": 6.073745796940264,
+   "attitude_source": "prior",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": -0.2,
+ "el_offset_mrad": 6.073745796940264,
+ "fov_deg": 73.74
+}
