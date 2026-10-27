@@ -35,3 +35,22 @@ experiments/out/segformer/*_seg*.json
 experiments/out/segformer/*_seg*.log
 experiments/out/segformer/*.log
 experiments/out/segformer/report_*.json
+experiments/out/seg_level/*.npz
+experiments/out/seg_level/*_hard6.json
+experiments/out/seg_level/*_soft5.json
+experiments/out/seg_level/*.log
+experiments/out/seg_level/report_*.json
+experiments/out/seg_level/replay/
+experiments/out/seg_level/replay_*/
+# rendered Google Photorealistic 3D Tiles frames: generated, and not ours to redistribute
+experiments/cesium_render/out/
+# E5ck oracle study: per-run solves and generated observation lines; the
+# reports, truth fits and the sensitivity figure are kept
+experiments/out/oracle/runs/
+experiments/out/oracle/perfect/
+experiments/out/oracle/google/
+experiments/out/oracle/*.log
+
+__pycache__/
+*.pyc
+experiments/realtime_sim/out/

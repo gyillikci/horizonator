@@ -32,12 +32,17 @@ import skyline as S
 
 
 def project(az_deg, el_rad, heading, pitch_deg, roll_deg, f_px, W, H):
-    """Camera model of skyfix.observation(), inverted: world (az, el)
-    -> pixel (col, row). Returns NaN outside the frame."""
+    """Camera model of skyfix.observation() (--camera-model exact: a
+    camera rotated by its pitch), inverted: world (az, el) -> pixel
+    (col, row). Returns NaN outside the frame."""
     rel = np.radians((np.asarray(az_deg) - heading + 180.0) % 360.0 - 180.0)
-    el_cam = np.asarray(el_rad) - np.radians(pitch_deg)
-    ur = f_px * np.tan(rel)
-    vr = np.hypot(ur, f_px) * np.tan(el_cam)
+    el = np.asarray(el_rad, dtype=float)
+    th = np.radians(pitch_deg)
+    X, Y, Z = np.sin(rel) * np.cos(el), np.sin(el), np.cos(rel) * np.cos(el)
+    zc = Y * np.sin(th) + Z * np.cos(th)
+    zc = np.where(zc > 1e-6, zc, np.nan)
+    ur = f_px * X / zc
+    vr = f_px * (Y * np.cos(th) - Z * np.sin(th)) / zc
     cr, sr = np.cos(np.radians(roll_deg)), np.sin(np.radians(roll_deg))
     u = ur * cr + vr * sr          # inverse of the solver's rotation
     v = -ur * sr + vr * cr

@@ -16,6 +16,8 @@
     --muted: #8b96a3;
     --photo: #ffd23f;      /* the skyline the solver read from the photo */
     --dem: #38c6f4;        /* the skyline the DEM predicts at this pose */
+    --sea: #ff4fd8;        /* the sea line that set pitch and roll (photo side) */
+    --hz: #ffffff;         /* the sea horizon the levelling assumed: -dip(z) */
     --edge: #ff6b5a;       /* a nuisance parameter sitting on its bound */
     --ok: #5fd38d;
     --mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
@@ -166,6 +168,8 @@
           <input type="range" id="l-opacity" min="0" max="1" step="0.05" value="0.55" aria-label="photo opacity"></div>
         <label for="l-sky">photo skyline</label><input type="checkbox" id="l-sky" checked>
         <label for="l-dem">DEM skyline</label><input type="checkbox" id="l-dem" checked>
+        <label for="l-sea">sea line</label><input type="checkbox" id="l-sea" checked>
+        <label for="l-hz">sea horizon (model)</label><input type="checkbox" id="l-hz" checked>
         <label for="l-pf">PeakFinder</label><input type="checkbox" id="l-pf" checked>
       </div>
     </section>
@@ -190,6 +194,8 @@
       <h2 style="margin-top:10px">Acceptance checks (after the solve, not constraints)</h2>
       <div id="checks"></div>
       <div class="hint" id="reasons" style="margin-top:6px"></div>
+      <h2 style="margin-top:10px">Coarse basins (exhaustive scan, ranked)</h2>
+      <div class="hint" id="basins"></div>
     </section>
 
     <section>
@@ -223,7 +229,8 @@ function recall(k, d) { try { const v = localStorage.getItem('skyfixeye.' + k); 
 function pose(step) {
   const v = S.view, p = v.photo;
   return {
-    lat: step.lat, lon: step.lon, z: v.z_m,
+    // per-step camera height when skyfix ran --land-observer (ground + H)
+    lat: step.lat, lon: step.lon, z: step.z_m !== undefined ? step.z_m : v.z_m,
     az: ((p.heading_deg + step.heading_offset_deg) % 360 + 360) % 360,
     // the solver's beta is a correction to the camera's pitch prior
     alt: p.pitch_deg + step.beta_mrad / 1000 / D2R,
@@ -232,18 +239,23 @@ function pose(step) {
 }
 
 // ---------- projection: the inverse of skyfix.observation, so the photo
-// skyline lands exactly on the photo's own pixels
+// skyline lands exactly on the photo's own pixels. skyfix's camera is
+// rotated by its pitch (--camera-model exact, the default); the photo is
+// drawn with its roll already undone
 function projector(W, H, ps) {
   const c = calib();
   const f = (W / 2) / Math.tan(ps.fov * D2R / 2) * c.scale;
+  const ca = Math.cos(ps.alt * D2R), sa = Math.sin(ps.alt * D2R);
   return {
     f,
     pt(azDeg, elRad) {
       let d = ((azDeg - ps.az + 540) % 360) - 180;
       if (Math.abs(d) >= 89) return null;
-      const ur = f * Math.tan(d * D2R);
-      const vr = Math.tan(elRad - ps.alt * D2R) * Math.hypot(ur, f);
-      return [W / 2 + ur + c.dx, H / 2 - vr + c.dy];
+      const X = Math.sin(d * D2R) * Math.cos(elRad), Y = Math.sin(elRad),
+            Z = Math.cos(d * D2R) * Math.cos(elRad);
+      const yc = Y * ca - Z * sa, zc = Y * sa + Z * ca;
+      if (zc <= 1e-6) return null;
+      return [W / 2 + f * X / zc + c.dx, H / 2 - f * yc / zc + c.dy];
     }
   };
 }
@@ -267,6 +279,17 @@ function layout() {
   const dpr = window.devicePixelRatio || 1;
   const ov = $('overlay');
   ov.width = Math.floor(w * dpr); ov.height = Math.floor(h * dpr);
+  // PeakFinder sizes its drawing buffer from the canvas only on a window
+  // resize: it kept the size it had at init (before the stage took the
+  // photo's aspect, e.g. 1276x586 for a 1241x931 stage), and the browser
+  // stretched that render 1.6x vertically over the stage. Nudge it when the
+  // sizes disagree (the guard also stops this handler re-triggering itself).
+  const pc = $('pfcanvas');
+  const same = (k) => Math.abs(pc.width - pc.clientWidth * k) <= 1 && Math.abs(pc.height - pc.clientHeight * k) <= 1;
+  if (S.pfReady && !S.pfNudging && !same(1) && !same(dpr)) {
+    S.pfNudging = true;                       // the dispatch re-enters layout() synchronously
+    try { window.dispatchEvent(new Event('resize')); } finally { S.pfNudging = false; }
+  }
   draw();
 }
 
@@ -313,6 +336,27 @@ function draw() {
     const pts = sk.az_rel_deg.map((a, j) => pr.pt(ps.az + a, sk.el_rad[j] + beta));
     polyline(ctx, pts, css.getPropertyValue('--photo'), lw);
   }
+  const sl = S.view.sea_line;
+  if ($('l-sea').checked && sl) {
+    // photo side, like the skyline: lands on the photo's water edge
+    const beta = step.beta_mrad / 1000;
+    const pts = sl.az_rel_deg.map((a, j) => pr.pt(ps.az + a, sl.el_rad[j] + beta));
+    // dotted when the levelling refused it: shown, but pitch and roll are the priors
+    ctx.save(); if (sl.used === false) ctx.setLineDash([2 * lw, 4 * lw]);
+    polyline(ctx, pts, css.getPropertyValue('--sea'), lw);
+    ctx.restore();
+  }
+  const dip = S.view.fixed && S.view.fixed.sea_horizon_dip_mrad;   // absent in older view files
+  if ($('l-hz').checked && dip !== undefined) {
+    // world side, like the DEM: where the true sea horizon is at this pose.
+    // At beta = 0 the sea line sits on it by construction; the gap at
+    // other steps is the beta the solver took; a far shoreline lies below it
+    const pts = [];
+    for (let a = -p.fov_deg / 2 - 5; a <= p.fov_deg / 2 + 5; a += 0.5) pts.push(pr.pt(ps.az + a, -dip / 1000));
+    ctx.save(); ctx.setLineDash([10 * lw, 6 * lw]);
+    polyline(ctx, pts, css.getPropertyValue('--hz'), lw);
+    ctx.restore();
+  }
 }
 
 // ---------- PeakFinder
@@ -354,8 +398,19 @@ function pushPF() {
   aimPF(ps);
 }
 
+// PeakFinder's altitude is not this page's pitch. Measured with its own
+// coordinate grid (fov 60 and 73.7, altitude 0 / 1.69 / 5, three canvas
+// aspects): it draws elevation e at  centre - f * tan(1.2 * e + altitude),
+// f from the horizontal fov. So its altitude has the opposite sign and
+// lives in a space where elevations are stretched by ~1.2. Sending
+// -1.2 * pitch puts the same direction at the canvas centre; the 1.2
+// stretch about the centre remains (no API to turn it off), a few px for
+// terrain a degree or two off the centre line.
+const PF_ELEV_SCALE = 1.2;
+function pfAltitude(ps) { return -PF_ELEV_SCALE * ps.alt; }
+
 function aimPF(ps) {
-  S.panel.azimut(ps.az); S.panel.altitude(ps.alt);
+  S.panel.azimut(ps.az); S.panel.altitude(pfAltitude(ps));
   S.panel.fieldofview(Math.min(90, Math.max(8, pfFov(ps))));
 }
 
@@ -378,11 +433,22 @@ function fmt(x, d = 0, sign = false) {
   const s = x.toFixed(d);
   return sign && x >= 0 ? '+' + s : s;
 }
+// [lo, hi] of the elevation-offset band, mrad: one-sided with
+// skyfix --waterline-band, symmetric in older view files
+function betaBand(s) {
+  return s.beta_lo_mrad !== undefined ? [s.beta_lo_mrad, s.beta_hi_mrad]
+                                      : [-s.beta_band_mrad, s.beta_band_mrad];
+}
+function fmtBand(s) {
+  const [lo, hi] = betaBand(s);
+  return Math.abs(lo + hi) < 0.05 ? `±${fmt(hi, 1)}` : `[${fmt(lo, 1, true)}, ${fmt(hi, 1, true)}]`;
+}
 function atEdge(step) {
   const s = S.view.search;
   if (!s) return { hdg: false, beta: false };    // view files before bounds were recorded
+  const [lo, hi] = betaBand(s);
   return { hdg: Math.abs(step.heading_offset_deg) >= s.heading_window_deg - 0.15,
-           beta: Math.abs(step.beta_mrad) >= s.beta_band_mrad - 0.05 };
+           beta: step.beta_mrad <= lo + 0.05 || step.beta_mrad >= hi - 0.05 };
 }
 function rms(c) { return Math.sqrt(2 * c) * 1e3; }
 
@@ -409,7 +475,7 @@ function renderSide() {
     <dt>residual rms</dt><dd>${fmt(rms(step.cost), 2)} mrad</dd>`;
   const flags = [];
   if (e.hdg) flags.push(`<span class="chip edge">heading on its ±${v.search.heading_window_deg}° bound</span>`);
-  if (e.beta) flags.push(`<span class="chip edge">β on its ±${fmt(v.search.beta_band_mrad, 0)} mrad bound</span>`);
+  if (e.beta) flags.push(`<span class="chip edge">β on its ${fmtBand(v.search)} mrad bound</span>`);
   if (!flags.length) flags.push('<span class="chip ok">nuisances interior</span>');
   flags.push(`<a href="${pfUrl(ps)}" target="_blank" rel="noopener">open on peakfinder.com</a>`);
   $('flags').innerHTML = flags.join(' ');
@@ -439,6 +505,11 @@ function renderStatic() {
     <dt>rms at fix</dt><dd>${fmt(r.rms_mrad, 2)} mrad</dd>
     <dt>photo</dt><dd>${v.photo.file}</dd>`;
   $('reasons').textContent = (r.reasons || []).join(' · ');
+  $('basins').innerHTML = v.basins
+    ? `suppression ${fmt(v.basins.min_sep_m)} m; basin margin = cost of #2 over #1<br>` + v.basins.list.map(b =>
+        `#${b.rank} &nbsp;Δn ${fmt(b.dn, 0, true)} Δe ${fmt(b.de, 0, true)} m &nbsp;rms ${fmt(b.rms_mrad, 2)} mrad` +
+        (b.rank > 1 ? ` &nbsp;(+${fmt(100 * b.cost_vs_best, 0)}%)` : '')).join('<br>')
+    : 'not in this view file (older skyfix): the steps are the raster-order running best';
   $('checks').innerHTML = (v.checks || []).map(c => {
     const ok = c.op === '>=' ? c.value >= c.limit : c.op === '<=' ? c.value <= c.limit : c.value > c.limit;
     const val = c.name === 'covariance computable' ? (c.value ? 'yes' : 'no')
@@ -459,9 +530,14 @@ function innerOptimum(step) {
   return { psi: P[bk], beta: B[bi], rms: best };
 }
 
-function gauge(name, value, bound, unit, digits, free, onEdge) {
-  // the track spans 1.5x the bound each way; the middle two thirds is feasible
+function gauge(name, value, bound, unit, digits, free, onEdge, band) {
+  // the track spans 1.5x the bound each way; the middle two thirds is
+  // feasible. band = [lo, hi] for a one-sided bound (beta, --waterline-band)
+  const [lo, hi] = band || [-bound, bound];
+  bound = Math.max(Math.abs(lo), Math.abs(hi));
   const pos = (x) => 50 + 50 * x / (1.5 * bound);
+  const feasStyle = band ? ` style="left:${pos(lo)}%;right:${100 - pos(hi)}%"` : '';
+  const boundTxt = band && Math.abs(lo + hi) > 0.05 ? `[${fmt(lo, digits, true)}, ${fmt(hi, digits, true)}]` : `±${fmt(bound, digits)}`;
   let ringHtml = '';
   if (free !== null && free !== undefined) {
     const x = pos(free);
@@ -469,12 +545,12 @@ function gauge(name, value, bound, unit, digits, free, onEdge) {
     else if (x > 100) ringHtml = `<span class="arrow" style="right:1px">▶</span>`;
     else ringHtml = `<span class="ring" style="left:${x}%"></span>`;
   }
-  return `<div class="gauge" title="bound ±${fmt(bound, digits)} ${unit}">
+  return `<div class="gauge" title="bound ${boundTxt} ${unit}">
     <span>${name}</span>
-    <div class="track"><div class="feas"></div><div class="zero"></div>${ringHtml}
+    <div class="track"><div class="feas"${feasStyle}></div><div class="zero"></div>${ringHtml}
       <span class="dot ${onEdge ? 'edge' : ''}" style="left:${pos(value)}%"></span></div>
-    <span class="val">${fmt(value, digits, true)} / ±${fmt(bound, digits)} ${unit}${
-      free !== null && free !== undefined && Math.abs(free) > bound * 1.02
+    <span class="val">${fmt(value, digits, true)} / ${boundTxt} ${unit}${
+      free !== null && free !== undefined && (free < lo * 1.02 - 1e-9 || free > hi * 1.02 + 1e-9)
         ? `<br><span style="color:var(--dem)">free: ${fmt(free, digits, true)}</span>` : ''}</span></div>`;
 }
 
@@ -486,7 +562,7 @@ function renderConstraints() {
   }
   const B2 = sr.box_m / 2;
   $('formula').innerHTML = `min J(n, e, ψ, β) = Σ wᵢ ρ<sub>δ</sub>(E(αᵢ+ψ; n, e) − êᵢ − β)<br>
-    <span class="b">s.t.</span> |n|, |e| ≤ ${fmt(B2)} m &nbsp; |ψ| ≤ ${fmt(sr.heading_window_deg, 0)}° &nbsp; |β| ≤ ${fmt(sr.beta_band_mrad, 1)} mrad<br>
+    <span class="b">s.t.</span> |n|, |e| ≤ ${fmt(B2)} m &nbsp; |ψ| ≤ ${fmt(sr.heading_window_deg, 0)}° &nbsp; β ∈ ${fmtBand(sr)} mrad<br>
     <span class="b">lattice:</span> ${sr.grid_steps_m.map(x => fmt(x, x < 20 ? 1 : 0)).join(' → ')} m, ψ ${sr.psi_lattice_deg}°, β ${fmt(sr.beta_lattice_mrad, 1)} mrad; δ = ${sr.huber_mrad} mrad`;
   const free = innerOptimum(step), ed = atEdge(step);
   // a position within one coarse cell of the box wall is on the bound
@@ -495,12 +571,13 @@ function renderConstraints() {
     gauge('n', step.dn, B2, 'm', 0, null, wall(step.dn)) +
     gauge('e', step.de, B2, 'm', 0, null, wall(step.de)) +
     gauge('ψ', step.heading_offset_deg, sr.heading_window_deg, '°', 1, free && free.psi, ed.hdg) +
-    gauge('β', step.beta_mrad, sr.beta_band_mrad, 'mrad', 1, free && free.beta, ed.beta);
+    gauge('β', step.beta_mrad, sr.beta_band_mrad, 'mrad', 1, free && free.beta, ed.beta, betaBand(sr));
   drawInner(step, free);
   const chips = [];
   if (free) {
     const outPsi = Math.abs(free.psi) > sr.heading_window_deg + 0.2;
-    const outBeta = Math.abs(free.beta) > sr.beta_band_mrad + 0.75;
+    const [blo, bhi] = betaBand(sr);
+    const outBeta = free.beta < blo - 0.75 || free.beta > bhi + 0.75;
     if (outPsi || outBeta) chips.push(`<span class="chip edge">binding: ${[outPsi && 'ψ', outBeta && 'β'].filter(Boolean).join(' and ')} would leave its bounds (rms ${fmt(rms(step.cost), 2)} → ${fmt(free.rms, 2)} mrad)</span>`);
     else chips.push('<span class="chip ok">bounds not binding: the optimum is interior</span>');
   }
@@ -510,8 +587,17 @@ function renderConstraints() {
     <dt>pitch prior θ</dt><dd>${fmt(f.pitch_prior_deg, 2, true)}° (${f.attitude_source})</dd>
     <dt>roll φ</dt><dd>${fmt(f.roll_deg, 2, true)}°</dd>
     <dt>field of view</dt><dd>${fmt(f.fov_deg, 1)}°</dd>
-    <dt>camera height z</dt><dd>${fmt(f.camera_height_m, 1)} m</dd>
-    <dt>near-field cut d<sub>min</sub></dt><dd>${fmt(f.near_field_m)} m</dd>`;
+    <dt>camera height z</dt><dd>${f.land_observer_m != null
+        ? `ground + ${fmt(f.land_observer_m, 1)} m (per candidate)` : fmt(f.camera_height_m, 1) + ' m'}</dd>
+    ${f.land_only_m ? `<dt>search</dt><dd>land within ${fmt(f.land_only_m)} m only</dd>` : ''}
+    <dt>near-field cut d<sub>min</sub></dt><dd>${fmt(f.near_field_m)} m</dd>`
+    + (f.sea_horizon_dip_mrad !== undefined
+       ? `<dt>sea horizon dip</dt><dd>${fmt(f.sea_horizon_dip_mrad, 2)} mrad</dd>` : '')
+    + (v.sea_line
+       ? `<dt>sea line</dt><dd>${v.sea_line.used
+           ? `levelled: ${v.sea_line.n_inliers} cols, rms ${fmt(v.sea_line.rms_px, 1)} px`
+           : 'refused by the fit (priors used)'}</dd>`
+       : `<dt>sea line</dt><dd>none</dd>`);
 }
 
 function drawInner(step, free) {
@@ -534,8 +620,9 @@ function drawInner(step, free) {
   const sr = v.search, css = getComputedStyle(document.documentElement);
   // feasible set
   ctx.setLineDash([7, 5]); ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2;
-  ctx.strokeRect(X(-sr.heading_window_deg), Y(sr.beta_band_mrad),
-                 X(sr.heading_window_deg) - X(-sr.heading_window_deg), Y(-sr.beta_band_mrad) - Y(sr.beta_band_mrad));
+  const [blo, bhi] = betaBand(sr);
+  ctx.strokeRect(X(-sr.heading_window_deg), Y(bhi),
+                 X(sr.heading_window_deg) - X(-sr.heading_window_deg), Y(blo) - Y(bhi));
   ctx.setLineDash([]);
   // optima
   if (free) {
@@ -551,7 +638,7 @@ function drawInner(step, free) {
   for (const t of [P[0], -sr.heading_window_deg, 0, sr.heading_window_deg, P[P.length - 1]])
     ctx.fillText(fmt(t, 0, t !== 0) + '°', X(t), H - 10);
   ctx.textAlign = 'right';
-  for (const t of [B[0], -sr.beta_band_mrad, 0, sr.beta_band_mrad, B[B.length - 1]])
+  for (const t of [B[0], blo, 0, bhi, B[B.length - 1]])
     ctx.fillText(fmt(t, 0, t !== 0), L - 6, Y(t) + 6);
   ctx.textAlign = 'left';
 }
@@ -562,10 +649,15 @@ function drawCostmap() {
   const g = v.grid.offsets_m, C = v.grid.cost, n = g.length;
   const W = cv.width, cell = W / n;
   let lo = Infinity, hi = -Infinity;
-  for (const row of C) for (const c of row) if (isFinite(c) && c > 0) {
+  for (const row of C) for (const c of row) if (c !== null && isFinite(c) && c > 0) {
     lo = Math.min(lo, Math.log(c)); hi = Math.max(hi, Math.log(c)); }
   for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) {
     const c = C[i][j];
+    if (c === null) {           // outside the search (skyfix --land-only): open water
+      ctx.fillStyle = '#1b232c';
+      ctx.fillRect(j * cell, (n - 1 - i) * cell, cell + 0.5, cell + 0.5);
+      continue;
+    }
     const t = isFinite(c) && c > 0 ? (Math.log(c) - lo) / (hi - lo || 1) : 1;
     // dark = low cost: a single-hue ramp, steel blue to near white
     const L = 16 + 78 * t;
@@ -579,21 +671,34 @@ function drawCostmap() {
   const [cx, cy] = xy(0, 0);
   ctx.strokeStyle = '#000'; ctx.lineWidth = 2;
   ctx.beginPath(); ctx.moveTo(cx - 9, cy); ctx.lineTo(cx + 9, cy); ctx.moveTo(cx, cy - 9); ctx.lineTo(cx, cy + 9); ctx.stroke();
-  // improvement path
   const css = getComputedStyle(document.documentElement);
+  // box label first, so a basin in the corner is drawn over it
+  ctx.font = '22px ' + css.getPropertyValue('--mono');
+  const label = `${(span / 1000).toFixed(1)} km box`;
+  ctx.fillStyle = 'rgba(18,22,27,.6)'; ctx.fillRect(6, 6, ctx.measureText(label).width + 12, 30);
+  ctx.fillStyle = '#fff'; ctx.fillText(label, 12, 29);
+  // basins: what the exhaustive coarse scan found, ranked; not a path
+  const bl = v.basins ? v.basins.list : [];
+  ctx.font = 'bold 20px ' + css.getPropertyValue('--mono');
+  bl.forEach((b) => { const [x, y] = xy(b.dn, b.de);
+    ctx.strokeStyle = b.rank === 1 ? css.getPropertyValue('--ok') : css.getPropertyValue('--edge');
+    ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(x, y, 14, 0, 7); ctx.stroke();
+    // keep the rank inside the canvas for basins on the box edge
+    const t = '#' + b.rank, tw = ctx.measureText(t).width;
+    const tx = x + 16 + tw > W ? x - 16 - tw : x + 16, ty = y - 10 < 20 ? y + 30 : y - 10;
+    ctx.fillStyle = '#fff'; ctx.fillText(t, tx, ty); });
+  // the path from basin #1 through the refinements to the fix (older view
+  // files without basins keep their raster record and draw it as before)
+  const path = bl.length ? [bl[0]].concat(v.steps.filter(s => s.stage !== 'basin' && s.stage !== 'prior')) : v.steps;
   ctx.strokeStyle = css.getPropertyValue('--photo'); ctx.lineWidth = 2;
   ctx.beginPath();
-  v.steps.forEach((s, j) => { const [x, y] = xy(s.dn, s.de); j ? ctx.lineTo(x, y) : ctx.moveTo(x, y); });
+  path.forEach((s, j) => { const [x, y] = xy(s.dn, s.de); j ? ctx.lineTo(x, y) : ctx.moveTo(x, y); });
   ctx.stroke();
-  v.steps.forEach((s) => { const [x, y] = xy(s.dn, s.de);
+  path.forEach((s) => { const [x, y] = xy(s.dn, s.de);
     ctx.fillStyle = css.getPropertyValue('--photo'); ctx.beginPath(); ctx.arc(x, y, 3.5, 0, 7); ctx.fill(); });
   const s = v.steps[S.i], [x, y] = xy(s.dn, s.de);
   ctx.strokeStyle = css.getPropertyValue('--edge'); ctx.lineWidth = 3;
   ctx.beginPath(); ctx.arc(x, y, 11, 0, 7); ctx.stroke();
-  ctx.font = '22px ' + css.getPropertyValue('--mono');
-  const label = `${(span / 1000).toFixed(1)} km box`;
-  ctx.fillStyle = 'rgba(18,22,27,.8)'; ctx.fillRect(6, 6, ctx.measureText(label).width + 12, 30);
-  ctx.fillStyle = '#fff'; ctx.fillText(label, 12, 29);
 }
 
 $('costmap').onclick = (ev) => {
@@ -636,7 +741,7 @@ document.addEventListener('keydown', (e) => {
     if (c.classList.contains('locked')) pushPF();
   }
 });
-['l-photo', 'l-opacity', 'l-sky', 'l-dem'].forEach(id => $(id).addEventListener('input', () => { store(id, $(id).type === 'checkbox' ? $(id).checked : $(id).value); draw(); }));
+['l-photo', 'l-opacity', 'l-sky', 'l-dem', 'l-sea', 'l-hz'].forEach(id => $(id).addEventListener('input', () => { store(id, $(id).type === 'checkbox' ? $(id).checked : $(id).value); draw(); }));
 $('l-pf').addEventListener('input', () => { store('l-pf', $('l-pf').checked); pushPF(); });
 ['c-axis', 'c-dx', 'c-dy', 'c-scale'].forEach(id => $(id).addEventListener('input', () => {
   store(id, $(id).value); draw(); if (S.pfReady) aimPF(pose(S.view.steps[S.i])); }));
@@ -657,7 +762,7 @@ async function loadRun(id) {
 }
 
 (async function init() {
-  for (const id of ['l-photo', 'l-sky', 'l-dem', 'l-pf']) $(id).checked = recall(id, $(id).checked);
+  for (const id of ['l-photo', 'l-sky', 'l-dem', 'l-sea', 'l-hz', 'l-pf']) $(id).checked = recall(id, $(id).checked);
   for (const id of ['l-opacity', 'c-axis', 'c-dx', 'c-dy', 'c-scale']) $(id).value = recall(id, $(id).value);
   S.runs = await (await fetch('/runs')).json();
   $('runsel').innerHTML = S.runs.map(r => `<option value="${r.id}">${r.name} (${r.status})</option>`).join('');

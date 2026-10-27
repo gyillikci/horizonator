@@ -21,12 +21,27 @@ configuration) is included:
 | photo, levelled | the photograph with its roll removed and scaled to the same field of view |
 | yellow line | the skyline the solver extracted from the photo, placed with this step's heading offset and β |
 | cyan line | the skyline **our** DEM predicts from this step's position; the solver minimises the gap between yellow and cyan |
+| magenta line | the sea line that set pitch and roll (`skyfix --level-npy`), photo side like yellow; dotted when the levelling fit refused it and the priors were used |
+| white dashed line | the sea horizon the levelling assumed, `-dip(z)`, world side like cyan. At β = 0 the magenta line sits on it by construction; a shoreline closer than the horizon lies below it |
 
 The steps are the camera's own claim (box centre, compass heading,
-pitch prior), every improvement of the running best during the grid
-scan, the two refinements, and the final fix. The grid scan is
-exhaustive, so the improvements arrive in raster order, not as a
-descent; the cost map on the right is the honest picture of the search.
+pitch prior), the best basins of the coarse grid scan (up to five, worst
+to best, with the 4-cell suppression distance the ambiguity test uses),
+the two refinements around basin #1, and the final fix. The grid scan
+is exhaustive, so there is no search path to replay: view files from
+before the basins showed the running best in raster order instead
+(always the south-west corner first, then along the south row), which
+read like a path and was not one. The cost map marks the basins as
+ranked rings and draws a line only from #1 through the refinements;
+the side panel lists them with their cost over #1. Two basins of nearly
+equal cost far apart are what an "ambiguous landscape" refusal means.
+
+With `skyfix --land-observer H` each step carries its own camera height
+(DEM ground there + H), which the page also hands to PeakFinder; with
+`--land-only R` the cells outside the search (no land within R) are
+drawn dark on the cost map. With `--waterline-band LO,HI` the β band is
+one-sided; the gauge, the inner map's dashed box and the bound chips use
+`[LO, HI]`.
 
 A red chip means a nuisance parameter (heading offset or β) is sitting
 on its search bound at that step. That is the clamping signature behind
@@ -57,6 +72,21 @@ opens the same view on the website.
   shift/scale under *Overlay alignment* (saved per browser). Small,
   pose-dependent differences between cyan and PeakFinder are real: they
   are two different DEMs and refraction models.
+
+  Two such mismatches are measured and handled in the page (headless
+  Chrome, PeakFinder's own coordinate grid, fov 60 and 73.7°, altitude
+  0 / 1.69 / 5°, canvases 1200×600 to 1200×1200):
+  - PeakFinder draws elevation *e* at `centre − f·tan(1.2·e + altitude)`,
+    *f* from the horizontal fov. Its altitude has the opposite sign of
+    this page's pitch and lives in a space stretched ~1.2× vertically, so
+    the page sends `−1.2 · pitch`. The 1.2 stretch about the centre has
+    no API switch and remains: a few px for terrain a degree or two off
+    the centre line. The peakfinder.com link still sends the raw pitch
+    (not measured on the website).
+  - PeakFinder sizes its drawing buffer only on a window resize. It kept
+    the size the stage had at init, before the stage took the photo's
+    aspect, and the browser stretched that render up to 1.6× vertically.
+    `layout()` now fires a resize when the buffer and the stage differ.
 - **Camera height.** PeakFinder stands the viewer on its own terrain at
   that point; the page lifts it by `z − ground` so the eye sits at the
   solver's height above sea level. The status line at the bottom left

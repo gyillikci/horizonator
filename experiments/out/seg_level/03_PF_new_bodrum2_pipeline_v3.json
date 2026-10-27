@@ -1,0 +1,12 @@
+{
+ "status": "inconclusive",
+ "fix_ok": false,
+ "reasons": [
+  "no usable sea line: the levelling accepted none, so pitch and roll are unknown"
+ ],
+ "lat": 37.01999,
+ "lon": 27.34782,
+ "basin_margin": 0.0,
+ "rms_mrad": null,
+ "n_photos": 1
+}

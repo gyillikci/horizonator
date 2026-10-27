@@ -1,6 +1,8 @@
 {
  "about": "The 44 field frames of the E5bm uniform run, rebuilt 2026-10-22 from out/resweep/*_w6 (the original list lived in a session scratchpad and was lost). lat/lon is the box centre each solve used, which for these frames is the EXIF GPS position, i.e. the truth. path is relative to the celestial-navigation checkout. e5bm_w6 is the stored result of that run, for reproduction checks.",
  "flags": "--extractor ewasr --dem ~/.horizonator/DEMs_COP30 --crest-dh 9 --max-peak-dh 30 --heading-window 6",
+ "pipeline_flags": "--extractor ewasr --dem ~/.horizonator/DEMs_COP30 --crest-dh 9 --max-peak-dh 100 --compass-sigma 5 --roll-window 1 --land-observer 2.0 --land-only 60.0 --waterline-band -12.5,5 --max-rms 7 --min-parallax 0.03",
+ "pipeline_about": "The campaign pipeline as decided 2026-10-25 (E5ck): every photo taken from land (camera 2 m above the ground at each candidate, land within 60 m), pitch and roll from the SegFormer sea line with the one-sided waterline band, and a photo whose sea line is missing or not accepted by the levelling is not solved (the driver adds --level-npy and --require-level per frame). Soft compass prior sigma 5 deg (search +-20), roll searched +-1 deg, peak-height gate 100 m (30 m refused 25 good fixes for 3 wrong ones); residual gate 7 mrad (no good fix above 6) and the parallax gate 0.03 per km (a frame whose ridges all stand at one range is bearing only: EWAC7374 went 1.8 km sideways), which took the wrong accepts to zero for one 289 m fix. skyfix defaults supply the exact camera model and the iterated refinement. \"flags\" stays the E5bm run, for reproduction.",
  "frames": [
   {
    "tag": "00_PF_new_akyaka3",

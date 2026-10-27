@@ -1,0 +1,97 @@
+{
+ "31_EWAC7374": {
+  "azimuth_acc_deg": 11.0,
+  "imu_pitch_deg": -0.2,
+  "imu_roll_deg": 0.1
+ },
+ "32_HATY3309": {
+  "azimuth_acc_deg": 11.0,
+  "imu_pitch_deg": 1.3,
+  "imu_roll_deg": -0.0
+ },
+ "33_KWHC9160": {
+  "azimuth_acc_deg": 10.0,
+  "imu_pitch_deg": -0.5,
+  "imu_roll_deg": -0.0
+ },
+ "34_LHCG7767": {
+  "azimuth_acc_deg": 10.0,
+  "imu_pitch_deg": -0.1,
+  "imu_roll_deg": -0.4
+ },
+ "35_MYQR7719": {
+  "azimuth_acc_deg": 10.0,
+  "imu_pitch_deg": -0.6,
+  "imu_roll_deg": -0.1
+ },
+ "36_PQBC6867": {
+  "azimuth_acc_deg": 10.0,
+  "imu_pitch_deg": -0.7,
+  "imu_roll_deg": -1.3
+ },
+ "37_QNJZ1625": {
+  "azimuth_acc_deg": 10.0,
+  "imu_pitch_deg": -0.9,
+  "imu_roll_deg": -0.8
+ },
+ "38_XKYU3498": {
+  "azimuth_acc_deg": 11.0,
+  "imu_pitch_deg": -0.1,
+  "imu_roll_deg": -0.8
+ },
+ "39_EURK8793": {
+  "azimuth_acc_deg": 10.0,
+  "imu_pitch_deg": 6.0,
+  "imu_roll_deg": 0.9
+ },
+ "40_FYMC7458": {
+  "azimuth_acc_deg": 11.0,
+  "imu_pitch_deg": 3.7,
+  "imu_roll_deg": 0.6
+ },
+ "41_GAQB1096": {
+  "azimuth_acc_deg": 10.0,
+  "imu_pitch_deg": 3.1,
+  "imu_roll_deg": -0.7
+ },
+ "42_MJFQ1511": {
+  "azimuth_acc_deg": 10.0,
+  "imu_pitch_deg": 5.2,
+  "imu_roll_deg": 1.2
+ },
+ "43_NCVO7252": {
+  "azimuth_acc_deg": 13.0,
+  "imu_pitch_deg": 6.7,
+  "imu_roll_deg": -1.4
+ },
+ "44_QMLO5628": {
+  "azimuth_acc_deg": 10.0,
+  "imu_pitch_deg": 7.9,
+  "imu_roll_deg": -1.3
+ },
+ "45_UYKQ7227": {
+  "azimuth_acc_deg": 10.0,
+  "imu_pitch_deg": 4.3,
+  "imu_roll_deg": -0.8
+ },
+ "46_UYXQ4404": {
+  "azimuth_acc_deg": 10.0,
+  "imu_pitch_deg": 5.3,
+  "imu_roll_deg": -0.9
+ },
+ "47_VSFK5163": {
+  "azimuth_acc_deg": 10.0,
+  "imu_pitch_deg": 5.8,
+  "imu_roll_deg": 0.0
+ },
+ "48_XRQV0283": {
+  "azimuth_acc_deg": 12.0,
+  "imu_pitch_deg": -2.4,
+  "imu_roll_deg": -0.9
+ },
+ "49_YBPL9738": {
+  "azimuth_acc_deg": 10.0,
+  "imu_pitch_deg": 1.8,
+  "imu_roll_deg": -0.6
+ }
+}

@@ -1,0 +1,73 @@
+{
+ "status": "inconclusive",
+ "reasons": [
+  "minimum on the search-box boundary: the true position may lie outside the box"
+ ],
+ "lat": 36.64059027135763,
+ "lon": 28.09508771929546,
+ "fix_ok": false,
+ "basin_margin": Infinity,
+ "relief_mrad": 7.544247011671892,
+ "dn_m": -40.0,
+ "de_m": -35.0,
+ "sigma_n_m": 137.00325862931396,
+ "sigma_e_m": 75.63113075359499,
+ "sigma_major_m": 147.7879922780977,
+ "sigma_minor_m": 51.46523246354767,
+ "major_bearing_deg": 23.58053379513416,
+ "anisotropy": 2.871608369451639,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": 0.003024394886759175,
+ "peak_dh_mad_m": 12.119442128042241,
+ "n_peaks": 5,
+ "search_trace": [
+  {
+   "dn": -0.0,
+   "de": -0.0,
+   "cost": 1.100828629082344e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -40.0,
+   "de": -40.0,
+   "cost": 1.003897311748044e-05,
+   "stage": "refine_20m"
+  },
+  {
+   "dn": -40.0,
+   "de": -35.0,
+   "cost": 9.985846215660652e-06,
+   "stage": "refine_5m"
+  }
+ ],
+ "heading_window_deg": 20.0,
+ "compass_sigma_deg": 5.0,
+ "search_evals": 51,
+ "cost": 9.985846215660652e-06,
+ "rms_mrad": 4.467680878411226,
+ "n_photos": 1,
+ "z_m": 2.5526461601257324,
+ "land_observer_m": 2.0,
+ "land_only_m": 60.0,
+ "photos": [
+  {
+   "file": "PF_20260824_122139.jpg",
+   "fov_deg": 38.07,
+   "heading_deg": 297.024,
+   "pitch_deg": 1.1203768253522493,
+   "roll_deg": -0.5357381360399254,
+   "weight": 1.0,
+   "rms_mrad": 4.467680878411226,
+   "heading_offset_deg": 0.8,
+   "el_offset_mrad": -3.75,
+   "roll_offset_deg": 0.0,
+   "attitude_source": "waterline",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": 0.8,
+ "el_offset_mrad": -3.75,
+ "fov_deg": 38.07
+}

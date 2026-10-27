@@ -1,0 +1,213 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Cesium skyline render</title>
+<script src="https://cdn.jsdelivr.net/npm/cesium@1.120.0/Build/Cesium/Cesium.js"></script>
+<style>
+  html, body { margin: 0; background: #000; overflow: hidden; }
+  #c { position: absolute; left: 0; top: 0; }
+  /* what Cesium's widgets.css would do: the canvas fills its container */
+  .cesium-widget, .cesium-widget canvas { width: 100%; height: 100%; display: block; }
+  .cesium-viewer, .cesium-viewer-cesiumWidgetContainer { width: 100%; height: 100%; }
+  .cesium-widget-credits, .cesium-viewer-bottom { display: none; }
+</style>
+</head>
+<body>
+<div id="c"></div>
+<script>
+/*
+  Renders a camera pose over Google Photorealistic 3D Tiles (Cesium ion asset
+  2275207) twice: a photo, and a segmentation whose sky is magenta, sea blue
+  and land green, from which the exact skyline and sea line follow.
+
+  Driven by driver.mjs over the DevTools protocol; nothing here is secret:
+    await init({token, width, height})
+    await renderPose({lat, lon, h_ellipsoid, heading_deg, pitch_deg, roll_deg,
+                      hfov_deg, geoid_n, sse, timeout_s})  -> {photo, seg, ...}
+
+  Heights are WGS84-ellipsoidal (what the tiles use). The open sea has no tile
+  geometry, so it is a globe drawn on an ellipsoid raised by the local geoid
+  separation N: the sea surface sits at mean sea level, not 30-40 m below it.
+  CesiumJS draws straight rays over the curved Earth: no refraction (k = 0).
+*/
+const SKY = [255, 0, 255], SEA = [0, 0, 255], LAND = [0, 255, 0];
+const WGS84 = Cesium.Ellipsoid.WGS84;
+let viewer = null, tileset = null, seaN = null;
+
+const segShader = new Cesium.CustomShader({
+  lightingModel: Cesium.LightingModel.UNLIT,
+  uniforms: { u_seaTop: { type: Cesium.UniformType.FLOAT, value: 0.0 } },
+  // land or sea by the fragment's height above the WGS84 ellipsoid; float32
+  // world positions limit this to about a metre, hence a 2 m margin over N
+  fragmentShaderText: `
+  void fragmentMain(FragmentInput fsInput, inout czm_modelMaterial material) {
+    vec3 p = fsInput.attributes.positionWC;
+    float a = 6378137.0;
+    float b = 6356752.314245;
+    float r = length(p);
+    float s = p.z / r;
+    float R = a * b / sqrt(b * b * (1.0 - s * s) + a * a * s * s);
+    float h = r - R;
+    material.diffuse = h < u_seaTop ? vec3(0.0, 0.0, 1.0) : vec3(0.0, 1.0, 0.0);
+    material.alpha = 1.0;
+  }`,
+});
+
+function seaGlobe(n) {
+  const e = new Cesium.Ellipsoid(WGS84.radii.x + n, WGS84.radii.y + n, WGS84.radii.z + n);
+  const g = new Cesium.Globe(e);
+  g.terrainProvider = new Cesium.EllipsoidTerrainProvider({ ellipsoid: e });
+  g.showGroundAtmosphere = false;
+  g.enableLighting = false;
+  g.depthTestAgainstTerrain = true;
+  return g;
+}
+
+async function init({ token, width, height }) {
+  Cesium.Ion.defaultAccessToken = token;
+  const c = document.getElementById('c');
+  c.style.width = width + 'px'; c.style.height = height + 'px';
+  viewer = new Cesium.Viewer(c, {
+    animation: false, timeline: false, baseLayerPicker: false, geocoder: false,
+    homeButton: false, sceneModePicker: false, navigationHelpButton: false,
+    fullscreenButton: false, infoBox: false, selectionIndicator: false,
+    baseLayer: false, terrainProvider: undefined, globe: seaGlobe(0.0),
+    useBrowserRecommendedResolution: false, requestRenderMode: false,
+    contextOptions: { webgl: { preserveDrawingBuffer: true } },
+  });
+  viewer.resolutionScale = 1.0;
+  viewer.clock.currentTime = Cesium.JulianDate.fromIso8601('2026-08-23T10:00:00Z');
+  viewer.clock.shouldAnimate = false;
+  tileset = await Cesium.createGooglePhotorealistic3DTileset();
+  // distant ridges are the point: do not let the tileset coarsen them
+  tileset.dynamicScreenSpaceError = false;
+  tileset.foveatedScreenSpaceError = false;
+  tileset.skipLevelOfDetail = false;
+  // the heaviest sea-level view at SSE 16 holds 1.1 GB of tiles (the
+  // 1600x3479 PF_20260823_175647); four workers share an 8 GB GPU, and with
+  // 1.0 GB kept per worker they peaked at 7.6 GB of it. A view that needs
+  // more than 1.25 GB is coarsened by the tileset: renderPose reports the
+  // screen-space error it actually used
+  tileset.cacheBytes = 0.75 * 1024 ** 3;
+  tileset.maximumCacheOverflowBytes = 0.5 * 1024 ** 3;
+  viewer.scene.primitives.add(tileset);
+  viewer.scene.screenSpaceCameraController.enableInputs = false;
+  // no collision handling: it lifted a camera 2.5 m above the sea to 185 m
+  // (above a coarse tile's surface); the poses here place the camera themselves
+  viewer.scene.screenSpaceCameraController.enableCollisionDetection = false;
+  const cv = viewer.scene.canvas;
+  return { canvas: [cv.width, cv.height], cesium: Cesium.VERSION };
+}
+
+const frame = () => new Promise((r) => requestAnimationFrame(() => r()));
+
+async function sizeCanvas(width, height) {
+  // the drawing buffer WebGL actually allocated for a width x height canvas.
+  // Short of GPU memory it allocates a smaller one without an error (four
+  // workers gave 1600x3479 frames 800x1739), so the driver checks; shrinking
+  // first frees the old buffer before the new one is asked for
+  const c = document.getElementById('c');
+  for (const [w, h] of [[16, 16], [width, height]]) {
+    c.style.width = w + 'px'; c.style.height = h + 'px';
+    for (let i = 0; i < 3; i++) await frame();
+  }
+  return [viewer.scene.drawingBufferWidth, viewer.scene.drawingBufferHeight];
+}
+
+async function settle(timeoutS) {
+  // tiles loaded on this many frames in a row, or give up at the timeout
+  const t0 = performance.now();
+  let calm = 0;
+  while ((performance.now() - t0) / 1000 < timeoutS) {
+    await frame();
+    calm = (tileset.tilesLoaded && viewer.scene.globe.tilesLoaded) ? calm + 1 : 0;
+    if (calm >= 8) return { loaded: true, s: (performance.now() - t0) / 1000 };
+  }
+  return { loaded: false, s: (performance.now() - t0) / 1000 };
+}
+
+function setLook(seg) {
+  const s = viewer.scene;
+  s.skyAtmosphere.show = !seg;
+  if (s.skyBox) s.skyBox.show = !seg;
+  if (s.sun) s.sun.show = !seg;
+  if (s.moon) s.moon.show = !seg;
+  // fog off in both passes: CesiumJS uses it to coarsen and drop distant
+  // tiles, and the far ridges (5-20 km, visible through the haze in the real
+  // photos) went missing from the renders with it on
+  s.fog.enabled = false;
+  s.highDynamicRange = false;
+  s.postProcessStages.fxaa.enabled = !seg;
+  s.msaaSamples = seg ? 1 : 4;
+  s.backgroundColor = seg ? new Cesium.Color(1, 0, 1, 1) : Cesium.Color.BLACK;
+  s.globe.baseColor = seg ? new Cesium.Color(0, 0, 1, 1) : Cesium.Color.fromCssColorString('#3d5f78');
+  tileset.customShader = seg ? segShader : undefined;
+}
+
+async function renderPose(p) {
+  if (seaN === null || Math.abs(seaN - p.geoid_n) > 0.05) {
+    viewer.scene.globe = seaGlobe(p.geoid_n);
+    seaN = p.geoid_n;
+  }
+  segShader.setUniform('u_seaTop', p.geoid_n + 2.0);
+  // SSE 16 against 4 on five sea-level frames: the exact skyline moves
+  // 0.3 px on average (p95 1 px, max 3), SegFormer's skyline on the photo
+  // 0.4-0.6 px, for a tenth of the tiles (bodrum3: 600 against 6444, 11 s
+  // against 151 s); a render sits ~5 px from COP30 and a photo 5-9 px from
+  // its render
+  tileset.maximumScreenSpaceError = p.sse || 16;
+  const cam = viewer.camera;
+  // Cesium's fov spans the LONGER side: horizontal for a landscape frame,
+  // vertical for a portrait one. Poses carry the horizontal FOV (skyfix's
+  // f = (W/2)/tan(hfov/2)); given as-is, a 1600x3479 frame rendered at
+  // 18 deg instead of 38
+  const hf = Cesium.Math.toRadians(p.hfov_deg);
+  cam.frustum.fov = p.width >= p.height ? hf : 2 * Math.atan(Math.tan(hf / 2) * p.height / p.width);
+  cam.frustum.near = 0.5;
+  cam.setView({
+    destination: Cesium.Cartesian3.fromDegrees(p.lon, p.lat, p.h_ellipsoid, WGS84),
+    // poses are in skyfix's convention; its roll has the opposite sign of
+    // Cesium's (checked on akyaka3, a frame rolled -9 deg by its sea line)
+    orientation: { heading: Cesium.Math.toRadians(p.heading_deg),
+                   pitch: Cesium.Math.toRadians(p.pitch_deg),
+                   roll: Cesium.Math.toRadians(-p.roll_deg) },
+  });
+  setLook(false);
+  const st = await settle(p.timeout_s || 240);
+  for (let i = 0; i < 4; i++) await frame();
+  const photo = viewer.scene.canvas.toDataURL('image/png');
+  // the level of detail the photo got: sse_used exceeds sse when the view
+  // needed more tile memory than the cache allows
+  const lod = { sse: tileset.maximumScreenSpaceError, sse_used: tileset.memoryAdjustedScreenSpaceError,
+                tiles: tileset._statistics ? tileset._statistics.selected : null,
+                tile_mb: tileset.totalMemoryUsageInBytes / 1e6 };
+  setLook(true);
+  // the shader swap can change what the tileset asks for: settle again
+  const st2 = await settle(Math.min(p.timeout_s || 240, 120));
+  for (let i = 0; i < 6; i++) await frame();
+  const seg = viewer.scene.canvas.toDataURL('image/png');
+  setLook(false);
+  // where the camera really was: Cesium can move a camera it finds below a surface
+  const pc = viewer.camera.positionCartographic;
+  const used = { lat: Cesium.Math.toDegrees(pc.latitude), lon: Cesium.Math.toDegrees(pc.longitude),
+                h_ellipsoid: pc.height, heading_deg: Cesium.Math.toDegrees(viewer.camera.heading),
+                pitch_deg: Cesium.Math.toDegrees(viewer.camera.pitch), roll_deg: Cesium.Math.toDegrees(viewer.camera.roll) };
+  return { photo, seg, cam: used, loaded: st.loaded && st2.loaded, settle_s: st.s + st2.s, lod,
+           canvas: [viewer.scene.canvas.width, viewer.scene.canvas.height],
+           buffer: [viewer.scene.drawingBufferWidth, viewer.scene.drawingBufferHeight] };
+}
+async function sampleHeights(points) {
+  // ellipsoidal height of the tiles' surface at [{lat, lon}], most detailed
+  // level; null where nothing is under the point (open sea, no tile)
+  const carto = points.map((q) => Cesium.Cartographic.fromDegrees(q.lon, q.lat));
+  const got = await viewer.scene.sampleHeightMostDetailed(carto, [], 0.5);
+  return got.map((c) => (c && Number.isFinite(c.height) ? c.height : null));
+}
+window.init = init;
+window.sizeCanvas = sizeCanvas;
+window.renderPose = renderPose;
+window.sampleHeights = sampleHeights;
+</script>
+</body>
+</html>

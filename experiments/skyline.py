@@ -28,9 +28,11 @@ K_REFRACTION = 0.13  # must match HORIZONATOR_REFRACTION_K in horizonator.h
 REFF = REARTH / (1.0 - K_REFRACTION)
 
 
-def horizon_dip_rad(h):
-    """Apparent dip of the sea horizon below horizontal for viewer height h"""
-    return np.sqrt(2.0 * h / REFF)
+def horizon_dip_rad(h, k=None):
+    """Apparent dip of the sea horizon below horizontal for viewer height h
+    (refraction coefficient k, default K_REFRACTION)"""
+    reff = REFF if k is None else REARTH / (1.0 - k)
+    return np.sqrt(2.0 * h / reff)
 
 
 def horizon_distance_m(h):

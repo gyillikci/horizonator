@@ -1,0 +1,119 @@
+{
+ "status": "ok",
+ "reasons": [],
+ "lat": 41.12684428768622,
+ "lon": 29.070222746706655,
+ "fix_ok": true,
+ "basin_margin": 2.1002494009300543,
+ "relief_mrad": 5.692718903489731,
+ "dn_m": 105.0,
+ "de_m": -45.0,
+ "sigma_n_m": 90.7902344713113,
+ "sigma_e_m": 79.22160288768283,
+ "sigma_major_m": 91.35916732137775,
+ "sigma_minor_m": 78.56482409955426,
+ "major_bearing_deg": 167.3891941296562,
+ "anisotropy": 1.1628507842849747,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -0.4320795666117146,
+ "peak_dh_mad_m": 5.670611328242613,
+ "n_peaks": 9,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -3000.0,
+   "cost": 9.540832891410382e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2700.0,
+   "cost": 2.334383525301584e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -2400.0,
+   "cost": 1.4181443300594018e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -1800.0,
+   "cost": 9.86503822427251e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": -2100.0,
+   "cost": 7.941682828120387e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 0.0,
+   "cost": 6.834817206182111e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": 0.0,
+   "cost": 2.561627082562433e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": 120.0,
+   "de": -60.0,
+   "cost": 2.1733039788225065e-06,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": 120.0,
+   "de": -60.0,
+   "cost": 2.1733039788225065e-06,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": 105.0,
+   "de": -45.0,
+   "cost": 2.172986373891059e-06,
+   "stage": "refine_15m"
+  },
+  {
+   "dn": 105.0,
+   "de": -45.0,
+   "cost": 2.172986373891059e-06,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 20.0,
+ "compass_sigma_deg": 5.0,
+ "search_evals": 491,
+ "cost": 2.172986373891059e-06,
+ "rms_mrad": 2.0553084313022505,
+ "n_photos": 1,
+ "z_m": 7.396223545074463,
+ "land_observer_m": 2.0,
+ "land_only_m": 60.0,
+ "photos": [
+  {
+   "file": "PF_new_bosphorus1.jpg",
+   "fov_deg": 73.7,
+   "heading_deg": 47.101,
+   "pitch_deg": 1.757229239700383,
+   "roll_deg": 1.9664899298378098,
+   "weight": 1.0,
+   "rms_mrad": 2.0553084313022505,
+   "heading_offset_deg": 2.6,
+   "el_offset_mrad": 1.2499999999999993,
+   "roll_offset_deg": 0.0,
+   "attitude_source": "waterline",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": 2.6,
+ "el_offset_mrad": 1.2499999999999993,
+ "fov_deg": 73.7
+}

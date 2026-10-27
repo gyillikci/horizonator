@@ -95,9 +95,20 @@ def skyline_seam(rgb, search_frac=0.85, m_sustain=8, nsigma=4.0,
     return out, np.maximum(conf, 0.0)
 
 
+def horizon_scale(u, f_px, camera='exact'):
+    """The sea horizon's row offset per unit of tan(-dip - pitch), per
+    column: f in a camera rotated by its pitch (skyfix's default, a pinhole
+    camera), where the horizon is a straight line; hypot(u, f) in skyfix's
+    legacy camera, where pitch adds to every pixel's elevation and the
+    horizon bows."""
+    if camera == 'exact':
+        return np.full(np.shape(u), float(f_px))
+    return np.hypot(u, f_px)
+
+
 def sea_horizon_attitude(rows, conf, shape, f_px, dip_rad, rgb=None,
                          tol_px=1.5, min_frac=0.12, min_span_frac=0.35,
-                         max_step=0.20):
+                         max_step=0.20, camera='exact', below_px=3.0):
     """Estimate camera (pitch, roll) from the visible sea horizon.
 
     For an observer at known height h the sea horizon sits at the exactly
@@ -136,12 +147,17 @@ def sea_horizon_attitude(rows, conf, shape, f_px, dip_rad, rgb=None,
     (skyline.horizon_dip_rad(z)). rgb: the image in [0,1], enables the
     water check.
 
+    camera='exact' (the default) is a camera rotated by its pitch, as
+    skyfix's default camera is: there the sea horizon is a straight line,
+    v = tan(-dip - pitch) * f - roll * u, to a fraction of a pixel.
+    camera='legacy' is the curve above, skyfix's historical camera.
+
     Returns dict(pitch_deg, roll_deg, n_inl, frac, span_frac, rms_px,
     contrast), or None when no adequate sea horizon is visible."""
     H, W = shape[:2]
     u = np.arange(W) - (W - 1) / 2.0
     v = (H - 1) / 2.0 - np.asarray(rows, dtype=float)
-    Hu = np.hypot(u, f_px)
+    Hu = horizon_scale(u, f_px, camera)
     ok = np.asarray(conf) > 0
     idx = np.where(ok)[0]
     if idx.size < 16:
@@ -159,7 +175,7 @@ def sea_horizon_attitude(rows, conf, shape, f_px, dip_rad, rgb=None,
         except np.linalg.LinAlgError:
             continue
         res = v - (a * Hu + b * u)
-        if ((res < -3.0) & ok).sum() > 0.02 * W:
+        if ((res < -below_px) & ok).sum() > 0.02 * W:
             continue                    # boundary below the line: not sea
         n = int(((np.abs(res) <= tol_px) & ok).sum())
         if best is None or n > best[0]:
@@ -180,7 +196,7 @@ def sea_horizon_attitude(rows, conf, shape, f_px, dip_rad, rgb=None,
         a, b = float(sol[0]), float(sol[1])
 
     res = v - (a * Hu + b * u)
-    if ((res < -3.0) & ok).sum() > 0.02 * W:
+    if ((res < -below_px) & ok).sum() > 0.02 * W:
         return None
     rms = float(np.sqrt(np.mean(res[inl] ** 2)))
     frac = float(inl.mean())
@@ -267,7 +283,7 @@ def sea_horizon_attitude_radon(rgb, f_px, dip_rad, max_step=0.20,
                                tol_px=2.0, min_frac=0.25,
                                min_span_frac=0.5, search_px=4,
                                min_score=0.15, extra_candidates=None,
-                               **kw):
+                               camera='exact', **kw):
     """Camera (pitch, roll) from the sea horizon, using
     horizon_candidates() as the front end instead of skyline_seam.
 
@@ -290,7 +306,7 @@ def sea_horizon_attitude_radon(rgb, f_px, dip_rad, max_step=0.20,
     scale = 1.4826 * np.median(np.abs(gy - med), axis=0) + 1e-3
     gn = np.abs((gy - med) / scale)
     u = np.arange(W) - (W - 1) / 2.0
-    Hu = np.hypot(u, f_px)
+    Hu = horizon_scale(u, f_px, camera)
 
     cands = list(horizon_candidates(g, **kw))
     if extra_candidates:

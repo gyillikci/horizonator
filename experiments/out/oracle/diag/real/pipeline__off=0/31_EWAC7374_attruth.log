@@ -1,0 +1,80 @@
+soft compass prior: sigma 5.0 deg, n_eff 20, search +-20 deg
+hand-digitised boundary: 1600 columns from /home/user/workspace/horizonator/experiments/out/seg_level/31_EWAC7374_segpost.npz
+photo 0: EWAC7374.JPG  fov 20.4, heading 347.645, pitch +0.76, roll +0.18, weight 1.00, auto-level (675 sea cols)
+z 4.1 m, box 0 m at (38.80561,26.97368)
+peak witness: 3 crests, median height residual -26 m (spread 24 m)
+INCONCLUSIVE: minimum on the search-box boundary: the true position may lie outside the box
+{
+ "status": "inconclusive",
+ "reasons": [
+  "minimum on the search-box boundary: the true position may lie outside the box"
+ ],
+ "lat": 38.80529523743793,
+ "lon": 26.974141618683813,
+ "fix_ok": false,
+ "basin_margin": Infinity,
+ "relief_mrad": 5.959718542451009,
+ "dn_m": -35.0,
+ "de_m": 40.0,
+ "sigma_n_m": 111.84906738684025,
+ "sigma_e_m": 90.43003036151663,
+ "sigma_major_m": 112.10531211217437,
+ "sigma_minor_m": 90.11217044729707,
+ "major_bearing_deg": 173.47748129601047,
+ "anisotropy": 1.2440640543414743,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -25.835179677763698,
+ "peak_dh_mad_m": 24.39190308221466,
+ "n_peaks": 3,
+ "search_trace": [
+  {
+   "dn": -0.0,
+   "de": -0.0,
+   "cost": 5.839805778004093e-07,
+   "stage": "coarse"
+  },
+  {
+   "dn": -40.0,
+   "de": 40.0,
+   "cost": 5.593875872852686e-07,
+   "stage": "refine_20m"
+  },
+  {
+   "dn": -35.0,
+   "de": 40.0,
+   "cost": 5.577603792502439e-07,
+   "stage": "refine_5m"
+  }
+ ],
+ "heading_window_deg": 20.0,
+ "compass_sigma_deg": 5.0,
+ "search_evals": 51,
+ "cost": 5.577603792502439e-07,
+ "rms_mrad": 0.7423211963163168,
+ "n_photos": 1,
+ "z_m": 7.841304779052734,
+ "land_observer_m": 2.0,
+ "land_only_m": 60.0,
+ "photos": [
+  {
+   "file": "EWAC7374.JPG",
+   "fov_deg": 20.408,
+   "heading_deg": 347.645,
+   "pitch_deg": 0.7603216247454404,
+   "roll_deg": -0.06536227215328169,
+   "weight": 1.0,
+   "rms_mrad": 0.7423211963163168,
+   "heading_offset_deg": -5.6000000000000005,
+   "el_offset_mrad": -1.250000000000001,
+   "roll_offset_deg": -0.25,
+   "attitude_source": "waterline",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": -5.6000000000000005,
+ "el_offset_mrad": -1.250000000000001,
+ "fov_deg": 20.408
+}
+wrote /home/user/workspace/horizonator/experiments/out/oracle/diag/real/pipeline__off=0/31_EWAC7374_attruth.json/.png

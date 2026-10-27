@@ -52,6 +52,7 @@ import argparse
 import json
 import os
 import sys
+import time
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import numpy as np
@@ -65,19 +66,32 @@ BETAS = np.arange(-0.010, 0.0101, 0.002)  # residual after the pitch prior
 BETAS_TIGHT = np.arange(-0.002, 0.00201, 0.0005)
 
 
-def basin_margin(cc, g, min_sep):
-    """Relative cost margin between the best and second-best coarse
-    basins (non-max suppression at min_sep meters). Near zero = ambiguous.
-    Returns inf when only one basin exists within the box."""
+def coarse_basins(cc, g, min_sep, k):
+    """The k best coarse cells after non-max suppression at min_sep
+    meters, best first: [((dn, de), cost), ...]. The basins the
+    ambiguity test compares. Cells outside the search (inf cost,
+    --land-only) are never basins."""
     order = np.argsort(cc, axis=None)
     kept = []
     for o in order:
         i, j = np.unravel_index(o, cc.shape)
+        if not np.isfinite(cc[i, j]):
+            break
         p = (g[i], g[j])
         if all(np.hypot(p[0] - q[0], p[1] - q[1]) >= min_sep for q, _ in kept):
             kept.append((p, cc[i, j]))
-        if len(kept) == 2:
-            return float((kept[1][1] - kept[0][1]) / max(kept[0][1], 1e-12))
+        if len(kept) == k:
+            break
+    return kept
+
+
+def basin_margin(cc, g, min_sep):
+    """Relative cost margin between the best and second-best coarse
+    basins (non-max suppression at min_sep meters). Near zero = ambiguous.
+    Returns inf when only one basin exists within the box."""
+    kept = coarse_basins(cc, g, min_sep, 2)
+    if len(kept) == 2:
+        return float((kept[1][1] - kept[0][1]) / max(kept[0][1], 1e-12))
     return float('inf')
 
 
@@ -94,6 +108,33 @@ BOUNDARY_CONF = None    # per-column confidence, when the file is an .npz
 USED_EXTRACTOR = None   # what the last extraction really used (the
                         # eWaSR pre-check can fall back to the seam)
 ACROSS_WATER_MIN_PX = 8
+CAMERA = 'exact'        # set from --camera-model
+REFRACTION_K = None     # set from --refraction-k; None = skyline.K_REFRACTION
+
+
+def pixel_angles(u, v, f, roll_deg, pitch_deg):
+    """Image coordinates (u right, v up, from the frame centre, pixels) ->
+    (azimuth from the camera heading in degrees, elevation in rad). Roll
+    turns the frame about its centre. 'legacy' then adds the pitch to
+    every pixel's elevation; 'exact' rotates the camera by it, so a pixel
+    off the centre column rises by pitch * cos(azimuth) and its azimuth
+    shifts too. A pitched pinhole camera (CesiumJS, a phone) is the
+    exact one: at 74 deg field of view, 3.5 deg of pitch puts the legacy
+    elevations 12 mrad off at the frame edges."""
+    cr, sr = np.cos(np.radians(roll_deg)), np.sin(np.radians(roll_deg))
+    ur = u * cr - v * sr
+    vr = u * sr + v * cr
+    th = np.radians(pitch_deg)
+    if CAMERA == 'exact':
+        fwd = f * np.cos(th) - vr * np.sin(th)
+        return (np.degrees(np.arctan2(ur, fwd)),
+                np.arctan2(vr * np.cos(th) + f * np.sin(th),
+                           np.hypot(ur, fwd)))
+    return np.degrees(np.arctan2(ur, f)), np.arctan2(vr, np.hypot(ur, f)) + th
+
+
+def horizon_dip(h):
+    return S.horizon_dip_rad(h, k=REFRACTION_K)
 
 
 
@@ -308,11 +349,7 @@ def observation(img, fov_deg, heading, roll_deg, pitch_deg=0.0,
     f = (W / 2) / np.tan(np.radians(fov_deg) / 2)
     u = np.arange(W) - (W - 1) / 2
     v = (H - 1) / 2 - rows
-    cr, sr = np.cos(np.radians(roll_deg)), np.sin(np.radians(roll_deg))
-    ur = u * cr - v * sr
-    vr = u * sr + v * cr
-    az_rel = np.degrees(np.arctan2(ur, f))
-    el_pt = np.arctan2(vr, np.hypot(ur, f)) + np.radians(pitch_deg)
+    az_rel, el_pt = pixel_angles(u, v, f, roll_deg, pitch_deg)
 
     # ---- drop masts, poles and rigging before they reach the cost.
     # A ship's mast or a lamp post is a one- or two-column spike tens
@@ -514,7 +551,7 @@ def fast_photo_cost(el_obs, w, el_syn, shifts, betas=BETAS, topk=12,
 
 
 def write_view(path, p, cm, z, lat_c, lon_c, mlat, mlon, g, cc, trace,
-               dn0, de0, result, args):
+               dn0, de0, result, args, z_at=None):
     """Everything a human needs to SEE a solve, step by step: for the
     camera's own claim (box centre, compass heading), every improvement
     of the running best, and the final fix, the pose the solver would
@@ -526,11 +563,39 @@ def write_view(path, p, cm, z, lat_c, lon_c, mlat, mlon, g, cc, trace,
     keep = np.linspace(0, d['az_rel'].size - 1,
                        min(900, d['az_rel'].size)).astype(int)
     keep = keep[ok[keep]]
+
+    # the sea line that set pitch and roll (--level-npy), mapped to angles
+    # exactly as observation() maps the skyline, so the viewer draws it
+    # back onto the photo's own pixels; and the sea-horizon dip the
+    # levelling assumed for it
+    sea_line = None
+    if p.get('level_rows') is not None:
+        H, W = p['img'].shape[:2]
+        f = (W / 2) / np.tan(np.radians(p['fov']) / 2)
+        rows = np.asarray(p['level_rows'], float)
+        u = np.arange(W) - (W - 1) / 2
+        v = (H - 1) / 2 - rows
+        az_s, el_s = pixel_angles(u, v, f, p['roll'], p['pitch'])
+        ks = np.flatnonzero(np.isfinite(el_s))
+        ks = ks[np.linspace(0, ks.size - 1, min(900, ks.size)).astype(int)] \
+            if ks.size else ks
+        lv = p['level']
+        sea_line = dict(az_rel_deg=np.round(az_s[ks], 3).tolist(),
+                        el_rad=np.round(el_s[ks], 6).tolist(),
+                        used=bool(lv),      # False: the fit's gates refused it
+                        n_inliers=int(lv['n_inl']) if lv else None,
+                        rms_px=float(lv['rms_px']) if lv else None,
+                        source=lv.get('source') if lv else None)
+    dip = horizon_dip(max(z, 0.5))
+    if args.dt_air_sea is not None:
+        dip -= 0.032e-3 * args.dt_air_sea
     half = p['fov'] / 2 + 10.0
     h0 = p['heading'] if p['heading'] is not None else 0.0
 
     def step(dn, de, label, stage, cost=None, prior=False):
-        el, r = cm.skyline(lat_c + dn / mlat, lon_c + de / mlon, z, AZ)
+        la, lo = lat_c + dn / mlat, lon_c + de / mlon
+        zc = z_at(la, lo) if z_at else z     # --land-observer: per candidate
+        el, r = cm.skyline(la, lo, zc, AZ)
         if args.crest_dh:
             el = el + np.where(np.isfinite(r) & (r > 0),
                                args.crest_dh / np.maximum(r, args.dmin),
@@ -546,6 +611,7 @@ def write_view(path, p, cm, z, lat_c, lon_c, mlat, mlon, g, cc, trace,
         o = np.argsort(rel[m])
         return dict(label=label, stage=stage, dn=float(dn), de=float(de),
                     lat=lat_c + dn / mlat, lon=lon_c + de / mlon,
+                    z_m=float(zc),
                     cost=float(c if cost is None else cost),
                     heading_offset_deg=s * 0.1, beta_mrad=b * 1e3,
                     dem_az=np.round(AZ[m][o], 2).tolist(),
@@ -580,12 +646,30 @@ def write_view(path, p, cm, z, lat_c, lon_c, mlat, mlon, g, cc, trace,
 
     steps = [step(0.0, 0.0, 'camera claim: box centre, compass heading',
                   'prior', prior=True)]
-    for k, t in enumerate(trace):
-        steps.append(step(t['dn'], t['de'],
-                          '%s improvement %d' % (t['stage'], k + 1),
-                          t['stage'], t['cost']))
+    # the coarse scan is exhaustive, so its running-best record arrives in
+    # raster order (always the south-west corner first, then along the
+    # south row): it reads like a search path and is not one. Show what
+    # the scan found instead: its best basins, with the same suppression
+    # distance the ambiguity test uses, worst to best so the replay ends
+    # on #1, where the refinements continue
+    sep = 4 * float(g[1] - g[0])
+    basins = coarse_basins(cc, g, sep, 5)
+    c1 = float(basins[0][1])
+    for r in range(len(basins), 0, -1):
+        (bn, be), bc = basins[r - 1]
+        steps.append(step(bn, be, 'basin #%d of %d (cost +%.0f%% vs #1)'
+                          % (r, len(basins), 100 * (bc - c1) / max(c1, 1e-12)),
+                          'basin', float(bc)))
+    for t in trace:
+        if t['stage'].startswith('refine'):
+            steps.append(step(t['dn'], t['de'], t['stage'], t['stage'],
+                              t['cost']))
     steps.append(step(dn0, de0, 'final fix (%s)' % result['status'],
                       'final'))
+    basin_list = [dict(rank=r + 1, dn=float(bn), de=float(be),
+                       rms_mrad=float(np.sqrt(2 * bc) * 1e3),
+                       cost_vs_best=float((bc - c1) / max(c1, 1e-12)))
+                  for r, ((bn, be), bc) in enumerate(basins)]
     H, W = p['img'].shape[:2]
     view = dict(
         photo=dict(path=os.path.abspath(p['path']),
@@ -598,6 +682,9 @@ def write_view(path, p, cm, z, lat_c, lon_c, mlat, mlon, g, cc, trace,
         # heading or beta sits ON one is the clamping signature
         search=dict(heading_window_deg=hw_deg,
                     beta_band_mrad=bmax * 1e3,
+                    # the band can be one-sided (--waterline-band)
+                    beta_lo_mrad=float(np.min(p['betas'])) * 1e3,
+                    beta_hi_mrad=float(np.max(p['betas'])) * 1e3,
                     box_m=float(args.box),
                     grid_steps_m=[float(g[1] - g[0]),
                                   float(g[1] - g[0]) / 5,
@@ -613,7 +700,11 @@ def write_view(path, p, cm, z, lat_c, lon_c, mlat, mlon, g, cc, trace,
                    fov_deg=p['fov'], camera_height_m=z,
                    near_field_m=float(args.dmin),
                    attitude_source=('sea horizon' if p['level']
-                                    else 'prior')),
+                                    else 'prior'),
+                   sea_horizon_dip_mrad=float(dip * 1e3),
+                   land_observer_m=args.land_observer,
+                   land_only_m=args.land_only),
+        sea_line=sea_line,
         # tested AFTER the optimum is found; they decide acceptance
         checks=[
             dict(name='basin margin', value=result['basin_margin'],
@@ -625,13 +716,22 @@ def write_view(path, p, cm, z, lat_c, lon_c, mlat, mlon, g, cc, trace,
             dict(name='distance to box edge',
                  value=float(args.box / 2 - max(abs(dn0), abs(de0))),
                  op='>', limit=float(g[1] - g[0]), unit='m'),
+            # the same test as cov_ok in the solve: a finite major axis
+            # alone passes a fix whose minor axis is zero (flat valley)
             dict(name='covariance computable',
-                 value=1.0 if np.isfinite(result['sigma_major_m'])
+                 value=1.0 if (np.isfinite(result['sigma_major_m'])
+                               and np.isfinite(result['sigma_minor_m'])
+                               and result['sigma_minor_m'] > 1e-6
+                               and np.isfinite(result['anisotropy']))
                  else 0.0, op='>=', limit=1.0, unit='')],
         photo_skyline=dict(
             az_rel_deg=np.round(d['az_rel'][keep], 3).tolist(),
             el_rad=np.round(d['el_pt'][keep], 6).tolist()),
-        grid=dict(offsets_m=g.tolist(), cost=cc.tolist()),
+        # null = outside the search (--land-only): inf is not valid JSON
+        grid=dict(offsets_m=g.tolist(),
+                  cost=[[float(c) if np.isfinite(c) else None for c in row]
+                        for row in cc]),
+        basins=dict(min_sep_m=sep, list=basin_list),
         result={k: result[k] for k in (
             'status', 'reasons', 'lat', 'lon', 'dn_m', 'de_m',
             'basin_margin', 'rms_mrad')},
@@ -655,6 +755,7 @@ def per_photo_vals(spec, n, default=None):
 
 
 def main():
+    t_main = time.perf_counter()
     ap = argparse.ArgumentParser()
     ap.add_argument('images', nargs='+',
                     help='one or more photos taken from the SAME position '
@@ -668,6 +769,20 @@ def main():
     ap.add_argument('--heading', help='deg true; single value, comma '
                                       "list, or 'x' for unknown")
     ap.add_argument('--z', type=float)
+    ap.add_argument('--land-observer', type=float, metavar='H',
+                    help='the photographer stands on land: at every '
+                         'candidate the camera sits H m above the DEM '
+                         'ground (sea clamps to 0) instead of at a fixed '
+                         '--z. A fixed z puts a candidate on a 30 m hill '
+                         'inside the hill. On the campaign the EXIF '
+                         'altitude is ground + 2.0 m (median), so try 2')
+    ap.add_argument('--land-only', type=float, metavar='R',
+                    help='search only candidates with land (DEM ground '
+                         '> 0.5 m) within R m; open-water candidates are '
+                         'not searched. R covers shoreline points that the '
+                         '30 m DEM samples as sea (all 44 campaign truths '
+                         'pass at R = 60). The covariance is still measured '
+                         'on the unmasked cost surface')
     ap.add_argument('--roll', help='deg; single value or comma list')
     ap.add_argument('--pitch', help='deg, positive up; single value or '
                                     'comma list. Accuracy to ~0.5 deg '
@@ -707,6 +822,23 @@ def main():
                          'is photometric and AK3 (E5aj) showed it can call '
                          'a hazy shoreline a horizon; this forces the call '
                          'so the cost of that mistake can be measured.')
+    ap.add_argument('--level-npy',
+                    help='.npz whose "rows" is an external sea line at the '
+                         'original frame width (NaN = rejected column), '
+                         'e.g. a segmenter water boundary after '
+                         'post-processing. Implies --auto-level and replaces '
+                         '--level-detector; fitted with the same closed-form '
+                         'model, without the photometric water check, and '
+                         'classed waterline unless --level-class says '
+                         'otherwise')
+    ap.add_argument('--waterline-band', metavar='LO,HI',
+                    help='elevation-offset band in mrad for a line levelled '
+                         'as a waterline, replacing +-5. A shoreline sits '
+                         'below the sea horizon (z/d + d/2Re, plus any '
+                         'segmenter offset), so the levelled pitch is high '
+                         'and beta negative: e.g. -20,5. On the SegFormer '
+                         'sea lines the levelled pitch exceeded the truth '
+                         'on 21 of 22 frames, median 7.3 mrad')
     ap.add_argument('--level-detector', default='radon',
                     choices=['radon', 'seam', 'sam'],
                     help='front end for --auto-level: radon (default) '
@@ -715,7 +847,7 @@ def main():
                          'mountain skyline detector. E4q measured radon '
                          'at 2x the availability and 2.4x the accuracy '
                          'on real maritime imagery (7.6 vs 18.6 mrad '
-                         'median edge error, 70% vs 22% within 10 mrad)')
+                         'median edge error, 70%% vs 22%% within 10 mrad)')
     ap.add_argument('--horizon-mask', action='store_true',
                     help='restrict the silhouette search to the band '
                          'above the sea horizon, and drop columns whose '
@@ -836,6 +968,9 @@ def main():
                          'adequate sea segment is visible')
     ap.add_argument('--dem', default=os.path.expanduser(
         os.environ.get('HORIZONATOR_DEMS', '~/.horizonator/DEMs_SRTM3')))
+    ap.add_argument('--max-width', type=int, default=1600,
+                    help='photos wider than this are downsized to it on load (default 1600 px, as '
+                         'always); a wider camera keeps its resolution with a larger value')
     ap.add_argument('--dmin', type=float, default=1000.0)
     ap.add_argument('--dmax', type=float, default=40000.0,
                     help='farthest terrain the DEM skyline may contain, '
@@ -899,16 +1034,85 @@ def main():
                          'correlation, offset- and scale-free). With ncc '
                          'the rms and peak-height checks still use the '
                          'huber residual at the fix; the margin uses ncc')
+    ap.add_argument('--camera-model', default='exact',
+                    choices=['exact', 'legacy'],
+                    help='how pitch enters the pixel -> angle map. exact '
+                         '(default) rotates the camera by it, as a pinhole '
+                         'camera (a phone, CesiumJS) is; legacy, the '
+                         'historical model kept for comparison, adds it to '
+                         'every pixel\'s elevation. Off the centre column '
+                         'they differ by about pitch * (1 - cos azimuth): '
+                         '12 mrad at the edge of a 74 deg frame pitched 3.5 '
+                         'deg. E5ck: exact halves the campaign pipeline\'s '
+                         'median error (1178 -> 473 m). Also sets the '
+                         'levelling\'s sea-horizon model (a straight line)')
+    ap.add_argument('--refine-iter', type=int, default=10, metavar='N',
+                    help='at most N passes per refinement level (60 m, 15 '
+                         'm), each re-centring the 5x5 window on the best so '
+                         'far until it stays put (default 10). 1 is the '
+                         'historical single pass, which reaches +-150 m from '
+                         'the coarse winner: E5ck, perfect model and '
+                         'attitude, p90 155 m with it, 11 m without')
+    ap.add_argument('--roll-window', type=float, default=0.0, metavar='DEG',
+                    help='search the roll +-DEG around its prior (the '
+                         'levelling\'s, or --roll) at every candidate, in '
+                         '--roll-step steps; 0 (default) trusts the prior. '
+                         'Not with --rigid-pan')
+    ap.add_argument('--roll-step', type=float, default=0.25, metavar='DEG')
+    ap.add_argument('--roll-stages', default='all', choices=['all', 'refine'],
+                    help='where --roll-window searches: every candidate (all), '
+                         'or the refinement and the fix only (refine)')
+    ap.add_argument('--coarse-div', type=int, default=20, metavar='N',
+                    help='coarse grid spacing = box / N (default 20: 300 m in '
+                         'a 6 km box); the refinement steps and the basin '
+                         'separation scale with it')
+    ap.add_argument('--min-parallax', type=float, default=None,
+                    metavar='PER_KM',
+                    help='inconclusive when the matched ridges\' 1/range '
+                         'spread (p90 - p10, per km) is below this: every '
+                         'ridge at one range, so the lateral position is the '
+                         'compass\'s, not the skyline\'s (E5ck: EWAC7374, '
+                         'accepted 1.8 km off at 0.006). Off by default')
+    ap.add_argument('--level-tol', type=float, default=None, metavar='PX',
+                    help='the levelling\'s inlier tolerance (default 1.5 px; '
+                         'the below-the-line veto takes twice it). Renders '
+                         'whose horizon wavers 2-3 px want 2.5')
+    ap.add_argument('--imu-attitude', default=None, metavar='PITCH,ROLL',
+                    help='the platform\'s own pitch and roll (deg, an IMU): a '
+                         'sea line whose levelling disagrees by more than '
+                         '--imu-gate is refused')
+    ap.add_argument('--imu-gate', type=float, default=1.5, metavar='DEG')
+    ap.add_argument('--require-level', action='store_true',
+                    help='refuse a photo whose sea line the levelling does '
+                         'not accept (none given, or not a straight '
+                         'horizon within its gates) instead of falling back '
+                         'to the pitch prior: E5ck, 12 of 44 campaign frames '
+                         'pitched 3-9 deg had none, and the +-10 mrad offset '
+                         'band cannot reach them. Implies --auto-level')
+    ap.add_argument('--beta-band', metavar='LO,HI', default=None,
+                    help='STUDY FLAG: the elevation-offset search band, '
+                         'mrad (1.25 mrad lattice), overriding the pitch '
+                         'prior\'s and the levelling\'s; 0,0 fixes the '
+                         'offset at zero, for an oracle pitch')
+    ap.add_argument('--refraction-k', type=float, default=None,
+                    help='STUDY FLAG: refraction coefficient of the '
+                         'synthesized skylines and of the horizon dip '
+                         '(default skyline.K_REFRACTION, 0.13). CesiumJS '
+                         'renders draw straight rays: k = 0')
     ap.add_argument('--view-json', metavar='PATH',
                     help='write what the solver saw at every search step '
                          '(pose, photo skyline, DEM skyline, cost map) for '
                          'the PeakFinder debug viewer, pf_debug/serve.py. '
                          'First photo only')
     args = ap.parse_args()
+    if args.level_npy or args.require_level:
+        args.auto_level = True
     global EXTRACTOR, ACROSS_WATER, BOUNDARY_ROWS, BOUNDARY_CONF, COST, \
-        COMPASS_K
+        COMPASS_K, CAMERA, REFRACTION_K
     EXTRACTOR = args.extractor
     COST = args.cost
+    CAMERA = args.camera_model
+    REFRACTION_K = args.refraction_k
     if args.compass_sigma:
         if COST != 'huber':
             ap.error('--compass-sigma needs --cost huber')
@@ -974,41 +1178,86 @@ def main():
     half = max(0.010, 2.0 * np.radians(args.pitch_sigma))
     betas_prior = np.arange(-half, half * 1.001, half / 5)
 
+    def refuse(reasons):
+        # a verdict before any search: printed, and written like any other
+        res = dict(status='inconclusive', fix_ok=False, reasons=reasons,
+                   lat=lat_c, lon=lon_c, basin_margin=0.0, rms_mrad=None,
+                   n_photos=N)
+        print(json.dumps(res, indent=1))
+        if args.out:
+            with open(args.out + '.json', 'w') as fjs:
+                json.dump(res, fjs, indent=1)
+        return 2
+
     photos = []
     for i, path in enumerate(args.images):
-        img = extract.load_image(path)
+        img = extract.load_image(path, max_w=args.max_width)
         betas = betas_prior
         level = None
+        level_rows = None       # the external sea line, kept for the viewer
         pitch, roll = pitches[i], rolls[i]
         if args.auto_level:
-            rows, conf = extract.skyline_seam(img)
             f_px = (img.shape[1] / 2) / np.tan(np.radians(fovs[i]) / 2)
-            dip = S.horizon_dip_rad(max(z, 0.5))
+            dip = horizon_dip(max(z, 0.5))
             if args.dt_air_sea is not None:
                 # dip anomaly ~0.11 arcmin/degC of (T_air - T_sea):
                 # warm air over cold water raises the apparent horizon
                 # (smaller dip). PROVISIONAL coefficient — see --help
                 dip -= 0.032e-3 * args.dt_air_sea
-            if args.level_detector == 'sam':
+            if args.level_npy:
+                # an external sea line, resampled like --boundary-npy. The
+                # photometric check is skipped: a terrain-backed waterline
+                # has land above it, which is exactly what that check
+                # rejects; the segmenter already said the pixels are water
+                src = np.load(args.level_npy)['rows'].astype(float)
+                Ww = img.shape[1]
+                lr = np.interp(np.linspace(0, src.size - 1, Ww),
+                               np.arange(src.size), src) * (Ww / src.size)
+                lt = {} if args.level_tol is None else dict(
+                    tol_px=args.level_tol, below_px=2 * args.level_tol)
+                level = extract.sea_horizon_attitude(
+                    np.nan_to_num(lr), np.isfinite(lr) * 1.0, img.shape,
+                    f_px, dip, max_step=args.max_step, camera=CAMERA, **lt)
+                level_rows = lr     # shown by the viewer even when refused
+                if level:
+                    level['source'] = 'waterline'
+            elif args.level_detector == 'sam':
                 # hybrid: SAM proposes the line, the radon detector's
                 # column-wise refinement and gates decide (E5l: SAM
                 # alone mis-tilts roll on high-res frames)
                 from e5l_samsea import sam_sea_line
                 # the seam boundary is the ceiling: a waterline is by
                 # definition below the terrain silhouette (E5u)
+                rows, conf = extract.skyline_seam(img)
                 got = sam_sea_line((img * 255).astype(np.uint8),
                                    ceiling_rows=rows)
                 seed = [(got[0], got[1])] if got else None
                 level = extract.sea_horizon_attitude_radon(
                     img, f_px, dip, max_step=args.max_step,
-                    extra_candidates=seed)
+                    extra_candidates=seed, camera=CAMERA)
             elif args.level_detector == 'radon':
                 level = extract.sea_horizon_attitude_radon(
-                    img, f_px, dip, max_step=args.max_step)
+                    img, f_px, dip, max_step=args.max_step, camera=CAMERA)
             else:
+                rows, conf = extract.skyline_seam(img)
                 level = extract.sea_horizon_attitude(
                     rows, conf, img.shape, f_px, dip, rgb=img,
-                    max_step=args.max_step)
+                    max_step=args.max_step, camera=CAMERA)
+            if level and args.imu_attitude:
+                # a sea line that disagrees with the platform's own pitch
+                # and roll is not the sea horizon: a straight shore, or a
+                # wooded slope the segmenter called water (E5ck cruise: up
+                # to 10 deg of pitch from such a line)
+                ip, ir = (float(x) for x in args.imu_attitude.split(','))
+                if max(abs(level['pitch_deg'] - ip),
+                       abs(level['roll_deg'] - ir)) > args.imu_gate:
+                    print(f"levelling refused: pitch {level['pitch_deg']:+.2f}"
+                          f" roll {level['roll_deg']:+.2f} against the IMU's "
+                          f"{ip:+.2f} {ir:+.2f}", flush=True)
+                    level = None
+            if not level and args.require_level:
+                return refuse(['no usable sea line: the levelling accepted '
+                               'none, so pitch and roll are unknown'])
             if level:
                 pitch, roll = level['pitch_deg'], level['roll_deg']
                 # a terrain-backed waterline (E5t: bays hide the true
@@ -1026,15 +1275,29 @@ def main():
                 if args.dt_air_sea is not None:
                     half += 0.00015 * abs(args.dt_air_sea)
                 betas = np.arange(-half, half * 1.001, half / 4)
+                if cls == 'waterline' and args.waterline_band:
+                    # the waterline lies BELOW the sea horizon, so the pitch
+                    # it gives is too high and the correction beta is
+                    # negative: a one-sided band. Same 1.25 mrad lattice
+                    lo, hi = (float(x) * 1e-3
+                              for x in args.waterline_band.split(','))
+                    n = int(round((hi - lo) / 0.00125)) + 1
+                    betas = np.linspace(lo, hi, n)
         hz_rows = None
         if args.auto_level and args.horizon_mask:
             Hh, Ww, _ = img.shape
             f_px = (Ww / 2) / np.tan(np.radians(fovs[i]) / 2)
-            dip_h = S.horizon_dip_rad(max(z, 0.5))
+            dip_h = horizon_dip(max(z, 0.5))
             uu = np.arange(Ww) - (Ww - 1) / 2
-            vv = (np.tan(-dip_h - np.radians(pitch)) * np.hypot(uu, f_px)
+            vv = (np.tan(-dip_h - np.radians(pitch))
+                  * (f_px if CAMERA == 'exact' else np.hypot(uu, f_px))
                   - np.radians(roll) * uu)
             hz_rows = (Hh - 1) / 2 - vv
+        if args.beta_band:
+            # STUDY: the elevation-offset search set outright, whatever the
+            # prior or the levelling gave; 0,0 fixes it (an oracle pitch)
+            lo, hi = (float(x) * 1e-3 for x in args.beta_band.split(','))
+            betas = np.linspace(lo, hi, int(round((hi - lo) / 0.00125)) + 1)
         el_obs, w, diag = observation(
             img, fovs[i], headings[i] if headings[i] is not None else 0.0,
             roll, pitch, horizon_rows=hz_rows)
@@ -1044,12 +1307,7 @@ def main():
             # Refusing is the honest answer — matching an empty
             # observation yields a confident-looking NaN, which is what
             # the first masked batch produced.
-            print(json.dumps(dict(
-                status='inconclusive', fix_ok=False,
-                reasons=['no terrain silhouette above the sea horizon'],
-                lat=lat_c, lon=lon_c, basin_margin=0.0,
-                rms_mrad=None, n_photos=N), indent=1))
-            return
+            return refuse(['no terrain silhouette above the sea horizon'])
         # the azimuth window must match the compass that produced the
         # prior, not a fixed guess: Theodolite records the accuracy iOS
         # reported (median +-10 deg on this field set, worst +-41), and
@@ -1060,11 +1318,27 @@ def main():
         shifts = np.arange(-hw, hw + 1, 2) if headings[i] is not None \
             else np.arange(-1800, 1800, 2)
         relief = float(np.std(el_obs[w > 0]) * 1e3)
+        # --roll-window: the photo seen at rolls around its prior, each
+        # candidate scored with the roll that fits it best. E5ck: the
+        # levelling's roll was 0.5-1.5 deg off on many campaign frames (a
+        # straight but tilted waterline), and 1 deg of roll costs ~100 m
+        variants = [(0.0, el_obs, w, diag)]
+        if args.roll_window > 0:
+            for dr in np.arange(-args.roll_window,
+                                args.roll_window + 1e-9, args.roll_step):
+                if abs(dr) < 1e-9:
+                    continue
+                eo_r, w_r, dg_r = observation(
+                    img, fovs[i],
+                    headings[i] if headings[i] is not None else 0.0,
+                    roll + dr, pitch, horizon_rows=hz_rows)
+                variants.append((float(dr), eo_r, w_r, dg_r))
         photos.append(dict(path=path, img=img, el_obs=el_obs, w=w,
                            diag=diag, fov=fovs[i], heading=headings[i],
                            pitch=pitch, roll=roll, betas=betas,
                            shifts=shifts, weight=uw[i], relief=relief,
-                           level=level))
+                           level=level, level_rows=level_rows,
+                           variants=variants))
         print(f'photo {i}: {os.path.basename(path)}  fov {fovs[i]:.1f}, '
               f'heading '
               f'{"none (full search)" if headings[i] is None else headings[i]}'
@@ -1074,17 +1348,37 @@ def main():
     print(f'z {z:.1f} m, box {args.box:.0f} m at ({lat_c:.5f},{lon_c:.5f})')
 
     mlat, mlon = S.meters_per_degree(lat_c)
+    k_ref = S.K_REFRACTION if REFRACTION_K is None else REFRACTION_K
     cm = S.CMarcher(args.dem, (lat_c - 0.6, lat_c + 0.6),
                     (lon_c - 0.8, lon_c + 0.8),
                     d_min=150.0 if args.dmin_soft else args.dmin,
-                    d_max=args.dmax)
+                    d_max=args.dmax, refraction_k=k_ref)
     cm2 = None
     if args.dem2:
         cm2 = S.CMarcher(os.path.expanduser(args.dem2),
                          (lat_c - 0.6, lat_c + 0.6),
                          (lon_c - 0.8, lon_c + 0.8),
                          d_min=150.0 if args.dmin_soft else args.dmin,
-                         d_max=args.dmax)
+                         d_max=args.dmax, refraction_k=k_ref)
+    # ---- where the camera is at a candidate. Fixed z by default; with
+    # --land-observer the photographer stands on the ground there, and
+    # with --land-only open water is outside the search
+    land_dem = S.Dem(args.dem) if (args.land_observer is not None
+                                   or args.land_only) else None
+
+    def z_at(lat, lon):
+        if args.land_observer is None:
+            return z
+        return max(float(land_dem.sample([lat], [lon])[0]), 0.0) \
+            + args.land_observer
+
+    def on_land(lat, lon):
+        if not args.land_only:
+            return True
+        d = np.linspace(-args.land_only, args.land_only, 5)
+        la, lo = np.meshgrid(lat + d / mlat, lon + d / mlon)
+        return bool(land_dem.sample(la.ravel(), lo.ravel()).max() > 0.5)
+
     DEM_TOL = 2.5e-3      # disagreement scale: ~the DEM noise floor
     usum = sum(uw)
 
@@ -1099,7 +1393,7 @@ def main():
     # CENTRE, the position actually known in the field, never at truth.
     subject_km = None
     if args.min_range:
-        el_c, rng_c = cm.skyline(lat_c, lon_c, z, AZ)
+        el_c, rng_c = cm.skyline(lat_c, lon_c, z_at(lat_c, lon_c), AZ)
         med = []
         for p in photos:
             if p['heading'] is None:
@@ -1116,10 +1410,37 @@ def main():
     rigid = args.rigid_pan and len(photos) > 1 \
         and all(p['heading'] is not None for p in photos)
 
-    def C(dn, de, plist=None, wsum=None):
+    # ---- the azimuths the search reads: every cost reads the synthetic
+    # skyline only where the observation's weight, rolled by a heading
+    # shift, is nonzero. The candidates' skylines are marched there alone
+    # (a 74 deg frame searched +-6 deg is a quarter of the circle, and the
+    # march was three quarters of a solve) and stay 0 elsewhere. A photo
+    # without a heading searches the whole circle; the fix's own skyline
+    # (peak witness, plots, viewer) is always marched in full
+    az_idx = None
+    if all(p['heading'] is not None for p in photos):
+        read = np.zeros(AZ.size, bool)
+        for p in photos:
+            on = np.any([v[2] > 0 for v in p['variants']], axis=0)
+            for s in (np.arange(-60, 61, 2) if rigid else p['shifts']):
+                read |= np.roll(on, s)
+        az_idx = np.flatnonzero(read)
+
+    def march(m, la, lo, zc):
+        if az_idx is None:
+            return m.skyline(la, lo, zc, AZ)
+        el, r = np.zeros(AZ.size), np.zeros(AZ.size)
+        el[az_idx], r[az_idx] = m.skyline(la, lo, zc, AZ[az_idx])
+        return el, r
+
+    def C(dn, de, plist=None, wsum=None, masked=True):
         pl = photos if plist is None else plist
         us = usum if wsum is None else wsum
-        el, r = cm.skyline(lat_c + dn / mlat, lon_c + de / mlon, z, AZ)
+        la, lo = lat_c + dn / mlat, lon_c + de / mlon
+        if masked and not on_land(la, lo):
+            return np.inf             # --land-only: not a place to stand
+        zc = z_at(la, lo)
+        el, r = march(cm, la, lo, zc)
         if args.crest_dh:
             el = el + np.where(np.isfinite(r) & (r > 0),
                                args.crest_dh / np.maximum(r, args.dmin),
@@ -1137,8 +1458,7 @@ def main():
             # six frames). Kept behind --dem2-weight for study only;
             # the default consensus use is the dem_split statistic.
             # Lorentzian falloff, half-weight at DEM_TOL.
-            el2, _ = cm2.skyline(lat_c + dn / mlat, lon_c + de / mlon,
-                                 z, AZ)
+            el2, _ = march(cm2, la, lo, zc)
             wd = 1.0 / (1.0 + ((el - el2) / DEM_TOL) ** 2)
             ws = wd if ws is None else ws * wd
         if rigid:
@@ -1148,13 +1468,18 @@ def main():
                 tot += p['weight'] * photo_cost_curve(
                     p['el_obs'], p['w'], el, shared, p['betas'])
             return float(tot.min()) / us
-        return sum(p['weight'] * fast_photo_cost(
-            p['el_obs'], p['w'], el, p['shifts'], p['betas'],
-            w_syn=ws)[0] for p in pl) / us
+        return sum(p['weight'] * min(fast_photo_cost(
+            eo, wv, el, p['shifts'], p['betas'], w_syn=ws)[0]
+            for _, eo, wv, _ in (p['variants'] if roll_now[0]
+                                 else p['variants'][:1])) for p in pl) / us
 
-    step0 = max(args.box / 20, 100.0)
+    # --roll-stages refine: the coarse grid at the prior roll, the roll
+    # searched from the refinement on
+    roll_now = [args.roll_stages == 'all']
+    step0 = max(args.box / args.coarse_div, 100.0)
     g = np.arange(-args.box / 2, args.box / 2 + 1, step0)
     cc = np.array([[C(dn, de) for de in g] for dn in g])
+    roll_now[0] = True
     i, j = np.unravel_index(np.argmin(cc), cc.shape)
     dn0, de0 = g[i], g[j]
 
@@ -1186,17 +1511,29 @@ def main():
     if relief < args.min_relief:
         reasons.append(f'insufficient skyline relief: {relief:.1f} mrad '
                        f'std < {args.min_relief:.1f}')
+    # --refine-iter > 1 re-centres a level's 5x5 window on its best until
+    # the best stays put. One pass reaches +-2 steps (+-150 m in all): with
+    # a perfect model and attitude, E5ck found 7 of 44 fixes stranded
+    # 100-600 m down the range valley from the truth
+    seen = {}
     for step in (step0 / 5, step0 / 20):
-        best = (np.inf, dn0, de0)
-        for di in range(-2, 3):
-            for dj in range(-2, 3):
-                c = C(dn0 + di * step, de0 + dj * step)
-                if c < best[0]:
-                    best = (c, dn0 + di * step, de0 + dj * step)
-        _, dn0, de0 = best
-        trace.append(dict(dn=float(dn0), de=float(de0),
-                          cost=float(best[0]),
-                          stage=f'refine_{step:.0f}m'))
+        for _pass in range(args.refine_iter):
+            best = (np.inf, dn0, de0)
+            for di in range(-2, 3):
+                for dj in range(-2, 3):
+                    key = (round(dn0 + di * step, 6), round(de0 + dj * step, 6))
+                    if key not in seen:
+                        seen[key] = C(dn0 + di * step, de0 + dj * step)
+                    c = seen[key]
+                    if c < best[0]:
+                        best = (c, dn0 + di * step, de0 + dj * step)
+            moved = (best[1], best[2]) != (dn0, de0)
+            _, dn0, de0 = best
+            trace.append(dict(dn=float(dn0), de=float(de0),
+                              cost=float(best[0]),
+                              stage=f'refine_{step:.0f}m'))
+            if not moved:
+                break
 
     # ---- conditioning: how much does the fix depend on the data?
     # E4v measured that neither the basin margin nor the covariance
@@ -1228,10 +1565,14 @@ def main():
                     continue
                 mid = idx[idx.size // 2]
                 for lo, hi in ((idx[0], mid), (mid, idx[-1])):
-                    w2 = np.zeros_like(p['w'])
-                    w2[lo:hi + 1] = p['w'][lo:hi + 1]
+                    def half_w(wv):
+                        w2 = np.zeros_like(wv)
+                        w2[lo:hi + 1] = wv[lo:hi + 1]
+                        return w2
                     q = dict(p)
-                    q['w'] = w2
+                    q['w'] = half_w(p['w'])
+                    q['variants'] = [(dr, eo, half_w(wv), dg)
+                                     for dr, eo, wv, dg in p['variants']]
                     subs.append(([q], p['weight']))
         pts = []
         for pl, wsum in subs:
@@ -1254,8 +1595,10 @@ def main():
     dem_split = None
     if cm2 is not None:
         def C2(dn, de):
-            el2, _ = cm2.skyline(lat_c + dn / mlat, lon_c + de / mlon,
-                                 z, AZ)
+            la, lo = lat_c + dn / mlat, lon_c + de / mlon
+            if not on_land(la, lo):
+                return np.inf
+            el2, _ = march(cm2, la, lo, z_at(la, lo))
             return sum(p['weight'] * fast_photo_cost(
                 p['el_obs'], p['w'], el2, p['shifts'], p['betas'])[0]
                 for p in photos) / usum
@@ -1266,12 +1609,15 @@ def main():
               f'away', flush=True)
 
     # Laplace covariance from a local quadratic fit of the cost
+    # (on the unmasked surface: --land-only bounds the search, it does not
+    # make the cost infinitely curved at a shoreline fix)
     h = step0 / 10
-    c0 = C(dn0, de0)
-    cnn = (C(dn0 + h, de0) - 2 * c0 + C(dn0 - h, de0)) / h ** 2
-    cee = (C(dn0, de0 + h) - 2 * c0 + C(dn0, de0 - h)) / h ** 2
-    cne = (C(dn0 + h, de0 + h) - C(dn0 + h, de0 - h)
-           - C(dn0 - h, de0 + h) + C(dn0 - h, de0 - h)) / (4 * h ** 2)
+    Cu = lambda a, b: C(a, b, masked=False)
+    c0 = Cu(dn0, de0)
+    cnn = (Cu(dn0 + h, de0) - 2 * c0 + Cu(dn0 - h, de0)) / h ** 2
+    cee = (Cu(dn0, de0 + h) - 2 * c0 + Cu(dn0, de0 - h)) / h ** 2
+    cne = (Cu(dn0 + h, de0 + h) - Cu(dn0 + h, de0 - h)
+           - Cu(dn0 - h, de0 + h) + Cu(dn0 - h, de0 - h)) / (4 * h ** 2)
     Hm = np.array([[cnn, cne], [cne, cee]])
     sig_maj = sig_min = np.nan
     maj_brg = np.nan
@@ -1303,7 +1649,8 @@ def main():
 
     lat_e = lat_c + dn0 / mlat
     lon_e = lon_c + de0 / mlon
-    el_syn, r_syn = cm.skyline(lat_e, lon_e, z, AZ)
+    z_fix = z_at(lat_e, lon_e)
+    el_syn, r_syn = cm.skyline(lat_e, lon_e, z_fix, AZ)
     if args.crest_dh:
         el_syn = el_syn + np.where(
             np.isfinite(r_syn) & (r_syn > 0),
@@ -1312,6 +1659,12 @@ def main():
     if args.dmin_soft:
         ws_fix = np.clip((r_syn - 300.0) / (args.dmin_soft - 300.0),
                          0.0, 1.0)
+    for p in photos:
+        if len(p['variants']) > 1:
+            dr, eo, wv, dg = min(p['variants'], key=lambda v: fast_photo_cost(
+                v[1], v[2], el_syn, p['shifts'], p['betas'], w_syn=ws_fix)[0])
+            p.update(el_obs=eo, w=wv, diag=dg, roll=p['roll'] + dr,
+                     roll_offset=dr)
     pj = []
     for p in photos:
         cb, sb, bb = fast_photo_cost(p['el_obs'], p['w'], el_syn,
@@ -1331,11 +1684,12 @@ def main():
                            2 * max(cb - COMPASS_K * sb * sb, 0.0)) * 1e3),
                        heading_offset_deg=sb * 0.1,
                        el_offset_mrad=bb * 1e3,
+                       roll_offset_deg=p.get('roll_offset', 0.0),
                        attitude_source=(
                            (p['level'].get('source') or 'sea-horizon')
                            if p['level'] else 'prior'),
                        ncc=ncc_r, best_shift=sb, best_beta=bb))
-    dip_fix = S.horizon_dip_rad(z)
+    dip_fix = horizon_dip(z_fix)
     dh_all = []
     for p, d in zip(photos, pj):
         dh_all += peak_heights(p['el_obs'], p['w'], el_syn, r_syn,
@@ -1392,6 +1746,28 @@ def main():
                        f"evidence is removed (limit "
                        f"{args.max_jackknife:.0f} m) — the geometry does "
                        f"not pin a position")
+    # ---- parallax: can the skyline tell a sideways step from a turn? A
+    # step L turns a ridge at range r by L/r; when every matched ridge
+    # stands at one range, a turn of L/r undoes it, and the compass prior,
+    # not the skyline, decides the lateral position. E5ck: EWAC7374 (20
+    # deg frame, ridges 20 km off) was accepted 1.8 km off to the side,
+    # = 20 km x its 5.8 deg compass error. Spread of 1/r over the matched
+    # columns (p90 - p10, per km); the best-constrained photo counts
+    parallax = None
+    for p, d in zip(photos, pj):
+        wm = (np.roll(p['w'], d['best_shift']) > 0) & np.isfinite(r_syn) \
+            & (r_syn > 0)
+        if wm.sum() >= 20:
+            inv = 1e3 / r_syn[wm]
+            pv = float(np.percentile(inv, 90) - np.percentile(inv, 10))
+            parallax = pv if parallax is None else max(parallax, pv)
+    if args.min_parallax and parallax is not None \
+            and parallax < args.min_parallax:
+        reasons.append(f'bearing only: the matched ridges stand at nearly '
+                       f'one range (1/r spread {parallax:.3f} per km < '
+                       f'{args.min_parallax:.3f}), so a sideways step looks '
+                       f'like a turn and the compass, not the skyline, '
+                       f'decides the lateral position')
     status = 'ok' if not reasons else 'inconclusive'
     for r in reasons:
         print('INCONCLUSIVE:', r, file=sys.stderr)
@@ -1407,14 +1783,18 @@ def main():
                   jackknife=jack, subject_km=subject_km,
                   dem_split_m=dem_split,
                   peak_dh_m=peak_dh_med, peak_dh_mad_m=peak_dh_mad,
+                  parallax_inv_km=parallax,
                   n_peaks=len(dh_all), search_trace=trace,
                   # the trace lists IMPROVEMENTS of the running best,
                   # not work done: the scan is exhaustive
                   heading_window_deg=float(args.heading_window),
                   compass_sigma_deg=args.compass_sigma,
                   search_evals=int(cc.size + 50),
+                  elapsed_s=time.perf_counter() - t_main,
                   cost=c0, rms_mrad=rms_mrad,
-                  n_photos=N, z_m=z,
+                  n_photos=N, z_m=z_fix,
+                  land_observer_m=args.land_observer,
+                  land_only_m=args.land_only,
                   photos=[{k: v for k, v in d.items()
                            if k not in ('best_shift', 'best_beta')}
                           for d in pj])
@@ -1426,7 +1806,7 @@ def main():
 
     if args.view_json:
         write_view(args.view_json, photos[0], cm, z, lat_c, lon_c, mlat,
-                   mlon, g, cc, trace, dn0, de0, result, args)
+                   mlon, g, cc, trace, dn0, de0, result, args, z_at=z_at)
 
     if args.out:
         with open(args.out + '.json', 'w') as fjs:

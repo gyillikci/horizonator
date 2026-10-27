@@ -1,0 +1,159 @@
+{
+ "status": "inconclusive",
+ "reasons": [
+  "residual 8.2 mrad > 7.0: the DEM cannot explain this observation",
+  "covariance degenerate: the cost surface has no measurable curvature at the fix (sigma cannot be computed) \u2014 the landscape does not pin a position here"
+ ],
+ "lat": 37.00684592963551,
+ "lon": 27.76055300138916,
+ "fix_ok": false,
+ "basin_margin": 0.6018140218000262,
+ "relief_mrad": 46.148917749394634,
+ "dn_m": 600.0,
+ "de_m": 2445.0,
+ "sigma_n_m": 0.0,
+ "sigma_e_m": 0.0,
+ "sigma_major_m": 82.33688951721959,
+ "sigma_minor_m": 0.0,
+ "major_bearing_deg": 114.06643427895214,
+ "anisotropy": Infinity,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -210.28324669021404,
+ "peak_dh_mad_m": 0.0,
+ "parallax_inv_km": 0.19354838709677424,
+ "n_peaks": 1,
+ "search_trace": [
+  {
+   "dn": -1200.0,
+   "de": 2100.0,
+   "cost": 0.00028049875595652666,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1200.0,
+   "de": 2400.0,
+   "cost": 0.00028022388222793704,
+   "stage": "coarse"
+  },
+  {
+   "dn": -600.0,
+   "de": 1500.0,
+   "cost": 0.0002294624028726759,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 1200.0,
+   "cost": 0.00022041304673166626,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 1500.0,
+   "cost": 0.00019100535757088035,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 1800.0,
+   "cost": 0.00018729448328301017,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": -300.0,
+   "cost": 0.0001543533646182879,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": 2100.0,
+   "cost": 0.0001155172864932439,
+   "stage": "coarse"
+  },
+  {
+   "dn": 300.0,
+   "de": -300.0,
+   "cost": 0.00010887637243638497,
+   "stage": "coarse"
+  },
+  {
+   "dn": 300.0,
+   "de": 2100.0,
+   "cost": 0.00010092359149063056,
+   "stage": "coarse"
+  },
+  {
+   "dn": 300.0,
+   "de": 2400.0,
+   "cost": 4.169410264820366e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 600.0,
+   "de": 2400.0,
+   "cost": 3.7938586866153325e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 660.0,
+   "de": 2460.0,
+   "cost": 3.710057990589052e-05,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": 660.0,
+   "de": 2460.0,
+   "cost": 3.710057990589052e-05,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": 630.0,
+   "de": 2460.0,
+   "cost": 3.629268278532619e-05,
+   "stage": "refine_15m"
+  },
+  {
+   "dn": 600.0,
+   "de": 2445.0,
+   "cost": 3.624549289478739e-05,
+   "stage": "refine_15m"
+  },
+  {
+   "dn": 600.0,
+   "de": 2445.0,
+   "cost": 3.624549289478739e-05,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 20.0,
+ "compass_sigma_deg": 5.0,
+ "search_evals": 491,
+ "cost": 3.624549289478739e-05,
+ "rms_mrad": 8.164495439987384,
+ "n_photos": 1,
+ "z_m": 69.69644927978516,
+ "land_observer_m": 2.0,
+ "land_only_m": 60.0,
+ "photos": [
+  {
+   "file": "PF_new_bodrum1.jpg",
+   "fov_deg": 73.74,
+   "heading_deg": 148.953,
+   "pitch_deg": 2.735283590585841,
+   "roll_deg": 0.12453654181801893,
+   "weight": 1.0,
+   "rms_mrad": 8.164495439987384,
+   "heading_offset_deg": -18.0,
+   "el_offset_mrad": -11.250000000000002,
+   "roll_offset_deg": 0.5,
+   "attitude_source": "waterline",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": -18.0,
+ "el_offset_mrad": -11.250000000000002,
+ "fov_deg": 73.74
+}

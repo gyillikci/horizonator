@@ -1,0 +1,113 @@
+{
+ "status": "ok",
+ "reasons": [],
+ "lat": 36.64881040703645,
+ "lon": 28.09178930680944,
+ "fix_ok": true,
+ "basin_margin": 5.647847671326307,
+ "relief_mrad": 53.56161291136067,
+ "dn_m": -60.0,
+ "de_m": -75.0,
+ "sigma_n_m": 59.13644999724463,
+ "sigma_e_m": 57.4134818662895,
+ "sigma_major_m": 59.148954769229505,
+ "sigma_minor_m": 57.40059902122112,
+ "major_bearing_deg": 175.11254573725734,
+ "anisotropy": 1.0304588415072466,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -2.623031330353335,
+ "peak_dh_mad_m": 7.331644730106621,
+ "n_peaks": 7,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -1200.0,
+   "cost": 6.125540852028732e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 0.0,
+   "cost": 4.529381994193815e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 900.0,
+   "cost": 3.986863011905293e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2700.0,
+   "de": 600.0,
+   "cost": 2.6315544810617977e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": 300.0,
+   "cost": 1.8189527040842153e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": 0.0,
+   "de": 0.0,
+   "cost": 3.8111654587303066e-06,
+   "stage": "coarse"
+  },
+  {
+   "dn": -60.0,
+   "de": -60.0,
+   "cost": 1.6747830125395458e-06,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -60.0,
+   "de": -60.0,
+   "cost": 1.6747830125395458e-06,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -60.0,
+   "de": -75.0,
+   "cost": 1.5257336483393732e-06,
+   "stage": "refine_15m"
+  },
+  {
+   "dn": -60.0,
+   "de": -75.0,
+   "cost": 1.5257336483393732e-06,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 20.0,
+ "compass_sigma_deg": 5.0,
+ "search_evals": 491,
+ "cost": 1.5257336483393732e-06,
+ "rms_mrad": 1.6998433153319592,
+ "n_photos": 1,
+ "z_m": 2.0,
+ "land_observer_m": 2.0,
+ "land_only_m": 60.0,
+ "photos": [
+  {
+   "file": "PF_20260823_175658_wide.jpg",
+   "fov_deg": 73.7,
+   "heading_deg": 200.551,
+   "pitch_deg": 1.2089464483589751,
+   "roll_deg": -2.4764986463177356,
+   "weight": 1.0,
+   "rms_mrad": 1.6998433153319592,
+   "heading_offset_deg": -3.0,
+   "el_offset_mrad": 0.0,
+   "roll_offset_deg": 0.0,
+   "attitude_source": "waterline",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": -3.0,
+ "el_offset_mrad": 0.0,
+ "fov_deg": 73.7
+}

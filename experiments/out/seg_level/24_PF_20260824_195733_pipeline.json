@@ -1,0 +1,148 @@
+{
+ "status": "inconclusive",
+ "reasons": [
+  "ambiguous landscape: basin margin 0.01 < 0.15",
+  "residual 11.6 mrad > 7.0: the DEM cannot explain this observation",
+  "covariance degenerate: the cost surface has no measurable curvature at the fix (sigma cannot be computed) \u2014 the landscape does not pin a position here"
+ ],
+ "lat": 37.0486624422187,
+ "lon": 28.316835051671834,
+ "fix_ok": false,
+ "basin_margin": 0.005940441894825475,
+ "relief_mrad": 55.409130740250035,
+ "dn_m": -360.0,
+ "de_m": -540.0,
+ "sigma_n_m": 0.0,
+ "sigma_e_m": 0.0,
+ "sigma_major_m": 0.0,
+ "sigma_minor_m": 0.0,
+ "major_bearing_deg": 146.43778877964988,
+ "anisotropy": Infinity,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -49.21175830167924,
+ "peak_dh_mad_m": 53.41484616793929,
+ "parallax_inv_km": 0.1551808406647116,
+ "n_peaks": 6,
+ "search_trace": [
+  {
+   "dn": -3000.0,
+   "de": -1200.0,
+   "cost": 0.0004621330999797637,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": -900.0,
+   "cost": 0.00040399785516230036,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 0.0,
+   "cost": 0.00024124288774335974,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 300.0,
+   "cost": 0.00018349618219075416,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1200.0,
+   "cost": 0.00013014393639874646,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1500.0,
+   "cost": 0.00011312979194040481,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 1800.0,
+   "cost": 9.697683712991004e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -3000.0,
+   "de": 2100.0,
+   "cost": 7.876211277649705e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -2100.0,
+   "de": 1500.0,
+   "cost": 7.707254149740518e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -1800.0,
+   "de": 1200.0,
+   "cost": 7.326128475195945e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": -2400.0,
+   "cost": 7.147082455258857e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -300.0,
+   "de": -600.0,
+   "cost": 7.104876350130984e-05,
+   "stage": "coarse"
+  },
+  {
+   "dn": -360.0,
+   "de": -540.0,
+   "cost": 6.794317534022922e-05,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -360.0,
+   "de": -540.0,
+   "cost": 6.794317534022922e-05,
+   "stage": "refine_60m"
+  },
+  {
+   "dn": -360.0,
+   "de": -540.0,
+   "cost": 6.794317534022922e-05,
+   "stage": "refine_15m"
+  }
+ ],
+ "heading_window_deg": 20.0,
+ "compass_sigma_deg": 5.0,
+ "search_evals": 491,
+ "cost": 6.794317534022922e-05,
+ "rms_mrad": 11.57642564354207,
+ "n_photos": 1,
+ "z_m": 2.0,
+ "land_observer_m": 2.0,
+ "land_only_m": 60.0,
+ "photos": [
+  {
+   "file": "PF_20260824_195733.jpg",
+   "fov_deg": 73.7,
+   "heading_deg": 196.515,
+   "pitch_deg": -0.8965404327051723,
+   "roll_deg": 0.9409735639100014,
+   "weight": 1.0,
+   "rms_mrad": 11.57642564354207,
+   "heading_offset_deg": -10.200000000000001,
+   "el_offset_mrad": -7.500000000000001,
+   "roll_offset_deg": -0.25,
+   "attitude_source": "waterline",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": -10.200000000000001,
+ "el_offset_mrad": -7.500000000000001,
+ "fov_deg": 73.7
+}

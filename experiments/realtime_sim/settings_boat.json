@@ -1,0 +1,17 @@
+{
+  "SettingsVersion": 2.0,
+  "SimMode": "ComputerVision",
+  "ClockType": "ScalableClock",
+  "OriginGeopoint": {"Latitude": 37.780654, "Longitude": -25.529909, "Altitude": 280},
+  "Vehicles": {
+    "Boat": {
+      "VehicleType": "ComputerVision",
+      "Cameras": {
+        "front": {
+          "CaptureSettings": [{"ImageType": 0, "Width": 1280, "Height": 720, "FOV_Degrees": 90}],
+          "X": 0, "Y": 0, "Z": 0, "Pitch": 0, "Roll": 0, "Yaw": 0
+        }
+      }
+    }
+  }
+}

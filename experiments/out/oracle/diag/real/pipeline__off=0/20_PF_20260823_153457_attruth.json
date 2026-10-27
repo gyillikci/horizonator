@@ -1,0 +1,74 @@
+{
+ "status": "inconclusive",
+ "reasons": [
+  "minimum on the search-box boundary: the true position may lie outside the box",
+  "residual 14.3 mrad > 12.0: the DEM cannot explain this observation"
+ ],
+ "lat": 36.64098489824089,
+ "lon": 28.094949599720994,
+ "fix_ok": false,
+ "basin_margin": Infinity,
+ "relief_mrad": 89.32552071385261,
+ "dn_m": 15.0,
+ "de_m": -50.0,
+ "sigma_n_m": 696.7685078586366,
+ "sigma_e_m": 1389.8183995637266,
+ "sigma_major_m": 1393.1183689651891,
+ "sigma_minor_m": 690.1469027396997,
+ "major_bearing_deg": 94.54195758127487,
+ "anisotropy": 2.0185823676595223,
+ "jackknife": null,
+ "subject_km": null,
+ "dem_split_m": null,
+ "peak_dh_m": -3.648953679961268,
+ "peak_dh_mad_m": 52.8630843754729,
+ "n_peaks": 7,
+ "search_trace": [
+  {
+   "dn": -0.0,
+   "de": -0.0,
+   "cost": 0.00010626727669735286,
+   "stage": "coarse"
+  },
+  {
+   "dn": 20.0,
+   "de": -40.0,
+   "cost": 0.00010493003462252953,
+   "stage": "refine_20m"
+  },
+  {
+   "dn": 15.0,
+   "de": -50.0,
+   "cost": 0.00010480012115177875,
+   "stage": "refine_5m"
+  }
+ ],
+ "heading_window_deg": 20.0,
+ "compass_sigma_deg": 5.0,
+ "search_evals": 51,
+ "cost": 0.00010480012115177875,
+ "rms_mrad": 14.2747414093411,
+ "n_photos": 1,
+ "z_m": 2.0,
+ "land_observer_m": 2.0,
+ "land_only_m": 60.0,
+ "photos": [
+  {
+   "file": "PF_20260823_153457.jpg",
+   "fov_deg": 38.07,
+   "heading_deg": 266.788,
+   "pitch_deg": -3.740211386866055,
+   "roll_deg": 0.21430165395014222,
+   "weight": 1.0,
+   "rms_mrad": 14.2747414093411,
+   "heading_offset_deg": -18.0,
+   "el_offset_mrad": -12.5,
+   "roll_offset_deg": -0.75,
+   "attitude_source": "waterline",
+   "ncc": null
+  }
+ ],
+ "heading_offset_deg": -18.0,
+ "el_offset_mrad": -12.5,
+ "fov_deg": 38.07
+}

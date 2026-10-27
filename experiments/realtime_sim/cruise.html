@@ -1,0 +1,232 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Boat cruise</title>
+<script src="https://cdn.jsdelivr.net/npm/cesium@1.120.0/Build/Cesium/Cesium.js"></script>
+<style>
+  html, body { margin: 0; background: #000; overflow: hidden; height: 100%; }
+  #c { position: absolute; inset: 0; }
+  .cesium-widget, .cesium-widget canvas { width: 100%; height: 100%; display: block; }
+  .cesium-widget-credits, .cesium-viewer-bottom { display: none; }
+  #hud { position: absolute; left: 10px; top: 10px; font: 13px/1.4 monospace; color: #fff;
+         background: rgba(0,0,0,.45); padding: 6px 10px; border-radius: 4px; white-space: pre; }
+  #attr { position: absolute; right: 8px; bottom: 6px; font: 11px sans-serif; color: #ddd; }
+  #map { position: absolute; right: 10px; top: 10px; background: rgba(0,0,0,.5); border-radius: 4px; }
+</style>
+</head>
+<body>
+<div id="c"></div><div id="hud"></div><canvas id="map" width="320" height="320"></canvas>
+<div id="attr">Google, Cesium</div>
+<script>
+/*
+  A boat cruising Google Photorealistic 3D Tiles (Cesium ion asset 2275207) at
+  sea level, in real time. Heights follow render.html's conventions (cesium_render):
+  tiles are WGS84-ellipsoidal, the open sea is a globe on an ellipsoid raised by
+  the geoid separation N, so the camera sits N + h_msl above the ellipsoid.
+    W/S speed up/down   A/D (or arrows) turn   Q/E look down/up   Space stop
+    [ ]  screen-space error   (smaller = sharper, slower)
+  window.start({token, lat, lon, n, heading, h, sse, bench}) from driver.mjs.
+*/
+const WGS84 = Cesium.Ellipsoid.WGS84;
+let viewer, tileset, S;
+
+function seaGlobe(n) {
+  const e = new Cesium.Ellipsoid(WGS84.radii.x + n, WGS84.radii.y + n, WGS84.radii.z + n);
+  const g = new Cesium.Globe(e);
+  g.terrainProvider = new Cesium.EllipsoidTerrainProvider({ ellipsoid: e });
+  g.showGroundAtmosphere = false; g.enableLighting = false; g.depthTestAgainstTerrain = true;
+  g.baseColor = Cesium.Color.fromCssColorString('#3d5f78');
+  return g;
+}
+
+async function start(o) {
+  Cesium.Ion.defaultAccessToken = o.token;
+  viewer = new Cesium.Viewer('c', {
+    animation: false, timeline: false, baseLayerPicker: false, geocoder: false, homeButton: false,
+    sceneModePicker: false, navigationHelpButton: false, fullscreenButton: false, infoBox: false,
+    selectionIndicator: false, baseLayer: false, globe: seaGlobe(o.n), useBrowserRecommendedResolution: false,
+    requestRenderMode: false, contextOptions: { webgl: { preserveDrawingBuffer: true } },
+  });
+  viewer.clock.currentTime = Cesium.JulianDate.fromIso8601('2026-08-23T10:00:00Z');
+  viewer.clock.shouldAnimate = false;
+  tileset = await Cesium.createGooglePhotorealistic3DTileset();
+  // a moving camera: the tileset may lower detail at the edges and while it moves, and the
+  // far ridges refine as they stream (cesium_render waits for them instead)
+  tileset.dynamicScreenSpaceError = true;
+  tileset.maximumScreenSpaceError = o.sse || 16;
+  tileset.cacheBytes = 0.75 * 1024 ** 3; tileset.maximumCacheOverflowBytes = 0.5 * 1024 ** 3;
+  viewer.scene.primitives.add(tileset);
+  const sc = viewer.scene.screenSpaceCameraController;
+  sc.enableInputs = false; sc.enableCollisionDetection = false;
+  viewer.scene.fog.enabled = false;
+  viewer.camera.frustum.fov = Cesium.Math.toRadians(o.fov || 70);
+  viewer.camera.frustum.near = 0.5;
+  S = { lat: o.lat, lon: o.lon, n: o.n, h: o.h || 2.5, hdg: o.heading || 0, v: 0, pitch: -1, turn: 0, roll: 0,
+        wob: o.wobble || null, fov: o.fov || 70, route: o.route || null, wi: 0, done: false,
+        look: o.look || null, yaw: 0, yawT: 0,
+        lat0: o.lat, lon0: o.lon, track: [], trackT: 0, fixes: [],
+        keys: {}, frames: 0, t0: performance.now(), dt: [], bench: o.bench || null, dist: 0 };
+  addEventListener('keydown', (e) => { S.keys[e.code] = true; if (e.code === 'Space') S.v = 0; });
+  addEventListener('keyup', (e) => { S.keys[e.code] = false; });
+  let last = performance.now(), fpsT = last, fpsN = 0, fps = 0;
+  viewer.scene.preRender.addEventListener(() => {
+    const now = performance.now(), dt = Math.min((now - last) / 1000, 0.25); last = now;
+    S.dt.push(dt * 1000);
+    step(dt);
+    fpsN++; if (now - fpsT > 500) { fps = fpsN * 1000 / (now - fpsT); fpsN = 0; fpsT = now; S.fps = fps; hud(); }
+  });
+  hud();
+  return { cesium: Cesium.VERSION };
+}
+
+function step(dt) {
+  const k = S.keys;
+  if (S.route) {      // autopilot: steer for the next waypoint at most 6 deg/s
+    const [wl, wo] = S.route[S.wi];
+    const dn = (wl - S.lat) * 111132, de = (wo - S.lon) * 111320 * Math.cos(S.lat * Math.PI / 180);
+    if (Math.hypot(dn, de) < 60) {
+      if (++S.wi >= S.route.length) { S.done = true; S.wi = S.route.length - 1; }
+    }
+    const want = Math.atan2(de, dn) * 180 / Math.PI;
+    const err = ((want - S.hdg + 540) % 360) - 180;
+    S.v = S.done ? 0 : S.bench.speed;
+    S.turn = Math.max(-6, Math.min(6, err)) ;
+  } else if (S.bench) {      // scripted route: constant speed, gentle weaving
+    S.v = S.bench.speed; S.turn = S.bench.weave * Math.sin(performance.now() / 4000);
+  } else {
+    if (k.KeyW || k.ArrowUp) S.v = Math.min(S.v + 3 * dt, 25);
+    if (k.KeyS || k.ArrowDown) S.v = Math.max(S.v - 3 * dt, 0);
+    S.turn = ((k.KeyD || k.ArrowRight) ? 1 : 0) - ((k.KeyA || k.ArrowLeft) ? 1 : 0);
+    S.turn *= 20;
+    if (k.KeyQ) S.pitch = Math.max(S.pitch - 20 * dt, -30);
+    if (k.KeyE) S.pitch = Math.min(S.pitch + 20 * dt, 30);
+  }
+  S.hdg = (S.hdg + S.turn * dt + 360) % 360;
+  const d = S.v * dt, h = S.hdg * Math.PI / 180;
+  S.lat += d * Math.cos(h) / 111132; S.lon += d * Math.sin(h) / (111320 * Math.cos(S.lat * Math.PI / 180));
+  S.dist += d;
+  if (performance.now() - S.trackT > 500) { S.track.push([S.lat, S.lon]); S.trackT = performance.now(); }
+  // a pan head: the camera turns to the yaw (off the bow) planned for the nearest look point
+  // (look_planner.py) or set by setLook(), at most 30 deg/s, the short way round
+  if (S.look) {
+    let best = Infinity;
+    for (const [la, lo, y] of S.look) {
+      const q = ((la - S.lat) * 111132) ** 2 + ((lo - S.lon) * 111320 * Math.cos(S.lat * Math.PI / 180)) ** 2;
+      if (q < best) { best = q; S.yawT = y; }
+    }
+  }
+  const dy = ((S.yawT - S.yaw + 540) % 360) - 180;
+  S.yaw = (S.yaw + Math.max(-30 * dt, Math.min(30 * dt, dy)) + 540) % 360 - 180;
+  // a hull's pitch and roll in a seaway, when asked for: sinusoids of different periods; a
+  // camera turned off the bow sees them mixed
+  const tt = performance.now() / 1000;
+  const wp = S.wob ? S.wob.pitch * Math.sin(tt * 2 * Math.PI / 5.3) : 0, wr = S.wob ? S.wob.roll * Math.sin(tt * 2 * Math.PI / 7.1) : 0;
+  const cy = Math.cos(S.yaw * Math.PI / 180), sy = Math.sin(S.yaw * Math.PI / 180);
+  S.cam = { pitch: S.pitch + wp * cy + wr * sy, roll: wr * cy - wp * sy };
+  viewer.camera.setView({
+    destination: Cesium.Cartesian3.fromDegrees(S.lon, S.lat, S.n + S.h, WGS84),
+    orientation: { heading: Cesium.Math.toRadians(S.hdg + S.yaw), pitch: Cesium.Math.toRadians(S.cam.pitch), roll: Cesium.Math.toRadians(-S.cam.roll) },
+  });
+}
+
+// the frame on screen and the pose it was drawn at (skyfix's attitude convention: roll sign
+// opposite to Cesium's, as in cesium_render); call between frames, the buffer is preserved
+function grab() {
+  const cv = viewer.scene.canvas, pc = viewer.camera.positionCartographic;
+  return { png: cv.toDataURL('image/png'),
+           pose: { lat: Cesium.Math.toDegrees(pc.latitude), lon: Cesium.Math.toDegrees(pc.longitude), h_ellipsoid: pc.height,
+                   z_msl: pc.height - S.n, geoid_n: S.n, heading_deg: Cesium.Math.toDegrees(viewer.camera.heading),
+                   pitch_deg: Cesium.Math.toDegrees(viewer.camera.pitch), roll_deg: ((-Cesium.Math.toDegrees(viewer.camera.roll) + 540) % 360) - 180,
+                   hfov_deg: S.fov, width: cv.width, height: cv.height, speed_ms: S.v, hull_heading_deg: S.hdg, yaw_deg: S.yaw,
+                   loaded: tileset.tilesLoaded, pending: tileset._statistics.numberOfPendingRequests } };
+}
+
+function hud() {
+  const st = tileset._statistics;
+  document.getElementById('hud').textContent =
+    `${S.fps ? S.fps.toFixed(0) : '-'} fps   ${(S.v * 1.944).toFixed(1)} kn   hdg ${S.hdg.toFixed(0)}` + (S.yaw || S.yawT ? `   camera ${S.yaw >= 0 ? '+' : ''}${S.yaw.toFixed(0)}` : '') + '\n' +
+    `${S.lat.toFixed(5)}, ${S.lon.toFixed(5)}   ${S.h} m MSL` + (S.route ? `   waypoint ${S.wi + 1}/${S.route.length}` : '') + '\n' +
+    `tiles ${st.selected}  pending ${st.numberOfPendingRequests}  SSE ${tileset.maximumScreenSpaceError}  ` +
+    `${tileset.tilesLoaded ? 'loaded' : 'streaming'}\n` + fixLine() + `W/S speed  A/D turn  Q/E look  Space stop  [ ] detail`;
+  drawMap();
+}
+
+// ---- live fixes (cruise.mjs --live): the truth track and every fix on a local map
+function fixLine() {
+  if (!S.fixes.length) return '';
+  const f = S.fixes[S.fixes.length - 1], ok = S.fixes.filter((x) => x.status === 'ok');
+  if (f.pf) {                       // the particle filter: an estimate every frame
+    const e = S.fixes.map((x) => x.err_m).filter((x) => x !== undefined).sort((a, b) => a - b);
+    return `particle filter: ${f.err_m !== undefined ? f.err_m.toFixed(0) + ' m off' : ''}  sigma ${f.pf.sigma_major.toFixed(0)} m  ` +
+      `${f.update ? 'skyline update' : 'dead reckoning (' + f.why + ')'}  (${(f.seg_s + f.solve_s).toFixed(1)} s)\n` +
+      `frames ${S.fixes.length}, median ${e.length ? e[Math.floor(e.length / 2)].toFixed(0) : '-'} m\n`;
+  }
+  const e = ok.map((x) => x.err_m).filter((x) => x !== undefined).sort((a, b) => a - b);
+  return `fix ${S.fixes.length}: ${f.status === 'ok' ? 'accepted' : 'refused'}` +
+    (f.err_m !== undefined ? ` ${f.err_m.toFixed(0)} m off` : '') + `  (${(f.seg_s + f.solve_s).toFixed(1)} s)   ` +
+    `accepted ${ok.length}/${S.fixes.length}` + (e.length ? `, median ${e[Math.floor(e.length / 2)].toFixed(0)} m` : '') + '\n';
+}
+function addFix(f) { S.fixes.push(f); hud(); }
+function setLook(y) { S.look = null; S.yawT = y; }
+function drawMap() {
+  const cv = document.getElementById('map'), g = cv.getContext('2d'), W = cv.width, H = cv.height;
+  const mlat = 111132, mlon = 111320 * Math.cos(S.lat0 * Math.PI / 180);
+  const xy = (la, lo) => [(lo - S.lon0) * mlon, (la - S.lat0) * mlat];
+  const pts = S.track.map((p) => xy(...p)).concat([xy(S.lat, S.lon)]);
+  for (const f of S.fixes) { pts.push(xy(f.truthAt.lat, f.truthAt.lon)); if (f.lat !== undefined) pts.push(xy(f.lat, f.lon)); }
+  const lastPF = [...S.fixes].reverse().find((f) => f.particles);
+  if (lastPF) for (const q of lastPF.particles.slice(0, 50)) pts.push(xy(q[0], q[1]));
+  let [x0, x1, y0, y1] = [Infinity, -Infinity, Infinity, -Infinity];
+  for (const [x, y] of pts) { x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); }
+  const span = Math.max(x1 - x0, y1 - y0, 1500) * 1.15, cx = (x0 + x1) / 2, cy = (y0 + y1) / 2, k = (W - 20) / span;
+  const P = ([x, y]) => [W / 2 + (x - cx) * k, H / 2 - (y - cy) * k];
+  g.clearRect(0, 0, W, H);
+  g.lineWidth = 2; g.strokeStyle = 'rgba(255,255,255,.85)'; g.beginPath();
+  S.track.forEach((p, i) => { const [u, v] = P(xy(...p)); i ? g.lineTo(u, v) : g.moveTo(u, v); }); g.stroke();
+  if (lastPF) {                     // the particle cloud now
+    g.fillStyle = 'rgba(120,180,255,.55)';
+    for (const q of lastPF.particles) { const [u, v] = P(xy(q[0], q[1])); g.fillRect(u - 1, v - 1, 2, 2); }
+  }
+  const pfs = S.fixes.filter((f) => f.pf);
+  if (pfs.length) {                 // the filter's track
+    g.strokeStyle = '#38c6f4'; g.lineWidth = 2; g.beginPath();
+    pfs.forEach((f, i) => { const [u, v] = P(xy(f.pf.lat, f.pf.lon)); i ? g.lineTo(u, v) : g.moveTo(u, v); }); g.stroke();
+  }
+  for (const f of S.fixes) {
+    if (f.pf) continue;
+    const t = P(xy(f.truthAt.lat, f.truthAt.lon));
+    if (f.lat === undefined) { g.strokeStyle = '#9a9a9a'; g.lineWidth = 1.5; g.beginPath(); g.arc(t[0], t[1], 4, 0, 7); g.stroke(); continue; }
+    const q = P(xy(f.lat, f.lon));
+    g.strokeStyle = 'rgba(255,255,255,.35)'; g.lineWidth = 1; g.beginPath(); g.moveTo(...t); g.lineTo(...q); g.stroke();
+    g.fillStyle = f.status === 'ok' ? '#1baf7a' : '#eda100'; g.beginPath(); g.arc(q[0], q[1], 4, 0, 7); g.fill();
+  }
+  const [bx, by] = P(xy(S.lat, S.lon)); g.fillStyle = '#fff'; g.beginPath(); g.arc(bx, by, 3.5, 0, 7); g.fill();
+  // scale bar and key
+  const bar = [500, 1000, 2000, 5000, 10000].find((m) => m * k > 50) || 10000;
+  g.fillStyle = '#fff'; g.fillRect(10, H - 14, bar * k, 3);
+  g.font = '11px monospace'; g.fillText(bar >= 1000 ? bar / 1000 + ' km' : bar + ' m', 10, H - 20);
+  g.fillStyle = '#1baf7a'; g.fillText('\u25cf accepted', W - 150, H - 20); g.fillStyle = '#eda100'; g.fillText('\u25cf refused', W - 150, H - 8);
+  g.fillStyle = '#9a9a9a'; g.fillText('\u25cb no fix', W - 70, H - 8); g.fillStyle = '#fff'; g.fillText('white: true track', 10, 14);
+  if (pfs.length) { g.fillStyle = '#38c6f4'; g.fillText('blue: particle filter', 10, 28); }
+}
+addEventListener('keydown', (e) => {
+  if (!tileset) return;
+  if (e.key === '[') tileset.maximumScreenSpaceError = Math.max(2, tileset.maximumScreenSpaceError / 1.5);
+  if (e.key === ']') tileset.maximumScreenSpaceError = Math.min(64, tileset.maximumScreenSpaceError * 1.5);
+});
+
+// frame-time statistics since the last call
+function take() {
+  const a = S.dt.slice(); S.dt.length = 0;
+  a.sort((x, y) => x - y);
+  const q = (p) => a[Math.min(a.length - 1, Math.floor(p * a.length))];
+  const st = tileset._statistics;
+  return { frames: a.length, mean_ms: a.reduce((s, x) => s + x, 0) / Math.max(a.length, 1), p50: q(0.5), p95: q(0.95), p99: q(0.99),
+           max: a[a.length - 1], dist_m: S.dist, tiles: st.selected, pending: st.numberOfPendingRequests,
+           mem_mb: tileset.totalMemoryUsageInBytes / 1e6, loaded: tileset.tilesLoaded };
+}
+window.start = start; window.take = take; window.grab = grab; window.isDone = () => S.done; window.addFix = addFix; window.setSse = (v) => { tileset.maximumScreenSpaceError = v; };
+</script>
+</body>
+</html>
